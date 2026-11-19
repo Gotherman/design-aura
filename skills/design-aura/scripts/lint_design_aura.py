@@ -246,6 +246,18 @@ RULES = [
         "fix": "Arredonde para o passo mais proximo de 4, 8, 12, 16, 20, 24, 32px (ou 2/6/10/14px interno de controle)",
     },
     {
+        "id": "DA-B7-03",
+        "severity": "HIGH",
+        "exts": UI_EXTS,
+        "pattern": re.compile(
+            r"(?:\[data-theme=[\"']dark[\"']\]|\.dark\b)[^{]{0,240}\{[^}]*box-shadow\s*:[^;]*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*(?:0\.[4-9]\d*|1(?:\.0+)?)\s*\)"
+            r"|dark:[^\s\"']*shadow-\[[^\]]*rgba\(\s*0\s*,\s*0\s*,\s*0",
+            re.I | re.S,
+        ),
+        "message": "Sombra preta chapada em Dark Mode; elevacao some no fundo escuro (Bloco 7)",
+        "fix": "Suba a luminosidade da superficie e use borda/inset claros. Reserve sombra preta fraca so como apoio, nunca como unico plano",
+    },
+    {
         "id": "DA-B8-03",
         "severity": "BLOCK",
         "exts": UI_EXTS,
@@ -348,8 +360,134 @@ def check_structural_rules(raw_text: str, clean_text: str, ext: str, rel_path: s
                     "message": "Tag <img> sem atributo alt (Bloco 10)",
                     "fix": 'Inclua alt descritivo ou alt="" quando puramente decorativa, mais object-fit: cover',
                 })
+            else:
+                classes = ""
+                class_match = re.search(r'\bclass(?:Name)?\s*=\s*["\']([^"\']+)["\']', attrs, re.I)
+                if class_match:
+                    classes = class_match.group(1)
+                looks_media = re.search(r"\b(?:avatar|thumb|photo|media|cover|portrait)\b", classes, re.I)
+                has_fit = re.search(r"\bobject-(?:cover|contain|fill)\b|object-fit\s*:", attrs + classes, re.I)
+                if looks_media and not has_fit:
+                    findings.append({
+                        "rule": "DA-B10-04",
+                        "severity": "HIGH",
+                        "location": f"{rel_path}:{pos_to_line(starts, m.start())}",
+                        "evidence": snippet_at(raw_text, m.start()),
+                        "message": "Midia de retrato/capa sem object-fit (Bloco 10)",
+                        "fix": "Aplique object-cover (ou object-contain quando o recorte distorcer o conteudo) e um fundo de fallback",
+                    })
 
+    findings.extend(_nested_surface_findings(clean_text, raw_text, ext, rel_path, starts))
+    findings.extend(_motion_findings(clean_text, raw_text, ext, rel_path, starts))
     return findings
+
+
+_TAG_RE = re.compile(r"<(/?)([A-Za-z][\w:-]*)\b([^>]*)>", re.S)
+_CLASS_RE = re.compile(r"""\bclass(?:Name)?\s*=\s*["']([^"']+)["']""", re.I)
+_RADIUS_RE = re.compile(r"\b(rounded-(?:none|sm|md|lg|xl|2xl|3xl|full|\[[^\]]+\]))\b")
+_PAD_RE = re.compile(r"\b(?:p|px|py|pt|pr|pb|pl)-(?:1|2|3|4|\[(?:4|8|12|16)px\])\b")
+_VOID_TAGS = {"img", "input", "br", "hr", "meta", "link", "source", "area", "col", "embed", "wbr"}
+
+
+def _is_cardish(tag: str, classes: str) -> bool:
+    if tag.lower() == "card":
+        return True
+    for token in classes.split():
+        name = token.lower()
+        if name in {"card", "da-card", "surface-card"} or name.endswith("-card") or name.startswith("card-") or "-card-" in name:
+            return True
+    return False
+
+
+def _nested_surface_findings(clean_text: str, raw_text: str, ext: str, rel_path: str, starts: list[int]) -> list[dict]:
+    if ext not in MARKUP_EXTS:
+        return []
+    findings = []
+    stack: list[tuple[str, bool, str | None, bool, int]] = []
+    for match in _TAG_RE.finditer(clean_text):
+        closing, tag, attrs = match.group(1), match.group(2), match.group(3)
+        self_close = tag.lower() in _VOID_TAGS or attrs.rstrip().endswith("/")
+        class_match = _CLASS_RE.search(attrs)
+        classes = class_match.group(1) if class_match else ""
+        if closing == "/":
+            wanted = tag.lower()
+            while stack:
+                top = stack.pop()
+                if top[0] == wanted:
+                    break
+            continue
+        cardish = _is_cardish(tag, classes)
+        radius = None
+        radii = _RADIUS_RE.findall(classes)
+        if radii:
+            radius = radii[-1]
+        tight_pad = bool(_PAD_RE.search(classes))
+        if cardish and any(item[1] for item in stack):
+            findings.append({
+                "rule": "DA-B2-01",
+                "severity": "BLOCK",
+                "location": f"{rel_path}:{pos_to_line(starts, match.start())}",
+                "evidence": snippet_at(raw_text, match.start()),
+                "message": "Card dentro de card (Bloco 2)",
+                "fix": "Achate a hierarquia: superficie externa unica e conteudo interno sem segunda caixa",
+            })
+        if radius:
+            for item in reversed(stack):
+                if item[2] == radius and item[3]:
+                    findings.append({
+                        "rule": "DA-B7-01",
+                        "severity": "HIGH",
+                        "location": f"{rel_path}:{pos_to_line(starts, match.start())}",
+                        "evidence": snippet_at(raw_text, match.start()),
+                        "message": f"Mesmo raio {radius} aninhado com padding curto; cantos beliscados (Bloco 7)",
+                        "fix": "Raio interno = raio externo - padding. Ex.: externo 20px, padding 8px, interno 12px",
+                    })
+                    break
+        if not self_close:
+            stack.append((tag.lower(), cardish, radius, tight_pad, match.start()))
+    return findings
+
+
+def _motion_findings(clean_text: str, raw_text: str, ext: str, rel_path: str, starts: list[int]) -> list[dict]:
+    if ext not in UI_EXTS:
+        return []
+    findings = []
+    for match in re.finditer(r"animation\s*:[^;{}]*\binfinite\b", clean_text, re.I):
+        window = clean_text[max(0, match.start() - 180):match.end() + 80]
+        if re.search(r"skeleton|spinner|progress|loading|indeterminate", window, re.I):
+            continue
+        findings.append({
+            "rule": "DA-B6-04",
+            "severity": "HIGH",
+            "location": f"{rel_path}:{pos_to_line(starts, match.start())}",
+            "evidence": snippet_at(raw_text, match.start()),
+            "message": "Animacao infinita sem papel de espera (Bloco 6)",
+            "fix": "Reserve loop para skeleton, spinner ou progresso real. O resto entra, comunica a mudanca e para",
+        })
+    return findings
+
+
+_ALLOW_RE = re.compile(r"design-aura-allow:\s*(DA-[A-Z0-9-]+)\s+(\S(?:.*\S)?)", re.I)
+
+
+def _line_window(raw_text: str, pos: int) -> str:
+    line_start = raw_text.rfind("\n", 0, pos) + 1
+    prev = raw_text.rfind("\n", 0, max(0, line_start - 1)) + 1
+    line_end = raw_text.find("\n", pos)
+    if line_end == -1:
+        line_end = len(raw_text)
+    return raw_text[prev:line_end]
+
+
+def _allowed(raw_text: str, pos: int, rule_id: str) -> bool:
+    window = _line_window(raw_text, pos)
+    for match in _ALLOW_RE.finditer(window):
+        if match.group(1).upper() != rule_id.upper():
+            continue
+        reason = match.group(2).strip()
+        if len(reason) >= 8:
+            return True
+    return False
 
 
 def scan_file(path: Path, root: Path) -> list[dict]:
@@ -378,6 +516,8 @@ def scan_file(path: Path, root: Path) -> list[dict]:
             # Excecao para DA-B9-02 quando :focus-visible esta explicitamente definido logo abaixo ou no arquivo
             if rule["id"] == "DA-B9-02" and "focus-visible" in clean_text[m.start():m.start() + 300]:
                 continue
+            if _allowed(raw_text, m.start(), rule["id"]):
+                continue
             findings.append({
                 "rule": rule["id"],
                 "severity": rule["severity"],
@@ -388,7 +528,18 @@ def scan_file(path: Path, root: Path) -> list[dict]:
             })
 
     findings.extend(check_structural_rules(raw_text, clean_text, ext, rel_path, starts))
+    findings = [f for f in findings if not _allowed(raw_text, _pos_from_location(raw_text, f["location"]), f["rule"])]
     return findings
+
+
+def _pos_from_location(raw_text: str, location: str) -> int:
+    try:
+        line_no = int(location.rsplit(":", 1)[-1])
+    except ValueError:
+        return 0
+    starts = line_index_map(raw_text)
+    idx = max(0, min(len(starts) - 1, line_no - 1))
+    return starts[idx]
 
 
 def collect_files(targets: list[str]) -> tuple[list[Path], Path]:

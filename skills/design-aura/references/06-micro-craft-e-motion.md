@@ -77,7 +77,11 @@ Em Dark Mode, **sombras pretas chapadas desaparecem** e não criam elevação re
 
 ---
 
-## 6. Motion Interrompível & Performance
+## 6. Motion de controle
+
+A decisão do que anima, e a curva de desktop, iOS e Android, está em [10-motion-anti-slop.md](10-motion-anti-slop.md). Esta seção guarda só o acabamento que vale nas três quando o movimento já tem motivo.
+
+## 6.1. Performance do controle
 
 - **PROIBIDO `transition: all` / `transition-all`**: especifique sempre as propriedades exatas (`transition-property: transform, background-color, border-color, opacity`).
 - **CSS Transitions para controles interativos** (hover, drawer, accordion, tabs, switches): se o usuário cancelar no meio, a transição interpola suavemente de volta ao estado atual; `@keyframes` reiniciam do zero e quebram a sensação tátil — reserve keyframes apenas para entradas únicas (`fadeInUp`) ou spinners reais.

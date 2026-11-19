@@ -51,10 +51,14 @@ Documente explicitamente os 5 planos físicos da interface nos dois temas:
 - Documente os pares de **raios concêntricos** usados no sistema (ex.: container `20px` + padding `8px` → filho `12px`; card `16px` + padding `8px` → botão/item interno `8px`).
 
 ### 8. Arsenal Open-Source de Elite
-Consulte `scripts/design_intel.py` e registre os primitivos exatos para a stack escolhida (nunca invente componentes frágeis do zero quando existir primitivo acessível consolidado):
-- Web/React: Radix / Base UI, shadcn/ui, TanStack Table, cmdk, Vaul, Sonner, Recharts/ECharts, Phosphor/Lucide.
-- Desktop (Electron/Tauri): atalhos globais, painéis redimensionáveis, window frames nativos.
-- Mobile (SwiftUI / Compose / RN / Flutter): componentes nativos da plataforma, `@gorhom/bottom-sheet`, `FlashList`, `Zeego`, `SF Symbols` / `Material Symbols`.
+Rode `scripts/discover_oss_components.py` com a interação real, a stack e o modo de superfície. O procedimento e a diferença entre registry, galeria e licença própria estão em [09-pesquisa-componentes-oss.md](09-pesquisa-componentes-oss.md).
+
+Registre só o que for usado, com licença e tipo de uso (Referência, Dependência ou Código copiado):
+
+- Web/React: shadcn/ui, coss ui, Kibo UI, Dice UI, Base UI, TanStack Table, cmdk.
+- Desktop: Dockview ou `react-resizable-panels`, mais o frame nativo da janela.
+- Mobile: SwiftUI e Material 3 primeiro; depois React Native Reusables, gluestack, `@gorhom/bottom-sheet`, FlashList, Forui ou `shadcn_ui` conforme a stack.
+- Galerias (Mobbin, Refero, Godly, Page Flows, Screenlane) entram como referência de fluxo, nunca como código.
 
 ### 9. Biblioteca de Componentes & Matriz de Estados
 Defina regras exatas de:
@@ -62,6 +66,7 @@ Defina regras exatas de:
 - Badges & Pills (somente com estado real; máx. 2 por item de lista).
 - Tabelas, Inputs (sempre com `<label>` visível + erro inline + `:focus-visible`), Toasts com **Desfazer**.
 - Estados obrigatórios: Loading (skeleton proporcional), Empty (diagnóstico + CTA), Error (causa + retry), Disabled, Foco.
+- Motion: preencha o contrato do guia [10-motion-anti-slop.md](10-motion-anti-slop.md). Diga o que anima, o que fica quieto, e as durações de desktop, iOS e Android separadas. Uma curva CSS não serve para as três.
 
 ### 10. Arquitetura de Fluxos & Horizontes Temporais
 Reestruture a operação do usuário em torno de velocidade cognitiva:

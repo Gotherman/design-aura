@@ -65,7 +65,8 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
 | `DA-B6-01` | Proibido entregar apenas o "caminho feliz": fluxos e componentes devem prever estados reais aplicáveis (`loading/skeleton`, `empty state` com próxima ação, `error` com recuperação, `sucesso` com feedback). | Revisão de componentes/telas |
-| `DA-B6-02` | Proibido `transition: all` / `transition-all`, `hover:scale-105` em todo card, `animate-bounce`/`animate-pulse` decorativo ou transições `> 300ms` em controles simples. Interações devem usar **CSS transitions interrompíveis** em propriedades específicas, saída mais rápida/suave que a entrada, `active:scale-[0.97]` tátil em botões e respeito obrigatório a `prefers-reduced-motion`. | `lint_design_aura.py` + CSS |
+| `DA-B6-02` | Proibido `transition: all` / `transition-all`, `hover:scale-105` em todo card, `animate-bounce`/`animate-pulse` decorativo ou transições `> 300ms` em controles simples. Interações devem usar **CSS transitions interrompíveis** em propriedades específicas, saída mais rápida que a entrada, `active:scale-[0.97]` tátil em botões e respeito obrigatório a `prefers-reduced-motion`. | `lint_design_aura.py` + CSS |
+| `DA-B6-04` | Animação infinita só enquanto algo espera (skeleton, spinner, progresso). Página, card e componente podem animar quando a mudança de estado precisa ser percebida. Desktop, iOS e Android seguem curvas diferentes: ver [10-motion-anti-slop.md](10-motion-anti-slop.md). | `lint_design_aura.py` + revisão |
 | `DA-B6-03` | Proibido esconder ações críticas ou navegação essencial atrás de padrões confusos por estética minimalista. Superfícies do browser (`::selection`, `caret-color`, scrollbars, `text-underline-offset`) devem ser tematizadas pela paleta. | Inspeção CSS + navegador |
 
 ---

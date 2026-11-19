@@ -31,21 +31,34 @@ const MIME_TYPES = {
   '.woff2': 'font/woff2',
 };
 
+function screensFromManifest(manifestPath) {
+  const abs = path.resolve(manifestPath);
+  const data = JSON.parse(fs.readFileSync(abs, 'utf8'));
+  const base = path.dirname(abs);
+  return (data.screens || [])
+    .map((screen) => screen.file)
+    .filter((file) => file && !/^https?:\/\//i.test(file))
+    .map((file) => path.resolve(base, file));
+}
+
 function parseArgs(argv) {
-  const args = { targets: [], out: './audit-shots', viewports: ['desktop', 'mobile'], themes: ['dark', 'light'], strict: false };
+  const args = { targets: [], out: './audit-shots', viewports: ['desktop', 'mobile'], themes: ['dark', 'light'], strict: false, manifest: '' };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--out' && argv[i + 1]) args.out = argv[++i];
     else if (a === '--viewports' && argv[i + 1]) args.viewports = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--themes' && argv[i + 1]) args.themes = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
+    else if (a === '--manifest' && argv[i + 1]) args.manifest = argv[++i];
     else if (a === '--strict') args.strict = true;
     else if (a === '--help' || a === '-h') {
-      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --out <dir> [--viewports desktop,tablet,mobile] [--themes dark,light] [--strict]');
+      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--viewports desktop,tablet,mobile] [--themes dark,light] [--strict]');
       process.exit(0);
     } else args.targets.push(a);
   }
+  if (args.manifest) args.targets.push(...screensFromManifest(args.manifest));
+  args.targets = [...new Set(args.targets)];
   if (!args.targets.length) {
-    console.error('Erro: informe ao menos 1 arquivo HTML ou URL.');
+    console.error('Erro: informe ao menos 1 arquivo HTML, URL ou --manifest.');
     process.exit(1);
   }
   return args;
@@ -279,6 +292,55 @@ const DOM_AUDIT_FN = `(() => {
   }
   if (contrastFails > 0) {
     issues.push({ severity: 'HIGH', rule: 'DA-B3-01', detail: contrastFails + ' elementos amostrados com contraste abaixo do minimo WCAG AA' });
+  }
+
+  // 7. Raios iguais aninhados com padding curto (concentricidade)
+  let pinched = 0;
+  const radiusNodes = document.querySelectorAll('div, article, section, li, a, button');
+  for (const el of Array.from(radiusNodes).slice(0, 200)) {
+    const st = getComputedStyle(el);
+    const pad = Math.min(parseFloat(st.paddingTop) || 0, parseFloat(st.paddingLeft) || 0);
+    const outer = parseFloat(st.borderTopLeftRadius) || 0;
+    if (pad < 4 || pad > 24 || outer < 8) continue;
+    const child = el.firstElementChild;
+    if (!child) continue;
+    const inner = parseFloat(getComputedStyle(child).borderTopLeftRadius) || 0;
+    if (inner >= 8 && Math.abs(inner - outer) < 1) pinched++;
+  }
+  if (pinched > 0) {
+    issues.push({ severity: 'HIGH', rule: 'DA-B7-01', detail: pinched + ' pares com o mesmo raio aninhado e padding <= 24px' });
+  }
+
+  // 8. Scroll aninhado acidental
+  function canScroll(el) {
+    if (!el || el === document.body || el === document.documentElement) return false;
+    const st = getComputedStyle(el);
+    if (st.overflowY !== 'auto' && st.overflowY !== 'scroll') return false;
+    return el.scrollHeight > el.clientHeight + 8;
+  }
+  let nestedScroll = 0;
+  for (const el of Array.from(document.querySelectorAll('div, section, main, ul')).slice(0, 300)) {
+    if (!canScroll(el)) continue;
+    let parent = el.parentElement;
+    while (parent) {
+      if (canScroll(parent)) { nestedScroll++; break; }
+      parent = parent.parentElement;
+    }
+  }
+  if (nestedScroll > 0) {
+    issues.push({ severity: 'MEDIUM', rule: 'DA-B10-02', detail: nestedScroll + ' regioes com scroll aninhado' });
+  }
+
+  // 9. Numeros de tabela sem alinhamento a direita
+  let ragged = 0;
+  for (const cell of document.querySelectorAll('td')) {
+    const text = (cell.textContent || '').trim();
+    if (!/^[-+R$€£]?\\d[\\d.,\\s%]*$/.test(text)) continue;
+    const align = getComputedStyle(cell).textAlign;
+    if (align !== 'right' && align !== 'end') ragged++;
+  }
+  if (ragged > 0) {
+    issues.push({ severity: 'HIGH', rule: 'DA-B8-03', detail: ragged + ' celulas numericas sem alinhamento a direita' });
   }
 
   return {

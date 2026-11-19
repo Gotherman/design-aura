@@ -110,6 +110,9 @@
     "duration-fast": "150ms",
     "duration-enter": "220ms",
     "duration-exit": "140ms",
+    "page-desktop": "200ms",
+    "page-ios": "350ms",
+    "page-android": "250ms",
     "ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
     "press-scale": "0.97"
   }

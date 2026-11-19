@@ -14,7 +14,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from audit_contrast import audit_file  # noqa: E402
+from audit_contrast import audit_file, color_to_hex  # noqa: E402
 
 REQUIRED_SEMANTIC_KEYS = {
     "surface-z0",
@@ -193,11 +193,210 @@ def build_css(data: dict) -> str:
     return "\n".join(css)
 
 
+def _camel(key: str) -> str:
+    parts = [p for p in re.split(r"[^A-Za-z0-9]+", key) if p]
+    if not parts:
+        return "token"
+    head = parts[0][0].lower() + parts[0][1:]
+    return head + "".join(p[:1].upper() + p[1:] for p in parts[1:])
+
+
+def _pascal(key: str) -> str:
+    camel = _camel(key)
+    return camel[:1].upper() + camel[1:]
+
+
+def _resolved_themes(data: dict) -> tuple[dict, dict[str, dict[str, str]]]:
+    primitives = data.get("primitive", {})
+    semantic = data.get("semantic", {})
+    themes = {}
+    for theme in ("light", "dark"):
+        raw = {k: resolve_ref(v, primitives) for k, v in semantic.get(theme, {}).items()}
+        themes[theme] = {k: color_to_hex(v, raw) or v for k, v in raw.items()}
+    return primitives, themes
+
+
+def _is_color(value: str) -> bool:
+    return bool(re.match(r"^#[0-9a-fA-F]{3,8}$", str(value).strip()))
+
+
+def build_tailwind(data: dict) -> str:
+    _, themes = _resolved_themes(data)
+    typo = data.get("typography", {})
+    spacing = data.get("spacing", {})
+    radii = data.get("radii", {})
+    lines = [
+        "/* Design Aura · Tailwind v4 @theme. Re-tema o projeto; nao misture paletas de registries. */",
+        "@theme {",
+    ]
+    for key, value in themes["light"].items():
+        lines.append(f"  --color-{key}: {value};")
+    for key, value in typo.items():
+        lines.append(f"  --font-{key}: {value};" if key.startswith("font-") else f"  --{key}: {value};")
+    for key, value in spacing.items():
+        lines.append(f"  --spacing-{key}: {value};")
+    for key, value in radii.items():
+        lines.append(f"  --radius-{key}: {value};")
+    lines.extend(["}", "", '[data-theme="dark"], .dark {'])
+    for key, value in themes["dark"].items():
+        lines.append(f"  --color-{key}: {value};")
+    lines.append("}")
+    return "\n".join(lines) + "\n"
+
+
+def build_ts(data: dict) -> str:
+    _, themes = _resolved_themes(data)
+    payload = {
+        "meta": data.get("meta", {}),
+        "light": themes["light"],
+        "dark": themes["dark"],
+        "typography": data.get("typography", {}),
+        "spacing": data.get("spacing", {}),
+        "radii": data.get("radii", {}),
+        "motion": data.get("motion", {}),
+    }
+    body = json.dumps(payload, ensure_ascii=False, indent=2)
+    return (
+        "/** Design tokens gerados pela Design Aura. Nao edite a mao. */\n"
+        f"export const tokens = {body} as const;\n"
+        "export type DesignTokens = typeof tokens;\n"
+        "export const lightColors = tokens.light;\n"
+        "export const darkColors = tokens.dark;\n"
+    )
+
+
+def _swift_color(hex_color: str) -> str:
+    rgb = color_to_hex(hex_color)
+    if not rgb:
+        return "Color.clear"
+    value = rgb.lstrip("#")
+    if len(value) == 3:
+        value = "".join(ch * 2 for ch in value)
+    r = int(value[0:2], 16) / 255.0
+    g = int(value[2:4], 16) / 255.0
+    b = int(value[4:6], 16) / 255.0
+    return f"Color(red: {r:.4f}, green: {g:.4f}, blue: {b:.4f})"
+
+
+def build_swift(data: dict) -> str:
+    _, themes = _resolved_themes(data)
+    lines = [
+        "import SwiftUI",
+        "",
+        "/// Tokens de cor da Design Aura. Movimento nativo continua no guia 10 (spring interrompivel, Reduce Motion).",
+        "enum DesignTokens {",
+    ]
+    for theme, mapping in themes.items():
+        lines.append(f"    enum {theme.capitalize()} {{")
+        for key, value in mapping.items():
+            if _is_color(value):
+                lines.append(f"        static let {_camel(key)} = {_swift_color(value)}")
+        lines.append("    }")
+        lines.append("")
+    motion = data.get("motion", {})
+    if motion:
+        lines.append("    enum Motion {")
+        for key, value in motion.items():
+            lines.append(f"        static let {_camel(key)} = \"{value}\"")
+        lines.append("    }")
+    lines.append("}")
+    return "\n".join(lines) + "\n"
+
+
+def _argb(hex_color: str) -> str | None:
+    rgb = color_to_hex(hex_color)
+    if not rgb:
+        return None
+    value = rgb.lstrip("#")
+    if len(value) == 3:
+        value = "".join(ch * 2 for ch in value)
+    return "FF" + value[0:6].upper()
+
+
+def build_kotlin(data: dict) -> str:
+    _, themes = _resolved_themes(data)
+    lines = [
+        "package design.aura",
+        "",
+        "import androidx.compose.ui.graphics.Color",
+        "",
+        "/** Tokens da Design Aura. No Android, duracao de pagina segue Material 3, nao este hex. */",
+        "object DesignTokens {",
+    ]
+    for theme, mapping in themes.items():
+        lines.append(f"    object {theme.capitalize()} {{")
+        for key, value in mapping.items():
+            argb = _argb(value) if _is_color(value) else None
+            if argb:
+                lines.append(f"        val {_pascal(key)} = Color(0x{argb})")
+        lines.append("    }")
+        lines.append("")
+    lines.append("}")
+    return "\n".join(lines) + "\n"
+
+
+def build_dart(data: dict) -> str:
+    _, themes = _resolved_themes(data)
+    lines = [
+        "import 'package:flutter/material.dart';",
+        "",
+        "/// Tokens da Design Aura. Curvas de pagina no Flutter nao copiam o cubic-bezier do CSS.",
+        "abstract final class DesignTokens {",
+    ]
+    for theme, mapping in themes.items():
+        for key, value in mapping.items():
+            argb = _argb(value) if _is_color(value) else None
+            if argb:
+                lines.append(f"  static const {theme}{_pascal(key)} = Color(0x{argb});")
+        lines.append("")
+    lines.append("}")
+    return "\n".join(lines) + "\n"
+
+
+def write_formats(data: dict, fmt: str, out: Path) -> list[Path]:
+    builders = {
+        "css": build_css,
+        "tailwind": build_tailwind,
+        "ts": build_ts,
+        "swift": build_swift,
+        "kotlin": build_kotlin,
+        "dart": build_dart,
+    }
+    names = {
+        "css": "tokens.css",
+        "tailwind": "tokens.tailwind.css",
+        "ts": "tokens.ts",
+        "swift": "DesignTokens.swift",
+        "kotlin": "DesignTokens.kt",
+        "dart": "design_tokens.dart",
+    }
+    if fmt != "all":
+        path = out / names[fmt] if out.suffix == "" else out
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(builders[fmt](data), encoding="utf-8")
+        return [path]
+
+    folder = out if out.suffix == "" else out.parent
+    folder.mkdir(parents=True, exist_ok=True)
+    written = []
+    for name, builder in builders.items():
+        path = folder / names[name]
+        path.write_text(builder(data), encoding="utf-8")
+        written.append(path)
+    return written
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Compilador de tokens.json -> tokens.css da Design Aura.")
+    parser = argparse.ArgumentParser(description="Compilador de tokens.json para CSS, Tailwind v4, TS, Swift, Kotlin e Dart.")
     parser.add_argument("input", help="Caminho para tokens.json")
-    parser.add_argument("--out", default="tokens.css", help="Arquivo CSS de saida")
-    parser.add_argument("--check-contrast", action="store_true", help="Valida WCAG e APCA apos gerar")
+    parser.add_argument("--out", default="tokens.css", help="Arquivo ou pasta de saida")
+    parser.add_argument(
+        "--format",
+        default="css",
+        choices=["css", "tailwind", "ts", "swift", "kotlin", "dart", "all"],
+        help="Formato de exportacao",
+    )
+    parser.add_argument("--check-contrast", action="store_true", help="Valida WCAG e APCA apos gerar o CSS")
     args = parser.parse_args()
 
     src = Path(args.input)
@@ -213,14 +412,15 @@ def main():
                 print(f"[BLOCK] {e}", file=sys.stderr)
             sys.exit(1)
 
-        css_text = build_css(data)
-        out_path = Path(args.out)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(css_text, encoding="utf-8")
-        print(f"Tokens gerados com sucesso: {out_path}")
+        written = write_formats(data, args.format, Path(args.out))
+        for path in written:
+            print(f"Tokens gerados com sucesso: {path}")
 
         if args.check_contrast:
-            results = audit_file(out_path)
+            css_path = next((p for p in written if p.suffix == ".css" and "tailwind" not in p.name), None)
+            if css_path is None:
+                css_path = write_formats(data, "css", Path(args.out).with_suffix(".css"))[0]
+            results = audit_file(css_path)
             blocks = [r for r in results if r["severity"] == "BLOCK"]
             if blocks:
                 for b in blocks:

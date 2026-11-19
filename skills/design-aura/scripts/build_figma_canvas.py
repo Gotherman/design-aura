@@ -9,6 +9,7 @@ Le screen-manifest.json (+ opcional --tokens tokens.css) e gera:
 import argparse
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -188,6 +189,150 @@ function daToggleTheme() {
   daSetTheme(daGetTheme() === 'dark' ? 'light' : 'dark');
 }
 """
+
+
+def _box(screen: dict) -> tuple[float, float, float, float]:
+    return (
+        float(screen.get("x") or 0),
+        float(screen.get("y") or 0),
+        float(screen.get("w") or 360),
+        float(screen.get("h") or 350),
+    )
+
+
+def apply_auto_layout(manifest: dict) -> list[str]:
+    """Preenche x/y ausentes e afasta artboards que se sobrepoem."""
+    notes: list[str] = []
+    screens = manifest.get("screens", [])
+    sections = manifest.setdefault("sections", [])
+    sec_by_id = {s["id"]: s for s in sections if s.get("id")}
+    for screen in screens:
+        sid = screen.get("sectionId")
+        if sid and sid not in sec_by_id:
+            sec = {
+                "id": sid,
+                "flow": screen.get("flow", "geral"),
+                "label": str(sid).replace("-", " "),
+                "accent": screen.get("accent", "#EA580C"),
+            }
+            sections.append(sec)
+            sec_by_id[sid] = sec
+            notes.append(f"secao criada: {sid}")
+
+    groups: dict[str, list] = {}
+    order: list[str] = []
+    for screen in screens:
+        key = screen.get("sectionId") or f"flow:{screen.get('flow', 'geral')}"
+        if key not in groups:
+            groups[key] = []
+            order.append(key)
+        groups[key].append(screen)
+
+    cursor_y = 40.0
+    for key in order:
+        group = groups[key]
+        sid = group[0].get("sectionId")
+        sec = sec_by_id.get(sid) if sid else None
+        missing = [s for s in group if s.get("x") is None or s.get("y") is None]
+        if not missing:
+            continue
+        mobile = all(s.get("platform") == "mobile" for s in group)
+        gap = 24.0
+        pad = 28.0
+        col_w = 280.0 if mobile else 360.0
+        row_h = 420.0 if mobile else 350.0
+        per_row = 4 if mobile else 3
+        placed = [s for s in group if s.get("x") is not None and s.get("y") is not None]
+        if placed:
+            x = max(float(s["x"]) + float(s.get("w") or col_w) for s in placed) + gap
+            y = min(float(s["y"]) for s in placed)
+            for screen in missing:
+                screen["w"] = screen.get("w") or col_w
+                screen["h"] = screen.get("h") or row_h
+                screen["x"] = x
+                screen["y"] = y
+                x += float(screen["w"]) + gap
+            notes.append(f"auto-layout parcial em {key}: {len(missing)} telas")
+            continue
+        origin_x = 40.0
+        origin_y = cursor_y
+        if sec and sec.get("x") is not None and sec.get("y") is not None:
+            origin_x = float(sec["x"]) + pad
+            origin_y = float(sec["y"]) + 36
+        for index, screen in enumerate(group):
+            screen["w"] = screen.get("w") or col_w
+            screen["h"] = screen.get("h") or row_h
+            col = index % per_row
+            row = index // per_row
+            screen["x"] = origin_x + col * (float(screen["w"]) + gap)
+            screen["y"] = origin_y + row * (float(screen["h"]) + gap)
+        rows = max(1, (len(group) + per_row - 1) // per_row)
+        sec_w = pad * 2 + per_row * col_w + (per_row - 1) * gap
+        sec_h = 56 + rows * row_h + max(0, rows - 1) * gap
+        if sec is not None:
+            sec.setdefault("x", 40)
+            sec.setdefault("y", cursor_y)
+            sec.setdefault("w", sec_w)
+            sec.setdefault("h", sec_h)
+        cursor_y += sec_h + 48
+        notes.append(f"auto-layout em {key}")
+
+    changed = True
+    guard = 0
+    while changed and guard < 80:
+        changed = False
+        guard += 1
+        for index, left in enumerate(screens):
+            ax, ay, aw, ah = _box(left)
+            for right in screens[index + 1:]:
+                bx, by, bw, bh = _box(right)
+                overlaps = ax < bx + bw and ax + aw > bx and ay < by + bh and ay + ah > by
+                if overlaps:
+                    right["x"] = ax + aw + 24
+                    changed = True
+                    notes.append(f"separou sobreposicao {left.get('id')} / {right.get('id')}")
+                    break
+            if changed:
+                break
+
+    if screens:
+        right_edge = max(float(s.get("x") or 0) + float(s.get("w") or 0) for s in screens) + 80
+        bottom_edge = max(float(s.get("y") or 0) + float(s.get("h") or 0) for s in screens) + 80
+        project = manifest.setdefault("project", {})
+        project["worldWidth"] = max(int(project.get("worldWidth") or 0), int(right_edge))
+        project["worldHeight"] = max(int(project.get("worldHeight") or 0), int(bottom_edge))
+    return notes
+
+
+def verify_screen_files(manifest: dict, manifest_path: Path, out_dir: Path) -> list[str]:
+    errors = []
+    roots = [manifest_path.parent, out_dir]
+    for screen in manifest.get("screens", []):
+        rel = screen.get("file") or ""
+        if not rel:
+            errors.append(f"{screen.get('id')}: sem file")
+            continue
+        if rel.startswith(("http://", "https://")):
+            continue
+        if not any((root / rel).exists() for root in roots):
+            errors.append(f"{screen.get('id')}: arquivo ausente '{rel}'")
+    return errors
+
+
+def verify_generated_links(out_dir: Path) -> list[str]:
+    errors = []
+    href_re = re.compile(r"""(?:href|src)=["']([^"']+)["']""")
+    for name in ("fluxo.html", "preview.html", "index.html"):
+        text = (out_dir / name).read_text(encoding="utf-8")
+        for href in href_re.findall(text):
+            if href.startswith(("#", "mailto:", "javascript:", "data:", "http://", "https://")):
+                continue
+            path = href.split("?", 1)[0].split("#", 1)[0]
+            if not path:
+                continue
+            if not (out_dir / path).exists() and not (out_dir / Path(path).name).exists():
+                errors.append(f"{name}: href quebrado {href}")
+    return errors
 
 
 def validate_manifest(manifest: dict) -> None:
@@ -971,13 +1116,17 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   var state = {{ journeyIdx: 0, stepIdx: 0, history: ['{html.escape(start_id)}'], currentId: '{html.escape(start_id)}', minimized: false }};
   var frame = document.getElementById('stageFrame');
 
+  function esc(str) {{
+    return String(str == null ? '' : str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }}
+
   function loadScreen(id, push) {{
     var s = screenMap[id] || SCREENS[0];
     state.currentId = s.id;
     if (push !== false && state.history[state.history.length - 1] !== s.id) state.history.push(s.id);
     frame.classList.toggle('is-mobile', s.platform === 'mobile');
     frame.src = s.file;
-    document.getElementById('breadcrumb').innerHTML = '<span>' + s.group + '</span> <strong>' + s.title + '</strong>';
+    document.getElementById('breadcrumb').innerHTML = '<span>' + esc(s.group) + '</span> <strong>' + esc(s.title) + '</strong>';
     document.getElementById('btnPure').href = s.file;
     document.getElementById('btnBack').disabled = state.history.length <= 1;
     renderGuide();
@@ -988,7 +1137,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
     var steps = j.steps || [];
     var cur = steps[state.stepIdx] || steps[0] || {{ title: '', tip: '' }};
     var htmlStr = steps.map(function(st, i) {{
-      return '<button type="button" class="pv-step-pill' + (i === state.stepIdx ? ' is-now' : '') + '" data-step="' + i + '"><span class="tabular-nums">' + (i + 1) + '.</span> ' + st.short + '</button>';
+      return '<button type="button" class="pv-step-pill' + (i === state.stepIdx ? ' is-now' : '') + '" data-step="' + i + '"><span class="tabular-nums">' + (i + 1) + '.</span> ' + esc(st.short) + '</button>';
     }}).join('') + '<button type="button" class="da-btn da-btn--sm" id="btnMin" style="margin-left:auto">' + (state.minimized ? 'Mostrar roteiro' : 'Recolher') + '</button>';
     document.getElementById('stepsRow').innerHTML = htmlStr;
     document.getElementById('narTitle').textContent = 'Passo ' + (state.stepIdx + 1) + '/' + steps.length + ' · ' + cur.title;
@@ -1008,7 +1157,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
       var found = SCREENS.find(function(s) {{ return s.file === path; }});
       if (found && found.id !== state.currentId) {{
         state.currentId = found.id;
-        document.getElementById('breadcrumb').innerHTML = '<span>' + found.group + '</span> <strong>' + found.title + '</strong>';
+        document.getElementById('breadcrumb').innerHTML = '<span>' + esc(found.group) + '</span> <strong>' + esc(found.title) + '</strong>';
         document.getElementById('btnPure').href = found.file;
       }}
     }} catch (err) {{}}
@@ -1053,7 +1202,15 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
     else {{ state.stepIdx = 0; loadScreen(steps[0].screenId, true); }}
   }});
 
-  loadScreen(JOURNEYS[0].steps[0].screenId, false);
+  var params = new URLSearchParams(location.search);
+  var journeyKey = params.get('j');
+  if (journeyKey) {{
+    var journeyIdx = JOURNEYS.findIndex(function(j) {{ return j.id === journeyKey; }});
+    if (journeyIdx >= 0) state.journeyIdx = journeyIdx;
+  }}
+  var initialId = JOURNEYS[state.journeyIdx].steps[0].screenId;
+  if (params.get('screen') && screenMap[params.get('screen')]) initialId = params.get('screen');
+  loadScreen(initialId, false);
 }})();
 </script>
 </body>
@@ -1092,7 +1249,7 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
     for s in screens:
         plat = "Mobile" if s.get("platform") == "mobile" else "Desktop"
         cards_html.append(
-            f'<article class="g-card" data-flow="{html.escape(s.get("flow", "geral"))}" data-title="{html.escape(s["title"].lower())}">'
+            f'<article class="g-card" id="screen-{html.escape(s["id"])}" data-flow="{html.escape(s.get("flow", "geral"))}" data-title="{html.escape(s["title"].lower())}">'
             f'  <div class="g-card-top"><span class="g-card-group">{html.escape(s.get("group", ""))}</span><span class="g-badge">{html.escape(plat)}</span></div>'
             f'  <h3 class="g-card-title">{html.escape(s["title"])}</h3>'
             f'  <p class="g-card-desc">{html.escape(s.get("desc", ""))}</p>'
@@ -1258,14 +1415,27 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
   var cmdkInput = document.getElementById('cmdkInput');
   var cmdkList = document.getElementById('cmdkList');
 
+  var cmdkIndex = 0;
+  function esc(str) {{
+    return String(str == null ? '' : str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }}
   function renderCmdk(q) {{
     var term = (q || '').toLowerCase().trim();
     var matches = SCREENS.filter(function(s) {{
       return !term || s.title.toLowerCase().includes(term) || (s.group || '').toLowerCase().includes(term);
     }});
+    cmdkIndex = 0;
     cmdkList.innerHTML = matches.map(function(s, i) {{
-      return '<a class="cmdk-item' + (i === 0 ? ' is-focus' : '') + '" href="' + s.file + '"><span>' + s.title + '</span><small style="font-family:var(--da-font-mono);color:var(--text-muted)">' + s.group + '</small></a>';
+      return '<a class="cmdk-item' + (i === 0 ? ' is-focus' : '') + '" href="' + esc(s.file) + '"><span>' + esc(s.title) + '</span><small style="font-family:var(--da-font-mono);color:var(--text-muted)">' + esc(s.group) + '</small></a>';
     }}).join('') || '<p style="padding:12px;margin:0;color:var(--text-muted)">Nenhuma tela encontrada.</p>';
+  }}
+  function visibleCmdk() {{ return Array.prototype.slice.call(cmdkList.querySelectorAll('.cmdk-item')); }}
+  function moveCmdk(delta) {{
+    var items = visibleCmdk();
+    if (!items.length) return;
+    cmdkIndex = (cmdkIndex + delta + items.length) % items.length;
+    items.forEach(function(el, i) {{ el.classList.toggle('is-focus', i === cmdkIndex); }});
+    items[cmdkIndex].scrollIntoView({{ block: 'nearest' }});
   }}
   function openCmdk() {{ cmdkModal.hidden = false; cmdkInput.value = ''; renderCmdk(''); cmdkInput.focus(); }}
   function closeCmdk() {{ cmdkModal.hidden = true; }}
@@ -1274,10 +1444,27 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
   document.getElementById('btnCmdkClose').addEventListener('click', closeCmdk);
   cmdkModal.addEventListener('click', function(e) {{ if (e.target === cmdkModal) closeCmdk(); }});
   cmdkInput.addEventListener('input', function() {{ renderCmdk(cmdkInput.value); }});
+  cmdkInput.addEventListener('keydown', function(e) {{
+    if (e.key === 'ArrowDown') {{ e.preventDefault(); moveCmdk(1); }}
+    else if (e.key === 'ArrowUp') {{ e.preventDefault(); moveCmdk(-1); }}
+    else if (e.key === 'Enter') {{
+      e.preventDefault();
+      var items = visibleCmdk();
+      if (items[cmdkIndex]) window.location.href = items[cmdkIndex].getAttribute('href');
+    }}
+  }});
   document.addEventListener('keydown', function(e) {{
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {{ e.preventDefault(); openCmdk(); }}
     if (e.key === 'Escape' && !cmdkModal.hidden) closeCmdk();
   }});
+  var deep = new URLSearchParams(location.search).get('screen');
+  if (deep) {{
+    var card = document.getElementById('screen-' + deep);
+    if (card) {{
+      card.style.outline = '2px solid var(--accent, #EA580C)';
+      card.scrollIntoView({{ block: 'center' }});
+    }}
+  }}
 }})();
 </script>
 </body>
@@ -1290,6 +1477,7 @@ def main():
     parser.add_argument("manifest", help="Caminho para screen-manifest.json")
     parser.add_argument("--tokens", default="", help="Caminho opcional para tokens.css relativo ao --out ou absoluto")
     parser.add_argument("--out", default=".", help="Diretorio de saida")
+    parser.add_argument("--verify-files", action="store_true", help="Falha se alguma tela do manifesto ou href local nao existir")
     args = parser.parse_args()
 
     mpath = Path(args.manifest).resolve()
@@ -1299,7 +1487,15 @@ def main():
 
     try:
         manifest = json.loads(mpath.read_text(encoding="utf-8"))
+        for note in apply_auto_layout(manifest):
+            print(f"[layout] {note}")
         validate_manifest(manifest)
+        if args.verify_files:
+            missing = verify_screen_files(manifest, mpath, Path(args.out).resolve())
+            if missing:
+                for item in missing:
+                    print(f"[BLOCK] {item}", file=sys.stderr)
+                sys.exit(1)
     except Exception as exc:
         print(f"Erro no screen-manifest.json: {exc}", file=sys.stderr)
         sys.exit(1)
@@ -1325,6 +1521,13 @@ def main():
     print(f"  - {out_dir / 'fluxo.html'}")
     print(f"  - {out_dir / 'preview.html'}")
     print(f"  - {out_dir / 'index.html'}")
+    if args.verify_files:
+        broken = verify_generated_links(out_dir)
+        if broken:
+            for item in broken:
+                print(f"[BLOCK] {item}", file=sys.stderr)
+            sys.exit(1)
+        print("Links locais da vitrine conferidos.")
 
 
 if __name__ == "__main__":

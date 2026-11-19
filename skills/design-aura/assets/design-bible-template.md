@@ -46,17 +46,22 @@
 - **Raios concêntricos:** Container `20px` + padding `8px` → Interno `12px`; Card `16px` + padding `8px` → Interno `8px`.
 
 ## 8. Arsenal Open-Source Escolhido
-| Papel | Biblioteca | Licença | Aplicação |
-|---|---|---|---|
-| Primitivos A11y | ... | ... | ... |
-| Iconografia | ... | ... | ... |
-| Gráficos / Tabelas / Sheets | ... | ... | ... |
+Saída de `discover_oss_components.py`. Galeria não ocupa a coluna de licença permissiva.
+
+| Papel | Fonte | Licença | Uso (Referência / Dependência / Registry) | O que foi aproveitado e re-tematizado |
+|---|---|---|---|---|
+| ... | ... | MIT / Apache-2.0 / BSD / ISC | ... | ... |
 
 ## 9. Matriz de Componentes & Estados Obrigatórios
 - **Botões:** máximo 1 primário por dobra; `iconPad = textPad - 2px`; `active:scale-[0.97]`.
 - **Formulários:** `<label>` sempre visível + `:focus-visible` `2px` + erro acionável junto ao campo.
 - **Estados:** `loading` (skeleton), `empty` (com CTA), `error` (com retry), `success` (toast com Desfazer).
-- **Motion:** apenas CSS transitions interrompíveis (`<= 250ms` entrada, `<= 160ms` saída), zero `transition-all`, suporte total a `prefers-reduced-motion`.
+- **Motion (guia 10):** anima só mudança de estado. Uma linha para desktop, uma para iOS e uma para Android.
+  - Desktop: hover de cor/borda 120–160 ms; página hierárquica ~200 ms; sem scale em card.
+  - iOS: push do sistema, interrompível pelo swipe, teto ~350 ms; sheet com detent; haptico só na confirmação.
+  - Android: eixo compartilhado ou container transform, ~250 ms, predictive back, scheme padrão em Operate.
+  - Quieto de propósito: ...
+  - Signature move único: ...
 
 ## 10. Arquitetura de Fluxos & Horizontes Temporais
 - **Horizonte 1 · Agora:** ...

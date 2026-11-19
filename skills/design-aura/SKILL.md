@@ -1,12 +1,12 @@
 ---
 name: design-aura
 description: >-
-  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards. Use sempre que o usuario pedir para planejar, especificar, desenhar, criar ou revisar interfaces, fluxos, design systems, tokens, telas ou prototipos navegaveis, aplicar anti-AI-slop, garantir alto contraste otico, micro-craft e acessibilidade WCAG/APCA, ou transformar requisitos e repositorios existentes em uma Biblia de Design com construcao fiel orquestrada por ate 8 subagentes e entrega em vitrine interativa estilo Figma (fluxo.html, preview.html, index.html).
+  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards. Use sempre que o usuario pedir para planejar, especificar, desenhar, criar ou revisar interfaces, fluxos, design systems, tokens, telas ou prototipos navegaveis, aplicar anti-AI-slop, garantir alto contraste otico, micro-craft e acessibilidade WCAG/APCA, procurar componentes free/open source que caibam na interface, ou definir animacoes com vida para desktop, iOS e Android. Tambem use para transformar requisitos e repositorios existentes em uma Biblia de Design com construcao fiel orquestrada por ate 8 subagentes e entrega em vitrine interativa estilo Figma (fluxo.html, preview.html, index.html).
 license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -49,17 +49,26 @@ Antes de delegar ou codar qualquer tela, o Orquestrador cria o **Contrato Único
    ```
    *(Opcional: se o servidor MCP Uizze estiver conectado e houver dúvida concreta de composição/fluxo, consulte-o como evidência complementar; nunca dependa dele.)*
 
+   Para cada interação que o projeto realmente precisa (tabela editável, sheet, command palette, gantt), rode o caçador antes de escolher biblioteca:
+
+   ```bash
+   python3 <skill_dir>/scripts/discover_oss_components.py --need "<interação>" --stack <stack> --platform <desktop|mobile|system|ios|android> --mode <operate|read|persuade>
+   ```
+
+   Use `--online` quando houver rede. Galerias (Mobbin, Refero, Godly, Page Flows) são referência visual. Código só entra com licença MIT, Apache-2.0, BSD ou ISC, re-tematizado pela Bíblia. O contrato de animação (o que pode mover, e a diferença entre desktop, iOS e Android) fica no guia 10 e na seção 9 da Bíblia.
+
 2. **Ler as referências obrigatórias do escopo**:
    - Sempre: [01-leis-inegociaveis.md](references/01-leis-inegociaveis.md) e [02-biblia-de-design.md](references/02-biblia-de-design.md).
    - Desktop / Sistemas / ERPs: [04-desktop-e-sistemas.md](references/04-desktop-e-sistemas.md).
    - Mobile iOS / Android / Cross-platform: [05-mobile-ios-android.md](references/05-mobile-ios-android.md).
-   - Micro-craft e Motion: [06-micro-craft-e-motion.md](references/06-micro-craft-e-motion.md).
+   - Micro-craft e Motion: [06-micro-craft-e-motion.md](references/06-micro-craft-e-motion.md) e [10-motion-anti-slop.md](references/10-motion-anti-slop.md).
+   - Componentes free/OSS: [09-pesquisa-componentes-oss.md](references/09-pesquisa-componentes-oss.md).
 
 3. **Gerar os 4 artefatos fundacionais (nesta ordem)**:
    - **`DESIGN-BIBLE.md`** (use [assets/design-bible-template.md](assets/design-bible-template.md)): diagnóstico/autópsia, modo de superfície (`Operate` / `Read` / `Persuade`), *1 signature move* ligado ao domínio, sistema cromático 60-30-10, 5 planos `Z0→Z4` Light & Dark, trio tipográfico, escala 4/8px + raios concêntricos, arsenal OSS escolhido, estados obrigatórios e mapa completo de telas.
    - **`tokens.json` → `tokens.css`**: modele com base em [assets/tokens.example.json](assets/tokens.example.json) e compile:
      ```bash
-     python3 <skill_dir>/scripts/generate_tokens.py tokens.json --out tokens.css --check-contrast
+     python3 <skill_dir>/scripts/generate_tokens.py tokens.json --out tokens.css --format all --check-contrast
      python3 <skill_dir>/scripts/audit_contrast.py tokens.css --strict
      ```
      **Portão 0**: não avance com `tokens.css` se `audit_contrast.py --strict` falhar.
@@ -89,7 +98,7 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
 ### Fase 4 — Vitrine Estilo Figma + Auditoria Automática & Visual Real (Onda 2)
 1. **Gerar a vitrine interativa estilo Figma** ([08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)):
    ```bash
-   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <dir_telas>
+   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <dir_telas> --verify-files
    ```
    Entrega automaticamente:
    - `fluxo.html`: canvas infinito estilo Figma (pan, zoom, seções por módulo/plataforma, previews ao vivo em iframe, setas Bézier clicáveis, modo isolar conexões, inspetor de saltos, minimapa e preview modal).
@@ -100,7 +109,7 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
    ```bash
    python3 <skill_dir>/scripts/audit_contrast.py tokens.css --strict
    python3 <skill_dir>/scripts/lint_design_aura.py <dir_projeto> --strict
-   node <skill_dir>/scripts/capture_and_audit.mjs <dir_telas>/index.html <dir_telas>/fluxo.html --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
+   node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
    ```
 
 3. **Inspeção visual real e fechamento**:
@@ -118,7 +127,7 @@ Qualquer violação abaixo **reprova automaticamente** na auditoria (`BLOCK`). D
 3. **Contraste, Cor & Acessibilidade**: WCAG AA mínimo `4.5:1` (texto normal/placeholder) e `3:1` (grande/UI), APCA `|Lc| >= 60` corpo; proibido `#000000`/`#FFFFFF` puros sem elevação controlada ou cinzas lavados em dark mode; touch targets `>= 44×44px` (mobile/iOS) e `>= 48×48dp` (Android); corpo `>= 14px`.
 4. **Tipografia Intencional**: contraste claro de escala/peso; `tabular-nums` obrigatório em dados dinâmicos, preços, tabelas e timers; `text-wrap: balance` em títulos curtos e `pretty` em parágrafos; `-webkit-font-smoothing: antialiased` no root; proteção real contra overflow/truncamento.
 5. **Conteúdo Real & Zero Copy de Template**: proibido *Lorem ipsum*, *John Doe*, *Acme Corp*; proibido clichês ("Transforme seu negócio", "Eleve sua experiência", "Solução definitiva", "Potencializado por IA"); zero subtítulos redundantes e zero *botsplaining*.
-6. **UX Completa & Motion com Propósito**: estados reais obrigatórios (loading/skeleton, empty, error+recuperação, sucesso); proibido `transition-all`, `hover:scale-105` em todo card, `animate-bounce`/`pulse` gratuito e transições `> 300ms` em controles simples; CSS transitions interrompíveis, `active:scale-[0.97]`, `prefers-reduced-motion` e superfícies do browser tematizadas (`::selection`, scrollbars, `caret-color`).
+6. **UX Completa & Motion com Propósito**: estados reais obrigatórios (loading/skeleton, empty, error+recuperação, sucesso). Animação de página, componente e card é bem-vinda quando comunica mudança de estado; desktop, iOS e Android não compartilham a mesma curva. Proibido `transition-all`, `hover:scale-105` em todo card, `animate-bounce` e loop infinito que não seja espera. Ver [10-motion-anti-slop.md](references/10-motion-anti-slop.md).
 7. **Precisão Geométrica & Sistema**: raios concêntricos obrigatórios (`Raio Interno = Raio Externo - Padding`); escala estrita 4/8px sem *magic numbers*; profundidade em Dark Mode por luminosidade de superfície (não sombra preta chapada); alinhamento óptico de ícones e botões.
 8. **Semântica & Higiene de Dados**: cores semânticas somente com significado real; sem excesso de badges competindo em listas/tabelas; números alinhados à direita; gráficos proporcionais sem título do tipo de gráfico, sem instrução de leitura e com rótulo direto quando possível.
 9. **Formulários, Estados & Interação**: proibido placeholder substituindo `<label>`; proibido remover `:focus-visible` sem substituto equivalente; estados `hover`/`active`/`disabled`/`focus`/`invalid` + erro orientando correção; proibido modal sobre modal e ações destrutivas sem confirmação ou Desfazer.
@@ -147,11 +156,14 @@ Quando o usuário pedir uma ação específica em um projeto existente, execute 
 - `references/03-orquestracao-subagentes.md` — Dimensionamento (máx. 8 subagentes), contratos e briefing.
 - `references/04-desktop-e-sistemas.md` — Sistemas operacionais, ERPs, SaaS, Electron/Tauri, `⌘K` e janelas.
 - `references/05-mobile-ios-android.md` — iOS HIG, Android Material 3, React Native/Expo, Flutter e PWA.
-- `references/06-micro-craft-e-motion.md` — Raios concêntricos, alinhamento óptico, sombras, tipografia e motion.
+- `references/06-micro-craft-e-motion.md` — Raios concêntricos, alinhamento óptico, sombras, tipografia e motion de controle.
 - `references/07-auditoria-e-veredito.md` — Protocolo de revisão, formato de relatório e evidências reais.
 - `references/08-canvas-figma-manifest.md` — Schema do `screen-manifest.json` e vitrine estilo Figma.
+- `references/09-pesquisa-componentes-oss.md` — Como casar uma interação com registry, galeria ou armadilha de licença.
+- `references/10-motion-anti-slop.md` — Onde animar, e a diferença objetiva entre desktop, iOS e Android.
 - `scripts/design_intel.py` — Pesquisa offline BM25 sobre domínios, tipografia, padrões e bibliotecas OSS.
-- `scripts/generate_tokens.py` — Compila `tokens.json` em `tokens.css` (Light/Dark, Z0–Z4, micro-craft CSS).
+- `scripts/discover_oss_components.py` — Caça componentes free/OSS por necessidade, stack, plataforma e modo. `--online` consulta GitHub e npm.
+- `scripts/generate_tokens.py` — Compila `tokens.json` em CSS, Tailwind v4, TS, Swift, Kotlin e Dart (`--format all`).
 - `scripts/audit_contrast.py` — Validador WCAG 2.1 + APCA em Light & Dark.
 - `scripts/lint_design_aura.py` — Linter determinístico dos 10 Blocos + AI tells.
 - `scripts/build_figma_canvas.py` — Gerador da vitrine `fluxo.html` + `preview.html` + `index.html`.

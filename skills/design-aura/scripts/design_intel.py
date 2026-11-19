@@ -212,6 +212,8 @@ def format_markdown(report: dict) -> str:
     lines.append("## 4. Arsenal Open-Source Recomendado")
     for c in report["components_oss"]:
         lines.append(f"- **{c['name']}** (`{c['stack']}` · {c['license']} · {c['url']}): {c['use_case']}")
+    lines.append("")
+    lines.append("Para casar uma interação com registries, galerias e o filtro de licença, rode `discover_oss_components.py --need \"...\"`.")
 
     return "\n".join(lines)
 
