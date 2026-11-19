@@ -22,10 +22,10 @@ Classifique a superfície primária do produto:
 - **`Read`** (documentação, relatórios, portal analítico, leitor): foco em medida tipográfica (65–75ch), ritmo vertical e clareza editorial.
 - **`Persuade / Experience`** (landing page, vitrine de produto, onboarding de impacto): compromisso expressivo máximo sem sacrificar legibilidade ou velocidade.
 
-Defina **1 assinatura visual concreta** enraizada num fato do planejamento, e só se a Fase 1 autorizou o sinal do domínio. Uma agência de viagens pode ter uma linha de rota ou um horizonte. Não ganha avião, nuvem e paisagem em todo card. Se a direção só muda cores, ainda não há assinatura. Se o sinal não foi autorizado, a identidade fica no vocabulário, na hierarquia e nos dados reais.
+Os detalhes visuais do domínio só entram se a Fase 1 aprovou, cada um com plano fechado: ação, aparição, formato, duração, reduced motion e onde não entra. O Orquestrador tem liberdade para criar o que foi aprovado. Não troca isso por cenário de fundo nem por um efeito em cada tela. Se nada foi aprovado, a identidade fica no vocabulário, na hierarquia e nos dados reais.
 
 ### 3. DNA da Marca sem Clichês
-Traduza a essência do negócio para **linguagem de UI**. Ilustração literal (avião, nuvem, mala) só entra se o sinal do domínio foi autorizado, e ainda assim uma vez, não como tema repetido:
+Traduza a essência do negócio para **linguagem de UI**. Um avião, um carimbo ou outro objeto do ofício só entra no momento aprovado, nunca como papel de parede:
 - O que a marca representa no mundo real → como isso vira geometria, superfície, ritmo e nomenclatura.
 - Vocabulário oficial do domínio (verbos de ação, rótulos de status, métricas reais).
 

@@ -40,7 +40,7 @@ Se nenhuma resposta for concreta, nao anime. "Fica moderno" nao conta.
 - Anime `transform` e `opacity`. Layout, blur e sombra em lista custam quadro.
 - O gesto cancela a animacao no meio. Keyframe que reinicia do zero nao serve para controle.
 - Reduced motion / remover animacoes: troca espacial vira crossfade de ate 120 ms. Estado ainda muda.
-- Um signature move por produto, ligado ao dominio (a linha da rota desenha quando o despacho confirma). Nao um efeito diferente por tela.
+- Detalhe de domínio aprovado fica numa ação real (enviar, validar, confirmar). Não vira cenário nem um efeito diferente em cada tela.
 
 Tokens sugeridos em `tokens.json`, sem copiar a duracao de uma plataforma para a outra:
 
