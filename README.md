@@ -28,6 +28,8 @@ Transforma um repositório existente, um planejamento (`CONCEPCAO.md`/PRD) ou um
 
 ## Instalação
 
+No T3 Code, no chat do projeto, digite `/designaura`. Se o repositório já tem telas, a skill começa a remodelação sem perguntar se deve começar.
+
 ### Via CLI `skills` (com acesso ao repo privado)
 ```bash
 npx skills add Gotherman/design-aura -g

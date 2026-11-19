@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.1.7"
+  version: "1.1.8"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -160,6 +160,8 @@ Qualquer violação abaixo **reprova automaticamente** na auditoria (`BLOCK`). D
 ---
 
 ## Modos Rápidos de Uso
+
+`/designaura` no chat de um projeto começa na hora. Se esse projeto já tem telas, o trabalho é remodelar: leia o repositório e o planejamento, mantenha rotas e dados, troque a linguagem visual. O comando está na skill `designaura`.
 
 Quando o usuário pedir uma ação específica em um projeto existente, execute apenas o necessário sem ritual excessivo:
 
