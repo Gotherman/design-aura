@@ -16,4 +16,4 @@ O usuario acabou de pedir para comecar a Design Aura neste chat. Nao pergunte se
 3. Se ja houver telas ou um visual feito, o trabalho e **remodelar**. Diga isso numa frase. O comando ja afirma que essas telas nao agradam: leia-as so para saber as tarefas, os dados e o que abandonar. Nao use o layout, a navbar, a posicao dos botoes nem a composicao delas como base. Mantenha rotas, tarefas e dados reais. A estrutura nova sai do fluxo de trabalho e da Design Aura. Nao pergunte "remodelar ou criar?".
 4. Se nao houver tela nenhuma, o trabalho e criar a partir do planejamento ou da ideia. Siga a Fase 1 da design-aura.
 5. Pergunte so o que o repositorio e esta mensagem ainda nao responderam e que muda shell, stack ou Biblia (superficies, iOS/Android/os dois, cores da marca, sinal do dominio).
-6. Grave o Contrato de plataforma, feche a Biblia, gere o PDF sem limite de paginas e siga ate a vitrine se o pedido for refazer as telas.
+6. Grave o Contrato de plataforma, feche a Biblia e gere o PDF sem limite de paginas. Entregue os dois caminhos e pare. Nao construa telas nem vitrine ate a pessoa aprovar a Biblia.

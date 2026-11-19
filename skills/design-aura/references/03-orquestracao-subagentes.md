@@ -16,10 +16,12 @@ ONDA 0 (Orquestrador — 0 subagentes de design)
   ├─ Roda design_intel.py e, para cada interação real, discover_oss_components.py
   ├─ Fecha o resto da Bíblia, inclusive o motion do guia 10 (desktop, iOS e Android separados)
   ├─ Gera tokens.json e exporta com generate_tokens.py. audit_contrast.py --strict é o Portão 0
-  ├─ Constrói o shell de cada superfície do contrato (não um layout único espremido)
-  └─ Fecha o screen-manifest.json com 100% das telas + dados compartilhados
+  ├─ Fecha o mapa de telas dentro da Bíblia e o screen-manifest.json (plano, ainda sem construir)
+  ├─ Gera DESIGN-BIBLE.pdf sem limite de páginas
+  └─ PARA. Entrega o PDF e espera aprovação explícita antes de qualquer tela
 
-ONDA 1 (Construção Paralela — 1 a 7 subagentes)
+ONDA 1 (só depois do "aprovado" — 1 a 7 subagentes)
+  ├─ Constrói o shell de cada superfície do contrato (não um layout único espremido)
   ├─ Cada subagente recebe apenas seu slice do screen-manifest.json
   ├─ Constrói todas as telas reais do seu módulo usando tokens.css + shell
   └─ Garante estados (loading/empty/error), dados coerentes e links inter-módulos

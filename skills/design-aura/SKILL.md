@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.1.9"
+  version: "1.1.10"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -100,9 +100,13 @@ Antes de delegar ou codar qualquer tela, o Orquestrador cria o **Contrato Único
    - **`screen-manifest.json`** (contrato em [08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)): liste **100% das telas necessárias**, inclusive perfil e configurações quando o produto tem conta, sessão, preferência ou automação para governar, mesmo que o planejamento tenha esquecido. Inclua seções, viewports, arestas de ida e volta e jornadas que atravessam o fluxo de verdade (inicial, específica, volta, outra específica).
    - As pranchas de [assets/biblia-visual-template.html](assets/biblia-visual-template.html) são resumo opcional. Não substituem o PDF da Bíblia.
 
+4. **Pare para aprovação.** Entregue o caminho de `DESIGN-BIBLE.pdf` e de `DESIGN-BIBLE.md`, com um resumo curto: superfícies, o que foi recusado do molde, a assinatura e a lista de telas. Não construa shell, telas nem vitrine. Não chame subagente construtor. A Fase 3 só começa quando a pessoa aprovar com clareza ("aprovado", "pode construir", "segue"). Se pedir ajuste, revise a Bíblia, gere o PDF de novo e pare outra vez.
+
 ---
 
 ### Fase 3 — Orquestração & Construção Fiel (Onda 1 · Máximo 8 Subagentes)
+
+Só depois da aprovação da Bíblia.
 Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.md) para dimensionar e delegar sem drift visual:
 
 - **Limite rígido:** **nunca ultrapasse 8 subagentes** no projeto (ideal: `1` a `7` construtores em paralelo + `1` auditor visual na Onda 2).
