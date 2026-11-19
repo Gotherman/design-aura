@@ -162,7 +162,9 @@ def search_local(need: str, stack: str, platform: str, mode: str, top: int) -> d
     items = load_catalog()
 
     def adopt_filter(item: dict) -> bool:
-        if item["kind"] in {"gallery", "anatomy", "official", "study", "license-trap"} or not item["license_ok"]:
+        if item["kind"] in {"gallery", "anatomy", "official", "study", "license-trap"}:
+            return False
+        if item["kind"] != "platform" and not item["license_ok"]:
             return False
         return stack_ok(item, stack) and mode_ok(item, mode)
 
