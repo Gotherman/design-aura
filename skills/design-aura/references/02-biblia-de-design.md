@@ -4,7 +4,7 @@ A **Bíblia de Design** é o contrato visual, ergonômico e estrutural criado pe
 
 Use o template copiável em [assets/design-bible-template.md](../assets/design-bible-template.md).
 
-O primeiro bloco do arquivo, antes das 12 seções, é o **Contrato de plataforma**: trabalho (remodelar, completar ou criar), tipo de produto, superfícies, qual é a principal, stack, tema, uso das cores da marca, sinal do domínio, como o trabalho se organiza e o que o projeto recusa do molde do catálogo. Também lista as hipóteses que não foram confirmadas. Cor, tipo e tela só começam depois desse bloco. Um subagente que não leu o contrato não escolhe shell nem recupera a cara antiga numa remodelação.
+O primeiro bloco do arquivo, antes das 12 seções, é o **Contrato de plataforma**: trabalho (remodelar, completar ou criar), tipo de produto, superfícies, qual é a principal, stack, tema, uso das cores da marca, sinal do domínio, modelo do Orquestrador, modelo dos subagentes, como o trabalho se organiza e o que o projeto recusa do molde do catálogo. Também lista as hipóteses que não foram confirmadas. Cor, tipo e tela só começam depois desse bloco. Um subagente que não leu o contrato não escolhe shell nem recupera a cara antiga numa remodelação.
 
 ---
 

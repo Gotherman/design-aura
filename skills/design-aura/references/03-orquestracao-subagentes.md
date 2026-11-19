@@ -21,6 +21,7 @@ ONDA 0 (Orquestrador — 0 subagentes de design)
   └─ PARA. Entrega o PDF e espera aprovação explícita antes de qualquer tela
 
 ONDA 1 (só depois do "aprovado" — 1 a 7 subagentes)
+  ├─ Cada subagente usa o modelo escrito no Contrato de plataforma, não outro
   ├─ Constrói o shell de cada superfície do contrato (não um layout único espremido)
   ├─ Cada subagente recebe apenas seu slice do screen-manifest.json
   ├─ Constrói todas as telas reais do seu módulo usando tokens.css + shell

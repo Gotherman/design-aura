@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.1.10"
+  version: "1.1.11"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -46,6 +46,7 @@ Pule a linha inteira quando a resposta já existe:
 8. **Tema:** light-first, dark-first, ou os dois obrigatórios.
 9. **Cores da marca:** usar a paleta oficial como base? Recomendado **sim** quando logo ou paleta existem. Se a resposta for sim, a cor da marca conduz a ação e pode tintar a estrutura. Fundos, neutros e cores semânticas não são variações da mesma tinta. Interface monocromática reprova.
 10. **Sinal do domínio:** o planejamento traz um fato visual. Exemplo: a Brasitur é agência de turismo e viagens, o que sustenta céu, rota e horizonte. Pergunte se esse fato vira um sinal no visual. Recomendado **sim** quando cabe num gesto só. Recomendado **não** quando viraria ilustração repetida. Sem o sim, não desenhe avião, nuvem nem paisagem. Com o sim, um sinal contido. Vários, não.
+11. **Modelos:** qual modelo conduz o Orquestrador e qual constrói as telas nos subagentes? Recomendado: o modelo deste chat no Orquestrador; nos subagentes, um modelo mais rápido do mesmo ambiente quando houver muitas telas. Se não houver resposta, os dois usam o modelo deste chat. Grave os dois no Contrato de plataforma e não troque no meio da Bíblia. Na Fase 3, cada subagente nasce com o modelo escrito no contrato.
 
 **Regra-mãe, antes de qualquer layout:** tokens (cor, tipo, espaçamento, elevação, ícone) atravessam as superfícies. Navegação, densidade, alvo de entrada e overlay mudam. Espremer um desktop em colunas estreitas, ou esticar um celular até sobrar vazio, reprova. O shell de cada uma está em [04-desktop-e-sistemas.md](references/04-desktop-e-sistemas.md) e [05-mobile-ios-android.md](references/05-mobile-ios-android.md).
 
