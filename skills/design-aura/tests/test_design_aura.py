@@ -442,6 +442,47 @@ class V22UpgradeTests(unittest.TestCase):
         self.assertIn("#E6ECF3", synced)
         self.assertNotIn("#0B1522", synced)
 
+    def test_v221_mobile_flex_clip_and_preview_bezel_and_brand_light_tokens(self):
+        # 1. CSS .mob-scroll flex-column sem flex-shrink: 0 dispara DA-MOBILE-FLEX-CLIP
+        with tempfile.TemporaryDirectory() as tmp:
+            bad_css = Path(tmp) / "shell.css"
+            bad_css.write_text(".mob-scroll { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }", encoding="utf-8")
+            bad_findings = scan_file(bad_css, Path(tmp))
+            self.assertIn("DA-MOBILE-FLEX-CLIP", {f["rule"] for f in bad_findings})
+
+            good_css = Path(tmp) / "shell-ok.css"
+            good_css.write_text(
+                ".mob-scroll { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }\n"
+                ".mob-scroll > * { flex-shrink: 0; }",
+                encoding="utf-8",
+            )
+            good_findings = scan_file(good_css, Path(tmp))
+            self.assertNotIn("DA-MOBILE-FLEX-CLIP", {f["rule"] for f in good_findings})
+
+        # 2. preview.html usa wrapper .pv-frame-wrap.is-mobile com clip-path (nunca iframe pelado vazando canto quadrado)
+        manifest = {
+            "project": {"name": "Mob", "startScreenId": "m1"},
+            "screens": [{"id": "m1", "title": "Pulso", "file": "m1.html", "platform": "mobile", "flow": "mobile", "group": "Mobile"}],
+            "edges": [],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder / "m1.html").write_text("<!doctype html><title>M1</title>", encoding="utf-8")
+            mpath = folder / "screen-manifest.json"
+            mpath.write_text(json.dumps(manifest), encoding="utf-8")
+            proc = run_py("build_figma_canvas.py", [str(mpath), "--out", str(folder), "--verify-files"])
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            preview = (folder / "preview.html").read_text(encoding="utf-8")
+            self.assertIn("pv-frame-wrap", preview)
+            self.assertIn("clip-path: inset(0 round 32px)", preview)
+
+        # 3. tokens.example.json inclui tokens de Modo Claro Ancorado pela Marca e passa 30/30 sem BLOCK/HIGH/MEDIUM
+        tok = json.loads((ROOT / "assets" / "tokens.example.json").read_text(encoding="utf-8"))
+        self.assertIn("surface-brand-dark", tok["semantic"]["light"])
+        self.assertIn("surface-tint-soft", tok["semantic"]["light"])
+        rows = audit_file(ROOT / "assets" / "tokens.example.json")
+        self.assertFalse(any(r["severity"] in ("BLOCK", "HIGH", "MEDIUM") for r in rows), [r for r in rows if r["severity"] != "PASS"])
+
 
 if __name__ == "__main__":
     unittest.main()

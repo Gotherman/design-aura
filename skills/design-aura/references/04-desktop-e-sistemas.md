@@ -69,9 +69,13 @@ Se o projeto compila para janela desktop nativa (Electron, Tauri, SwiftUI macOS,
 
 ---
 
-## 5. Equilíbrio Cromático `65 / 20 / 10 / 5` & Alto Contraste Ótico
+## 5. Equilíbrio Cromático `65 / 20 / 10 / 5` & Modo Claro Ancorado pela Marca (`v2.2.1`)
 
-- **Light Mode Aterrado & Nítido (`DA-LIGHT-WASHED-OUT`):** canvas `Z0` (`#DCE3EC`) / `Z1` (`#E6ECF3`) com cartões `Z2` (`#FFFFFF`), bordas visíveis (`border-subtle >= 1.22:1` contra `Z2`, ex.: `#B4C1D1` e `#7A8CA3`), chanfro branco `inset 0 1px 0 #FFFFFF` e sombra física de 3 camadas.
+- **Modo Claro Ancorado pela Marca (`Brand-Anchored Light Mode` — PROIBIDO "Tudo Branco/Cinza Lavado" · `DA-LIGHT-WASHED-OUT`):**
+  Um Modo Claro onde Sidebar, Topbar, Canvas, Login e todos os Cards são brancos ou cinza-pálido perde completamente o senso de divisão, profundidade e identidade! Use **variações da cor forte e da cor clara da marca**:
+  1. **Âncora Forte da Marca (`--surface-brand-dark`, ex.: Marinho `#0E294B → #163E70` com texto `#F8FAFC`):** aplique na **Sidebar Desktop no Light Mode** (ou no **Painel Institucional do Login Split-Screen**) e no **Card-Rei `.card-brand-hero`** de cada tela (ex.: Saldo Consolidado / Cabeçalho Mobile) — criando divisão arquitetônica imediata entre a Navegação/Hero ricos em cor e a Área de Trabalho clara!
+  2. **Variações de Azul/Cor Clara Estrutural (`--surface-tint-soft: #E6F0FD`, `--border-tint: #B5CEF0`):** aplique nos **cabeçalhos internos de cards compostos (`.panel-head`)**, nos **`<thead>` das tabelas**, nos **berços de ícone (`.icon-emblem`)** e nos **controles ativos** — substituindo cinza-morto por tintagem harmônica da marca.
+  3. **Canvas, Poços e Sombras Tintadas pela Marca:** `Z0 #CFDCEB` · `Z1 #E1EAF4` · `Z2 #FFFFFF` com borda nítida `#B0C2D9` (`>= 1.22:1` contra `Z2`), chanfro branco `inset 0 1px 0 #FFFFFF` e sombra física tintada com a cor profunda da marca (`rgba(14, 41, 75, 0.11)`).
 - **Dark Mode com Subtom Arquitetônico & Presença da Marca (`DA-DARK-MONOCHROME`):** evite tanto a **massa azul 50%-saturada** quanto o **carvão morto sem marca**. Use base `Z0–Z3` em Obsidiana com subtom sutil da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`) e expresse a cor oficial da empresa com clareza em **3 Zonas Fixas**:
   1. Bloco de identidade na Sidebar/Header (`.sidebar-brand-card`) + item ativo (`18% --primary` + filete `3px --accent`);
   2. **Card-Rei (`.card-brand-hero`)** no topo de cada tela com gradiente direcional `135deg` (`20% --primary`) + borda luminosa;

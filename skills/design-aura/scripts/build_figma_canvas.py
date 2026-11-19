@@ -929,8 +929,13 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   }}
   .fx-modal-bar {{ display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; background: var(--da-navy); color: #FFFFFF; }}
   .fx-modal-stage {{ flex: 1; display: flex; align-items: center; justify-content: center; background: var(--surface-z0); overflow: hidden; padding: 16px; }}
-  .fx-modal-iframe {{ width: 100%; height: 100%; border: 0; border-radius: 10px; background: var(--surface-z1); }}
-  .fx-modal-iframe.is-mobile {{ width: 390px; height: 100%; max-height: 844px; border: 2px solid var(--border-strong); border-radius: 24px; }}
+  .fx-modal-wrap {{ width: 100%; height: 100%; border-radius: 12px; overflow: hidden; background: var(--surface-z1); isolation: isolate; }}
+  .fx-modal-wrap.is-mobile {{
+    width: 390px; height: min(844px, calc(100% - 8px)); border-radius: 38px; border: 8px solid #141923;
+    outline: 1.5px solid var(--border-strong); box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.55);
+    overflow: hidden; clip-path: inset(0 round 30px); transform: translateZ(0);
+  }}
+  .fx-modal-iframe {{ width: 100%; height: 100%; display: block; border: 0; background: var(--surface-z1); }}
 
   @media (max-width: 1180px) {{
     .fx-hintbar {{ display: none; }}
@@ -1023,7 +1028,9 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
       </div>
     </div>
     <div class="fx-modal-stage">
-      <iframe class="fx-modal-iframe" id="modalIframe" title="Preview interativo"></iframe>
+      <div class="fx-modal-wrap" id="modalWrap">
+        <iframe class="fx-modal-iframe" id="modalIframe" title="Preview interativo"></iframe>
+      </div>
     </div>
   </div>
 </div>
@@ -1331,11 +1338,12 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     var n = nodeMap[id] || NODES[0];
     if (!n) return;
     var m = document.getElementById('previewModal');
+    var wrap = document.getElementById('modalWrap');
     var ifr = document.getElementById('modalIframe');
     document.getElementById('modalTitle').textContent = n.title;
     document.getElementById('modalFile').textContent = n.file;
     document.getElementById('modalNewTab').href = n.file;
-    ifr.classList.toggle('is-mobile', n.platform === 'mobile');
+    wrap.classList.toggle('is-mobile', n.platform === 'mobile');
     ifr.src = n.file;
     m.hidden = false;
   }}
@@ -1514,9 +1522,14 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
     color: var(--text-body); font-family: var(--da-font-ui); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
   }}
   .pv-jbtn.is-active {{ background: var(--surface-z2); color: var(--text-strong); border-color: var(--border-strong); }}
-  .pv-stage {{ flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0; background: var(--surface-z0); }}
-  .pv-iframe {{ width: 100%; height: 100%; border: 0; background: var(--surface-z1); }}
-  .pv-iframe.is-mobile {{ width: 390px; height: calc(100% - 24px); max-height: 844px; border: 2px solid var(--border-strong); border-radius: 28px; box-shadow: var(--shadow-z2); }}
+  .pv-stage {{ flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0; background: var(--surface-z0); overflow: hidden; }}
+  .pv-frame-wrap {{ width: 100%; height: 100%; overflow: hidden; background: var(--surface-z1); isolation: isolate; }}
+  .pv-frame-wrap.is-mobile {{
+    width: 390px; height: min(844px, calc(100% - 20px)); border-radius: 40px; border: 8px solid #141923;
+    outline: 1.5px solid var(--border-strong); box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.55);
+    overflow: hidden; clip-path: inset(0 round 32px); transform: translateZ(0);
+  }}
+  .pv-iframe {{ width: 100%; height: 100%; display: block; border: 0; background: var(--surface-z1); }}
   .pv-guide {{
     display: flex; flex-direction: column; gap: 10px; padding: 12px 16px;
     background: var(--surface-glass); border-top: 1.25px solid var(--border-strong);
@@ -1555,7 +1568,9 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   </header>
 
   <main class="pv-stage">
-    <iframe class="pv-iframe" id="stageFrame" title="Tela do sistema"></iframe>
+    <div class="pv-frame-wrap" id="stageWrap">
+      <iframe class="pv-iframe" id="stageFrame" title="Tela do sistema"></iframe>
+    </div>
   </main>
 
   <footer class="pv-guide" id="guideDock">
@@ -1588,6 +1603,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   document.getElementById('btnThemeToggle').innerHTML = daGetTheme() === 'dark' ? DA_ICONS.sun : DA_ICONS.moon;
 
   var state = {{ journeyIdx: 0, stepIdx: 0, history: ['{html.escape(start_id)}'], currentId: '{html.escape(start_id)}', minimized: false }};
+  var frameWrap = document.getElementById('stageWrap');
   var frame = document.getElementById('stageFrame');
 
   function esc(str) {{
@@ -1598,7 +1614,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
     var s = screenMap[id] || SCREENS[0];
     state.currentId = s.id;
     if (push !== false && state.history[state.history.length - 1] !== s.id) state.history.push(s.id);
-    frame.classList.toggle('is-mobile', s.platform === 'mobile');
+    frameWrap.classList.toggle('is-mobile', s.platform === 'mobile');
     frame.src = s.file;
     document.getElementById('breadcrumb').innerHTML = '<span>' + esc(s.group) + '</span> <strong>' + esc(s.title) + '</strong>';
     document.getElementById('btnPure').href = s.file;
@@ -1631,6 +1647,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
       var found = SCREENS.find(function(s) {{ return s.file === path; }});
       if (found && found.id !== state.currentId) {{
         state.currentId = found.id;
+        frameWrap.classList.toggle('is-mobile', found.platform === 'mobile');
         document.getElementById('breadcrumb').innerHTML = '<span>' + esc(found.group) + '</span> <strong>' + esc(found.title) + '</strong>';
         document.getElementById('btnPure').href = found.file;
       }}

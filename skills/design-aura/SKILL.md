@@ -6,12 +6,12 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.2.0"
+  version: "2.2.1"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.2.0`)
+# Design Aura (`v2.2.1`)
 
 Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual e orquestração multi-agente para produzir **sistemas web operacionais, apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero telas casca vazias, contraste irretocável, ergonomia nativa e verificação visual real em cada etapa.
 
@@ -171,7 +171,7 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
    python3 <skill_dir>/scripts/lint_design_aura.py <dir_projeto> --strict
    node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
    ```
-   *(Em `v2.2.0`, `--manifest` audita automaticamente também `fluxo.html` aguardando todos os iframes `.is-loaded`, `preview.html` e `index.html`, além de checar `DA-JS-ERROR`, `DA-ASSET-404`, `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE` e `DA-SURFACE-FLAT`; e `audit_contrast.py` + `lint_design_aura.py` checam também `DA-DARK-MONOCHROME`, `DA-LIGHT-WASHED-OUT`, `DA-ICON-GENERIC-REPEAT` e `DA-FLAT-CHART-AXIS`.)*
+   *(Em `v2.2.1`, `--manifest` audita automaticamente também `fluxo.html` aguardando todos os iframes `.is-loaded`, `preview.html` com bezel mobile `clip-path` anti-vazamento e `index.html`, além de checar `DA-JS-ERROR`, `DA-ASSET-404`, `DA-CLIPPED-CONTENT`, `DA-MOBILE-FLEX-CLIP`, `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE` e `DA-SURFACE-FLAT`; e `audit_contrast.py` + `lint_design_aura.py` checam também `DA-DARK-MONOCHROME`, `DA-LIGHT-WASHED-OUT`, `DA-ICON-GENERIC-REPEAT`, `DA-FLAT-CHART-AXIS` e `DA-MOBILE-FLEX-CLIP`.)*
 
 3. **Inspeção visual final & Entrega real em ambiente local ou remoto**:
    - Inspecione os PNGs finais (inclusive `fluxo.html`, `preview.html`, `index.html`). Só encerre com veredito **`Approve`** (`0 BLOCK`, `0 HIGH` e qualidade estética validada).

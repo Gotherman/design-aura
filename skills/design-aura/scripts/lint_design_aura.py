@@ -490,6 +490,19 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "fix": "Use escala Y dinamica calibrada (ex.: min: (v) => Math.floor(v.min * 0.88)) ou grafico Combo (Barras Entrada/Saida + Curva de Saldo + HUD vivo de crosshair)",
                 })
 
+    # DA-MOBILE-FLEX-CLIP (v2.2.1): container flex-column rolavel (.mob-scroll / .sheet-panel) sem flex-shrink: 0 nos filhos diretos
+    if not is_vitrine and ext in (CSS_EXTS | MARKUP_EXTS):
+        m_mob_scroll = re.search(r"\.(?:mob-scroll|mob-body|mobile-scroll)\s*\{[^}]*display\s*:\s*flex[^}]*flex-direction\s*:\s*column", clean_text, re.I | re.S)
+        if m_mob_scroll and not re.search(r"\.(?:mob-scroll|mob-body|mobile-scroll)\s*>\s*\*\s*\{[^}]*flex-shrink\s*:\s*0", clean_text, re.I | re.S):
+            findings.append({
+                "rule": "DA-MOBILE-FLEX-CLIP",
+                "severity": "HIGH",
+                "location": f"{rel_path}:{pos_to_line(starts, m_mob_scroll.start())}",
+                "evidence": snippet_at(raw_text, m_mob_scroll.start()),
+                "message": "Container mobile flex-column sem 'flex-shrink: 0' nos filhos diretos (cards com overflow:hidden serao esmagados e cortados no mockup/iframe!)",
+                "fix": "Adicione '.mob-scroll > * { flex-shrink: 0; }' ou troque .mob-scroll para 'display: grid; grid-auto-rows: max-content; align-content: start;'",
+            })
+
     return findings
 
 

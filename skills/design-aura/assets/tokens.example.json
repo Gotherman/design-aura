@@ -1,7 +1,7 @@
 {
   "meta": {
     "brand": "Meridiano Frota & Operações",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "defaultTheme": "dark"
   },
   "primitive": {
@@ -45,17 +45,22 @@
   },
   "semantic": {
     "light": {
-      "surface-z0": "{primitive.porcelain-300}",
-      "surface-z1": "{primitive.porcelain-200}",
+      "surface-z0": "#CFDCEB",
+      "surface-z1": "#E1EAF4",
       "surface-z2": "{primitive.white-paper}",
-      "surface-z3": "{primitive.porcelain-100}",
+      "surface-z3": "#EDF3FA",
       "surface-z4": "{primitive.white-paper}",
+      "surface-brand-dark": "#0E294B",
+      "surface-brand-dark-2": "#163E70",
+      "on-brand-dark": "#F8FAFC",
+      "surface-tint-soft": "#E6F0FD",
+      "border-tint": "#B5CEF0",
       "text-strong": "{primitive.slate-950}",
-      "text-body": "#243040",
+      "text-body": "#1E2D40",
       "text-muted": "{primitive.slate-700}",
-      "border-subtle": "#B4C1D1",
-      "border-strong": "#7A8CA3",
-      "primary": "#162A3E",
+      "border-subtle": "#B0C2D9",
+      "border-strong": "#728AA8",
+      "primary": "#14427A",
       "on-primary": "#F8FAFC",
       "accent": "{primitive.copper-600}",
       "on-accent": "#FFFFFF",

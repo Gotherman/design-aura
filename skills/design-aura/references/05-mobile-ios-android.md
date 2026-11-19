@@ -77,3 +77,42 @@ O erro clássico de IA no Android é copiar um iPhone (switches estilo Cupertino
 | **React Native / Expo** | Use menus nativos (`Zeego`), sheets com gestos físicos (`@gorhom/bottom-sheet`), listas virtualizadas (`FlashList`), animações na UI thread (`react-native-reanimated`) e `react-native-safe-area-context`. Adapte `Header` e ícones por `Platform.OS` (`SF Symbols` / `Material Symbols`). |
 | **Flutter** | Use `ThemeData(useMaterial3: true)` com `ColorScheme` em roles reais; adote widgets `.adaptive` (`Switch.adaptive`, diálogos adaptativos) e respeite `MediaQuery.padding` / `SafeArea` + `NavigationBar` vs `NavigationRail` via `LayoutBuilder`. |
 | **Mobile Web / PWA / Showcase iPhone** | Aplique `env(safe-area-inset-top/bottom)`, `100dvh`, `touch-action: manipulation` (remove delay de 300ms), `overscroll-behavior: contain` em sheets, `-webkit-tap-highlight-color: transparent` com feedback próprio `active:scale-[0.97]` e simulação limpa de Bottom Sheet (ex.: `Vaul`) com fechar por arrasto e `Esc`. |
+
+---
+
+## 7. Blindagem contra Corte de Dados e Vazamento de Mockup Mobile (`DA-CLIPPED-CONTENT` & `DA-MOBILE-FLEX-CLIP` · `v2.2.1`)
+
+Dois erros técnicos clássicos destroem protótipos mobile quando abertos no desktop (`preview.html` ou visualização em moldura de aparelho):
+
+1. **PROIBIDO esmagamento de cards por `flex-shrink: 1` (`DA-MOBILE-FLEX-CLIP`):**
+   - Em containers roláveis verticais (`.mob-scroll`, `.sheet-panel`, `main` mobile), se você usar `display: flex; flex-direction: column; overflow-y: auto;` e colocar cards filhos com `overflow: hidden` (para arredondar bordas), o Flexbox do navegador **encolhe todos os cards verticalmente para caberem sem scroll**, cortando números e textos pela metade!
+   - **Solução obrigatória (escolha uma):**
+     ```css
+     /* Opção A (recomendada): grid auto-rows nunca esmaga filhos */
+     .mob-scroll {
+       flex: 1;
+       overflow-y: auto;
+       display: grid;
+       grid-auto-rows: max-content;
+       align-content: start;
+       gap: var(--space-4);
+     }
+
+     /* Opção B: se usar flex-column, trave flex-shrink: 0 em TODOS os filhos diretos */
+     .mob-scroll > * {
+       flex-shrink: 0;
+     }
+     ```
+2. **PROIBIDO canto quadrado vazando fora do bezel arredondado do mockup:**
+   - No Chromium, um cabeçalho `position: sticky` com `backdrop-filter: blur(...)` dentro de um container arredondado (`border-radius: 40px`) ou de um `<iframe>` pelado vaza cantos de 90° por cima da borda curva!
+   - **Solução obrigatória:** aplique no container `.mob-device` (desktop showcase) e no wrapper `.pv-frame-wrap.is-mobile` do iframe:
+     ```css
+     .mob-device, .pv-frame-wrap.is-mobile {
+       overflow: hidden;
+       border-radius: 40px;
+       clip-path: inset(0 round 32px);
+       isolation: isolate;
+       transform: translateZ(0);
+     }
+     ```
+   - E valide sempre no Chromium com `capture_and_audit.mjs` (que bloqueia automaticamente via `DA-CLIPPED-CONTENT` e `DA-MOBILE-FLEX-CLIP`).

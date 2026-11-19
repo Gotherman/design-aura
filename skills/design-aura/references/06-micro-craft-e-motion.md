@@ -52,15 +52,27 @@ Um card chapado com 1 borda simples parece 2D mesmo passando no WCAG. Construa p
     0 18px 36px -14px rgba(0, 0, 0, 0.34);
 }
 
-/* Light Mode: Porcelana aterrada + contorno nitido (>= 1.22:1 contra Z2) + chanfro branco + 3 sombras */
+/* Light Mode Ancorado pela Marca: Porcelana fria + contorno nitido + sombras tintadas pelo marinho */
 html[data-theme="light"] .panel-z2 {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFD 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
   border: 1px solid var(--border-subtle);
   box-shadow:
     inset 0 1px 0 #FFFFFF,
-    0 1px 2px rgba(15, 23, 42, 0.06),
-    0 6px 16px -4px rgba(15, 23, 42, 0.10),
-    0 14px 28px -10px rgba(15, 23, 42, 0.07);
+    0 1px 2px rgba(14, 41, 75, 0.08),
+    0 6px 16px -4px rgba(14, 41, 75, 0.12),
+    0 14px 28px -10px rgba(14, 41, 75, 0.08);
+}
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .auth-brand-pane,
+html[data-theme="light"] .card-brand-hero {
+  background: linear-gradient(155deg, var(--surface-brand-dark, #0E294B) 0%, var(--surface-brand-dark-2, #163E70) 100%);
+  color: var(--on-brand-dark, #F8FAFC);
+}
+html[data-theme="light"] .panel-head,
+html[data-theme="light"] .data-table th {
+  background: var(--surface-tint-soft, #E6F0FD);
+  border-bottom-color: var(--border-tint, #B5CEF0);
+  color: var(--surface-brand-dark, #0E294B);
 }
 ```
 

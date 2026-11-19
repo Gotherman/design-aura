@@ -652,6 +652,55 @@ const DOM_AUDIT_FN = `(() => {
         issues.push({ severity: 'MEDIUM', rule: 'DA-CARD-INTERNAL-VOID', detail: voidCards + ' card(s) com buraco vertical interno > 95px (provavel space-between/margin-top:auto em Bento Grid): ' + voidSamples.join(', ') });
       }
     }
+
+    // 17. DA-CLIPPED-CONTENT & DA-MOBILE-FLEX-CLIP (v2.2.1): detecta cards/paineis cortando proprio conteudo ou flex-column rolavel que esmaga filhos overflow:hidden
+    {
+      let clippedCards = 0;
+      const clipSamples = [];
+      for (const el of Array.from(mainEl.querySelectorAll('section, article, div, aside, ul, ol')).slice(0, 260)) {
+        const st = getComputedStyle(el);
+        if (st.display === 'none' || st.visibility === 'hidden') continue;
+        const r = el.getBoundingClientRect();
+        if (r.width < 80 || r.height < 36) continue;
+        // Ignora truncamento intencional de texto em 1 linha (text-overflow: ellipsis) e line-clamp
+        if (st.textOverflow === 'ellipsis' || (st.webkitLineClamp && st.webkitLineClamp !== 'none')) continue;
+        if (st.overflowY === 'hidden' || st.overflowY === 'clip') {
+          if (el.scrollHeight > el.clientHeight + 8) {
+            // Verifica se ha texto/elemento real alem do fundo do card
+            const hasRealInnerOverflow = Array.from(el.children).some((ch) => {
+              const cs = getComputedStyle(ch);
+              if (cs.display === 'none' || cs.position === 'absolute') return false;
+              return ch.getBoundingClientRect().bottom > r.bottom + 5;
+            });
+            if (hasRealInnerOverflow) {
+              clippedCards++;
+              const lbl = (el.querySelector('h2, h3, h4, strong')?.textContent || el.className || el.tagName).trim().slice(0, 32);
+              if (clipSamples.length < 3) clipSamples.push(lbl + ' (' + Math.round(el.scrollHeight) + 'px > ' + Math.round(el.clientHeight) + 'px)');
+            }
+          }
+        }
+      }
+      if (clippedCards > 0) {
+        issues.push({ severity: 'BLOCK', rule: 'DA-CLIPPED-CONTENT', detail: clippedCards + ' card(s)/painel(is) cortando proprio conteudo verticalmente com overflow:hidden: ' + clipSamples.join(', ') });
+      }
+
+      // Detecta bomba-relogio de flex-shrink em containers rolaveis (ex.: .mob-scroll flex-direction: column onde filhos com overflow:hidden nao tem flex-shrink: 0)
+      let shrinkBombs = 0;
+      for (const container of document.querySelectorAll('main, [class*="scroll"], [class*="mob-body"], [class*="sheet-panel"]')) {
+        const st = getComputedStyle(container);
+        if (st.display !== 'flex' || st.flexDirection !== 'column') continue;
+        for (const ch of Array.from(container.children)) {
+          const cs = getComputedStyle(ch);
+          if (cs.display === 'none' || cs.position === 'fixed' || cs.position === 'absolute') continue;
+          if ((cs.overflowY === 'hidden' || cs.overflow === 'hidden') && parseFloat(cs.flexShrink || '1') > 0 && ch.getBoundingClientRect().height >= 48) {
+            shrinkBombs++;
+          }
+        }
+      }
+      if (shrinkBombs > 0) {
+        issues.push({ severity: 'BLOCK', rule: 'DA-MOBILE-FLEX-CLIP', detail: shrinkBombs + ' card(s) com overflow:hidden dentro de container flex-column sem flex-shrink:0 (esmaga e corta texto ao abrir no mockup/preview!)' });
+      }
+    }
   }
 
   return {
