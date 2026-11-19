@@ -2,8 +2,23 @@
   {
     "id": "erp-financeiro",
     "name": "ERP Financeiro & Controladoria",
-    "keywords": ["erp", "financeiro", "contas a pagar", "contas a receber", "fluxo de caixa", "conciliacao", "dre", "fiscal", "boleto", "banco"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "erp",
+      "financeiro",
+      "contas a pagar",
+      "contas a receber",
+      "fluxo de caixa",
+      "conciliacao",
+      "dre",
+      "fiscal",
+      "boleto",
+      "banco"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "compact-structured",
     "palette_light": {
@@ -26,16 +41,39 @@
       "text_muted": "#9DB0C6",
       "border": "#263952"
     },
-    "typography_ids": ["jakarta-instrument-mono", "ibm-plex-suite"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "ibm-plex-suite"
+    ],
     "layout_archetype": "Cockpit de 3 zonas (Fila priorizada + Documento vivo + Telemetria de caixa/risco)",
-    "signature_moves": ["Trilho visual de cobertura de caixa e vencimento", "Horizontes temporais: Atrasado / Hoje / Em Rota"],
-    "anti_patterns": ["70% de painel vazio em tela de aprovacao", "Monocromia azul onde atrasado e normal tem o mesmo peso", "Numeros alinhados a esquerda sem tabular-nums"]
+    "signature_moves": [
+      "Trilho visual de cobertura de caixa e vencimento",
+      "Horizontes temporais: Atrasado / Hoje / Em Rota"
+    ],
+    "anti_patterns": [
+      "70% de painel vazio em tela de aprovacao",
+      "Monocromia azul onde atrasado e normal tem o mesmo peso",
+      "Numeros alinhados a esquerda sem tabular-nums"
+    ]
   },
   {
     "id": "saas-b2b-operacional",
     "name": "SaaS B2B Operacional & Fluxo de Trabalho",
-    "keywords": ["saas", "b2b", "operacao", "workflow", "tickets", "fila", "workspace", "equipe", "triagem"],
-    "platforms": ["system", "desktop"],
+    "keywords": [
+      "saas",
+      "b2b",
+      "operacao",
+      "workflow",
+      "tickets",
+      "fila",
+      "workspace",
+      "equipe",
+      "triagem"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -58,16 +96,39 @@
       "text_muted": "#94A3B8",
       "border": "#2A3548"
     },
-    "typography_ids": ["geist-mono-clean", "inter-jetbrains"],
+    "typography_ids": [
+      "geist-mono-clean",
+      "inter-jetbrains"
+    ],
     "layout_archetype": "Master-Detail com Command Palette (Cmd+K) e Inspector lateral",
-    "signature_moves": ["Barra de comandos unificada Cmd+K", "Atalhos de teclado em linha para triagem"],
-    "anti_patterns": ["Modais empilhados para editar um campo", "Cards iguais em grid quando uma tabela densa resolve melhor"]
+    "signature_moves": [
+      "Barra de comandos unificada Cmd+K",
+      "Atalhos de teclado em linha para triagem"
+    ],
+    "anti_patterns": [
+      "Modais empilhados para editar um campo",
+      "Cards iguais em grid quando uma tabela densa resolve melhor"
+    ]
   },
   {
     "id": "fintech-mobile",
     "name": "Fintech & Carteira Mobile",
-    "keywords": ["fintech", "banco", "carteira", "pix", "pagamento", "cartao", "investimento", "saldo", "mobile"],
-    "platforms": ["mobile", "ios", "android"],
+    "keywords": [
+      "fintech",
+      "banco",
+      "carteira",
+      "pix",
+      "pagamento",
+      "cartao",
+      "investimento",
+      "saldo",
+      "mobile"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "surface_mode": "Operate",
     "density": "airy-focused",
     "palette_light": {
@@ -90,16 +151,39 @@
       "text_muted": "#99B8AE",
       "border": "#223D37"
     },
-    "typography_ids": ["ios-sf-native", "manrope-tabular"],
+    "typography_ids": [
+      "ios-sf-native",
+      "manrope-tabular"
+    ],
     "layout_archetype": "Tab Bar 4 secoes + Sheet de confirmacao biométrica na zona do polegar",
-    "signature_moves": ["Cartao de resumo com saldo protegivel por toque", "Comprovante estruturado estilo recibo de alta legibilidade"],
-    "anti_patterns": ["Acao de transferir escondida no topo fora do alcance do polegar", "Gradientes neon cripto roxo-ciano"]
+    "signature_moves": [
+      "Cartao de resumo com saldo protegivel por toque",
+      "Comprovante estruturado estilo recibo de alta legibilidade"
+    ],
+    "anti_patterns": [
+      "Acao de transferir escondida no topo fora do alcance do polegar",
+      "Gradientes neon cripto roxo-ciano"
+    ]
   },
   {
     "id": "saude-clinica",
     "name": "Saúde, Prontuário & Clínica",
-    "keywords": ["saude", "clinica", "medico", "prontuario", "paciente", "agenda", "telemedicina", "exame", "hospital"],
-    "platforms": ["system", "mobile", "desktop"],
+    "keywords": [
+      "saude",
+      "clinica",
+      "medico",
+      "prontuario",
+      "paciente",
+      "agenda",
+      "telemedicina",
+      "exame",
+      "hospital"
+    ],
+    "platforms": [
+      "system",
+      "mobile",
+      "desktop"
+    ],
     "surface_mode": "Operate",
     "density": "calm-structured",
     "palette_light": {
@@ -122,16 +206,40 @@
       "text_muted": "#9AB6BC",
       "border": "#254149"
     },
-    "typography_ids": ["source-sans-serif", "jakarta-instrument-mono"],
+    "typography_ids": [
+      "atkinson-legibility",
+      "jakarta-instrument-mono",
+      "inter-jetbrains"
+    ],
     "layout_archetype": "Timeline cronologica de atendimento + painel lateral de alergias/alertas clinicos",
-    "signature_moves": ["Faixa fixa de alertas clinicos criticos no topo do prontuario", "Linha do tempo de consultas e exames escaneavel"],
-    "anti_patterns": ["Textos cinza claro ilegiveis em ambientes hospitalares muito iluminados", "Cor vermelha decorativa competindo com alergias/urgencias"]
+    "signature_moves": [
+      "Faixa fixa de alertas clinicos criticos no topo do prontuario",
+      "Linha do tempo de consultas e exames escaneavel"
+    ],
+    "anti_patterns": [
+      "Textos cinza claro ilegiveis em ambientes hospitalares muito iluminados",
+      "Cor vermelha decorativa competindo com alergias/urgencias"
+    ]
   },
   {
     "id": "logistica-frota",
     "name": "Logística, Frota & Rastreamento",
-    "keywords": ["logistica", "frota", "entrega", "transporte", "rastreio", "motorista", "rota", "caminhao", "despacho"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "logistica",
+      "frota",
+      "entrega",
+      "transporte",
+      "rastreio",
+      "motorista",
+      "rota",
+      "caminhao",
+      "despacho"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "compact-high-contrast",
     "palette_light": {
@@ -154,16 +262,39 @@
       "text_muted": "#9EB0C4",
       "border": "#293D54"
     },
-    "typography_ids": ["space-dm-mono", "ibm-plex-suite"],
+    "typography_ids": [
+      "space-dm-mono",
+      "ibm-plex-suite"
+    ],
     "layout_archetype": "Mapa/Rota vivo (60%) + Fila de manifestos e ocorrencias (40%) + App Motorista thumb-friendly",
-    "signature_moves": ["Marcador de progresso de viagem com checkpoints e ETA", "Cartao de ocorrencia de parada com acao em 1 toque"],
-    "anti_patterns": ["Alvos pequenos no app do motorista em movimento", "Badges de status sem cor semantica ligada a atraso real"]
+    "signature_moves": [
+      "Marcador de progresso de viagem com checkpoints e ETA",
+      "Cartao de ocorrencia de parada com acao em 1 toque"
+    ],
+    "anti_patterns": [
+      "Alvos pequenos no app do motorista em movimento",
+      "Badges de status sem cor semantica ligada a atraso real"
+    ]
   },
   {
     "id": "devtools-desktop-ide",
     "name": "DevTools & App Desktop Técnico",
-    "keywords": ["devtools", "ide", "codigo", "terminal", "electron", "tauri", "desktop", "sql", "api", "cliente"],
-    "platforms": ["desktop", "system"],
+    "keywords": [
+      "devtools",
+      "ide",
+      "codigo",
+      "terminal",
+      "electron",
+      "tauri",
+      "desktop",
+      "sql",
+      "api",
+      "cliente"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "surface_mode": "Operate",
     "density": "dense-precision",
     "palette_light": {
@@ -186,16 +317,38 @@
       "text_muted": "#9CA3AF",
       "border": "#293142"
     },
-    "typography_ids": ["geist-mono-clean", "inter-jetbrains"],
+    "typography_ids": [
+      "geist-mono-clean",
+      "inter-jetbrains"
+    ],
     "layout_archetype": "Workbench multi-pane redimensionavel com arvore de projeto, editor/inspetor e painel inferior",
-    "signature_moves": ["Titlebar integrada com breadcrumbs e status de ambiente", "Palette de comandos e atalhos descobertos"],
-    "anti_patterns": ["Falta de suporte a teclado e atalhos", "Scroll horizontal invisivel em logs ou payloads"]
+    "signature_moves": [
+      "Titlebar integrada com breadcrumbs e status de ambiente",
+      "Palette de comandos e atalhos descobertos"
+    ],
+    "anti_patterns": [
+      "Falta de suporte a teclado e atalhos",
+      "Scroll horizontal invisivel em logs ou payloads"
+    ]
   },
   {
     "id": "produtividade-linear",
     "name": "Produtividade, Tarefas & Projetos",
-    "keywords": ["produtividade", "tarefas", "kanban", "sprint", "projetos", "roadmap", "linear", "gestao"],
-    "platforms": ["desktop", "system", "mobile"],
+    "keywords": [
+      "produtividade",
+      "tarefas",
+      "kanban",
+      "sprint",
+      "projetos",
+      "roadmap",
+      "linear",
+      "gestao"
+    ],
+    "platforms": [
+      "desktop",
+      "system",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -218,16 +371,39 @@
       "text_muted": "#9CA3AF",
       "border": "#2C3240"
     },
-    "typography_ids": ["inter-jetbrains", "geist-mono-clean"],
+    "typography_ids": [
+      "inter-jetbrains",
+      "geist-mono-clean"
+    ],
     "layout_archetype": "Lista agrupada / Board com filtros persistentes e inspector lateral de tarefa",
-    "signature_moves": ["Edicao inline instantanea com atalhos de tecla unica", "Barra de filtro em linha sem abrir modais"],
-    "anti_patterns": ["Cardite com 12 badges coloridos em cada cartao", "Carregamentos bloqueantes para cada alteracao de status"]
+    "signature_moves": [
+      "Edicao inline instantanea com atalhos de tecla unica",
+      "Barra de filtro em linha sem abrir modais"
+    ],
+    "anti_patterns": [
+      "Cardite com 12 badges coloridos em cada cartao",
+      "Carregamentos bloqueantes para cada alteracao de status"
+    ]
   },
   {
     "id": "pdv-varejo",
     "name": "PDV, Frente de Caixa & Varejo",
-    "keywords": ["pdv", "caixa", "varejo", "loja", "estoque", "pedido", "restaurante", "balcao", "tablet"],
-    "platforms": ["desktop", "mobile", "system"],
+    "keywords": [
+      "pdv",
+      "caixa",
+      "varejo",
+      "loja",
+      "estoque",
+      "pedido",
+      "restaurante",
+      "balcao",
+      "tablet"
+    ],
+    "platforms": [
+      "desktop",
+      "mobile",
+      "system"
+    ],
     "surface_mode": "Operate",
     "density": "touch-large",
     "palette_light": {
@@ -250,16 +426,39 @@
       "text_muted": "#9BB2A7",
       "border": "#2A3E35"
     },
-    "typography_ids": ["dm-sans-mono", "jakarta-instrument-mono"],
+    "typography_ids": [
+      "dm-sans-mono",
+      "jakarta-instrument-mono"
+    ],
     "layout_archetype": "Grade de catalogo rapido a esquerda + Cupom/Resumo de venda fixo a direita",
-    "signature_moves": ["Botoes de pagamento com atalhos F1-F4 e toque minimo 52px", "Totalizacao tabular sempre visivel no topo do cupom"],
-    "anti_patterns": ["Alvos de toque pequenos para operacao em balcao", "Multiplas confirmacoes lentas durante fila de clientes"]
+    "signature_moves": [
+      "Botoes de pagamento com atalhos F1-F4 e toque minimo 52px",
+      "Totalizacao tabular sempre visivel no topo do cupom"
+    ],
+    "anti_patterns": [
+      "Alvos de toque pequenos para operacao em balcao",
+      "Multiplas confirmacoes lentas durante fila de clientes"
+    ]
   },
   {
     "id": "govtech-licitacoes",
     "name": "GovTech, Licitações & Compliance Público",
-    "keywords": ["govtech", "licitacao", "edital", "pregao", "pncp", "certidao", "contrato", "publico", "compliance"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "govtech",
+      "licitacao",
+      "edital",
+      "pregao",
+      "pncp",
+      "certidao",
+      "contrato",
+      "publico",
+      "compliance"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "compact-structured",
     "palette_light": {
@@ -282,16 +481,39 @@
       "text_muted": "#A0B2C7",
       "border": "#283B54"
     },
-    "typography_ids": ["jakarta-instrument-mono", "ibm-plex-suite"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "ibm-plex-suite"
+    ],
     "layout_archetype": "Radar de editais por aderencia + Gaveta de certidoes e prazos criticos",
-    "signature_moves": ["Termometro de aderencia (0-100) cruzado com certidoes vencidas", "Timeline de marcos do edital ate empenho"],
-    "anti_patterns": ["Esconder certidao vencida no fim da pagina", "Copiar tabelas burocraticas do governo sem triagem por urgencia"]
+    "signature_moves": [
+      "Termometro de aderencia (0-100) cruzado com certidoes vencidas",
+      "Timeline de marcos do edital ate empenho"
+    ],
+    "anti_patterns": [
+      "Esconder certidao vencida no fim da pagina",
+      "Copiar tabelas burocraticas do governo sem triagem por urgencia"
+    ]
   },
   {
     "id": "observabilidade-sre",
     "name": "Observabilidade, SRE & Telemetria",
-    "keywords": ["observabilidade", "sre", "monitoramento", "logs", "sla", "latencia", "incidentes", "api", "servidor"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "observabilidade",
+      "sre",
+      "monitoramento",
+      "logs",
+      "sla",
+      "latencia",
+      "incidentes",
+      "api",
+      "servidor"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "dense-precision",
     "palette_light": {
@@ -314,16 +536,39 @@
       "text_muted": "#94A3B8",
       "border": "#273549"
     },
-    "typography_ids": ["geist-mono-clean", "ibm-plex-suite"],
+    "typography_ids": [
+      "geist-mono-clean",
+      "ibm-plex-suite"
+    ],
     "layout_archetype": "Faixa de saude de servicos + grafico temporal com marcacao de inicio de incidente + log stream",
-    "signature_moves": ["Mapa linear de saude de APIs com marcacao de degrau de latencia", "Botao testar agora com feedback deterministico"],
-    "anti_patterns": ["Bolinha verde piscando falsa sem leitura real de endpoint", "Graficos com excesso de grades e legendas separadas"]
+    "signature_moves": [
+      "Mapa linear de saude de APIs com marcacao de degrau de latencia",
+      "Botao testar agora com feedback deterministico"
+    ],
+    "anti_patterns": [
+      "Bolinha verde piscando falsa sem leitura real de endpoint",
+      "Graficos com excesso de grades e legendas separadas"
+    ]
   },
   {
     "id": "atendimento-inbox",
     "name": "Central de Atendimento & Omnichannel",
-    "keywords": ["atendimento", "whatsapp", "chat", "inbox", "sla", "sac", "suporte", "bot", "cliente"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "atendimento",
+      "whatsapp",
+      "chat",
+      "inbox",
+      "sla",
+      "sac",
+      "suporte",
+      "bot",
+      "cliente"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -346,16 +591,38 @@
       "text_muted": "#9BB3BF",
       "border": "#273E4A"
     },
-    "typography_ids": ["jakarta-instrument-mono", "inter-jetbrains"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "inter-jetbrains"
+    ],
     "layout_archetype": "3 colunas reais: Fila por SLA a esquerda + Conversa/Bot no centro + Contexto do cliente/pedidos a direita",
-    "signature_moves": ["Contador regressivo de SLA em tabular-nums na fila", "Modo escalonamento supervisor com intervencao sem perder historico"],
-    "anti_patterns": ["Esconder dados do cliente atras de 4 cliques durante ligacao", "Bolhas de chat sem diferenciacao clara entre bot e humano"]
+    "signature_moves": [
+      "Contador regressivo de SLA em tabular-nums na fila",
+      "Modo escalonamento supervisor com intervencao sem perder historico"
+    ],
+    "anti_patterns": [
+      "Esconder dados do cliente atras de 4 cliques durante ligacao",
+      "Bolhas de chat sem diferenciacao clara entre bot e humano"
+    ]
   },
   {
     "id": "crm-comercial",
     "name": "CRM Comercial & Pipeline B2B",
-    "keywords": ["crm", "vendas", "funil", "pipeline", "leads", "proposta", "comercial", "negociacao"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "crm",
+      "vendas",
+      "funil",
+      "pipeline",
+      "leads",
+      "proposta",
+      "comercial",
+      "negociacao"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -378,16 +645,37 @@
       "text_muted": "#9FB0C4",
       "border": "#2B3B50"
     },
-    "typography_ids": ["jakarta-instrument-mono", "manrope-tabular"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "manrope-tabular"
+    ],
     "layout_archetype": "Alternancia instantanea Kanban / Tabela ponderada + Gaveta lateral da conta com historico",
-    "signature_moves": ["Indicador de dias parados na etapa sem movimento", "Proximo passo obrigatorio visivel em cada negociacao"],
-    "anti_patterns": ["Kanban cheio de tags irrelevantes onde nao se le valor nem proxima acao"]
+    "signature_moves": [
+      "Indicador de dias parados na etapa sem movimento",
+      "Proximo passo obrigatorio visivel em cada negociacao"
+    ],
+    "anti_patterns": [
+      "Kanban cheio de tags irrelevantes onde nao se le valor nem proxima acao"
+    ]
   },
   {
     "id": "educacao-lms",
     "name": "Educação, LMS & Plataforma de Ensino",
-    "keywords": ["educacao", "curso", "aula", "aluno", "lms", "trilha", "prova", "ensino"],
-    "platforms": ["system", "mobile", "desktop"],
+    "keywords": [
+      "educacao",
+      "curso",
+      "aula",
+      "aluno",
+      "lms",
+      "trilha",
+      "prova",
+      "ensino"
+    ],
+    "platforms": [
+      "system",
+      "mobile",
+      "desktop"
+    ],
     "surface_mode": "Read",
     "density": "editorial-comfortable",
     "palette_light": {
@@ -410,16 +698,35 @@
       "text_muted": "#A9AEBC",
       "border": "#30384B"
     },
-    "typography_ids": ["source-sans-serif", "newsreader-instrument"],
+    "typography_ids": [
+      "source-sans-serif",
+      "newsreader-instrument"
+    ],
     "layout_archetype": "Area de leitura/video limpa (65-75ch) + trilha modular retratil",
-    "signature_moves": ["Retomar exatamente do minuto/paragrafo onde parou", "Sumario de progresso continuo sem gamificacao infantil"],
-    "anti_patterns": ["Explosao de confetes, rankings e badges falsos em cursos tecnicos"]
+    "signature_moves": [
+      "Retomar exatamente do minuto/paragrafo onde parou",
+      "Sumario de progresso continuo sem gamificacao infantil"
+    ],
+    "anti_patterns": [
+      "Explosao de confetes, rankings e badges falsos em cursos tecnicos"
+    ]
   },
   {
     "id": "imobiliario-proptech",
     "name": "PropTech & Gestão Imobiliária",
-    "keywords": ["imobiliaria", "imovel", "aluguel", "contrato", "vistoria", "proptech", "condominio"],
-    "platforms": ["system", "mobile"],
+    "keywords": [
+      "imobiliaria",
+      "imovel",
+      "aluguel",
+      "contrato",
+      "vistoria",
+      "proptech",
+      "condominio"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -442,16 +749,37 @@
       "text_muted": "#A3B3AC",
       "border": "#2B3C35"
     },
-    "typography_ids": ["fraunces-dm", "jakarta-instrument-mono"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "dm-sans-mono",
+      "inter-jetbrains"
+    ],
     "layout_archetype": "Grade limpa com filtros persistentes + ficha do imovel/contrato com repasses em tabular-nums",
-    "signature_moves": ["Linha do tempo de vistoria e reajuste IGPM/IPCA", "Grade de repasse locador x locatario crystal-clear"],
-    "anti_patterns": ["Fotos distorcidas sem object-cover ou sem proporcao travada"]
+    "signature_moves": [
+      "Linha do tempo de vistoria e reajuste IGPM/IPCA",
+      "Grade de repasse locador x locatario crystal-clear"
+    ],
+    "anti_patterns": [
+      "Fotos distorcidas sem object-cover ou sem proporcao travada"
+    ]
   },
   {
     "id": "estudio-criativo-desktop",
     "name": "Estúdio Criativo, Áudio & Vídeo Desktop",
-    "keywords": ["estudio", "editor", "video", "audio", "design", "canvas", "midia", "desktop", "tauri"],
-    "platforms": ["desktop"],
+    "keywords": [
+      "estudio",
+      "editor",
+      "video",
+      "audio",
+      "design",
+      "canvas",
+      "midia",
+      "desktop",
+      "tauri"
+    ],
+    "platforms": [
+      "desktop"
+    ],
     "surface_mode": "Operate",
     "density": "dense-neutral",
     "palette_light": {
@@ -474,16 +802,36 @@
       "text_muted": "#9BA1AE",
       "border": "#2D323B"
     },
-    "typography_ids": ["geist-mono-clean", "ios-sf-native"],
+    "typography_ids": [
+      "geist-mono-clean",
+      "ios-sf-native"
+    ],
     "layout_archetype": "Canvas neutro dominante no centro + barra de ferramentas fina + inspetor contextual a direita",
-    "signature_moves": ["Superficies neutras calibradas para nao contaminar a percepcao de cor da midia"],
-    "anti_patterns": ["Interface colorida competindo com o trabalho visual do usuario no canvas"]
+    "signature_moves": [
+      "Superficies neutras calibradas para nao contaminar a percepcao de cor da midia"
+    ],
+    "anti_patterns": [
+      "Interface colorida competindo com o trabalho visual do usuario no canvas"
+    ]
   },
   {
     "id": "agro-campo-mobile",
     "name": "Agronegócio & Operação em Campo",
-    "keywords": ["agro", "fazenda", "campo", "offline", "safra", "insumo", "tablet", "mobile"],
-    "platforms": ["mobile", "android", "system"],
+    "keywords": [
+      "agro",
+      "fazenda",
+      "campo",
+      "offline",
+      "safra",
+      "insumo",
+      "tablet",
+      "mobile"
+    ],
+    "platforms": [
+      "mobile",
+      "android",
+      "system"
+    ],
     "surface_mode": "Operate",
     "density": "touch-high-contrast",
     "palette_light": {
@@ -506,16 +854,37 @@
       "text_muted": "#9DB5A3",
       "border": "#2A4231"
     },
-    "typography_ids": ["android-roboto-m3", "dm-sans-mono"],
+    "typography_ids": [
+      "android-roboto-m3",
+      "dm-sans-mono"
+    ],
     "layout_archetype": "Light-first de altissimo contraste sob luz solar + sincronizacao offline explicita",
-    "signature_moves": ["Indicador real de fila offline pendente de sincronizacao", "Botoes grandes 48dp+ operaveis com luva/sol"],
-    "anti_patterns": ["Dark mode obrigatorio sob sol forte", "Textos finos cinza claro ilegiveis fora de escritorio"]
+    "signature_moves": [
+      "Indicador real de fila offline pendente de sincronizacao",
+      "Botoes grandes 48dp+ operaveis com luva/sol"
+    ],
+    "anti_patterns": [
+      "Dark mode obrigatorio sob sol forte",
+      "Textos finos cinza claro ilegiveis fora de escritorio"
+    ]
   },
   {
     "id": "rh-dp",
     "name": "RH, Departamento Pessoal & Escala",
-    "keywords": ["rh", "dp", "folha", "ponto", "colaborador", "ferias", "admissao", "escala"],
-    "platforms": ["system", "mobile"],
+    "keywords": [
+      "rh",
+      "dp",
+      "folha",
+      "ponto",
+      "colaborador",
+      "ferias",
+      "admissao",
+      "escala"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -538,16 +907,35 @@
       "text_muted": "#A0A9BD",
       "border": "#2B344B"
     },
-    "typography_ids": ["jakarta-instrument-mono", "manrope-tabular"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "manrope-tabular"
+    ],
     "layout_archetype": "Checklist de admissao/fechamento em etapas + visao individual do colaborador",
-    "signature_moves": ["Painel de bloqueios de fechamento por competencia", "Autoatendimento mobile limpo para espelho de ponto"],
-    "anti_patterns": ["Expor dados pessoais sensiveis em listas publicas sem mascara"]
+    "signature_moves": [
+      "Painel de bloqueios de fechamento por competencia",
+      "Autoatendimento mobile limpo para espelho de ponto"
+    ],
+    "anti_patterns": [
+      "Expor dados pessoais sensiveis em listas publicas sem mascara"
+    ]
   },
   {
     "id": "juridico-contratos",
     "name": "Jurídico, Processos & Contratos",
-    "keywords": ["juridico", "advocacia", "processo", "contrato", "prazo", "audiencia", "documento"],
-    "platforms": ["system", "desktop"],
+    "keywords": [
+      "juridico",
+      "advocacia",
+      "processo",
+      "contrato",
+      "prazo",
+      "audiencia",
+      "documento"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "surface_mode": "Read",
     "density": "editorial-precision",
     "palette_light": {
@@ -570,16 +958,37 @@
       "text_muted": "#9FA7B3",
       "border": "#2C3542"
     },
-    "typography_ids": ["newsreader-instrument", "ibm-plex-suite"],
+    "typography_ids": [
+      "newsreader-instrument",
+      "ibm-plex-suite"
+    ],
     "layout_archetype": "Leitura comparativa lado a lado + fila de prazos fatais ordenada por vencimento",
-    "signature_moves": ["Contagem regressiva de prazo fatal com contraste carmim apenas quando urgente", "Diff de clausulas legivel"],
-    "anti_patterns": ["Largura de linha de 140 caracteres em leitura de pecas"]
+    "signature_moves": [
+      "Contagem regressiva de prazo fatal com contraste carmim apenas quando urgente",
+      "Diff de clausulas legivel"
+    ],
+    "anti_patterns": [
+      "Largura de linha de 140 caracteres em leitura de pecas"
+    ]
   },
   {
     "id": "turismo-viagens-corporativas",
     "name": "Turismo Corporativo, Eventos & Reservas",
-    "keywords": ["turismo", "viagem", "aereo", "hotel", "evento", "passagem", "reserva", "corporativo"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "turismo",
+      "viagem",
+      "aereo",
+      "hotel",
+      "evento",
+      "passagem",
+      "reserva",
+      "corporativo"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -602,16 +1011,36 @@
       "text_muted": "#9EB0C5",
       "border": "#273B54"
     },
-    "typography_ids": ["jakarta-instrument-mono", "dm-sans-mono"],
+    "typography_ids": [
+      "jakarta-instrument-mono",
+      "dm-sans-mono"
+    ],
     "layout_archetype": "Boarding Pass cards + Painel de emissões, faturas e eventos em 3 horizontes",
-    "signature_moves": ["Cartao de embarque escaneavel em 1.5s", "Arco de progresso da etapa de viagem/evento"],
-    "anti_patterns": ["Desenhos infantis de avioezinhos ou templates de agencia generica"]
+    "signature_moves": [
+      "Cartao de embarque escaneavel em 1.5s",
+      "Arco de progresso da etapa de viagem/evento"
+    ],
+    "anti_patterns": [
+      "Desenhos infantis de avioezinhos ou templates de agencia generica"
+    ]
   },
   {
     "id": "energia-iot-industrial",
     "name": "Energia, IoT & Telemetria Industrial",
-    "keywords": ["energia", "solar", "iot", "industria", "sensor", "planta", "telemetria", "scada"],
-    "platforms": ["desktop", "system"],
+    "keywords": [
+      "energia",
+      "solar",
+      "iot",
+      "industria",
+      "sensor",
+      "planta",
+      "telemetria",
+      "scada"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "surface_mode": "Operate",
     "density": "dense-high-contrast",
     "palette_light": {
@@ -634,16 +1063,36 @@
       "text_muted": "#9AAAB5",
       "border": "#283744"
     },
-    "typography_ids": ["ibm-plex-suite", "space-dm-mono"],
+    "typography_ids": [
+      "ibm-plex-suite",
+      "space-dm-mono"
+    ],
     "layout_archetype": "Painel de unidades + Matriz de alarmes ativos + series temporais comparativas",
-    "signature_moves": ["Rótulo direto nas curvas de consumo/geracao", "Alarme com timestamp exato e protocolo de reconhecimento"],
-    "anti_patterns": ["Gauges 3D decorativos ocupando meia tela", "Efeito neon brilhante estilo filme sci-fi"]
+    "signature_moves": [
+      "Rótulo direto nas curvas de consumo/geracao",
+      "Alarme com timestamp exato e protocolo de reconhecimento"
+    ],
+    "anti_patterns": [
+      "Gauges 3D decorativos ocupando meia tela",
+      "Efeito neon brilhante estilo filme sci-fi"
+    ]
   },
   {
     "id": "marketplace-b2b",
     "name": "Marketplace B2B & Compras",
-    "keywords": ["marketplace", "compras", "cotacao", "fornecedor", "pedido", "catalogo", "b2b"],
-    "platforms": ["system", "mobile"],
+    "keywords": [
+      "marketplace",
+      "compras",
+      "cotacao",
+      "fornecedor",
+      "pedido",
+      "catalogo",
+      "b2b"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
     "surface_mode": "Operate",
     "density": "balanced",
     "palette_light": {
@@ -666,16 +1115,37 @@
       "text_muted": "#A1AEC0",
       "border": "#2B384C"
     },
-    "typography_ids": ["dm-sans-mono", "inter-jetbrains"],
+    "typography_ids": [
+      "dm-sans-mono",
+      "inter-jetbrains"
+    ],
     "layout_archetype": "Comparativo tabular de cotacoes lado a lado + Carrinho de pedido de compra persistente",
-    "signature_moves": ["Matriz comparativa de preco, prazo e frete destacando menor custo total"],
-    "anti_patterns": ["Cards de e-commerce B2C gigantes quando o comprador precisa comparar 12 SKUs"]
+    "signature_moves": [
+      "Matriz comparativa de preco, prazo e frete destacando menor custo total"
+    ],
+    "anti_patterns": [
+      "Cards de e-commerce B2C gigantes quando o comprador precisa comparar 12 SKUs"
+    ]
   },
   {
     "id": "app-executivo-socios",
     "name": "App Executivo para Sócios & Diretoria",
-    "keywords": ["executivo", "socio", "diretor", "aprovacao", "resumo", "pulso", "iphone", "mobile", "bi"],
-    "platforms": ["mobile", "ios", "android"],
+    "keywords": [
+      "executivo",
+      "socio",
+      "diretor",
+      "aprovacao",
+      "resumo",
+      "pulso",
+      "iphone",
+      "mobile",
+      "bi"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "surface_mode": "Operate",
     "density": "focused-decision",
     "palette_light": {
@@ -698,16 +1168,37 @@
       "text_muted": "#9FB2C7",
       "border": "#283C54"
     },
-    "typography_ids": ["ios-sf-native", "jakarta-instrument-mono"],
+    "typography_ids": [
+      "ios-sf-native",
+      "jakarta-instrument-mono"
+    ],
     "layout_archetype": "Pulso em 10 segundos no topo + 3 decisoes pendentes acionaveis via Bottom Sheet + Dock 4 abas",
-    "signature_moves": ["Simulador de impacto em caixa antes de aprovar em 1 toque", "Desfazer imediato apos aprovacao"],
-    "anti_patterns": ["Dashboards com 14 graficos minusculos no celular", "Exigir desktop para aprovar uma fatura critica"]
+    "signature_moves": [
+      "Simulador de impacto em caixa antes de aprovar em 1 toque",
+      "Desfazer imediato apos aprovacao"
+    ],
+    "anti_patterns": [
+      "Dashboards com 14 graficos minusculos no celular",
+      "Exigir desktop para aprovar uma fatura critica"
+    ]
   },
   {
     "id": "gestao-obras-engenharia",
     "name": "Gestão de Obras & Engenharia Civil",
-    "keywords": ["obra", "engenharia", "construcao", "medicao", "diario", "orcamento", "cronograma"],
-    "platforms": ["system", "mobile", "desktop"],
+    "keywords": [
+      "obra",
+      "engenharia",
+      "construcao",
+      "medicao",
+      "diario",
+      "orcamento",
+      "cronograma"
+    ],
+    "platforms": [
+      "system",
+      "mobile",
+      "desktop"
+    ],
     "surface_mode": "Operate",
     "density": "structured-high-contrast",
     "palette_light": {
@@ -730,16 +1221,37 @@
       "text_muted": "#9CA9B5",
       "border": "#2B3745"
     },
-    "typography_ids": ["ibm-plex-suite", "space-dm-mono"],
+    "typography_ids": [
+      "ibm-plex-suite",
+      "space-dm-mono"
+    ],
     "layout_archetype": "Cronograma fisico-financeiro + Diario fotografico com registro de campo mobile",
-    "signature_moves": ["Comparativo Previsto vs Realizado alinhado por etapa", "Galeria de vistoria com metadados de data e responsavel"],
-    "anti_patterns": ["Graficos de Gantt ilegiveis sem zoom ou filtro por frente"]
+    "signature_moves": [
+      "Comparativo Previsto vs Realizado alinhado por etapa",
+      "Galeria de vistoria com metadados de data e responsavel"
+    ],
+    "anti_patterns": [
+      "Graficos de Gantt ilegiveis sem zoom ou filtro por frente"
+    ]
   },
   {
     "id": "landing-produto-editorial",
     "name": "Vitrine de Produto & Documentação Editorial",
-    "keywords": ["landing", "produto", "site", "editorial", "docs", "documentacao", "institucional", "vitrine"],
-    "platforms": ["system", "desktop", "mobile"],
+    "keywords": [
+      "landing",
+      "produto",
+      "site",
+      "editorial",
+      "docs",
+      "documentacao",
+      "institucional",
+      "vitrine"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "surface_mode": "Persuade",
     "density": "editorial-spacious",
     "palette_light": {
@@ -762,9 +1274,16 @@
       "text_muted": "#A3AAB8",
       "border": "#2F3542"
     },
-    "typography_ids": ["fraunces-dm", "newsreader-instrument"],
+    "typography_ids": [
+      "fraunces-dm",
+      "newsreader-instrument"
+    ],
     "layout_archetype": "Narrativa orientada por prova real (captura do produto em acao) + especificacao direta",
-    "signature_moves": ["Demonstracao interativa ao vivo acima da dobra em vez de slogan abstrato"],
-    "anti_patterns": ["Template hero + 6 logos falsos + 3 cards com sparkles + depoimentos inventados"]
+    "signature_moves": [
+      "Demonstracao interativa ao vivo acima da dobra em vez de slogan abstrato"
+    ],
+    "anti_patterns": [
+      "Template hero + 6 logos falsos + 3 cards com sparkles + depoimentos inventados"
+    ]
   }
 ]

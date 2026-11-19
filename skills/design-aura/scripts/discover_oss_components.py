@@ -49,12 +49,20 @@ STACK_ALIASES = {
 
 def load_catalog() -> list[dict]:
     items = []
+    seen_names: set[str] = set()
+    # Carrega registries_oss primeiro (mais rico, com comando install e needs) e deduplica por nome normalizado
     for name in ("registries_oss.json", "components_oss.json", "study_references.json"):
         path = DATA_DIR / name
         if not path.exists():
             continue
         for raw in json.loads(path.read_text(encoding="utf-8")):
-            items.append(normalize_item(raw, name))
+            item = normalize_item(raw, name)
+            key = " ".join(normalize_text(item["name"]))
+            if key and key in seen_names:
+                continue
+            if key:
+                seen_names.add(key)
+            items.append(item)
     return items
 
 

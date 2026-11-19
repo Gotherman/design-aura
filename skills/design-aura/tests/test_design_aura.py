@@ -209,6 +209,30 @@ class DiscoverTests(unittest.TestCase):
         self.assertNotIn("Cal.com", names)
         self.assertNotIn("Grafana", names)
 
+    def test_no_duplicates_and_html_ios_coverage_and_no_operate_serif_collision(self):
+        # 1. Sem duplicatas entre registries_oss e components_oss
+        tbl = search_local("tabela densa com filtros", "react", "system", "operate", 8)
+        adopt_names = [it["name"].lower() for it in tbl["adopt"]]
+        self.assertEqual(len(adopt_names), len(set(adopt_names)))
+
+        # 2. Stack HTML/vanilla devolve ECharts e Tabulator
+        html_res = search_local("grafico financeiro e tabela", "html", "system", "operate", 6)
+        html_names = {it["name"] for it in html_res["adopt"]}
+        self.assertIn("Apache ECharts", html_names)
+        self.assertIn("Tabulator", html_names)
+
+        # 3. Stack iOS devolve SwiftUI para bottom sheet e lista
+        ios_res = search_local("bottom sheet e lista", "ios", "ios", "operate", 6)
+        ios_names = {it["name"] for it in ios_res["adopt"]}
+        self.assertIn("SwiftUI", ios_names)
+
+        # 4. Zero colisao entre dominios Operate e tipografia serifada editorial
+        domains = json.loads((ROOT / "data" / "domains.json").read_text(encoding="utf-8"))
+        serif_ids = {"source-sans-serif", "newsreader-instrument", "fraunces-dm", "lora-plusjakarta"}
+        for dom in domains:
+            if dom.get("surface_mode", "").lower() == "operate":
+                self.assertFalse(set(dom.get("typography_ids", [])) & serif_ids, dom["id"])
+
 
 class CanvasTests(unittest.TestCase):
     def test_auto_layout_and_vitrine(self):

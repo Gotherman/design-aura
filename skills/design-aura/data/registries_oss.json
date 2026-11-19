@@ -3,15 +3,33 @@
     "id": "shadcn-ui",
     "name": "shadcn/ui",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "primitives",
     "license": "MIT",
     "license_ok": true,
     "url": "https://ui.shadcn.com",
     "repo": "https://github.com/shadcn-ui/ui",
-    "needs": ["dialog", "select", "tabs", "dropdown", "form", "command palette", "data table"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "dialog",
+      "select",
+      "tabs",
+      "dropdown",
+      "form",
+      "command palette",
+      "data table"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "npx shadcn@latest add button dialog",
     "usage": "registry",
@@ -22,15 +40,31 @@
     "id": "coss-ui",
     "name": "coss ui (ex-Origin UI)",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "inputs",
     "license": "MIT",
     "license_ok": true,
     "url": "https://coss.com/ui",
     "repo": "https://github.com/cosscom/ui",
-    "needs": ["input", "select", "date picker", "otp", "file upload", "micro interaction"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "input",
+      "select",
+      "date picker",
+      "otp",
+      "file upload",
+      "micro interaction"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npx shadcn@latest add https://coss.com/ui/r/input.json",
     "usage": "registry",
@@ -41,15 +75,31 @@
     "id": "kibo-ui",
     "name": "Kibo UI",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "dense-widgets",
     "license": "MIT",
     "license_ok": true,
     "url": "https://www.kibo-ui.com",
     "repo": "https://github.com/shadcnblocks/kibo",
-    "needs": ["gantt", "kanban", "file tree", "dropzone", "calendar", "ai chat"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "gantt",
+      "kanban",
+      "file tree",
+      "dropzone",
+      "calendar",
+      "ai chat"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npx shadcn@latest add @kibo-ui/gantt",
     "usage": "registry",
@@ -60,15 +110,30 @@
     "id": "dice-ui",
     "name": "Dice UI",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "primitives",
     "license": "MIT",
     "license_ok": true,
     "url": "https://www.diceui.com",
     "repo": "https://github.com/sadmann7/diceui",
-    "needs": ["data table", "combobox", "sortable", "kanban", "file upload"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "data table",
+      "combobox",
+      "sortable",
+      "kanban",
+      "file upload"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npx shadcn@latest add @diceui/data-table",
     "usage": "registry",
@@ -79,15 +144,31 @@
     "id": "base-ui",
     "name": "Base UI",
     "kind": "library",
-    "stack": ["react"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless",
     "license": "MIT",
     "license_ok": true,
     "url": "https://base-ui.com",
     "repo": "https://github.com/mui/base-ui",
-    "needs": ["dialog", "popover", "menu", "select", "tabs", "headless"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "dialog",
+      "popover",
+      "menu",
+      "select",
+      "tabs",
+      "headless"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "npm install @base-ui/react",
     "usage": "dependency",
@@ -98,15 +179,31 @@
     "id": "ark-ui",
     "name": "Ark UI",
     "kind": "library",
-    "stack": ["react", "vue", "solid"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "vue",
+      "solid"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless",
     "license": "MIT",
     "license_ok": true,
     "url": "https://ark-ui.com",
     "repo": "https://github.com/chakra-ui/ark",
-    "needs": ["date picker", "dialog", "tree view", "carousel", "headless"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "date picker",
+      "dialog",
+      "tree view",
+      "carousel",
+      "headless"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install @ark-ui/react",
     "usage": "dependency",
@@ -117,15 +214,30 @@
     "id": "react-aria",
     "name": "React Aria Components",
     "kind": "library",
-    "stack": ["react"],
-    "platforms": ["system", "desktop", "mobile"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "headless",
     "license": "Apache-2.0",
     "license_ok": true,
     "url": "https://react-spectrum.adobe.com/react-aria",
     "repo": "https://github.com/adobe/react-spectrum",
-    "needs": ["date range", "calendar", "combobox", "table", "i18n"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "date range",
+      "calendar",
+      "combobox",
+      "table",
+      "i18n"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install react-aria-components",
     "usage": "dependency",
@@ -136,15 +248,28 @@
     "id": "cmdk",
     "name": "cmdk",
     "kind": "library",
-    "stack": ["react"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "command-palette",
     "license": "MIT",
     "license_ok": true,
     "url": "https://cmdk.paco.me",
     "repo": "https://github.com/pacocoursey/cmdk",
-    "needs": ["command palette", "cmdk", "search", "keyboard"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "command palette",
+      "cmdk",
+      "search",
+      "keyboard"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install cmdk",
     "usage": "dependency",
@@ -155,15 +280,29 @@
     "id": "dockview",
     "name": "Dockview",
     "kind": "library",
-    "stack": ["react", "electron", "tauri"],
-    "platforms": ["desktop"],
+    "stack": [
+      "react",
+      "electron",
+      "tauri"
+    ],
+    "platforms": [
+      "desktop"
+    ],
     "category": "workspace",
     "license": "MIT",
     "license_ok": true,
     "url": "https://dockview.dev",
     "repo": "https://github.com/mathuo/dockview",
-    "needs": ["dock", "tabs", "panels", "ide", "split view"],
-    "modes": ["operate"],
+    "needs": [
+      "dock",
+      "tabs",
+      "panels",
+      "ide",
+      "split view"
+    ],
+    "modes": [
+      "operate"
+    ],
     "flashy": false,
     "install": "npm install dockview-react",
     "usage": "dependency",
@@ -174,15 +313,30 @@
     "id": "react-resizable-panels",
     "name": "react-resizable-panels",
     "kind": "library",
-    "stack": ["react", "electron", "tauri"],
-    "platforms": ["desktop", "system"],
+    "stack": [
+      "react",
+      "electron",
+      "tauri"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "category": "workspace",
     "license": "MIT",
     "license_ok": true,
     "url": "https://react-resizable-panels.vercel.app",
     "repo": "https://github.com/bvaughn/react-resizable-panels",
-    "needs": ["split", "resize", "master detail", "panels"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "split",
+      "resize",
+      "master detail",
+      "panels"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install react-resizable-panels",
     "usage": "dependency",
@@ -193,15 +347,30 @@
     "id": "tanstack-table",
     "name": "TanStack Table",
     "kind": "library",
-    "stack": ["react", "vue", "solid"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "vue",
+      "solid"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "data-table",
     "license": "MIT",
     "license_ok": true,
     "url": "https://tanstack.com/table",
     "repo": "https://github.com/TanStack/table",
-    "needs": ["data table", "inline edit", "sort", "filter", "column pin"],
-    "modes": ["operate"],
+    "needs": [
+      "data table",
+      "inline edit",
+      "sort",
+      "filter",
+      "column pin"
+    ],
+    "modes": [
+      "operate"
+    ],
     "flashy": false,
     "install": "npm install @tanstack/react-table",
     "usage": "dependency",
@@ -212,15 +381,29 @@
     "id": "motion-primitives",
     "name": "Motion Primitives",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "motion",
     "license": "MIT",
     "license_ok": true,
     "url": "https://motion-primitives.com",
     "repo": "https://github.com/ibelick/motion-primitives",
-    "needs": ["dialog motion", "text effect", "disclosure", "shared element"],
-    "modes": ["persuade", "read"],
+    "needs": [
+      "dialog motion",
+      "text effect",
+      "disclosure",
+      "shared element"
+    ],
+    "modes": [
+      "persuade",
+      "read"
+    ],
     "flashy": true,
     "install": "npx motion-primitives@latest add dialog",
     "usage": "registry",
@@ -231,15 +414,27 @@
     "id": "magic-ui",
     "name": "Magic UI",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "motion",
     "license": "MIT",
     "license_ok": true,
     "url": "https://magicui.design",
     "repo": "https://github.com/magicuidesign/magicui",
-    "needs": ["marquee", "border beam", "hero", "landing motion"],
-    "modes": ["persuade"],
+    "needs": [
+      "marquee",
+      "border beam",
+      "hero",
+      "landing motion"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "npx shadcn@latest add @magicui/marquee",
     "usage": "registry",
@@ -250,15 +445,27 @@
     "id": "kokonut-ui",
     "name": "Kokonut UI",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "motion",
     "license": "MIT",
     "license_ok": true,
     "url": "https://kokonutui.com",
     "repo": "https://github.com/kokonut-labs/kokonutui",
-    "needs": ["ai input", "card", "button motion"],
-    "modes": ["persuade", "read"],
+    "needs": [
+      "ai input",
+      "card",
+      "button motion"
+    ],
+    "modes": [
+      "persuade",
+      "read"
+    ],
     "flashy": true,
     "install": "npx shadcn@latest add @kokonutui/particle-button",
     "usage": "registry",
@@ -269,15 +476,26 @@
     "id": "cult-ui",
     "name": "Cult UI",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "motion",
     "license": "MIT",
     "license_ok": true,
     "url": "https://www.cult-ui.com",
     "repo": "https://github.com/nolly-studio/cult-ui",
-    "needs": ["shift card", "family drawer", "landing"],
-    "modes": ["persuade"],
+    "needs": [
+      "shift card",
+      "family drawer",
+      "landing"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "npx shadcn@latest add @cult-ui/shift-card",
     "usage": "registry",
@@ -288,15 +506,30 @@
     "id": "hyperui",
     "name": "HyperUI",
     "kind": "registry",
-    "stack": ["react", "tailwind", "html"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind",
+      "html"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "marketing",
     "license": "MIT",
     "license_ok": true,
     "url": "https://www.hyperui.dev",
     "repo": "https://github.com/markmead/hyperui",
-    "needs": ["banner", "pricing", "nav", "ecommerce", "filter"],
-    "modes": ["persuade", "read"],
+    "needs": [
+      "banner",
+      "pricing",
+      "nav",
+      "ecommerce",
+      "filter"
+    ],
+    "modes": [
+      "persuade",
+      "read"
+    ],
     "flashy": false,
     "install": "copiar o markup da pagina do componente",
     "usage": "registry",
@@ -307,15 +540,26 @@
     "id": "animata",
     "name": "Animata",
     "kind": "registry",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "motion",
     "license": "MIT",
     "license_ok": true,
     "url": "https://animata.design",
     "repo": "https://github.com/codse/animata",
-    "needs": ["hero", "text reveal", "landing motion"],
-    "modes": ["persuade"],
+    "needs": [
+      "hero",
+      "text reveal",
+      "landing motion"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "copiar o componente e re-tematizar",
     "usage": "registry",
@@ -326,15 +570,28 @@
     "id": "mantine",
     "name": "Mantine",
     "kind": "library",
-    "stack": ["react"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "product-kit",
     "license": "MIT",
     "license_ok": true,
     "url": "https://mantine.dev",
     "repo": "https://github.com/mantinedev/mantine",
-    "needs": ["form", "date picker", "app shell", "notifications"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "form",
+      "date picker",
+      "app shell",
+      "notifications"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install @mantine/core @mantine/hooks",
     "usage": "dependency",
@@ -345,15 +602,29 @@
     "id": "heroui",
     "name": "HeroUI",
     "kind": "library",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "product-kit",
     "license": "Apache-2.0",
     "license_ok": true,
     "url": "https://www.heroui.com",
     "repo": "https://github.com/heroui-inc/heroui",
-    "needs": ["navbar", "modal", "table", "next"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "navbar",
+      "modal",
+      "table",
+      "next"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "npm install @heroui/react",
     "usage": "dependency",
@@ -364,15 +635,28 @@
     "id": "tremor",
     "name": "Tremor",
     "kind": "library",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "charts",
     "license": "Apache-2.0",
     "license_ok": true,
     "url": "https://tremor.so",
     "repo": "https://github.com/tremorlabs/tremor",
-    "needs": ["chart", "kpi", "dashboard", "bar list"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "chart",
+      "kpi",
+      "dashboard",
+      "bar list"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install @tremor/react",
     "usage": "dependency",
@@ -383,15 +667,28 @@
     "id": "reka-ui",
     "name": "Reka UI",
     "kind": "library",
-    "stack": ["vue"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "vue"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless",
     "license": "MIT",
     "license_ok": true,
     "url": "https://reka-ui.com",
     "repo": "https://github.com/unovue/reka-ui",
-    "needs": ["dialog", "combobox", "vue", "headless"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "dialog",
+      "combobox",
+      "vue",
+      "headless"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install reka-ui",
     "usage": "dependency",
@@ -402,15 +699,27 @@
     "id": "nuxt-ui",
     "name": "Nuxt UI",
     "kind": "library",
-    "stack": ["vue"],
-    "platforms": ["system"],
+    "stack": [
+      "vue"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "product-kit",
     "license": "MIT",
     "license_ok": true,
     "url": "https://ui.nuxt.com",
     "repo": "https://github.com/nuxt/ui",
-    "needs": ["dashboard", "form", "nuxt", "table"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "dashboard",
+      "form",
+      "nuxt",
+      "table"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install @nuxt/ui",
     "usage": "dependency",
@@ -421,15 +730,28 @@
     "id": "bits-ui",
     "name": "Bits UI",
     "kind": "library",
-    "stack": ["svelte"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "svelte"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless",
     "license": "MIT",
     "license_ok": true,
     "url": "https://bits-ui.com",
     "repo": "https://github.com/huntabyte/bits-ui",
-    "needs": ["dialog", "menu", "svelte", "headless"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "dialog",
+      "menu",
+      "svelte",
+      "headless"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install bits-ui",
     "usage": "dependency",
@@ -440,15 +762,27 @@
     "id": "kobalte",
     "name": "Kobalte",
     "kind": "library",
-    "stack": ["solid"],
-    "platforms": ["system"],
+    "stack": [
+      "solid"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "headless",
     "license": "MIT",
     "license_ok": true,
     "url": "https://kobalte.dev",
     "repo": "https://github.com/kobaltedev/kobalte",
-    "needs": ["dialog", "select", "solid", "headless"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "dialog",
+      "select",
+      "solid",
+      "headless"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install @kobalte/core",
     "usage": "dependency",
@@ -459,15 +793,32 @@
     "id": "rn-reusables",
     "name": "React Native Reusables",
     "kind": "registry",
-    "stack": ["rn", "expo"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "rn",
+      "expo"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-kit",
     "license": "MIT",
     "license_ok": true,
     "url": "https://reactnativereusables.com",
     "repo": "https://github.com/founded-labs/react-native-reusables",
-    "needs": ["button", "dialog", "bottom sheet", "nativewind", "form"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "button",
+      "dialog",
+      "bottom sheet",
+      "nativewind",
+      "form"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "npx @react-native-reusables/cli@latest add button",
     "usage": "registry",
@@ -478,15 +829,30 @@
     "id": "gluestack",
     "name": "gluestack UI",
     "kind": "registry",
-    "stack": ["rn", "expo"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "rn",
+      "expo"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-kit",
     "license": "MIT",
     "license_ok": true,
     "url": "https://gluestack.io",
     "repo": "https://github.com/gluestack/gluestack-ui",
-    "needs": ["form", "menu", "nativewind", "expo router"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "form",
+      "menu",
+      "nativewind",
+      "expo router"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npx gluestack-ui init",
     "usage": "registry",
@@ -497,15 +863,32 @@
     "id": "tamagui",
     "name": "Tamagui",
     "kind": "library",
-    "stack": ["react", "rn", "expo"],
-    "platforms": ["mobile", "system", "ios", "android"],
+    "stack": [
+      "react",
+      "rn",
+      "expo"
+    ],
+    "platforms": [
+      "mobile",
+      "system",
+      "ios",
+      "android"
+    ],
     "category": "universal",
     "license": "MIT",
     "license_ok": true,
     "url": "https://tamagui.dev",
     "repo": "https://github.com/tamagui/tamagui",
-    "needs": ["universal", "sheet", "adapt", "token"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "universal",
+      "sheet",
+      "adapt",
+      "token"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install tamagui",
     "usage": "dependency",
@@ -516,15 +899,30 @@
     "id": "gorhom-sheet",
     "name": "@gorhom/bottom-sheet",
     "kind": "library",
-    "stack": ["rn", "expo"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "rn",
+      "expo"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "sheet",
     "license": "MIT",
     "license_ok": true,
     "url": "https://gorhom.dev/react-native-bottom-sheet",
     "repo": "https://github.com/gorhom/react-native-bottom-sheet",
-    "needs": ["bottom sheet", "detent", "drag"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "bottom sheet",
+      "detent",
+      "drag"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "npm install @gorhom/bottom-sheet",
     "usage": "dependency",
@@ -535,15 +933,28 @@
     "id": "zeego",
     "name": "Zeego",
     "kind": "library",
-    "stack": ["rn", "expo"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "rn",
+      "expo"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "menu",
     "license": "MIT",
     "license_ok": true,
     "url": "https://zeego.dev",
     "repo": "https://github.com/nandorojo/zeego",
-    "needs": ["context menu", "dropdown", "native menu"],
-    "modes": ["operate"],
+    "needs": [
+      "context menu",
+      "dropdown",
+      "native menu"
+    ],
+    "modes": [
+      "operate"
+    ],
     "flashy": false,
     "install": "npm install zeego",
     "usage": "dependency",
@@ -554,15 +965,29 @@
     "id": "flashlist",
     "name": "FlashList",
     "kind": "library",
-    "stack": ["rn", "expo"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "rn",
+      "expo"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "list",
     "license": "MIT",
     "license_ok": true,
     "url": "https://shopify.github.io/flash-list",
     "repo": "https://github.com/Shopify/flash-list",
-    "needs": ["long list", "virtualization", "feed"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "long list",
+      "virtualization",
+      "feed"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "npm install @shopify/flash-list",
     "usage": "dependency",
@@ -573,15 +998,29 @@
     "id": "forui",
     "name": "Forui",
     "kind": "library",
-    "stack": ["flutter"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "flutter"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-kit",
     "license": "MIT",
     "license_ok": true,
     "url": "https://forui.dev",
     "repo": "https://github.com/forus-labs/forui",
-    "needs": ["flutter", "dialog", "tabs", "sheet"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "flutter",
+      "dialog",
+      "tabs",
+      "sheet"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "flutter pub add forui",
     "usage": "dependency",
@@ -592,15 +1031,30 @@
     "id": "shadcn-flutter",
     "name": "shadcn_ui Flutter",
     "kind": "library",
-    "stack": ["flutter"],
-    "platforms": ["mobile", "desktop", "ios", "android"],
+    "stack": [
+      "flutter"
+    ],
+    "platforms": [
+      "mobile",
+      "desktop",
+      "ios",
+      "android"
+    ],
     "category": "mobile-kit",
     "license": "MIT",
     "license_ok": true,
     "url": "https://mariuti.com/shadcn-ui",
     "repo": "https://pub.dev/packages/shadcn_ui",
-    "needs": ["flutter", "button", "dialog", "form"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "flutter",
+      "button",
+      "dialog",
+      "form"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "flutter pub add shadcn_ui",
     "usage": "dependency",
@@ -611,15 +1065,29 @@
     "id": "compose-unstyled",
     "name": "Compose Unstyled",
     "kind": "library",
-    "stack": ["android", "compose"],
-    "platforms": ["android", "mobile"],
+    "stack": [
+      "android",
+      "compose"
+    ],
+    "platforms": [
+      "android",
+      "mobile"
+    ],
     "category": "headless",
     "license": "Apache-2.0",
     "license_ok": true,
     "url": "https://github.com/composablehorizons/compose-unstyled",
     "repo": "https://github.com/composablehorizons/compose-unstyled",
-    "needs": ["compose", "headless", "dialog", "dropdown"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "compose",
+      "headless",
+      "dialog",
+      "dropdown"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "implementation do modulo publicado no README",
     "usage": "dependency",
@@ -630,15 +1098,34 @@
     "id": "material3",
     "name": "Material 3 / Compose Material",
     "kind": "platform",
-    "stack": ["android", "compose"],
-    "platforms": ["android", "mobile"],
+    "stack": [
+      "android",
+      "compose"
+    ],
+    "platforms": [
+      "android",
+      "mobile"
+    ],
     "category": "platform",
     "license": "Apache-2.0",
     "license_ok": true,
     "url": "https://m3.material.io",
     "repo": "https://github.com/material-components/material-components-android",
-    "needs": ["navigation bar", "fab", "snackbar", "predictive back", "adaptive", "expressive", "foldable", "tablet"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "navigation bar",
+      "fab",
+      "snackbar",
+      "predictive back",
+      "adaptive",
+      "expressive",
+      "foldable",
+      "tablet"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "androidx.compose.material3:material3",
     "usage": "platform",
@@ -649,15 +1136,37 @@
     "id": "swiftui",
     "name": "SwiftUI",
     "kind": "platform",
-    "stack": ["ios", "swiftui"],
-    "platforms": ["ios", "desktop"],
+    "stack": [
+      "ios",
+      "swiftui"
+    ],
+    "platforms": [
+      "ios",
+      "desktop"
+    ],
     "category": "platform",
     "license": "Apple SDK",
     "license_ok": false,
     "url": "https://developer.apple.com/documentation/swiftui",
     "repo": "",
-    "needs": ["navigation stack", "sheet", "tab", "safe area", "list"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "bottom sheet",
+      "detents",
+      "ios",
+      "list",
+      "lista",
+      "menu",
+      "navegacao",
+      "navigation stack",
+      "safe area",
+      "sheet",
+      "tab"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "framework do SDK",
     "usage": "platform",
@@ -668,15 +1177,28 @@
     "id": "swiftuix",
     "name": "SwiftUIX",
     "kind": "library",
-    "stack": ["ios", "swiftui"],
-    "platforms": ["ios", "desktop"],
+    "stack": [
+      "ios",
+      "swiftui"
+    ],
+    "platforms": [
+      "ios",
+      "desktop"
+    ],
     "category": "platform-plus",
     "license": "MIT",
     "license_ok": true,
     "url": "https://github.com/SwiftUIX/SwiftUIX",
     "repo": "https://github.com/SwiftUIX/SwiftUIX",
-    "needs": ["swiftui", "convenience", "search bar"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "swiftui",
+      "convenience",
+      "search bar"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "dependencia Swift Package",
     "usage": "dependency",
@@ -687,15 +1209,30 @@
     "id": "component-gallery",
     "name": "Component Gallery",
     "kind": "gallery",
-    "stack": ["all"],
-    "platforms": ["system", "desktop", "mobile"],
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "reference",
     "license": "n/a",
     "license_ok": false,
     "url": "https://component.gallery",
     "repo": "",
-    "needs": ["reference", "pattern", "inspiration", "name of component"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "reference",
+      "pattern",
+      "inspiration",
+      "name of component"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -706,15 +1243,35 @@
     "id": "mobbin",
     "name": "Mobbin",
     "kind": "gallery",
-    "stack": ["ios", "android", "react"],
-    "platforms": ["mobile", "ios", "android", "system"],
+    "stack": [
+      "ios",
+      "android",
+      "react"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android",
+      "system"
+    ],
     "category": "reference",
     "license": "pago / capturas",
     "license_ok": false,
     "url": "https://mobbin.com",
     "repo": "",
-    "needs": ["reference", "flow", "ios", "android", "onboarding", "settings"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "reference",
+      "flow",
+      "ios",
+      "android",
+      "onboarding",
+      "settings"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -725,15 +1282,29 @@
     "id": "refero",
     "name": "Refero",
     "kind": "gallery",
-    "stack": ["react"],
-    "platforms": ["system"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "reference",
     "license": "capturas",
     "license_ok": false,
     "url": "https://refero.design",
     "repo": "",
-    "needs": ["reference", "saas", "settings", "pricing", "dashboard"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "reference",
+      "saas",
+      "settings",
+      "pricing",
+      "dashboard"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -744,15 +1315,26 @@
     "id": "godly",
     "name": "Godly",
     "kind": "gallery",
-    "stack": ["react"],
-    "platforms": ["system"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "reference",
     "license": "capturas",
     "license_ok": false,
     "url": "https://godly.website",
     "repo": "",
-    "needs": ["reference", "landing", "awwwards", "hero"],
-    "modes": ["persuade"],
+    "needs": [
+      "reference",
+      "landing",
+      "awwwards",
+      "hero"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "",
     "usage": "reference",
@@ -763,15 +1345,31 @@
     "id": "pageflows",
     "name": "Page Flows",
     "kind": "gallery",
-    "stack": ["ios", "android"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "ios",
+      "android"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "reference",
     "license": "pago / fluxos",
     "license_ok": false,
     "url": "https://pageflows.com",
     "repo": "",
-    "needs": ["reference", "onboarding", "checkout", "user flow"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "reference",
+      "onboarding",
+      "checkout",
+      "user flow"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -782,15 +1380,30 @@
     "id": "screenlane",
     "name": "Screenlane",
     "kind": "gallery",
-    "stack": ["ios", "android"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "ios",
+      "android"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "reference",
     "license": "capturas",
     "license_ok": false,
     "url": "https://screenlane.com",
     "repo": "",
-    "needs": ["reference", "mobile screen", "paywall", "empty state"],
-    "modes": ["read", "persuade"],
+    "needs": [
+      "reference",
+      "mobile screen",
+      "paywall",
+      "empty state"
+    ],
+    "modes": [
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -801,15 +1414,26 @@
     "id": "21st-dev",
     "name": "21st.dev",
     "kind": "gallery",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "reference",
     "license": "mista",
     "license_ok": false,
     "url": "https://21st.dev",
     "repo": "",
-    "needs": ["community component", "hero", "inspiration"],
-    "modes": ["persuade"],
+    "needs": [
+      "community component",
+      "hero",
+      "inspiration"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "",
     "usage": "reference",
@@ -820,15 +1444,27 @@
     "id": "aceternity",
     "name": "Aceternity UI",
     "kind": "license-trap",
-    "stack": ["react", "tailwind"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "motion",
     "license": "Aceternity License",
     "license_ok": false,
     "url": "https://ui.aceternity.com",
     "repo": "",
-    "needs": ["hero", "spotlight", "3d card", "landing"],
-    "modes": ["persuade"],
+    "needs": [
+      "hero",
+      "spotlight",
+      "3d card",
+      "landing"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "",
     "usage": "reference",
@@ -839,15 +1475,25 @@
     "id": "react-bits",
     "name": "React Bits",
     "kind": "license-trap",
-    "stack": ["react"],
-    "platforms": ["system"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "motion",
     "license": "MIT + Commons Clause",
     "license_ok": false,
     "url": "https://reactbits.dev",
     "repo": "https://github.com/DavidHDev/react-bits",
-    "needs": ["text animation", "background", "landing"],
-    "modes": ["persuade"],
+    "needs": [
+      "text animation",
+      "background",
+      "landing"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "",
     "usage": "end-product",
@@ -858,15 +1504,28 @@
     "id": "tailwind-plus",
     "name": "Tailwind Plus",
     "kind": "license-trap",
-    "stack": ["react", "tailwind", "html"],
-    "platforms": ["system"],
+    "stack": [
+      "react",
+      "tailwind",
+      "html"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "marketing",
     "license": "comercial",
     "license_ok": false,
     "url": "https://tailwindcss.com/plus",
     "repo": "",
-    "needs": ["pricing", "application ui", "marketing"],
-    "modes": ["operate", "persuade"],
+    "needs": [
+      "pricing",
+      "application ui",
+      "marketing"
+    ],
+    "modes": [
+      "operate",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -877,15 +1536,34 @@
     "id": "apple-hig",
     "name": "Apple Human Interface Guidelines",
     "kind": "official",
-    "stack": ["ios", "swiftui", "all"],
-    "platforms": ["ios", "mobile", "desktop"],
+    "stack": [
+      "ios",
+      "swiftui",
+      "all"
+    ],
+    "platforms": [
+      "ios",
+      "mobile",
+      "desktop"
+    ],
     "category": "platform-guide",
     "license": "documentacao",
     "license_ok": false,
     "url": "https://developer.apple.com/design/human-interface-guidelines",
     "repo": "",
-    "needs": ["tab bar", "sheet", "safe area", "navigation", "liquid glass", "macos window"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "tab bar",
+      "sheet",
+      "safe area",
+      "navigation",
+      "liquid glass",
+      "macos window"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -896,15 +1574,28 @@
     "id": "fluent-2",
     "name": "Microsoft Fluent 2",
     "kind": "official",
-    "stack": ["all"],
-    "platforms": ["desktop"],
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "desktop"
+    ],
     "category": "platform-guide",
     "license": "documentacao",
     "license_ok": false,
     "url": "https://fluent2.microsoft.design",
     "repo": "",
-    "needs": ["windows", "density", "command", "titlebar", "desktop"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "windows",
+      "density",
+      "command",
+      "titlebar",
+      "desktop"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -915,15 +1606,28 @@
     "id": "geist",
     "name": "Vercel Geist",
     "kind": "anatomy",
-    "stack": ["react"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "design-system",
     "license": "referencia",
     "license_ok": false,
     "url": "https://vercel.com/geist",
     "repo": "",
-    "needs": ["dark mode", "typography", "web app", "dashboard shell"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "dark mode",
+      "typography",
+      "web app",
+      "dashboard shell"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -934,15 +1638,27 @@
     "id": "primer",
     "name": "GitHub Primer",
     "kind": "anatomy",
-    "stack": ["react"],
-    "platforms": ["system", "desktop"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "design-system",
     "license": "referencia",
     "license_ok": false,
     "url": "https://primer.style",
     "repo": "https://github.com/primer/react",
-    "needs": ["dense", "responsive", "admin", "github"],
-    "modes": ["operate"],
+    "needs": [
+      "dense",
+      "responsive",
+      "admin",
+      "github"
+    ],
+    "modes": [
+      "operate"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -953,15 +1669,29 @@
     "id": "polaris",
     "name": "Shopify Polaris",
     "kind": "anatomy",
-    "stack": ["react"],
-    "platforms": ["system", "desktop", "mobile"],
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "design-system",
     "license": "referencia",
     "license_ok": false,
     "url": "https://polaris.shopify.com",
     "repo": "https://github.com/Shopify/polaris",
-    "needs": ["admin", "saas", "shopify", "index table", "settings"],
-    "modes": ["operate"],
+    "needs": [
+      "admin",
+      "saas",
+      "shopify",
+      "index table",
+      "settings"
+    ],
+    "modes": [
+      "operate"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -972,15 +1702,33 @@
     "id": "aria-apg",
     "name": "ARIA Authoring Practices",
     "kind": "official",
-    "stack": ["all"],
-    "platforms": ["system", "desktop", "mobile"],
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "accessibility",
     "license": "W3C",
     "license_ok": false,
     "url": "https://www.w3.org/WAI/ARIA/apg",
     "repo": "",
-    "needs": ["keyboard", "dialog", "menu", "tabs", "combobox", "grid", "landmarks"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "keyboard",
+      "dialog",
+      "menu",
+      "tabs",
+      "combobox",
+      "grid",
+      "landmarks"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -991,15 +1739,33 @@
     "id": "laws-of-ux",
     "name": "Laws of UX",
     "kind": "official",
-    "stack": ["all"],
-    "platforms": ["system", "desktop", "mobile", "ios", "android"],
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "foundations",
     "license": "conteudo do site",
     "license_ok": false,
     "url": "https://lawsofux.com",
     "repo": "",
-    "needs": ["proximity", "fitts", "hick", "hierarchy", "cognitive"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "proximity",
+      "fitts",
+      "hick",
+      "hierarchy",
+      "cognitive"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -1010,15 +1776,30 @@
     "id": "inclusive-components",
     "name": "Inclusive Components",
     "kind": "official",
-    "stack": ["html"],
-    "platforms": ["system", "desktop", "mobile"],
+    "stack": [
+      "html"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "accessibility",
     "license": "conteudo do site",
     "license_ok": false,
     "url": "https://inclusive-components.design",
     "repo": "",
-    "needs": ["tabs", "cards", "notifications", "form", "inclusive"],
-    "modes": ["operate", "read"],
+    "needs": [
+      "tabs",
+      "cards",
+      "notifications",
+      "form",
+      "inclusive"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -1029,15 +1810,32 @@
     "id": "banani",
     "name": "Banani References",
     "kind": "gallery",
-    "stack": ["ios", "android"],
-    "platforms": ["mobile", "ios", "android"],
+    "stack": [
+      "ios",
+      "android"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "reference",
     "license": "capturas",
     "license_ok": false,
     "url": "https://banani.co/references",
     "repo": "",
-    "needs": ["reference", "mobile screen", "ios", "android", "flow"],
-    "modes": ["operate", "read", "persuade"],
+    "needs": [
+      "reference",
+      "mobile screen",
+      "ios",
+      "android",
+      "flow"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
     "flashy": false,
     "install": "",
     "usage": "reference",
@@ -1048,15 +1846,32 @@
     "id": "60fps",
     "name": "60fps.design",
     "kind": "gallery",
-    "stack": ["ios", "android", "react"],
-    "platforms": ["mobile", "ios", "android", "system"],
+    "stack": [
+      "ios",
+      "android",
+      "react"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android",
+      "system"
+    ],
     "category": "motion-reference",
     "license": "galeria; acervo completo pago",
     "license_ok": false,
     "url": "https://60fps.design",
     "repo": "",
-    "needs": ["microinteraction", "transition", "gesture", "motion"],
-    "modes": ["read", "persuade"],
+    "needs": [
+      "microinteraction",
+      "transition",
+      "gesture",
+      "motion"
+    ],
+    "modes": [
+      "read",
+      "persuade"
+    ],
     "flashy": true,
     "install": "",
     "usage": "reference",
@@ -1067,19 +1882,312 @@
     "id": "pixlpin",
     "name": "Pixlpin",
     "kind": "gallery",
-    "stack": ["all"],
-    "platforms": ["system"],
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
     "category": "inspiration",
     "license": "galeria",
     "license_ok": false,
     "url": "https://pixlpin.com",
     "repo": "",
-    "needs": ["campaign", "poster", "landing motion", "inspiration"],
-    "modes": ["persuade"],
+    "needs": [
+      "campaign",
+      "poster",
+      "landing motion",
+      "inspiration"
+    ],
+    "modes": [
+      "persuade"
+    ],
     "flashy": true,
     "install": "",
     "usage": "reference",
     "use_case": "Pecas de campanha, poster e motion. Nao e anatomia de app operacional nem de sistema",
     "a11y_notes": "Nao usar como padrao de estrutura"
+  },
+  {
+    "id": "apache-echarts",
+    "name": "Apache ECharts",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://echarts.apache.org",
+    "repo": "apache/echarts",
+    "needs": [
+      "chart",
+      "grafico",
+      "financeiro",
+      "projecao",
+      "linha",
+      "barra",
+      "area",
+      "sparkline",
+      "dashboard",
+      "telemetria",
+      "kpi"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install echarts",
+    "usage": "dependency",
+    "use_case": "Graficos financeiros, curvas de caixa, series temporais, comparativos e visualizacoes interativas de alta densidade em HTML puro ou qualquer framework",
+    "a11y_notes": "Suporta aria.enabled=true para gerar descricoes acessiveis e padronizacao de cores via tema proprio da Biblia"
+  },
+  {
+    "id": "tabulator-tables",
+    "name": "Tabulator",
+    "kind": "library",
+    "stack": [
+      "html",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "table",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://tabulator.info",
+    "repo": "olifolkerd/tabulator",
+    "needs": [
+      "table",
+      "tabela",
+      "grid",
+      "filtro",
+      "ordenacao",
+      "paginacao",
+      "edicao inline",
+      "financeiro",
+      "dados"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install tabulator-tables",
+    "usage": "dependency",
+    "use_case": "Tabelas interativas densas em JavaScript/HTML puro com ordenacao, filtros por coluna, congelamento de colunas e virtualizacao",
+    "a11y_notes": "Re-tematize as bordas, alinhamento numerico a direita e tabular-nums pelos tokens da Biblia"
+  },
+  {
+    "id": "sortablejs",
+    "name": "SortableJS",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "drag-and-drop",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://sortablejs.github.io/Sortable/",
+    "repo": "SortableJS/Sortable",
+    "needs": [
+      "kanban",
+      "funil",
+      "drag",
+      "arrastar",
+      "ordenar",
+      "colunas",
+      "pipeline",
+      "board"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install sortablejs",
+    "usage": "dependency",
+    "use_case": "Arraste fluido de cards entre colunas de funil/Kanban e reordenacao de filas em HTML puro, touch e desktop",
+    "a11y_notes": "Combine sempre com acao alternativa por teclado ou menu contextual para mover etapa sem mouse"
+  },
+  {
+    "id": "floating-ui",
+    "name": "Floating UI",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "overlay",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://floating-ui.com",
+    "repo": "floating-ui/floating-ui",
+    "needs": [
+      "popover",
+      "tooltip",
+      "dropdown",
+      "menu",
+      "context menu",
+      "ancorado",
+      "overlay"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @floating-ui/dom",
+    "usage": "dependency",
+    "use_case": "Posicionamento inteligente sem corte de viewport para popovers, menus contextuais, tooltips e seletores em HTML/JS ou React",
+    "a11y_notes": "Sempre gerencie foco, aria-expanded e fechamento por Esc junto do posicionamento"
+  },
+  {
+    "id": "ninja-keys",
+    "name": "ninja-keys",
+    "kind": "library",
+    "stack": [
+      "html",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "command-palette",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://github.com/ssleptsov/ninja-keys",
+    "repo": "ssleptsov/ninja-keys",
+    "needs": [
+      "command palette",
+      "cmdk",
+      "ctrl+k",
+      "busca",
+      "atalho",
+      "rotina",
+      "teclado"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install ninja-keys",
+    "usage": "dependency",
+    "use_case": "Command Palette Cmd+K / Ctrl+K como Web Component nativo para HTML puro, sem precisar de React",
+    "a11y_notes": "Navegacao integral por setas, Enter e Esc; re-tematize as variaveis CSS --ninja-* com tokens.css"
+  },
+  {
+    "id": "phosphor-icons",
+    "name": "Phosphor Icons",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "flutter",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "category": "icons",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://phosphoricons.com",
+    "repo": "phosphor-icons/core",
+    "needs": [
+      "icon",
+      "icone",
+      "svg",
+      "duotone",
+      "navegacao",
+      "sidebar",
+      "toolbar"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @phosphor-icons/core",
+    "usage": "dependency",
+    "use_case": "Familia flexivel de icones SVG (regular, bold, duotone, fill) com consistencia optica para sistemas desktop e mobile",
+    "a11y_notes": "Use regular/duotone no padrao, fill no ativo e aria-hidden=true quando acompanhado de texto"
+  },
+  {
+    "id": "lucide-icons",
+    "name": "Lucide Icons",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "license": "ISC",
+    "license_ok": true,
+    "url": "https://lucide.dev",
+    "repo": "lucide-icons/lucide",
+    "needs": [
+      "icon",
+      "icone",
+      "svg",
+      "outline",
+      "navegacao",
+      "sidebar",
+      "botao"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install lucide",
+    "usage": "dependency",
+    "use_case": "Icones SVG limpos e leves (1.5px-2px) com recorte cirurgico de sprites SVG para prototipos HTML ou apps web",
+    "a11y_notes": "Emparelhe stroke-width com o peso tipografico e prefira sprites SVG enxutos ao bundle inteiro"
   }
 ]

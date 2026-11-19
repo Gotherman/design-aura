@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.0.1"
+  version: "2.0.2"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
