@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.1.8"
+  version: "1.1.9"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -20,7 +20,7 @@ Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual 
 Leia o repositório e o planejamento por completo antes de desenhar: concepção, PRD, proposta, rotas, telas, tokens, componentes, logo e o vocabulário real do negócio. Cada projeto ganha um design saído desse material. Uma agência de viagens e um caixa de banco não compartilham a mesma pele.
 
 1. **Repositório que já tem design e telas.** Dois caminhos, e eles não se misturam:
-   - **Remodelar o visual:** o pedido é trocar a linguagem inteira pela Design Aura. Mantenha rotas, tarefas e dados reais. Substitua tokens, tipografia, shell, densidade e componentes. Não conserve a cara antiga por cautela.
+   - **Remodelar o visual:** o pedido, e principalmente `/designaura`, já diz que as telas atuais não servem. Leia-as só para extrair tarefas, dados e o que falhou. Não baseie layout, navegação, botões nem composição nelas. Mantenha rotas, tarefas e dados reais. A estrutura nova sai do fluxo de trabalho do projeto e das regras da skill.
    - **Ajuste pontual:** altere só o que foi pedido e preserve o que já funciona.
 2. **Planejamento sem telas** (`CONCEPCAO.md`, PRD, requisitos, proposta): extraia domínio, perfis, módulos, fluxos e restrições já decididas.
 3. **Ideia do zero:** conduza a especificação enxuta antes de gerar código ou telas.
@@ -161,7 +161,7 @@ Qualquer violação abaixo **reprova automaticamente** na auditoria (`BLOCK`). D
 
 ## Modos Rápidos de Uso
 
-`/designaura` no chat de um projeto começa na hora. Se esse projeto já tem telas, o trabalho é remodelar: leia o repositório e o planejamento, mantenha rotas e dados, troque a linguagem visual. O comando está na skill `designaura`.
+`/designaura` no chat de um projeto começa na hora. Se esse projeto já tem telas, elas não são o modelo: o comando significa que não agradaram. Extraia tarefas e dados, descarte a composição, e redesenhe pelo fluxo de trabalho. O comando está na skill `designaura`.
 
 Quando o usuário pedir uma ação específica em um projeto existente, execute apenas o necessário sem ritual excessivo:
 
