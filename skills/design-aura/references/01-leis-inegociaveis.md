@@ -9,11 +9,11 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
 | `DA-B1-01` | Proibido gradientes roxo/índigo/violeta/neon genéricos como paleta padrão sem justificativa explícita da marca ou do briefing. | `lint_design_aura.py` + revisão da `DESIGN-BIBLE.md` |
-| `DA-B1-02` | Proibido glow colorido excessivo (`box-shadow: 0 0 24px ...`), blobs desfocados decorativos, glassmorphism sem função de hierarquia ou bordas brilhantes em todos os elementos. | `lint_design_aura.py` + inspeção visual |
+| `DA-B1-02` | Proibido glow neon pesado (`box-shadow: 0 0 24px+` saturado), blobs desfocados decorativos, glassmorphism sem função de hierarquia ou bordas brilhantes em todos os elementos. *(Micro-halos sutis `<= 20px` com baixa opacidade em anéis de foco ou badges de score são permitidos.)* | `lint_design_aura.py` + inspeção visual |
 | `DA-B1-03` | Proibido usar emojis ou ícones clichês de IA (`✨`, `🚀`, `⚡`, `🛡️`, `🔥`, `💡`, `🎯`) como decoração genérica em títulos, botões, badges ou cards. | `lint_design_aura.py` |
 | `DA-B1-04` | Proibido misturar famílias ou estilos de ícones (outline vs solid aleatórios) ou espessuras de traço inconsistentes na mesma interface. Regra: outline como padrão; fill apenas no estado ativo; traço casado com o peso da fonte (`1.5px` para 400, `2px` para 500–600). | Revisão de SVG/ícones |
-| `DA-B1-05` | Proibido eyebrows/kickers decorativos em caixa alta com `letter-spacing` largo acima de títulos (`"FEATURES"`, `"PASSPORT"`, `"HOW IT WORKS"`) e numeração decorativa (`"01 //"`, `"01 ·"` quando não é passo real). | `lint_design_aura.py` |
-| `DA-B1-06` | Proibido gradiente em texto (`bg-clip-text` / `background-clip: text`), barrinha colorida em apenas um lado de card arredondado (`border-l-4 rounded-xl`) e dots/badges `LIVE`/`NEW`/`AI` estáticos sem binding real de estado. | `lint_design_aura.py` |
+| `DA-B1-05` | Proibido eyebrows clichês de landing IA (`"FEATURES"`, `"HOW IT WORKS"`, `"WHY CHOOSE US"`) e numeração decorativa (`"01 //"`, `"01 ·"` quando não é passo real). *(Rótulos reais de contexto, data ou módulo como `"Novembro / Dezembro 2026"` ou `"Fila por SLA"` são bem-vindos, mesmo usando classes `.eyebrow`/`.kicker`.)* | `lint_design_aura.py` |
+| `DA-B1-06` | Proibido gradiente em texto (`bg-clip-text` / `background-clip: text`), dots/badges `LIVE`/`NEW`/`AI` falsos sem estado real e barrinhas coloridas repetidas em todos os cards/KPIs. *(Borda esquerda sutil em callouts/alertas, blockquotes ou item ativo de menu é permitida.)* | `lint_design_aura.py` |
 
 ---
 
@@ -25,7 +25,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B2-02` | Proibido repetir o template preguiçoso de "3 cards idênticos com ícone em círculo/quadrado colorido + título + 2 linhas" como solução padrão de seção. | Inspeção visual |
 | `DA-B2-03` | Proibido centralizar blocos de texto longos ou listas de leitura; alinhamento deve favorecer escaneabilidade pela margem esquerda. | `lint_design_aura.py` |
 | `DA-B2-04` | Proibido espaçamento uniforme sem agrupamento lógico (**Lei da Proximidade**): elementos relacionados ficam mais próximos entre si do que de grupos distintos; sempre há mais espaço acima de um título do que abaixo dele. | Inspeção visual + CSS |
-| `DA-B2-05` | Proibido múltiplos CTAs primários competindo com o mesmo peso visual na mesma dobra/tela. Cada vista tem no máximo 1 ação primária dominante. | `lint_design_aura.py` + inspeção visual |
+| `DA-B2-05` | Proibido múltiplos CTAs primários competindo com o mesmo peso visual **no mesmo contexto/painel**. Cada vista/modal/drawer tem no máximo 1 ação primária sólida dominante. | `lint_design_aura.py` + inspeção visual |
 | `DA-B2-06` | **Alto Contraste Ótico & Zero Espaços Mortos**: Light Mode usa canvas aterrado com separação clara entre fundo (`Z0/Z1`) e cartões (`Z2`) por contorno nítido (`1.25px`) + sombra dupla sutil — proibido branco lavado onde tudo se mistura. Desktop operacional usa composição de 2 ou 3 zonas sem vazio morto (`DA-DEAD-SPACE`). | `capture_and_audit.mjs` + inspeção 1440×900 |
 | `DA-B2-07` | **Anti-poluição e uso humano.** Em poucos segundos a pessoa entende onde está, para onde pode ir, onde clicar e o que pode fazer. Proibido despejar o sistema inteiro numa tela, espalhar botões do mesmo peso, ou posicionar a navegação fora do lugar que a plataforma ensinou. Densidade é permitida quando o trabalho é denso e os grupos estão separados. Proibido esconder a ação principal ou a saída para a tela parecer vazia. | Revisão da tela e do fluxo |
 | `DA-B2-08` | **Piso de Substância & Zero Telas Casca (`DA-STUB-SCREEN` / `DA-RAW-LINK-LIST` / `DA-DEAD-SPACE`):** proibidas telas rasas com apenas 1–2 linhas em tabelas operacionais, inspectors laterais quase vazios (ex.: só 1 linha de texto e um buraco branco), copy de desculpa de stub (*"não estão nesta amostra"*, *"semente do funil"*) ou links `<a>` azuis sublinhados crus servindo de lista/menu de aplicativo. | `lint_design_aura.py` (`DA-B2-08A/B`) + `capture_and_audit.mjs` |
@@ -37,8 +37,8 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
 | `DA-B3-01` | Obrigatório respeitar no mínimo **WCAG AA** (`>= 4.5:1` texto normal e placeholders; `>= 3.0:1` texto grande `>= 18pt` / `14pt bold` e componentes UI) e **APCA** (`|Lc| >= 60` corpo, `>= 45` grande/UI). | `audit_contrast.py --strict` + `capture_and_audit.mjs` |
-| `DA-B3-02` | Proibido usar preto puro (`#000000`) com branco puro (`#FFFFFF`) sem controle de elevação de superfície, ou textos cinza lavados que prejudicam a leitura em Dark Mode. Em superfícies coloridas, matizar o texto secundário pela cor do fundo/frente, nunca cinza genérico. | `audit_contrast.py` + `lint_design_aura.py` |
-| `DA-B3-03` | Proibido áreas de toque/clique menores que **44×44px** em interfaces mobile/iOS (e **48×48dp** com 8dp de respiro em Android), com texto de corpo mínimo de **14px** (ideal 15–16px web, 17pt iOS). | `capture_and_audit.mjs` + `lint_design_aura.py` |
+| `DA-B3-02` | Proibido parear `#000000` puro com `#FFFFFF` puro sem controle de elevação de superfície, ou textos cinza lavados em Dark Mode. *(Cartões `#FFFFFF` elevados em `Z2` sobre canvas aterrado `Z1` no Light Mode são recomendados!)* Em superfícies coloridas, matize o texto secundário pela cor do fundo, nunca cinza genérico. | `audit_contrast.py` + `lint_design_aura.py` |
+| `DA-B3-03` | Proibido áreas de toque/clique menores que **44×44px** em interfaces mobile/iOS (e **48×48dp** com 8dp de respiro em Android), com texto de corpo mínimo de **14px** (e rótulos técnicos `>= 11–12px`; `< 10px` bloqueia; ícones `<i>` internos ficam isentos). | `capture_and_audit.mjs` + `lint_design_aura.py` |
 | `DA-B3-04` | **Vitalidade Cromática da Marca:** proibido degradar/escurecer uma cor vibrante da marca até virar marrom, bege sujo ou cinza apagado apenas para forçar texto branco no botão. Quando a cor vibrante (ex.: laranja, âmbar, verde-lima) tem luminância alta, use texto escuro calibrado (`#101822` / `#140804`) sobre o acento vivo ou variante deep saturada, mantendo WCAG AA `>= 4.5:1`. | `audit_contrast.py` + inspeção da Prancha Visual |
 
 ---
@@ -47,7 +47,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
-| `DA-B4-01` | Obrigatório contraste tipográfico claro entre título, subtítulo, corpo e metadados (escala, peso e `line-height`), com medida de leitura confortável (`65–75ch`). Proibido peso `800`/`900` gratuito em textos corridos ou UI comum. | `lint_design_aura.py` + inspeção |
+| `DA-B4-01` | Obrigatório contraste tipográfico claro entre título, subtítulo, corpo e metadados (escala, peso e `line-height`), com medida de leitura confortável (`65–75ch`). Peso `800` é bem-vindo em Display/KPIs; evite `900`/`font-black` gratuito em textos corridos. | `lint_design_aura.py` + inspeção |
 | `DA-B4-02` | Obrigatório `font-variant-numeric: tabular-nums` (`tabular-nums`) em todos os números dinâmicos, preços, contadores, timers e colunas numéricas de tabela. | `lint_design_aura.py` + inspeção |
 | `DA-B4-03` | Obrigatório `text-wrap: balance` em títulos curtos (≤6 linhas) e `text-wrap: pretty` em parágrafos/descrições, além de `-webkit-font-smoothing: antialiased` no root. Todo texto dinâmico deve prever quebra limpa ou `text-overflow: ellipsis` sem estourar containers. | `capture_and_audit.mjs` + CSS |
 | `DA-B4-04` | **Tipografia Adequada ao Modo `Operate` (`DA-SERIF-OPERATE`):** em sistemas operacionais, ERPs e dashboards (`Operate`), proibido usar fontes serifadas editoriais (`Source Serif`, `Georgia`, `Palatino`, `Times`, `Merriweather`, `Playfair`) em títulos ou corpo sem autorização explícita do usuário. Use sans-serif geométrica/neo-grotesca nítida + mono tabular. | `lint_design_aura.py` + `capture_and_audit.mjs` |
@@ -60,7 +60,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 |---|---|---|
 | `DA-B5-01` | Proibido usar `"Lorem ipsum"`, `"John Doe"`, `"Jane Doe"`, `"Acme Corp"` ou placeholders genéricos em telas entregues. | `lint_design_aura.py` |
 | `DA-B5-02` | Proibido microcopy clichê de IA (`"Transforme seu negócio"`, `"Eleve sua experiência"`, `"Solução definitiva"`, `"Potencializado por IA"`, `"Revolucione sua rotina"`, `"Unlock your potential"`). O texto deve usar verbos concretos e vocabulário do domínio real. | `lint_design_aura.py` |
-| `DA-B5-03` | Proibido subtítulos reflexos que repetem o título, *botsplaining* (`"Clique no botão abaixo para..."`), notas de design vazadas (`"(atualiza em tempo real)"`) e correntes de status inchadas (`"12 itens · Sincronizado · v2.1"`). CTAs dizem exatamente o que fazem. | `lint_design_aura.py` + revisão textual |
+| `DA-B5-03` | Proibido subtítulos-eco que apenas repetem o título (*"Contas a pagar — Gerencie suas contas"*), *botsplaining* (`"Clique no botão abaixo para..."`) e notas de dev vazadas. *(Subtítulos com dados reais e contagem como `"140 editais abertos · 17 encerram em 7 dias"` são ótimos.)* | `lint_design_aura.py` + revisão textual |
 
 ---
 
@@ -70,7 +70,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 |---|---|---|
 | `DA-B6-01` | Proibido entregar apenas o "caminho feliz": fluxos e componentes devem prever estados reais aplicáveis (`loading/skeleton`, `empty state` com próxima ação, `error` com recuperação, `sucesso` com feedback). | Revisão de componentes/telas |
 | `DA-B6-02` | Proibido `transition: all` / `transition-all`, `hover:scale-105` em todo card, `animate-bounce`/`animate-pulse` decorativo ou transições `> 300ms` em controles simples. Interações devem usar **CSS transitions interrompíveis** em propriedades específicas, saída mais rápida que a entrada, `active:scale-[0.97]` tátil em botões e respeito obrigatório a `prefers-reduced-motion`. | `lint_design_aura.py` + CSS |
-| `DA-B6-04` | Animação infinita só enquanto algo espera (skeleton, spinner, progresso). Página, card e componente podem animar quando a mudança de estado precisa ser percebida. Desktop, iOS e Android seguem curvas diferentes: ver [10-motion-anti-slop.md](10-motion-anti-slop.md). | `lint_design_aura.py` + revisão |
+| `DA-B6-04` | Animação infinita só para estados reais de espera ou sinal ativo (skeleton, spinner, progresso, indicador de digitação `typing`, gravação ou alerta SLA crítico). Página, card e componente animam quando a mudança de estado precisa ser percebida. Ver [10-motion-anti-slop.md](10-motion-anti-slop.md). | `lint_design_aura.py` + revisão |
 | `DA-B6-03` | Proibido esconder ações críticas ou navegação essencial atrás de padrões confusos por estética minimalista. Superfícies do browser (`::selection`, `caret-color`, scrollbars, `text-underline-offset`) devem ser tematizadas pela paleta. | Inspeção CSS + navegador |
 
 ---
@@ -80,8 +80,8 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
 | `DA-B7-01` | **Concentricidade obrigatória**: proibido raios idênticos em elementos aninhados com padding `<= 24px`. Fórmula: `Raio Interno = Raio Externo - Padding` (ou `Externo = Interno + Padding`). | `lint_design_aura.py` + inspeção CSS |
-| `DA-B7-02` | Proibido *magic numbers* arbitrários (`7px`, `11px`, `13px`, `15px`, `17px`, `19px`) fora da escala estrita baseada em **4px / 8px** (exceção: `2px`, `6px`, `10px`, `14px` dentro de controles compactos ou ajuste óptico `-2px` no lado do ícone de um botão). | `lint_design_aura.py` |
-| `DA-B7-03` | Proibido sombras pretas chapadas como único recurso de profundidade em Dark Mode: a hierarquia `Z0→Z4` em Dark Mode deve evoluir por **luminosidade progressiva de superfície + contorno nítido** (`1px–1.25px`). Em Light Mode, preferir sombra-como-borda em 3 camadas. | `lint_design_aura.py` + `tokens.css` |
+| `DA-B7-02` | Preferir a escala baseada em **4px / 8px** (`4, 8, 12, 16, 20, 24, 32, 40, 48, 64px`), permitindo ajustes ópticos curtos (`2, 6, 7, 9, 10, 11, 14px`) dentro de controles/ícones. Magic numbers arbitrários maiores (`13, 15, 17, 19, 21, 23px`) geram alerta `MEDIUM` (polimento, não bloqueio). | `lint_design_aura.py` (`MEDIUM`) |
+| `DA-B7-03` | Proibido usar sombra preta chapada como único recurso de elevação em cards Dark Mode: a hierarquia `Z0→Z4` evolui por **luminosidade progressiva + contorno nítido** (`1px–1.25px`). *(Sombras `inset` em poços `Z0` e drop-shadows em molduras de aparelho/mockup são permitidas.)* | `lint_design_aura.py` + `tokens.css` |
 
 ---
 
@@ -100,7 +100,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
 | `DA-B9-01` | Proibido usar `placeholder` como substituto de `<label>` visível (ou `aria-label` quando controle de busca/filtro em barra). | `lint_design_aura.py` + `capture_and_audit.mjs` |
-| `DA-B9-02` | Proibido remover `:focus-visible` (`outline: none` / `outline-none`) sem fornecer anel de foco acessível equivalente (`2px+`, contraste >= 3:1). | `lint_design_aura.py` |
+| `DA-B9-02` | Proibido remover `:focus-visible` (`outline: none` / `outline-none`) sem fornecer anel de foco acessível equivalente (`:focus-visible` ou `:focus-within` no container pai em barras de busca/composers compostos). | `lint_design_aura.py` |
 | `DA-B9-03` | Obrigatório prever estados reais (`hover`, `active`, `disabled`, `focus`, `invalid`) com mensagens de erro junto ao campo que dizem o que aconteceu e como corrigir. | Revisão de fluxo |
 | `DA-B9-04` | Proibido empilhar modais (modal sobre modal) ou executar ações destrutivas sem confirmação explícita ou mecanismo imediato de **Desfazer (Undo)**. | Revisão de fluxo |
 | `DA-B9-05` | Proibido deixar `<textarea>`, `<select>` ou `<input>` com visual cru do navegador sem classe/estilização do design system (borda, padding, raio e `:focus-visible`). | `lint_design_aura.py` + inspeção visual |

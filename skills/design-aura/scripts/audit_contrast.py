@@ -352,7 +352,11 @@ def evaluate_pair(
 
     if ratio < min_wcag:
         severity = "BLOCK"
-        reasons.append(f"WCAG {ratio}:1 abaixo do minimo {min_wcag}:1")
+        hint = ""
+        if "on-accent" in label or "on-warning" in label or "on-success" in label:
+            if relative_luminance(fg_rgb) > 0.8 and relative_luminance(bg_rgb) > 0.16:
+                hint = " (Dica DA-B3-04: use texto escuro #101822 sobre a cor viva em vez de apagar a marca para marrom/oliva morto)"
+        reasons.append(f"WCAG {ratio}:1 abaixo do minimo {min_wcag}:1{hint}")
 
     if abs_lc < min_apca:
         if severity != "BLOCK":
@@ -421,6 +425,23 @@ def parse_css_themes(css_text: str) -> dict[str, dict[str, str]]:
     return result
 
 
+TOKEN_ALIASES = {
+    "surface-z0": ["surface-z0", "da-surface-z0", "bg-well", "well"],
+    "surface-z1": ["surface-z1", "da-surface-z1", "bg-canvas", "canvas", "bg"],
+    "surface-z2": ["surface-z2", "da-surface-z2", "bg-card", "card", "surface"],
+    "text-strong": ["text-strong", "da-text-strong", "ink-strong", "fg-strong", "text"],
+    "text-body": ["text-body", "da-text-body", "ink", "fg", "text-primary", "text"],
+    "text-muted": ["text-muted", "da-text-muted", "ink-muted", "muted"],
+}
+
+
+def _resolve_token_key(tmap: dict[str, str], key: str) -> str | None:
+    for cand in TOKEN_ALIASES.get(key, [key, f"da-{key}"]):
+        if cand in tmap:
+            return tmap[cand]
+    return tmap.get(key) or tmap.get(f"da-{key}")
+
+
 def audit_file(path: Path) -> list[dict]:
     results = []
     if path.suffix.lower() == ".json":
@@ -432,16 +453,17 @@ def audit_file(path: Path) -> list[dict]:
             if not tmap:
                 continue
             for fg_k, bg_k, kind, label in REQUIRED_LIGHT_DARK_PAIRS:
-                if fg_k in tmap and bg_k in tmap:
-                    results.append(evaluate_pair(tmap[fg_k], tmap[bg_k], kind, label, theme=tname, token_map=tmap))
+                fg_val = _resolve_token_key(tmap, fg_k)
+                bg_val = _resolve_token_key(tmap, bg_k)
+                if fg_val and bg_val:
+                    results.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
     else:
         css_text = path.read_text(encoding="utf-8")
         themes = parse_css_themes(css_text)
         for tname, tmap in themes.items():
             for fg_k, bg_k, kind, label in REQUIRED_LIGHT_DARK_PAIRS:
-                # Suporte a prefixo --da- ou nome direto --
-                fg_val = tmap.get(fg_k) or tmap.get(f"da-{fg_k}")
-                bg_val = tmap.get(bg_k) or tmap.get(f"da-{bg_k}")
+                fg_val = _resolve_token_key(tmap, fg_k)
+                bg_val = _resolve_token_key(tmap, bg_k)
                 if fg_val and bg_val:
                     results.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
     return results

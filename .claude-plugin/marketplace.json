@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Design Aura v2.0 skill for Desktop, Mobile (iOS HIG / Android M3), and Complex Systems UI/UX direction, Visual Design Bible, Golden Screens Gate, 10 Non-Negotiable Laws, OSS component discovery, platform motion, multi-agent orchestration (1-3 screens per subagent with immediate Fast-Audit), and interactive Hub-and-Spoke Figma-style canvas showcase.",
-    "version": "2.0.2"
+    "version": "2.1.0"
   },
   "plugins": [
     {
       "name": "design-aura",
       "source": "./",
       "description": "Design Aura v2.0 — End-to-end UI/UX direction, Visual Design Bible, Golden Screens Gate, 10 Non-Negotiable anti-slop & craft laws, WCAG/APCA contrast & DOM craft auditing, and interactive Hub-and-Spoke Figma-style screen flow showcase.",
-      "version": "2.0.2",
+      "version": "2.1.0",
       "author": {
         "name": "Lucas (Gotherman)"
       },

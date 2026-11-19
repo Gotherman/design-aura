@@ -86,12 +86,12 @@ RULES = [
         "severity": "BLOCK",
         "exts": UI_EXTS,
         "pattern": re.compile(
-            r"shadow-\[0_0_(?:1[5-9]|[2-9]\d)px"
-            r"|box-shadow\s*:[^;]*\b0(?:px)?\s+0(?:px)?\s+(?:1[5-9]|[2-9]\d)px\b[^;]*(?:rgba?\(|#)",
+            r"shadow-\[0_0_(?:2[4-9]|[3-9]\d)px"
+            r"|box-shadow\s*:[^;]*\b0(?:px)?\s+0(?:px)?\s+(?:2[4-9]|[3-9]\d)px\b[^;]*(?:rgba?\([^)]*,\s*(?:0\.[4-9]|1(?:\.0+)?)\)|#[0-9a-f]{3,6})",
             re.I,
         ),
-        "message": "Halo de glow colorido com offset zero (decoracao gratuita, Bloco 1)",
-        "fix": "Use elevacao fisica com offset e blur suave no Light Mode ou luminosidade no Dark Mode",
+        "message": "Halo de glow neon pesado com offset zero (decoracao gratuita, Bloco 1)",
+        "fix": "Use elevacao fisica com offset e blur suave no Light Mode ou luminosidade no Dark Mode (micro-halo <= 20px com baixa opacidade e permitido em foco/score)",
     },
     {
         "id": "DA-B1-03",
@@ -106,11 +106,12 @@ RULES = [
         "severity": "BLOCK",
         "exts": MARKUP_EXTS,
         "pattern": re.compile(
-            r'class(?:Name)?="[^"]*\b(?:eyebrow|kicker)\b[^"]*"'
-            r"|>\s*0[1-9]\s*(?://|·|—)\s*[A-ZÀ-Úa-zà-ú]",
+            r">\s*0[1-9]\s*(?://|·|—)\s*[A-ZÀ-Úa-zà-ú]"
+            r"|<(?:span|p|div|small)[^>]*class(?:Name)?=\"[^\"]*(?:eyebrow|kicker)[^\"]*\"[^>]*>\s*(?:FEATURES|HOW IT WORKS|WHY CHOOSE US|OUR PLATFORM|FUNCIONALIDADES|COMO FUNCIONA|BENEF[IÍ]CIOS|RECURSOS)\s*</",
+            re.I,
         ),
-        "message": "Eyebrow decorativo ou numeracao ornamental '01 //' sobre titulo (Bloco 1)",
-        "fix": "Remova o eyebrow/numero ornamental e deixe o titulo principal conduzir a hierarquia",
+        "message": "Eyebrow cliche de landing IA ou numeracao ornamental '01 //' sobre titulo (Bloco 1)",
+        "fix": "Remova o eyebrow cliche/numeracao ornamental; rotulos reais de data, modulo ou contexto sao permitidos",
     },
     {
         "id": "DA-B1-06A",
@@ -122,11 +123,11 @@ RULES = [
     },
     {
         "id": "DA-B1-06B",
-        "severity": "BLOCK",
+        "severity": "MEDIUM",
         "exts": MARKUP_EXTS,
-        "pattern": re.compile(r"\bborder-l-[248]\b[^>]*\brounded-|\brounded-[^>]*\bborder-l-[248]\b"),
-        "message": "Barrinha colorida em um lado de caixa arredondada (Bloco 1)",
-        "fix": "Substitua por borda completa sutil, tint leve de fundo ou icone/badge semantico",
+        "pattern": re.compile(r"class(?:Name)?=\"[^\"]*(?:card|kpi|stat)[^\"]*(?:\bborder-l-[248]\b[^\"]*\brounded-|\brounded-[^\"]*\bborder-l-[248]\b)"),
+        "message": "Barrinha lateral colorida em card/KPI arredondado (callouts/alertas e itens ativos de menu sao permitidos) (Bloco 1)",
+        "fix": "Em cards/KPIs prefira borda completa sutil ou badge semantico; reserve barra lateral para callouts/alertas ou selecao ativa",
     },
     {
         "id": "DA-B1-06C",
@@ -165,17 +166,17 @@ RULES = [
         "id": "DA-B3-03",
         "severity": "BLOCK",
         "exts": UI_EXTS,
-        "pattern": re.compile(r"font-size\s*:\s*(?:[6-9]|10)px\b|\btext-\[(?:[6-9]|10)px\]"),
-        "message": "Tamanho de fonte ilegivel abaixo de 11px em interface (Bloco 3)",
+        "pattern": re.compile(r"font-size\s*:\s*[6-9]px\b|\btext-\[[6-9]px\]"),
+        "message": "Tamanho de fonte ilegivel abaixo de 10px em interface (Bloco 3)",
         "fix": "Eleve para >= 12px em rotulos tecnicos/mono e >= 14px em corpo de leitura",
     },
     {
         "id": "DA-B4-01",
-        "severity": "HIGH",
+        "severity": "MEDIUM",
         "exts": UI_EXTS,
-        "pattern": re.compile(r"\bfont-(?:extrabold|black)\b|font-weight\s*:\s*(?:800|900)\b"),
-        "message": "Peso tipografico excessivo (800/900) fora de display intencional (Bloco 4)",
-        "fix": "Use pesos 500, 600 ou 700 deixando escala e cor criarem a hierarquia",
+        "pattern": re.compile(r"\bfont-black\b|font-weight\s*:\s*900\b"),
+        "message": "Peso tipografico extremo (900 / font-black) fora de display intencional (Bloco 4)",
+        "fix": "Prefira pesos 500-800 (800 e valido em display/KPIs; 400-700 em UI e corpo)",
     },
     {
         "id": "DA-B5-01",
@@ -248,26 +249,26 @@ RULES = [
     },
     {
         "id": "DA-B7-02",
-        "severity": "BLOCK",
+        "severity": "MEDIUM",
         "exts": UI_EXTS,
         "pattern": re.compile(
-            r"(?:margin|padding|gap|row-gap|column-gap)(?:-[a-z]+)?\s*:\s*(?:7|9|11|13|15|17|19|21|23)px\b"
-            r"|\b(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap)-\[(?:7|9|11|13|15|17|19|21|23)px\]",
+            r"(?:margin|padding|gap|row-gap|column-gap)(?:-[a-z]+)?\s*:\s*(?:13|15|17|19|21|23)px\b"
+            r"|\b(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap)-\[(?:13|15|17|19|21|23)px\]",
         ),
-        "message": "Magic number de espacamento fora da escala 4px/8px (Bloco 7)",
-        "fix": "Arredonde para o passo mais proximo de 4, 8, 12, 16, 20, 24, 32px (ou 2/6/10/14px interno de controle)",
+        "message": "Magic number de espacamento fora da escala 4px/8px (ajustes opticos curtos 2/6/7/9/10/11/14px sao permitidos) (Bloco 7)",
+        "fix": "Arredonde para o passo mais proximo da escala 4/8px (12, 16, 20, 24px)",
     },
     {
         "id": "DA-B7-03",
         "severity": "HIGH",
         "exts": UI_EXTS,
         "pattern": re.compile(
-            r"(?:\[data-theme=[\"']dark[\"']\]|\.dark\b)[^{]{0,240}\{[^}]*box-shadow\s*:[^;]*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*(?:0\.[4-9]\d*|1(?:\.0+)?)\s*\)"
+            r"(?:\[data-theme=[\"']dark[\"']\]|\.dark\b)[^{]{0,240}\{[^}]*box-shadow\s*:(?!\s*inset\b)[^;]*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*(?:0\.[5-9]\d*|1(?:\.0+)?)\s*\)"
             r"|dark:[^\s\"']*shadow-\[[^\]]*rgba\(\s*0\s*,\s*0\s*,\s*0",
             re.I | re.S,
         ),
-        "message": "Sombra preta chapada em Dark Mode; elevacao some no fundo escuro (Bloco 7)",
-        "fix": "Suba a luminosidade da superficie e use borda/inset claros. Reserve sombra preta fraca so como apoio, nunca como unico plano",
+        "message": "Sombra preta chapada em Dark Mode como recurso principal de profundidade (inset em well Z0 e moldura de aparelho sao permitidos) (Bloco 7)",
+        "fix": "Suba a luminosidade da superficie e use borda/inset claros. Reserve sombra preta fraca so como apoio",
     },
     {
         "id": "DA-B8-03",
@@ -468,12 +469,26 @@ _PAD_RE = re.compile(r"\b(?:p|px|py|pt|pr|pb|pl)-(?:1|2|3|4|\[(?:4|8|12|16)px\])
 _VOID_TAGS = {"img", "input", "br", "hr", "meta", "link", "source", "area", "col", "embed", "wbr"}
 
 
+_CARD_SUBPART_RE = re.compile(
+    r"(?:^|[-_])card(?:[-_](?:head|header|title|sub|subtitle|body|content|foot|footer|action|actions|meta|row|list|icon|badge|grid|wrap|wrapper|inner|media|img|label|desc|metric|kpi|top|bottom|left|right|val|num|bar|btn|link|tag|pill|sep|divider|note|info|stat|stats))s?$"
+)
+
+
+_NON_CONTAINER_TAGS = {"i", "svg", "path", "span", "img", "small", "strong", "em", "b", "label", "input", "button", "a"}
+_ICON_PREFIXES = ("ph-", "lucide-", "icon-", "fa-", "bi-", "ti-", "ri-", "mdi-", "credit-card", "id-card", "address-card")
+
+
 def _is_cardish(tag: str, classes: str) -> bool:
-    if tag.lower() == "card":
+    tl = tag.lower()
+    if tl == "card":
         return True
+    if tl in _NON_CONTAINER_TAGS:
+        return False
     for token in classes.split():
         name = token.lower()
-        if name in {"card", "da-card", "surface-card"} or name.endswith("-card") or name.startswith("card-") or "-card-" in name:
+        if name.startswith(_ICON_PREFIXES) or _CARD_SUBPART_RE.search(name):
+            continue
+        if name in {"card", "da-card", "surface-card", "h-card", "ui-card"} or name.endswith("-card") or name.endswith("_card"):
             return True
     return False
 
@@ -533,15 +548,15 @@ def _motion_findings(clean_text: str, raw_text: str, ext: str, rel_path: str, st
     findings = []
     for match in re.finditer(r"animation\s*:[^;{}]*\binfinite\b", clean_text, re.I):
         window = clean_text[max(0, match.start() - 180):match.end() + 80]
-        if re.search(r"skeleton|spinner|progress|loading|indeterminate", window, re.I):
+        if re.search(r"skeleton|spinner|spin|progress|loading|indeterminate|shimmer|typing|blink|caret|cursor|recording|sla|ping|pulse-live", window, re.I):
             continue
         findings.append({
             "rule": "DA-B6-04",
             "severity": "HIGH",
             "location": f"{rel_path}:{pos_to_line(starts, match.start())}",
             "evidence": snippet_at(raw_text, match.start()),
-            "message": "Animacao infinita sem papel de espera (Bloco 6)",
-            "fix": "Reserve loop para skeleton, spinner ou progresso real. O resto entra, comunica a mudanca e para",
+            "message": "Animacao infinita decorativa sem papel de espera ou sinal real (Bloco 6)",
+            "fix": "Reserve loop para skeleton, spinner, typing, gravacao ou alerta critico ativo. Remova loops decorativos (drift/float/blob/orb)",
         })
     return findings
 
@@ -592,9 +607,14 @@ def scan_file(path: Path, root: Path) -> list[dict]:
         if ext not in rule["exts"]:
             continue
         for m in rule["pattern"].finditer(clean_text):
-            # Excecao para DA-B9-02 quando :focus-visible esta explicitamente definido logo abaixo ou no arquivo
-            if rule["id"] == "DA-B9-02" and "focus-visible" in clean_text[m.start():m.start() + 300]:
+            # Excecao para DA-B9-02 quando :focus-visible ou :focus-within esta definido no arquivo (ex.: inputs compostos dentro de .search-box)
+            if rule["id"] == "DA-B9-02" and ("focus-visible" in clean_text or "focus-within" in clean_text):
                 continue
+            # Excecao para DA-B7-03 em molduras de dispositivo (.iphone/.phone/.mockup) ou quando o bloco ja tem borda/luminosidade
+            if rule["id"] == "DA-B7-03":
+                matched_block = clean_text[m.start():m.end()]
+                if re.search(r"(?:iphone|phone|mockup|device|bezel|frame)", matched_block, re.I):
+                    continue
             if _allowed(raw_text, m.start(), rule["id"]):
                 continue
             findings.append({

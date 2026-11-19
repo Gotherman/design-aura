@@ -149,6 +149,42 @@ class LintTests(unittest.TestCase):
         ta = self._scan("desktop-chat.html", '<label for="m">Msg</label><textarea id="m"></textarea>')
         self.assertIn("DA-B9-05", {f["rule"] for f in ta})
 
+    def test_v21_pragmatic_rules_no_false_positives_on_good_ui(self):
+        # 1. BEM card sub-elements (card-head, card-title, card-body) MUST NOT trigger DA-B2-01
+        bem_card = self._scan(
+            "bem.html",
+            '<article class="h-card"><div class="h-card-head"><h2 class="h-card-title">Resumo</h2><p class="h-card-sub">30d</p></div><div class="h-card-body">OK</div></article>',
+        )
+        self.assertNotIn("DA-B2-01", {f["rule"] for f in bem_card})
+        # Genuine card-inside-card STILL triggers DA-B2-01 BLOCK
+        bad_card = self._scan("bad.html", '<div class="h-card"><div class="kpi-card">Aninhado</div></div>')
+        self.assertIn("DA-B2-01", {f["rule"] for f in bad_card})
+
+        # 2. Real context label with .eyebrow/.kicker passes; cliche FEATURES or "01 //" blocks
+        real_label = self._scan("cal.html", '<p class="cal-eyebrow">Novembro 2026</p><span class="rail-kicker">Histórico</span>')
+        self.assertNotIn("DA-B1-05", {f["rule"] for f in real_label})
+        slop_label = self._scan("slop.html", '<span class="eyebrow">FEATURES</span><h3>01 // Plataforma</h3>')
+        self.assertIn("DA-B1-05", {f["rule"] for f in slop_label})
+
+        # 3. Composite search input with :focus-within passes DA-B9-02
+        search_css = self._scan("search.css", ".box:focus-within { outline: 2px solid #EA580C; } .box input { outline: none; }")
+        self.assertNotIn("DA-B9-02", {f["rule"] for f in search_css})
+
+        # 4. Optical spacing 7px/9px/11px and font-weight 800 on display pass; 13px is only MEDIUM (not BLOCK)
+        opt_css = self._scan("opt.css", ".btn { gap: 7px; padding: 9px 14px; font-weight: 800; } .odd { margin: 13px; }")
+        self.assertFalse(any(f["severity"] == "BLOCK" for f in opt_css))
+        self.assertTrue(any(f["rule"] == "DA-B7-02" and f["severity"] == "MEDIUM" for f in opt_css))
+
+        # 5. Chat typing dots and dark inset well shadow pass; decorative drift loop still flags
+        good_anim = self._scan("good.css", ".typing span { animation: blink 1.2s infinite; } [data-theme='dark'] .well { box-shadow: inset 0 2px 6px rgba(0,0,0,0.5); }")
+        self.assertNotIn("DA-B6-04", {f["rule"] for f in good_anim})
+        self.assertNotIn("DA-B7-03", {f["rule"] for f in good_anim})
+
+        # 6. Callout with left accent bar passes DA-B1-06B; subtle score ring passes DA-B1-02
+        callout = self._scan("note.html", '<div class="callout border-l-4 rounded-lg">Aviso importante</div><style>.score{box-shadow:0 0 18px rgba(255,86,30,0.22);}</style>')
+        self.assertNotIn("DA-B1-06B", {f["rule"] for f in callout})
+        self.assertNotIn("DA-B1-02", {f["rule"] for f in callout})
+
 
 class BiblePaperTests(unittest.TestCase):
     def test_paper_has_no_fixed_board_and_renders_specimens(self):
