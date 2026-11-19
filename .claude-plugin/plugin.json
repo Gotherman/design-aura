@@ -1,7 +1,7 @@
 {
   "name": "design-aura",
-  "description": "Design Aura — Direção de design e engenharia UI/UX para Desktop, Mobile e Sistemas com Bíblia de Design, 10 Blocos de Leis Inegociáveis, orquestração de até 8 subagentes, auditoria WCAG/APCA + DOM real e vitrine interativa estilo Figma.",
-  "version": "1.1.13",
+  "description": "Design Aura v2.0 — Direção de design e engenharia UI/UX para Desktop, Mobile e Sistemas com Bíblia Visual de Design, Portão de Telas-Mãe, 10 Blocos de Leis Inegociáveis, orquestração de subagentes (1–3 telas/subagente com Fast-Audit imediato), auditoria WCAG/APCA + DOM/craft real e vitrine interativa estilo Figma Hub-and-Spoke.",
+  "version": "2.0.0",
   "author": {
     "name": "Lucas (Gotherman)"
   },

@@ -126,16 +126,47 @@ class LintTests(unittest.TestCase):
         bare = self._scan("bare.html", '<div class="bg-gradient-to-r from-purple-500 to-indigo-500"></div>')
         self.assertIn("DA-B1-01", {f["rule"] for f in bare})
 
+    def test_v2_craft_floor_rules(self):
+        # Dev-leak copy / stub excuse
+        leak = self._scan("desktop-pagar.html", "<p>Os outros titulos em aberto nao estao nesta amostra.</p>")
+        self.assertIn("DA-B2-08A", {f["rule"] for f in leak})
+
+        seed = self._scan("desktop-editais.html", "<p>A grade e a semente do funil.</p>")
+        self.assertIn("DA-B2-08A", {f["rule"] for f in seed})
+
+        # Editorial serif in operational screen
+        serif = self._scan("desktop-pagar.html", "<table><tbody><tr><td>1</td></tr></tbody></table><style>h1{font-family:'Source Serif 4', serif;}</style>")
+        rules = {f["rule"] for f in serif}
+        self.assertIn("DA-B4-04", rules)
+        self.assertIn("DA-B2-08B", rules)
+
+        # Allowed serif with explicit opt-in
+        serif_ok = self._scan("desktop-report.html", '<html data-allow-serif="true"><table><tbody><tr><td>1</td></tr><tr><td>2</td></tr><tr><td>3</td></tr></tbody></table><style>h1{font-family:Georgia, serif;}</style></html>')
+        self.assertNotIn("DA-B4-04", {f["rule"] for f in serif_ok})
+        self.assertNotIn("DA-B2-08B", {f["rule"] for f in serif_ok})
+
+        # Unstyled raw textarea
+        ta = self._scan("desktop-chat.html", '<label for="m">Msg</label><textarea id="m"></textarea>')
+        self.assertIn("DA-B9-05", {f["rule"] for f in ta})
+
 
 class BiblePaperTests(unittest.TestCase):
-    def test_paper_has_no_fixed_board(self):
+    def test_paper_has_no_fixed_board_and_renders_specimens(self):
         sample = "# Biblia\n\n## 8. Arsenal\n\n| Peça | Caminho |\n|---|---|\n| Tabela | `npm install @tanstack/react-table` |\n"
-        page = build_html(sample, "Biblia")
+        page = build_html(
+            sample,
+            "Biblia",
+            tokens_light={"--surface-z1": "#F1F5F9", "--surface-z2": "#FFFFFF", "--accent": "#EA580C"},
+            tokens_dark={"--surface-z1": "#0E1724", "--surface-z2": "#152336", "--accent": "#FF6B38"},
+        )
         self.assertNotIn("overflow: hidden", page)
         self.assertNotIn("height: 210mm", page)
+        self.assertNotIn("Palatino", page)
         self.assertIn("<table>", page)
         self.assertIn("npm install", page)
-        self.assertIn('class="swatch"', build_html("# T\n\nCor `#B53C0C`.\n", "T"))
+        self.assertIn("specimen-sheet", page)
+        self.assertIn("#FF6B38", page)
+        self.assertIn('class="swatch"', build_html("# T\n\nCor `#EA580C`.\n", "T"))
 
 
 class DiscoverTests(unittest.TestCase):
@@ -218,6 +249,43 @@ class CanvasTests(unittest.TestCase):
             self.assertIn("function esc(", preview)
             self.assertIn("params.get('screen')", preview)
             self.assertIn("Alpha &lt;b&gt;", index)
+            fluxo = (folder / "fluxo.html").read_text(encoding="utf-8")
+            self.assertIn("btnJumpStart", fluxo)
+            self.assertIn("btnEdgesMode", fluxo)
+            self.assertIn("Todas setas", fluxo)
+
+    def test_hub_and_spoke_relayout_and_edge_tiers(self):
+        # Simula uma torre vertical degenerada de 14 telas e 30 arestas
+        screens = [
+            {"id": "login", "title": "Entrada", "file": "login.html", "platform": "desktop", "flow": "conta", "group": "Conta", "x": 40, "y": 40, "w": 360, "h": 350},
+            {"id": "portal", "title": "Portal", "file": "portal.html", "platform": "desktop", "flow": "inicio", "group": "Portal", "x": 40, "y": 420, "w": 360, "h": 350},
+        ]
+        for i in range(6):
+            screens.append({"id": f"fin-{i}", "title": f"Fin {i}", "file": f"fin-{i}.html", "platform": "desktop", "flow": "financeiro", "sectionId": "sec-fin", "group": "Fin", "x": 40 + (i % 2) * 380, "y": 820 + (i // 2) * 380, "w": 360, "h": 350})
+        for i in range(6):
+            screens.append({"id": f"mob-{i}", "title": f"Mob {i}", "file": f"mob-{i}.html", "platform": "mobile", "flow": "mobile", "sectionId": "sec-mob", "group": "Mobile", "x": 40 + (i % 2) * 300, "y": 2100 + (i // 2) * 400, "w": 260, "h": 360})
+
+        edges = [{"id": "e0", "from": "login", "to": "portal", "label": "Entrar", "flow": "inicio", "color": "#B53C0C"}]
+        for i in range(6):
+            edges.append({"id": f"ef-{i}", "from": "portal", "to": f"fin-{i}", "label": f"F{i}", "flow": "financeiro", "color": "#B53C0C"})
+            edges.append({"id": f"ef-back-{i}", "from": f"fin-{i}", "to": "portal", "label": "Voltar", "flow": "financeiro", "color": "#B53C0C"})
+        for i in range(5):
+            edges.append({"id": f"ef-seq-{i}", "from": f"fin-{i}", "to": f"fin-{i+1}", "label": "Prox", "flow": "financeiro", "color": "#B53C0C"})
+            edges.append({"id": f"em-seq-{i}", "from": f"mob-{i}", "to": f"mob-{i+1}", "label": "Prox", "flow": "mobile", "color": "#B53C0C"})
+            edges.append({"id": f"em-back-{i}", "from": f"mob-{i+1}", "to": "mob-0", "label": "Inicio", "flow": "mobile", "color": "#B53C0C"})
+        edges.append({"id": "em-hub", "from": "portal", "to": "mob-0", "label": "Mobile", "flow": "mobile", "color": "#B53C0C"})
+
+        manifest = {"project": {"name": "Grande", "startScreenId": "login"}, "screens": screens, "edges": edges}
+        notes = apply_auto_layout(manifest)
+        self.assertTrue(any("hub-and-spoke" in n for n in notes))
+        # Proporcao deve ficar panoramica (largura >= altura ou proxima, nao torre)
+        self.assertGreater(manifest["project"]["worldWidth"], manifest["project"]["worldHeight"] * 0.9)
+        tiers = [e.get("tier") for e in manifest["edges"]]
+        self.assertIn("primary", tiers)
+        self.assertIn("secondary", tiers)
+        # Re-coloriu setas monocromaticas por fluxo
+        colors = {e.get("color") for e in manifest["edges"]}
+        self.assertGreater(len(colors), 1)
 
 
 if __name__ == "__main__":

@@ -3,11 +3,12 @@
 Skill de direção de design, arquitetura de informação e engenharia UI/UX para **Apps Desktop**, **Apps Mobile** (iOS HIG / SwiftUI, Android Material 3 / Jetpack Compose, React Native / Expo, Flutter, PWA) e **Sistemas Complexos** (SaaS, ERPs, Dashboards Operacionais).
 
 Transforma um repositório existente, um planejamento (`CONCEPCAO.md`/PRD) ou uma ideia do zero em:
-1. **Especificação Enxuta** (apenas o essencial que altera decisões de produto e design).
-2. **Bíblia de Direção de Design** (`DESIGN-BIBLE.md` + `tokens.json` + `tokens.css` validado em WCAG/APCA + Bíblia Visual HTML/PDF opcional).
-3. **Construção Fiel Orquestrada** (Onda 0 Orquestrador → Onda 1 até 7 subagentes construtores → Onda 2 Auditor Visual, **teto rígido de 8 subagentes**).
-4. **Vitrine Interativa Estilo Figma** (`fluxo.html` canvas infinito com setas Bézier e previews ao vivo, `preview.html` player guiado de uso real e `index.html` galeria com `⌘K`).
-5. **Auditoria Objetiva dos 10 Blocos de Leis Inegociáveis** (contraste WCAG/APCA, linter estático anti-slop e inspeção DOM real em Chromium headless).
+1. **Especificação Enxuta** (autópsia seletiva + entrevista curta obrigatória nos pontos críticos que mudam shell, tema, mobile e modelos).
+2. **Bíblia Visual de Design** (`DESIGN-BIBLE.md` + `tokens.json`/`tokens.css` validado em WCAG/APCA + `DESIGN-BIBLE.pdf` com pranchas visuais reais renderizadas).
+3. **Portão das Telas-Mãe (Onda 0.5)** (1 Tela-Mãe Desktop + 1 Tela-Mãe Mobile validadas visualmente antes de escalar).
+4. **Construção Fiel por Subagentes + Fast-Audit Imediato** (`1–3` telas ricas por subagente, **sem teto artificial de 8 subagentes**, com auditoria rápida automática e visual do Orquestrador a cada entrega de subagente).
+5. **Vitrine Interativa Estilo Figma** (`fluxo.html` canvas Hub-and-Spoke panorâmico com higiene de arestas, `preview.html` player guiado de uso real e `index.html` galeria com `⌘K`).
+6. **Auditoria Objetiva dos 10 Blocos + Piso de Craft `v2.0`** (contraste WCAG/APCA, linter estático e inspeção DOM real em Chromium headless incluindo `DA-DEAD-SPACE`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT` e `DA-ASSET-404`).
 
 ---
 

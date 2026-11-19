@@ -4,7 +4,9 @@ A **Bíblia de Design** é o contrato visual, ergonômico e estrutural criado pe
 
 Use o template copiável em [assets/design-bible-template.md](../assets/design-bible-template.md).
 
-O primeiro bloco do arquivo, antes das 12 seções, é o **Contrato de plataforma**: trabalho (remodelar, completar ou criar), tipo de produto, superfícies, qual é a principal, stack, tema, uso das cores da marca, sinal do domínio, modelo do Orquestrador, modelo dos subagentes, como o trabalho se organiza e o que o projeto recusa do molde do catálogo. Também lista as hipóteses que não foram confirmadas. Cor, tipo e tela só começam depois desse bloco. Um subagente que não leu o contrato não escolhe shell nem recupera a cara antiga numa remodelação.
+O primeiro bloco do arquivo, antes das 12 seções, é o **Contrato de plataforma**: trabalho (remodelar com autópsia seletiva, completar ou criar), tipo de produto, superfícies, qual é a principal, papel do mobile, stack, tema, uso das cores da marca (com vitalidade cromática), detalhes do domínio aprovados, modelo do Orquestrador, modelo dos subagentes, como o trabalho se organiza e **adaptações do molde ao vocabulário e fluxo do projeto**. Também lista as hipóteses que não foram confirmadas. Cor, tipo e tela só começam depois desse bloco.
+
+**Regra anti-sabotagem:** adaptar o molde ao domínio **nunca** significa descartar engenharia UI de alto nível (superfícies `Z2`, cockpits de 3 zonas quando o trabalho pede triagem+documento+telemetria, gráficos OSS reais como ECharts, badges semânticos, ícones coerentes ou tipografia sans-serif moderna em `Operate`).
 
 ---
 
@@ -91,19 +93,21 @@ Critérios objetivos de saída ligados aos 10 Blocos e aos 3 scripts (`audit_con
 
 ---
 
-## O papel da Bíblia
+## O papel da Bíblia (Bíblia Visual `v2.0`)
 
-A Bíblia é um documento só, em duas faces do mesmo texto:
+A Bíblia é um documento só, em duas faces, **com pranchas visuais reais renderizadas a partir de `tokens.css`**:
 
-- **`DESIGN-BIBLE.md`** é o que o subagente executa. Títulos, tabelas e caminhos ficam literais.
-- **`DESIGN-BIBLE.html` e `DESIGN-BIBLE.pdf`** são o papel para leitura humana. Não há número máximo de páginas. O conteúdo manda. Seção longa continua na página seguinte. Nada fica escondido por altura fixa.
+- **`DESIGN-BIBLE.md`** é o contrato literal que os subagentes executam (incluindo seção 8.1 de anatomia CSS e piso de riqueza/widgets por tela).
+- **`DESIGN-BIBLE.html` e `DESIGN-BIBLE.pdf`** renderizam automaticamente **Pranchas Visuais de Espécimes** (Dark & Light `Z0–Z4`, swatches reais, tipografia, botões, badges semânticos e card `Z2`) antes das seções textuais — sem limite artificial de páginas e sem corte. O usuário enxerga o visual real antes de aprovar.
 
 ```bash
-python3 <skill_dir>/scripts/render_design_bible.py DESIGN-BIBLE.md --out-dir .
+python3 <skill_dir>/scripts/render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css --out-dir .
 ```
 
-O PDF sai em A4 retrato, com margem, título que não fica órfão e tabela que não parte no meio. Se não houver Chromium, o HTML já imprime do mesmo jeito.
+Após a aprovação da Bíblia e construção das **Telas-Mãe (Onda 0.5)**, você pode re-gerar o PDF incorporando também as capturas reais das Telas-Mãe:
 
-A seção 8 lista cada componente, card ou elemento escolhido fora do projeto, com licença, uso e **caminho**: URL, comando de instalação e o arquivo no repositório depois de copiado. Sem essa linha, o subagente não adota a peça.
+```bash
+python3 <skill_dir>/scripts/render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css --golden-desktop audit/desktop-mae-dark.png --golden-mobile audit/mobile-mae-dark.png --out-dir .
+```
 
-As pranchas de [assets/biblia-visual-template.html](../assets/biblia-visual-template.html) são um resumo de uma página por tema, opcional e fácil de cortar. Elas não substituem este papel.
+O PDF sai em A4 retrato com fundo limpo neutro, tipografia moderna de estúdio (sem viés de papel bege/serifa) e blocos ` ```html-specimen ` renderizados ao vivo quando presentes no Markdown.

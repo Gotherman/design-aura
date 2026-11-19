@@ -94,15 +94,15 @@ p { text-wrap: pretty; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 14px;
-  border-radius: 10px;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 9px;
   border: 1.25px solid var(--border-card);
   background: var(--surface-z2);
   color: var(--text-strong);
   font-family: var(--da-font-ui);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -121,12 +121,17 @@ p { text-wrap: pretty; }
   color: #FFFFFF;
 }
 .da-btn--primary:hover:not(:disabled) { background: var(--da-accent); border-color: var(--da-accent); }
-.da-btn--icon { width: 44px; padding: 0; }
-.da-btn--sm { min-height: 44px; padding: 0 12px; font-size: 12px; }
+.da-btn--icon { width: 36px; padding: 0; }
+.da-btn--sm { min-height: 34px; padding: 0 10px; font-size: 12px; }
 .da-btn.is-on {
   background: var(--da-accent-deep);
   border-color: var(--da-accent-deep);
   color: #FFFFFF;
+}
+@media (max-width: 768px) {
+  .da-btn { min-height: 44px; padding: 0 14px; font-size: 13px; }
+  .da-btn--icon { width: 44px; }
+  .da-btn--sm { min-height: 44px; padding: 0 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -191,19 +196,371 @@ function daToggleTheme() {
 """
 
 
+STUDIO_FLOW_PALETTE = [
+    "#38BDF8",  # sky
+    "#FF6B38",  # vibrant orange
+    "#10B981",  # emerald
+    "#F59E0B",  # amber
+    "#60A5FA",  # steel blue
+    "#14B8A6",  # teal
+    "#F43F5E",  # rose
+]
+
+
 def _box(screen: dict) -> tuple[float, float, float, float]:
     return (
         float(screen.get("x") or 0),
         float(screen.get("y") or 0),
         float(screen.get("w") or 360),
-        float(screen.get("h") or 350),
+        float(screen.get("h") or 330),
     )
 
 
-def apply_auto_layout(manifest: dict) -> list[str]:
-    """Preenche x/y ausentes e afasta artboards que se sobrepoem."""
+def _is_entry_like(screen: dict) -> bool:
+    sid = str(screen.get("id") or "").lower()
+    fl = str(screen.get("flow") or "").lower()
+    title = str(screen.get("title") or "").lower()
+    return any(k in sid or k in fl or k in title for k in ("login", "entrada", "acesso", "auth", "2fa", "perfil", "conta", "ajust", "config"))
+
+
+def _pick_hub_id(screens: list[dict], edges: list[dict], start_id: str) -> str:
+    desktop = [s for s in screens if s.get("platform") != "mobile"]
+    if not desktop:
+        return start_id
+    # Se existe um "portal" / "home" / "dashboard" / "inicio" com maior grau de saida, usa como hub central
+    out_deg: dict[str, int] = {s["id"]: 0 for s in desktop}
+    for e in edges:
+        if e.get("from") in out_deg:
+            out_deg[e["from"]] += 1
+    for s in desktop:
+        sid = str(s["id"]).lower()
+        if any(k in sid for k in ("portal", "home", "dashboard", "painel", "inicio")) and out_deg.get(s["id"], 0) >= 2:
+            return s["id"]
+    if start_id in out_deg and out_deg[start_id] >= 2:
+        return start_id
+    best = max(desktop, key=lambda s: out_deg.get(s["id"], 0))
+    return best["id"] if out_deg.get(best["id"], 0) >= 2 else start_id
+
+
+def _smart_edge_sides(n1: dict, n2: dict) -> tuple[str, str]:
+    cx1 = float(n1["x"]) + float(n1["w"]) * 0.5
+    cy1 = float(n1["y"]) + float(n1["h"]) * 0.5
+    cx2 = float(n2["x"]) + float(n2["w"]) * 0.5
+    cy2 = float(n2["y"]) + float(n2["h"]) * 0.5
+    dx = cx2 - cx1
+    dy = cy2 - cy1
+    if abs(dx) >= abs(dy) * 0.85:
+        return ("r", "l") if dx >= 0 else ("l", "r")
+    return ("b", "t") if dy >= 0 else ("t", "b")
+
+
+def classify_and_style_edges(manifest: dict, recompute_sides: bool = False) -> None:
+    """Classifica arestas em primary/secondary e aplica cores legiveis por fluxo."""
+    screens = manifest.get("screens", [])
+    edges = manifest.get("edges", [])
+    if not edges or not screens:
+        return
+
+    node_map = {s["id"]: s for s in screens}
+    proj = manifest.get("project", {})
+    start_id = proj.get("startScreenId") or screens[0]["id"]
+    hub_id = _pick_hub_id(screens, edges, start_id)
+
+    # Paleta distinta por fluxo para eliminar monocromia de setas
+    flow_colors: dict[str, str] = {}
+    idx = 0
+    for s in screens:
+        fl = s.get("flow", "geral")
+        if fl not in flow_colors:
+            acc = s.get("accent") or ""
+            # Se o accent e muito escuro/ferrugem repetido em tudo, usa a paleta de estudio
+            flow_colors[fl] = STUDIO_FLOW_PALETTE[idx % len(STUDIO_FLOW_PALETTE)] if not acc else acc
+            idx += 1
+    # Se todas as arestas usam a mesma cor, re-colore pelo fluxo de destino
+    distinct_edge_colors = {e.get("color") for e in edges if e.get("color")}
+    recolor_all = len(distinct_edge_colors) <= 1 and len(flow_colors) > 1
+    if recolor_all:
+        unique_flows = list(flow_colors.keys())
+        for i, fl in enumerate(unique_flows):
+            flow_colors[fl] = STUDIO_FLOW_PALETTE[i % len(STUDIO_FLOW_PALETTE)]
+
+    has_explicit_tier = any(e.get("tier") in ("primary", "secondary") for e in edges)
+    dense_graph = len(edges) > 22
+
+    primary_from_hub_flows: set[str] = set()
+    primary_out_used: set[str] = set()
+    primary_mobile_bridge = False
+
+    for e in edges:
+        n1 = node_map.get(e.get("from"))
+        n2 = node_map.get(e.get("to"))
+        if not n1 or not n2:
+            continue
+        if recolor_all or not e.get("color"):
+            e["color"] = flow_colors.get(n2.get("flow", "geral"), "#38BDF8")
+        if recompute_sides or not e.get("fromSide") or not e.get("toSide"):
+            fs, ts = _smart_edge_sides(n1, n2)
+            e["fromSide"] = fs
+            e["toSide"] = ts
+
+        if has_explicit_tier and e.get("tier") in ("primary", "secondary"):
+            continue
+        if not dense_graph:
+            e["tier"] = "primary"
+            continue
+
+        f_id, t_id = n1["id"], n2["id"]
+        same_sec = (n1.get("sectionId") or n1.get("flow")) == (n2.get("sectionId") or n2.get("flow"))
+        same_row_forward = abs(float(n2.get("y") or 0) - float(n1.get("y") or 0)) < 48 and float(n2.get("x") or 0) > float(n1.get("x") or 0)
+
+        if f_id == start_id and t_id == hub_id:
+            e["tier"] = "primary"
+        elif f_id == hub_id and n2.get("platform") != "mobile":
+            t_flow = n2.get("flow", "geral")
+            if t_flow not in primary_from_hub_flows:
+                primary_from_hub_flows.add(t_flow)
+                e["tier"] = "primary"
+                if recompute_sides:
+                    e["fromSide"] = "r"
+                    e["toSide"] = "l"
+            else:
+                e["tier"] = "secondary"
+        elif f_id == hub_id and n2.get("platform") == "mobile" and not primary_mobile_bridge:
+            primary_mobile_bridge = True
+            e["tier"] = "primary"
+            if recompute_sides:
+                e["fromSide"] = "b"
+                e["toSide"] = "t"
+        elif same_sec and same_row_forward and f_id not in primary_out_used and t_id not in (start_id, hub_id):
+            primary_out_used.add(f_id)
+            e["tier"] = "primary"
+        else:
+            e["tier"] = "secondary"
+
+
+def apply_hub_and_spoke_layout(manifest: dict) -> list[str]:
+    """Organiza o canvas em arvore panoramica Hub-and-Spoke (Acesso -> Hub Inicio -> Raias Desktop -> Faixa Mobile)."""
     notes: list[str] = []
     screens = manifest.get("screens", [])
+    if not screens:
+        return notes
+
+    edges = manifest.get("edges", [])
+    proj = manifest.setdefault("project", {})
+    start_id = proj.get("startScreenId") or screens[0]["id"]
+    hub_id = _pick_hub_id(screens, edges, start_id)
+
+    old_sections = {s["id"]: s for s in manifest.get("sections", []) if s.get("id")}
+    desktop_screens = [s for s in screens if s.get("platform") != "mobile"]
+    mobile_screens = [s for s in screens if s.get("platform") == "mobile"]
+
+    hub_screen = next((s for s in desktop_screens if s["id"] == hub_id), desktop_screens[0] if desktop_screens else screens[0])
+    entry_screens = [s for s in desktop_screens if s["id"] != hub_screen["id"] and (_is_entry_like(s) or s["id"] == start_id)]
+    # Limita coluna de acesso/conta a telas realmente de acesso/conta (max 4), o resto vai para raias
+    entry_ids = {s["id"] for s in entry_screens}
+    module_screens = [s for s in desktop_screens if s["id"] != hub_screen["id"] and s["id"] not in entry_ids]
+
+    # Agrupa modulos desktop por secao/fluxo mantendo ordem
+    mod_groups: dict[str, list[dict]] = {}
+    mod_order: list[str] = []
+    for s in module_screens:
+        key = s.get("sectionId") or f"flow:{s.get('flow', 'geral')}"
+        if key not in mod_groups:
+            mod_groups[key] = []
+            mod_order.append(key)
+        mod_groups[key].append(s)
+
+    new_sections: list[dict] = []
+    gap_x = 34.0
+    gap_y = 36.0
+    pad_x = 28.0
+    pad_top = 44.0
+    pad_bot = 24.0
+    lane_gap = 52.0
+
+    # 1. Calcula raias horizontais Desktop na Coluna Direita
+    desk_w, desk_h = 330.0, 290.0
+    hub_w, hub_h = 410.0, 340.0
+    col0_w = 340.0 if entry_screens else 0.0
+    col1_x = (48.0 + col0_w + pad_x * 2 + 64.0) if entry_screens else 48.0
+    col2_x = col1_x + hub_w + pad_x * 2 + 84.0
+
+    cursor_y = 48.0
+    flow_color_idx = 0
+    for key in mod_order:
+        grp = mod_groups[key]
+        sid = grp[0].get("sectionId") or f"sec-{grp[0].get('flow', 'mod')}"
+        prev_sec = old_sections.get(sid, {})
+        per_row = 5 if len(grp) >= 9 else 4 if len(grp) >= 4 else max(1, len(grp))
+        rows = (len(grp) + per_row - 1) // per_row
+        cols = min(len(grp), per_row)
+        sec_w = pad_x * 2 + cols * desk_w + max(0, cols - 1) * gap_x
+        sec_h = pad_top + pad_bot + rows * desk_h + max(0, rows - 1) * gap_y
+        accent = STUDIO_FLOW_PALETTE[flow_color_idx % len(STUDIO_FLOW_PALETTE)]
+        flow_color_idx += 1
+
+        for idx_s, s in enumerate(grp):
+            r = idx_s // per_row
+            c = idx_s % per_row
+            s["w"] = desk_w
+            s["h"] = desk_h
+            s["x"] = round(col2_x + pad_x + c * (desk_w + gap_x))
+            s["y"] = round(cursor_y + pad_top + r * (desk_h + gap_y))
+            s["sectionId"] = sid
+            s["accent"] = accent
+
+        label = prev_sec.get("label") or str(grp[0].get("flow") or sid).upper()
+        if f"({len(grp)}" not in label:
+            label = f"{label} ({len(grp)} TELAS)" if len(grp) > 1 else label
+        new_sections.append({
+            "id": sid,
+            "flow": grp[0].get("flow", "geral"),
+            "label": label,
+            "x": round(col2_x),
+            "y": round(cursor_y),
+            "w": round(sec_w),
+            "h": round(sec_h),
+            "accent": accent,
+            "isStart": False,
+            "isMobileSection": False,
+        })
+        cursor_y += sec_h + lane_gap
+
+    desktop_bottom = max(cursor_y - lane_gap, 48.0 + hub_h + pad_top + pad_bot)
+    center_y = max(48.0, round((desktop_bottom - (hub_h + pad_top + pad_bot)) * 0.45))
+
+    # 2. Coluna 1: Hub / Tela Inicial em destaque
+    hub_sec_w = hub_w + pad_x * 2
+    hub_sec_h = hub_h + pad_top + pad_bot
+    hub_screen["w"] = hub_w
+    hub_screen["h"] = hub_h
+    hub_screen["x"] = round(col1_x + pad_x)
+    hub_screen["y"] = round(center_y + pad_top)
+    hub_screen["isStart"] = True
+    hub_screen["sectionId"] = "sec-start-hub"
+    hub_accent = "#FF6B38"
+    hub_screen["accent"] = hub_accent
+    new_sections.insert(0, {
+        "id": "sec-start-hub",
+        "flow": hub_screen.get("flow", "inicio"),
+        "label": f"★ TELA INICIAL · {hub_screen.get('title', 'INICIO').upper()}",
+        "x": round(col1_x),
+        "y": round(center_y),
+        "w": round(hub_sec_w),
+        "h": round(hub_sec_h),
+        "accent": hub_accent,
+        "isStart": True,
+        "isMobileSection": False,
+    })
+
+    # 3. Coluna 0: Acesso / Conta empilhado limpo a esquerda do Hub
+    if entry_screens:
+        e_w, e_h = 310.0, 260.0
+        e_gap = 28.0
+        e_sec_h = pad_top + pad_bot + len(entry_screens) * e_h + max(0, len(entry_screens) - 1) * e_gap
+        e_sec_w = e_w + pad_x * 2
+        e_top = max(48.0, round(center_y + (hub_sec_h - e_sec_h) * 0.5))
+        e_accent = "#60A5FA"
+        for i_e, s in enumerate(entry_screens):
+            s["w"] = e_w
+            s["h"] = e_h
+            s["x"] = round(48.0 + pad_x)
+            s["y"] = round(e_top + pad_top + i_e * (e_h + e_gap))
+            s["sectionId"] = "sec-acesso-conta"
+            s["accent"] = e_accent
+        new_sections.insert(0, {
+            "id": "sec-acesso-conta",
+            "flow": entry_screens[0].get("flow", "conta"),
+            "label": f"ACESSO & CONTA ({len(entry_screens)})",
+            "x": 48,
+            "y": round(e_top),
+            "w": round(e_sec_w),
+            "h": round(e_sec_h),
+            "accent": e_accent,
+            "isStart": False,
+            "isMobileSection": False,
+        })
+        desktop_bottom = max(desktop_bottom, e_top + e_sec_h)
+
+    # 4. Faixa Inferior Dedicada: Mobile (panoramica em 1-2 linhas compactas)
+    if mobile_screens:
+        mob_y = round(desktop_bottom + 72.0)
+        mob_w, mob_h = 236.0, 340.0
+        mob_gap_x, mob_gap_y = 28.0, 34.0
+        # Distribui panoramicamente (ate 8 por linha para casar com a largura do desktop)
+        mob_per_row = 8 if len(mobile_screens) >= 10 else max(4, min(6, len(mobile_screens)))
+        mob_rows = (len(mobile_screens) + mob_per_row - 1) // mob_per_row
+        mob_cols = min(len(mobile_screens), mob_per_row)
+        mob_sec_w = pad_x * 2 + mob_cols * mob_w + max(0, mob_cols - 1) * mob_gap_x
+        mob_sec_h = pad_top + pad_bot + mob_rows * mob_h + max(0, mob_rows - 1) * mob_gap_y
+        mob_accent = "#10B981"
+        mob_sec_id = mobile_screens[0].get("sectionId") or "sec-mobile"
+        prev_mob = old_sections.get(mob_sec_id, {})
+        mob_label = prev_mob.get("label") or "MOBILE"
+        if f"({len(mobile_screens)}" not in mob_label:
+            mob_label = f"{mob_label} ({len(mobile_screens)} TELAS)"
+
+        for i_m, s in enumerate(mobile_screens):
+            r = i_m // mob_per_row
+            c = i_m % mob_per_row
+            s["w"] = mob_w
+            s["h"] = mob_h
+            s["x"] = round(48.0 + pad_x + c * (mob_w + mob_gap_x))
+            s["y"] = round(mob_y + pad_top + r * (mob_h + mob_gap_y))
+            s["sectionId"] = mob_sec_id
+            s["accent"] = mob_accent
+
+        new_sections.append({
+            "id": mob_sec_id,
+            "flow": mobile_screens[0].get("flow", "mobile"),
+            "label": mob_label,
+            "x": 48,
+            "y": mob_y,
+            "w": round(mob_sec_w),
+            "h": round(mob_sec_h),
+            "accent": mob_accent,
+            "isStart": False,
+            "isMobileSection": True,
+        })
+
+    manifest["sections"] = new_sections
+    right_edge = max(float(s["x"]) + float(s["w"]) for s in new_sections) + 80
+    bottom_edge = max(float(s["y"]) + float(s["h"]) for s in new_sections) + 80
+    proj["worldWidth"] = int(right_edge)
+    proj["worldHeight"] = int(bottom_edge)
+    proj["hubScreenId"] = hub_screen["id"]
+    classify_and_style_edges(manifest, recompute_sides=True)
+    notes.append(f"hub-and-spoke layout aplicado ({len(screens)} telas, {int(right_edge)}x{int(bottom_edge)})")
+    return notes
+
+
+def apply_auto_layout(manifest: dict, force_relayout: bool = False) -> list[str]:
+    """Preenche x/y ausentes, organiza mapas grandes em Hub-and-Spoke e afasta sobreposicoes."""
+    notes: list[str] = []
+    screens = manifest.get("screens", [])
+    if not screens:
+        return notes
+
+    proj = manifest.setdefault("project", {})
+    all_missing = all(s.get("x") is None or s.get("y") is None for s in screens)
+    all_placed = all(s.get("x") is not None and s.get("y") is not None for s in screens)
+
+    # Detecta layout torre vertical degenerado (ex.: 2800x3700 com >= 10 telas) e reorganiza automaticamente
+    is_vertical_tower = False
+    if all_placed and len(screens) >= 10 and not proj.get("lockManualLayout"):
+        xs = [float(s["x"]) + float(s.get("w") or 360) for s in screens]
+        ys = [float(s["y"]) + float(s.get("h") or 350) for s in screens]
+        span_w = max(xs) - min(float(s["x"]) for s in screens)
+        span_h = max(ys) - min(float(s["y"]) for s in screens)
+        if span_h > span_w * 1.12:
+            is_vertical_tower = True
+
+    if force_relayout or (all_missing and len(screens) >= 4) or is_vertical_tower:
+        if is_vertical_tower and not force_relayout:
+            notes.append("torre vertical detectada; reorganizando para Hub-and-Spoke panoramico")
+        notes.extend(apply_hub_and_spoke_layout(manifest))
+        return notes
+
     sections = manifest.setdefault("sections", [])
     sec_by_id = {s["id"]: s for s in sections if s.get("id")}
     for screen in screens:
@@ -237,11 +594,11 @@ def apply_auto_layout(manifest: dict) -> list[str]:
         if not missing:
             continue
         mobile = all(s.get("platform") == "mobile" for s in group)
-        gap = 24.0
+        gap = 28.0
         pad = 28.0
-        col_w = 280.0 if mobile else 360.0
-        row_h = 420.0 if mobile else 350.0
-        per_row = 4 if mobile else 3
+        col_w = 250.0 if mobile else 350.0
+        row_h = 370.0 if mobile else 320.0
+        per_row = 5 if mobile else 4
         placed = [s for s in group if s.get("x") is not None and s.get("y") is not None]
         if placed:
             x = max(float(s["x"]) + float(s.get("w") or col_w) for s in placed) + gap
@@ -258,7 +615,7 @@ def apply_auto_layout(manifest: dict) -> list[str]:
         origin_y = cursor_y
         if sec and sec.get("x") is not None and sec.get("y") is not None:
             origin_x = float(sec["x"]) + pad
-            origin_y = float(sec["y"]) + 36
+            origin_y = float(sec["y"]) + 40
         for index, screen in enumerate(group):
             screen["w"] = screen.get("w") or col_w
             screen["h"] = screen.get("h") or row_h
@@ -267,8 +624,8 @@ def apply_auto_layout(manifest: dict) -> list[str]:
             screen["x"] = origin_x + col * (float(screen["w"]) + gap)
             screen["y"] = origin_y + row * (float(screen["h"]) + gap)
         rows = max(1, (len(group) + per_row - 1) // per_row)
-        sec_w = pad * 2 + per_row * col_w + (per_row - 1) * gap
-        sec_h = 56 + rows * row_h + max(0, rows - 1) * gap
+        sec_w = pad * 2 + min(len(group), per_row) * col_w + max(0, min(len(group), per_row) - 1) * gap
+        sec_h = 60 + rows * row_h + max(0, rows - 1) * gap
         if sec is not None:
             sec.setdefault("x", 40)
             sec.setdefault("y", cursor_y)
@@ -298,9 +655,9 @@ def apply_auto_layout(manifest: dict) -> list[str]:
     if screens:
         right_edge = max(float(s.get("x") or 0) + float(s.get("w") or 0) for s in screens) + 80
         bottom_edge = max(float(s.get("y") or 0) + float(s.get("h") or 0) for s in screens) + 80
-        project = manifest.setdefault("project", {})
-        project["worldWidth"] = max(int(project.get("worldWidth") or 0), int(right_edge))
-        project["worldHeight"] = max(int(project.get("worldHeight") or 0), int(bottom_edge))
+        proj["worldWidth"] = max(int(proj.get("worldWidth") or 0), int(right_edge))
+        proj["worldHeight"] = max(int(proj.get("worldHeight") or 0), int(bottom_edge))
+    classify_and_style_edges(manifest, recompute_sides=False)
     return notes
 
 
@@ -370,30 +727,46 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     proj = manifest.get("project", {})
     name = html.escape(proj.get("name", "Projeto Design Aura"))
     subtitle = html.escape(proj.get("subtitle", "Mapa de Fluxo Estilo Figma"))
-    default_theme = html.escape(proj.get("defaultTheme", "dark"))
+    # Estudio Figma abre em dark por padrao para maximo contraste dos artboards (toggle T alterna livremente)
+    canvas_theme = html.escape(proj.get("canvasTheme", "dark"))
     world_w = int(proj.get("worldWidth", 2400))
     world_h = int(proj.get("worldHeight", 1600))
-    start_id = proj.get("startScreenId") or manifest["screens"][0]["id"]
+    start_id = proj.get("hubScreenId") or proj.get("startScreenId") or manifest["screens"][0]["id"]
+    has_mobile = any(s.get("platform") == "mobile" for s in manifest["screens"])
     head_css = build_base_css(manifest, tokens_link)
     manifest_json = json.dumps(manifest, ensure_ascii=False)
 
     flows = []
-    seen_flows = set()
+    flow_counts: dict[str, int] = {}
+    flow_colors: dict[str, str] = {}
     for s in manifest["screens"]:
         fl = s.get("flow", "geral")
-        if fl not in seen_flows:
-            seen_flows.add(fl)
-            flows.append((fl, s.get("accent", "#EA580C")))
+        flow_counts[fl] = flow_counts.get(fl, 0) + 1
+        if fl not in flow_colors:
+            flow_colors[fl] = s.get("accent", "#38BDF8")
+            flows.append(fl)
 
-    flow_buttons = ['<button type="button" class="fx-flow-btn is-active" data-flow="all">Todos</button>']
-    for fl, col in flows:
+    total_screens = len(manifest["screens"])
+    flow_buttons = [
+        f'<button type="button" class="fx-flow-btn is-active" data-flow="all">Todos <span class="fx-count tabular-nums">{total_screens}</span></button>'
+    ]
+    for fl in flows:
+        col = flow_colors[fl]
+        cnt = flow_counts[fl]
         flow_buttons.append(
             f'<button type="button" class="fx-flow-btn" data-flow="{html.escape(fl)}">'
-            f'<span class="fx-dot" style="background:{html.escape(col)}"></span>{html.escape(fl.capitalize())}</button>'
+            f'<span class="fx-dot" style="background:{html.escape(col)}"></span>{html.escape(fl.capitalize())} '
+            f'<span class="fx-count tabular-nums">{cnt}</span></button>'
         )
 
+    mobile_jump_btn = (
+        '<button type="button" class="da-btn fx-hide-sm" id="btnJumpMobile" title="Ir para secao Mobile (M)">Mobile</button>'
+        if has_mobile
+        else ""
+    )
+
     return f"""<!DOCTYPE html>
-<html lang="pt-BR" data-theme="{default_theme}">
+<html lang="pt-BR" data-theme="{canvas_theme}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -405,32 +778,34 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   html, body {{ height: 100%; overflow: hidden; user-select: none; touch-action: none; }}
   .fx-app {{ display: flex; flex-direction: column; height: 100dvh; width: 100vw; overflow: hidden; background: var(--surface-z1); }}
   .fx-bar {{
-    position: relative; z-index: 40; display: flex; align-items: center; gap: 12px;
-    min-height: 60px; padding: 8px 16px; background: var(--surface-glass);
+    position: relative; z-index: 40; display: flex; align-items: center; gap: 10px;
+    min-height: 54px; padding: 6px 14px; background: var(--surface-glass);
     border-bottom: 1.25px solid var(--border-card); box-shadow: var(--shadow-z1);
   }}
-  .fx-brand {{ display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: none; }}
-  .fx-brand strong {{ font-family: var(--da-font-display); font-size: 14px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }}
-  .fx-brand span {{ font-family: var(--da-font-mono); font-size: 12px; color: var(--text-muted); white-space: nowrap; }}
+  .fx-brand {{ display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: none; }}
+  .fx-brand strong {{ font-family: var(--da-font-display); font-size: 13.5px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }}
+  .fx-brand span {{ font-family: var(--da-font-mono); font-size: 11.5px; color: var(--text-muted); white-space: nowrap; }}
   .fx-flows {{
-    display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px;
-    background: var(--surface-z0); border: 1px solid var(--border-card); overflow-x: auto; flex: 1 1 auto; min-width: 0;
+    display: flex; align-items: center; gap: 3px; padding: 3px; border-radius: 10px;
+    background: var(--surface-z0); border: 1px solid var(--border-card); overflow-x: auto; scrollbar-width: none; flex: 1 1 auto; min-width: 0;
   }}
+  .fx-flows::-webkit-scrollbar {{ display: none; }}
   .fx-flow-btn {{
-    display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px;
-    border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-body);
+    display: inline-flex; align-items: center; gap: 5px; min-height: 32px; padding: 0 9px;
+    border-radius: 7px; border: 1px solid transparent; background: transparent; color: var(--text-body);
     font-family: var(--da-font-ui); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
     transition-property: background-color, border-color, color; transition-duration: 150ms; transition-timing-function: ease-out;
   }}
   .fx-flow-btn:hover {{ color: var(--text-strong); background: var(--surface-z2); }}
   .fx-flow-btn.is-active {{ background: var(--surface-z2); color: var(--text-strong); border-color: var(--border-strong); box-shadow: var(--shadow-z1); }}
+  .fx-count {{ font-family: var(--da-font-mono); font-size: 11px; color: var(--text-muted); padding: 1px 5px; border-radius: 999px; background: rgba(148,163,184,0.16); }}
   .fx-dot {{ width: 8px; height: 8px; border-radius: 50%; flex: none; }}
-  .fx-actions {{ display: flex; align-items: center; gap: 8px; flex: none; }}
+  .fx-actions {{ display: flex; align-items: center; gap: 6px; flex: none; }}
 
   .fx-stage {{
     position: relative; flex: 1 1 auto; overflow: hidden; cursor: grab;
-    background-color: var(--surface-z1);
-    background-image: radial-gradient(rgba(148, 163, 184, 0.24) 1.25px, transparent 1.25px);
+    background-color: var(--surface-z0);
+    background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1.25px, transparent 1.25px);
     background-size: 24px 24px;
   }}
   .fx-stage.is-panning {{ cursor: grabbing; }}
@@ -438,41 +813,53 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
 
   .fx-section {{
     position: absolute; border-radius: 20px; border: 1.5px solid var(--sec-accent, var(--border-strong));
-    background: rgba(15, 26, 38, 0.28); transition-property: opacity; transition-duration: 180ms;
+    background: rgba(15, 26, 38, 0.36); transition-property: opacity; transition-duration: 180ms;
   }}
-  html[data-theme="light"] .fx-section {{ background: rgba(255, 255, 255, 0.35); }}
-  .fx-section.is-dim {{ opacity: 0.25; }}
+  .fx-section.is-start {{
+    border-width: 2px; background: rgba(255, 107, 56, 0.08);
+    box-shadow: 0 0 0 1px rgba(255, 107, 56, 0.25), 0 16px 38px -12px rgba(255, 107, 56, 0.24);
+  }}
+  .fx-section.is-mobile-sec {{ background: rgba(16, 185, 129, 0.07); }}
+  html[data-theme="light"] .fx-section {{ background: rgba(255, 255, 255, 0.52); }}
+  html[data-theme="light"] .fx-section.is-start {{ background: rgba(234, 88, 12, 0.07); }}
+  .fx-section.is-dim {{ opacity: 0.22; }}
   .fx-sec-label {{
     position: absolute; top: -14px; left: 16px; display: inline-flex; align-items: center; gap: 6px;
     height: 28px; padding: 0 12px; border-radius: 999px; background: var(--da-navy); color: #FFFFFF;
-    font-family: var(--da-font-mono); font-size: 12px; font-weight: 600; border: 1px solid var(--sec-accent, var(--border-strong));
+    font-family: var(--da-font-mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.02em;
+    border: 1.25px solid var(--sec-accent, var(--border-strong));
   }}
+  .fx-section.is-start .fx-sec-label {{ background: #EA580C; border-color: #FF8A5B; }}
 
   .fx-edges {{ position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 15; }}
-  .fx-edge-path {{ fill: none; stroke-width: 2.25; opacity: 0.72; transition-property: opacity, stroke-width; transition-duration: 150ms; }}
+  .fx-edge-path {{ fill: none; stroke-width: 2.25; opacity: 0.78; transition-property: opacity, stroke-width; transition-duration: 150ms; }}
   .fx-edge-path.is-dashed {{ stroke-dasharray: 6 5; }}
   .fx-edge-path.is-hl {{ opacity: 1; stroke-width: 3.25; }}
-  .fx-edge-path.is-dim {{ opacity: 0.14; }}
+  .fx-edge-path.is-dim {{ opacity: 0.10; }}
+  .fx-edge-path.is-hidden {{ display: none; }}
   .fx-edge-badge {{
     position: absolute; transform: translate(-50%, -50%); z-index: 18;
-    display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 4px 12px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 4px; min-height: 26px; padding: 2px 10px; border-radius: 999px;
     background: var(--surface-z2); border: 1.25px solid var(--edge-color, var(--border-strong));
-    color: var(--text-strong); font-family: var(--da-font-ui); font-size: 12px; font-weight: 600;
+    color: var(--text-strong); font-family: var(--da-font-ui); font-size: 11px; font-weight: 600;
     cursor: pointer; box-shadow: var(--shadow-z1); transition-property: opacity, transform; transition-duration: 150ms;
+    white-space: nowrap;
   }}
-  .fx-edge-badge.is-dim {{ opacity: 0.18; }}
+  .fx-edge-badge.is-dim {{ opacity: 0.14; }}
+  .fx-edge-badge.is-hidden {{ display: none; }}
 
   .fx-node {{
     position: absolute; z-index: 10; display: flex; flex-direction: column; border-radius: 16px; padding: 8px;
     background: var(--surface-z2); border: 1.5px solid var(--border-card); box-shadow: var(--shadow-z2);
     cursor: pointer; transition-property: opacity, border-color, transform; transition-duration: 160ms;
   }}
-  .fx-node.is-selected {{ border-color: var(--da-accent); border-width: 2px; }}
-  .fx-node.is-dim {{ opacity: 0.24; }}
-  .fx-node-head {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 4px 8px; }}
+  .fx-node.is-start {{ border-color: #FF6B38; border-width: 2px; }}
+  .fx-node.is-selected {{ border-color: var(--da-accent); border-width: 2.5px; }}
+  .fx-node.is-dim {{ opacity: 0.22; }}
+  .fx-node-head {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 4px 7px; }}
   .fx-node-titles {{ display: flex; flex-direction: column; min-width: 0; }}
   .fx-node-name {{ font-family: var(--da-font-display); font-size: 13px; font-weight: 700; color: var(--text-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
-  .fx-node-file {{ font-family: var(--da-font-mono); font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+  .fx-node-file {{ font-family: var(--da-font-mono); font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
   .fx-preview {{
     position: relative; flex: 1 1 auto; border-radius: 8px; overflow: hidden;
     border: 1px solid var(--border-card); background: var(--surface-z0);
@@ -483,44 +870,52 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     position: absolute; inset: 0; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;
     background: var(--surface-z1); color: var(--text-strong);
   }}
-  .fx-node-foot {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 4px 2px; font-size: 12px; }}
+  .fx-node-foot {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 4px 2px; font-size: 11.5px; }}
   .fx-node-metric {{ font-family: var(--da-font-mono); font-weight: 600; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
-  .fx-node-pill {{ padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-card); background: var(--surface-z0); font-size: 12px; font-weight: 600; color: var(--text-body); flex: none; }}
+  .fx-node-pill {{ padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-card); background: var(--surface-z0); font-size: 11px; font-weight: 600; color: var(--text-body); flex: none; }}
+  .fx-node.is-start .fx-node-pill {{ background: rgba(255,107,56,0.18); border-color: #FF6B38; color: var(--text-strong); }}
 
   .fx-inspector {{
-    position: absolute; left: 16px; bottom: 16px; z-index: 35; width: 340px; max-width: calc(100vw - 32px);
-    max-height: calc(100dvh - 104px); overflow-y: auto; border-radius: 16px; padding: 16px;
+    position: absolute; left: 16px; bottom: 16px; z-index: 35; width: 312px; max-width: calc(100vw - 32px);
+    max-height: min(440px, calc(100dvh - 104px)); overflow-y: auto; border-radius: 16px; padding: 14px;
     background: var(--surface-glass); border: 1.5px solid var(--border-strong); box-shadow: var(--shadow-z2);
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 10px;
   }}
-  .fx-inspector.is-collapsed {{ width: auto; padding: 10px 14px; }}
-  .fx-insp-body {{ display: flex; flex-direction: column; gap: 12px; }}
+  .fx-inspector.is-collapsed {{ width: auto; padding: 8px 12px; }}
+  .fx-insp-body {{ display: flex; flex-direction: column; gap: 10px; }}
   .fx-inspector.is-collapsed .fx-insp-body {{ display: none; }}
   .fx-insp-top {{ display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }}
-  .fx-insp-meta {{ font-family: var(--da-font-mono); font-size: 12px; color: var(--da-accent); font-weight: 600; }}
-  .fx-insp-desc {{ margin: 0; font-size: 13px; color: var(--text-body); }}
-  .fx-hop-list {{ display: flex; flex-direction: column; gap: 6px; }}
+  .fx-insp-meta {{ font-family: var(--da-font-mono); font-size: 11.5px; color: var(--da-accent); font-weight: 600; }}
+  .fx-insp-desc {{ margin: 0; font-size: 12.5px; color: var(--text-body); }}
+  .fx-hop-list {{ display: flex; flex-direction: column; gap: 5px; }}
   .fx-hop {{
-    display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px;
-    padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-card); background: var(--surface-z2);
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 36px;
+    padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border-card); background: var(--surface-z2);
     color: var(--text-strong); font-size: 12px; font-weight: 600; text-align: left; cursor: pointer;
   }}
   .fx-hop:hover {{ border-color: var(--da-accent); }}
   .fx-insp-btns {{ display: flex; gap: 8px; }}
   .fx-insp-btns .da-btn {{ flex: 1; }}
 
-  .fx-hud {{ position: absolute; right: 16px; bottom: 16px; z-index: 35; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }}
+  .fx-hud {{ position: absolute; right: 16px; bottom: 16px; z-index: 35; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }}
   .fx-minimap {{
-    position: relative; width: 200px; height: 140px; border-radius: 12px; background: var(--surface-glass);
+    position: relative; width: 204px; height: 132px; border-radius: 12px; background: var(--surface-glass);
     border: 1.5px solid var(--border-strong); box-shadow: var(--shadow-z2); overflow: hidden; cursor: crosshair;
   }}
   .fx-mini-node {{ position: absolute; border-radius: 2px; }}
   .fx-mini-vp {{ position: absolute; border: 2px solid var(--da-accent); background: rgba(234, 88, 12, 0.18); border-radius: 3px; pointer-events: none; }}
   .fx-zoombar {{
-    display: inline-flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px;
+    display: inline-flex; align-items: center; gap: 4px; padding: 4px; border-radius: 10px;
     background: var(--surface-glass); border: 1.5px solid var(--border-strong); box-shadow: var(--shadow-z2);
   }}
-  .fx-zoom-val {{ min-width: 48px; text-align: center; font-family: var(--da-font-mono); font-size: 12px; font-weight: 700; color: var(--text-strong); }}
+  .fx-zoom-val {{ min-width: 46px; text-align: center; font-family: var(--da-font-mono); font-size: 12px; font-weight: 700; color: var(--text-strong); }}
+
+  .fx-hintbar {{
+    position: absolute; left: calc(50% + 56px); bottom: 16px; transform: translateX(-50%); z-index: 30;
+    padding: 6px 14px; border-radius: 999px; background: var(--surface-glass);
+    border: 1px solid var(--border-card); font-family: var(--da-font-mono); font-size: 11px;
+    color: var(--text-muted); white-space: nowrap; pointer-events: none;
+  }}
 
   .fx-modal {{ position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; padding: 16px; background: rgba(8, 16, 24, 0.84); }}
   .fx-modal[hidden] {{ display: none !important; }}
@@ -533,9 +928,14 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   .fx-modal-iframe {{ width: 100%; height: 100%; border: 0; border-radius: 10px; background: var(--surface-z1); }}
   .fx-modal-iframe.is-mobile {{ width: 390px; height: 100%; max-height: 844px; border: 2px solid var(--border-strong); border-radius: 24px; }}
 
+  @media (max-width: 1180px) {{
+    .fx-hintbar {{ display: none; }}
+  }}
   @media (max-width: 768px) {{
     .fx-bar {{ flex-wrap: wrap; gap: 8px; padding: 8px 10px; }}
     .fx-flows {{ order: 3; flex: 1 0 100%; }}
+    .fx-flow-btn {{ min-height: 44px; }}
+    .fx-hop {{ min-height: 44px; }}
     .fx-minimap, .fx-hide-sm {{ display: none; }}
     .fx-inspector {{ left: 10px; right: 10px; bottom: 72px; width: auto; max-height: 40dvh; }}
   }}
@@ -552,9 +952,12 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
       {"".join(flow_buttons)}
     </div>
     <div class="fx-actions">
-      <a class="da-btn da-btn--primary" href="preview.html">Preview Guiado</a>
-      <a class="da-btn fx-hide-sm" href="index.html">Galeria</a>
+      <button type="button" class="da-btn fx-hide-sm" id="btnJumpStart" title="Centralizar na tela inicial (H)">★ Início</button>
+      {mobile_jump_btn}
+      <button type="button" class="da-btn fx-hide-sm" id="btnEdgesMode" title="Alternar setas principais / todas (E)">Setas</button>
       <button type="button" class="da-btn is-on fx-hide-sm" id="btnLive" title="Alternar preview ao vivo (L)">Ao Vivo</button>
+      <a class="da-btn da-btn--primary" href="preview.html">Preview</a>
+      <a class="da-btn fx-hide-sm" href="index.html">Galeria</a>
       <button type="button" class="da-btn da-btn--icon" id="btnThemeToggle" aria-label="Alternar tema" onclick="daToggleTheme()"></button>
     </div>
   </header>
@@ -571,7 +974,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
       <div class="fx-insp-top">
         <div>
           <div class="fx-insp-meta" id="inspMeta"></div>
-          <h2 id="inspTitle" style="font-size:18px;margin-top:4px;"></h2>
+          <h2 id="inspTitle" style="font-size:17px;margin-top:3px;"></h2>
         </div>
         <div style="display:flex;gap:6px;align-items:center;">
           <button type="button" class="da-btn da-btn--sm" id="btnIsolate">Isolar (I)</button>
@@ -580,14 +983,16 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
       </div>
       <div class="fx-insp-body">
         <p class="fx-insp-desc" id="inspDesc"></p>
-        <div id="inspOutWrap"><strong style="font-size:12px;color:var(--text-muted)">Vai para</strong><div class="fx-hop-list" id="inspOut"></div></div>
-        <div id="inspInWrap"><strong style="font-size:12px;color:var(--text-muted)">Vem de</strong><div class="fx-hop-list" id="inspIn"></div></div>
+        <div id="inspOutWrap"><strong style="font-size:11.5px;color:var(--text-muted)">Vai para</strong><div class="fx-hop-list" id="inspOut"></div></div>
+        <div id="inspInWrap"><strong style="font-size:11.5px;color:var(--text-muted)">Vem de</strong><div class="fx-hop-list" id="inspIn"></div></div>
         <div class="fx-insp-btns">
           <button type="button" class="da-btn da-btn--primary" id="btnModalPreview">Abrir Modal</button>
           <a class="da-btn" id="btnOpenFull" href="#">Tela Cheia</a>
         </div>
       </div>
     </aside>
+
+    <div class="fx-hintbar">Arraste: mover · Scroll: zoom · Clique: inspecionar/isolar · Duplo clique: modal · F: enquadrar · E: setas · T: tema</div>
 
     <div class="fx-hud">
       <div class="fx-minimap" id="minimap" title="Clique para navegar no mapa">
@@ -629,14 +1034,16 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   var EDGES = MANIFEST.edges || [];
   var WORLD_W = {world_w};
   var WORLD_H = {world_h};
+  var START_ID = '{html.escape(start_id)}';
   var nodeMap = {{}};
   NODES.forEach(function(n) {{ nodeMap[n.id] = n; }});
 
   var state = {{
     x: 32, y: 32, scale: 0.55,
     activeFlow: 'all',
-    selectedId: '{html.escape(start_id)}',
+    selectedId: START_ID,
     isolate: false,
+    showAllEdges: EDGES.length <= 22,
     livePreview: true
   }};
 
@@ -655,9 +1062,10 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   var miniNodes = document.getElementById('miniNodes');
   var miniVp = document.getElementById('miniVp');
   var minimap = document.getElementById('minimap');
+  var btnEdgesMode = document.getElementById('btnEdgesMode');
 
   function esc(str) {{
-    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return String(str == null ? '' : str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }}
 
   function anchorPoint(node, side) {{
@@ -668,7 +1076,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   }}
 
   function buildBezier(p1, s1, p2, s2, factor) {{
-    var d = Math.max(48, Math.min(200, (Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y)) * (factor || 0.35)));
+    var d = Math.max(44, Math.min(180, (Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y)) * (factor || 0.34)));
     var c1 = {{ x: p1.x, y: p1.y }}, c2 = {{ x: p2.x, y: p2.y }};
     if (s1 === 'r') c1.x += d; if (s1 === 'l') c1.x -= d; if (s1 === 'b') c1.y += d; if (s1 === 't') c1.y -= d;
     if (s2 === 'r') c2.x += d; if (s2 === 'l') c2.x -= d; if (s2 === 'b') c2.y += d; if (s2 === 't') c2.y -= d;
@@ -679,8 +1087,9 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
 
   function renderSections() {{
     sectionsLayer.innerHTML = SECTIONS.map(function(s) {{
-      return '<div class="fx-section" data-sec="' + esc(s.id) + '" data-flow="' + esc(s.flow) + '" ' +
-        'style="left:' + s.x + 'px;top:' + s.y + 'px;width:' + s.w + 'px;height:' + s.h + 'px;--sec-accent:' + esc(s.accent || '#EA580C') + '">' +
+      var cls = 'fx-section' + (s.isStart ? ' is-start' : '') + (s.isMobileSection ? ' is-mobile-sec' : '');
+      return '<div class="' + cls + '" data-sec="' + esc(s.id) + '" data-flow="' + esc(s.flow) + '" ' +
+        'style="left:' + s.x + 'px;top:' + s.y + 'px;width:' + s.w + 'px;height:' + s.h + 'px;--sec-accent:' + esc(s.accent || '#38BDF8') + '">' +
         '<span class="fx-sec-label">' + esc(s.label) + '</span></div>';
     }}).join('');
   }}
@@ -690,52 +1099,57 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
       var vw = n.vw || (n.platform === 'mobile' ? 390 : 1440);
       var vh = n.vh || (n.platform === 'mobile' ? 844 : 900);
       var previewW = n.w - 16;
-      var previewH = n.h - 94;
+      var previewH = n.h - 86;
       var scale = previewW / vw;
       var iframeH = Math.ceil(previewH / scale);
-      return '<article class="fx-node" data-id="' + esc(n.id) + '" data-flow="' + esc(n.flow) + '" ' +
+      var isStart = n.isStart || n.id === START_ID;
+      var pill = isStart ? '★ Início' : (n.badge || n.platform || 'desktop');
+      return '<article class="fx-node' + (isStart ? ' is-start' : '') + '" data-id="' + esc(n.id) + '" data-flow="' + esc(n.flow) + '" ' +
         'style="left:' + n.x + 'px;top:' + n.y + 'px;width:' + n.w + 'px;height:' + n.h + 'px">' +
         '<div class="fx-node-head">' +
           '<div class="fx-node-titles">' +
             '<span class="fx-node-name">' + esc(n.title) + '</span>' +
             '<span class="fx-node-file">' + esc(n.file) + '</span>' +
           '</div>' +
-          '<a class="da-btn da-btn--icon" style="min-height:36px;width:36px" href="' + esc(n.file) + '" title="Abrir tela" onclick="event.stopPropagation()">' + DA_ICONS.arrowUpRight + '</a>' +
+          '<a class="da-btn da-btn--icon" style="min-height:30px;width:30px" href="' + esc(n.file) + '" title="Abrir tela" onclick="event.stopPropagation()">' + DA_ICONS.arrowUpRight + '</a>' +
         '</div>' +
         '<div class="fx-preview" data-preview="' + esc(n.id) + '" data-src="' + esc(n.file) + '" data-vw="' + vw + '" data-vh="' + iframeH + '" data-scale="' + scale.toFixed(4) + '">' +
           '<div class="fx-schematic">' +
-            '<span style="font-family:var(--da-font-mono);font-size:12px;color:var(--text-muted)">' + esc(n.group) + '</span>' +
-            '<strong class="tabular-nums" style="font-size:14px">' + esc(n.metric) + '</strong>' +
+            '<span style="font-family:var(--da-font-mono);font-size:11.5px;color:var(--text-muted)">' + esc(n.group) + '</span>' +
+            '<strong class="tabular-nums" style="font-size:13px">' + esc(n.metric) + '</strong>' +
           '</div>' +
         '</div>' +
         '<div class="fx-node-foot">' +
           '<span class="fx-node-metric tabular-nums">' + esc(n.metric) + '</span>' +
-          '<span class="fx-node-pill">' + esc(n.badge || n.platform) + '</span>' +
+          '<span class="fx-node-pill">' + esc(pill) + '</span>' +
         '</div>' +
       '</article>';
     }}).join('');
 
-    var mxS = 200 / WORLD_W, myS = 140 / WORLD_H;
+    var mxS = 204 / WORLD_W, myS = 132 / WORLD_H;
     miniNodes.innerHTML = NODES.map(function(n) {{
-      return '<div class="fx-mini-node" style="left:' + (n.x * mxS) + 'px;top:' + (n.y * myS) + 'px;width:' + Math.max(6, n.w * mxS) + 'px;height:' + Math.max(5, n.h * myS) + 'px;background:' + esc(n.accent || '#EA580C') + '"></div>';
+      return '<div class="fx-mini-node" style="left:' + (n.x * mxS) + 'px;top:' + (n.y * myS) + 'px;width:' + Math.max(5, n.w * mxS) + 'px;height:' + Math.max(4, n.h * myS) + 'px;background:' + esc(n.accent || '#38BDF8') + '"></div>';
     }}).join('');
   }}
 
   function renderEdges() {{
     var colors = {{}};
-    EDGES.forEach(function(e) {{ colors[e.color || '#EA580C'] = true; }});
+    EDGES.forEach(function(e) {{ colors[e.color || '#38BDF8'] = true; }});
     var defs = '<defs>' + Object.keys(colors).map(function(c) {{
-      var id = 'arr-' + c.replace('#','');
+      var id = 'arr-' + c.replace(/[^a-zA-Z0-9]/g, '');
       return '<marker id="' + id + '" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M1,1.2 L7.8,4.5 L1,7.8 L2.6,4.5 Z" fill="' + c + '"></path></marker>';
     }}).join('') + '</defs>';
     var paths = defs, badges = '';
     EDGES.forEach(function(e) {{
       var n1 = nodeMap[e.from], n2 = nodeMap[e.to];
       if (!n1 || !n2) return;
-      var col = e.color || '#EA580C';
+      var col = e.color || '#38BDF8';
+      var tier = e.tier || 'primary';
       var bz = buildBezier(anchorPoint(n1, e.fromSide || 'r'), e.fromSide || 'r', anchorPoint(n2, e.toSide || 'l'), e.toSide || 'l', e.curve);
-      paths += '<path class="fx-edge-path' + (e.dashed ? ' is-dashed' : '') + '" data-edge="' + esc(e.id) + '" data-from="' + esc(e.from) + '" data-to="' + esc(e.to) + '" data-flow="' + esc(e.flow) + '" d="' + bz.d + '" stroke="' + col + '" marker-end="url(#arr-' + col.replace('#','') + ')"></path>';
-      badges += '<button type="button" class="fx-edge-badge" data-edge-badge="' + esc(e.id) + '" data-target="' + esc(e.to) + '" style="left:' + bz.mx + 'px;top:' + bz.my + 'px;--edge-color:' + col + '">' + esc(e.label) + '</button>';
+      paths += '<path class="fx-edge-path' + (e.dashed ? ' is-dashed' : '') + '" data-edge="' + esc(e.id) + '" data-tier="' + esc(tier) + '" data-from="' + esc(e.from) + '" data-to="' + esc(e.to) + '" data-flow="' + esc(e.flow) + '" d="' + bz.d + '" stroke="' + col + '" marker-end="url(#arr-' + col.replace(/[^a-zA-Z0-9]/g, '') + ')"></path>';
+      if (e.label) {{
+        badges += '<button type="button" class="fx-edge-badge" data-edge-badge="' + esc(e.id) + '" data-tier="' + esc(tier) + '" data-from="' + esc(e.from) + '" data-to="' + esc(e.to) + '" data-target="' + esc(e.to) + '" style="left:' + bz.mx + 'px;top:' + bz.my + 'px;--edge-color:' + col + '">' + esc(e.label) + '</button>';
+      }}
     }});
     edgesSvg.innerHTML = paths;
     badgesLayer.innerHTML = badges;
@@ -759,6 +1173,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
         ifr.className = 'fx-preview-frame';
         ifr.setAttribute('tabindex', '-1');
         ifr.setAttribute('aria-hidden', 'true');
+        ifr.setAttribute('loading', 'lazy');
         ifr.style.width = box.dataset.vw + 'px';
         ifr.style.height = box.dataset.vh + 'px';
         ifr.style.transform = 'scale(' + box.dataset.scale + ')';
@@ -784,48 +1199,66 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     world.style.transform = 'translate(' + state.x + 'px, ' + state.y + 'px) scale(' + state.scale + ')';
     zoomVal.textContent = Math.round(state.scale * 100) + '%';
     var rect = stage.getBoundingClientRect();
-    var mxS = 200 / WORLD_W, myS = 140 / WORLD_H;
-    miniVp.style.left = Math.max(0, Math.min(190, (-state.x / state.scale) * mxS)) + 'px';
-    miniVp.style.top = Math.max(0, Math.min(130, (-state.y / state.scale) * myS)) + 'px';
-    miniVp.style.width = Math.max(12, Math.min(200, (rect.width / state.scale) * mxS)) + 'px';
-    miniVp.style.height = Math.max(10, Math.min(140, (rect.height / state.scale) * myS)) + 'px';
+    var mxS = 204 / WORLD_W, myS = 132 / WORLD_H;
+    miniVp.style.left = Math.max(0, Math.min(194, (-state.x / state.scale) * mxS)) + 'px';
+    miniVp.style.top = Math.max(0, Math.min(122, (-state.y / state.scale) * myS)) + 'px';
+    miniVp.style.width = Math.max(12, Math.min(204, (rect.width / state.scale) * mxS)) + 'px';
+    miniVp.style.height = Math.max(10, Math.min(132, (rect.height / state.scale) * myS)) + 'px';
   }}
 
-  function fitAll() {{
+  function fitBox(minX, minY, maxX, maxY, minScale) {{
     var rect = stage.getBoundingClientRect();
-    var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
-    NODES.forEach(function(n) {{
-      minX = Math.min(minX, n.x - 40); minY = Math.min(minY, n.y - 40);
-      maxX = Math.max(maxX, n.x + n.w + 40); maxY = Math.max(maxY, n.y + n.h + 40);
-    }});
     var bw = Math.max(400, maxX - minX), bh = Math.max(300, maxY - minY);
-    var leftReserve = rect.width > 1100 ? 364 : 24;
+    var leftReserve = rect.width > 1100 ? 344 : 24;
     var rightReserve = rect.width > 1100 ? 228 : 24;
     var availW = Math.max(260, rect.width - leftReserve - rightReserve);
-    var availH = Math.max(240, rect.height - 72);
-    var s = Math.max(0.25, Math.min(1.05, Math.min(availW / bw, availH / bh)));
+    var availH = Math.max(240, rect.height - 84);
+    var s = Math.max(minScale || 0.25, Math.min(1.05, Math.min(availW / bw, availH / bh)));
     state.scale = s;
     state.x = Math.round(leftReserve + (availW - bw * s) / 2 - minX * s);
     state.y = Math.round((rect.height - bh * s) / 2 - minY * s);
     applyTransform();
   }}
 
-  function centerNode(id) {{
+  function fitAll() {{
+    var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+    NODES.forEach(function(n) {{
+      minX = Math.min(minX, n.x - 40); minY = Math.min(minY, n.y - 40);
+      maxX = Math.max(maxX, n.x + n.w + 40); maxY = Math.max(maxY, n.y + n.h + 40);
+    }});
+    fitBox(minX, minY, maxX, maxY, 0.24);
+  }}
+
+  function fitFlow(flow) {{
+    var targets = flow === 'all' ? NODES : NODES.filter(function(n) {{ return n.flow === flow; }});
+    if (!targets.length) return fitAll();
+    var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+    targets.forEach(function(n) {{
+      minX = Math.min(minX, n.x - 40); minY = Math.min(minY, n.y - 40);
+      maxX = Math.max(maxX, n.x + n.w + 40); maxY = Math.max(maxY, n.y + n.h + 40);
+    }});
+    fitBox(minX, minY, maxX, maxY, 0.32);
+  }}
+
+  function centerNode(id, targetScale) {{
     var n = nodeMap[id];
     if (!n) return;
     var rect = stage.getBoundingClientRect();
-    state.scale = Math.max(state.scale, 0.72);
-    state.x = Math.round(rect.width * 0.55 - (n.x + n.w * 0.5) * state.scale);
-    state.y = Math.round(rect.height * 0.48 - (n.y + n.h * 0.5) * state.scale);
+    state.scale = targetScale || Math.max(state.scale, 0.74);
+    state.x = Math.round(rect.width * 0.56 - (n.x + n.w * 0.5) * state.scale);
+    state.y = Math.round(rect.height * 0.46 - (n.y + n.h * 0.5) * state.scale);
     applyTransform();
   }}
 
   function updateHighlights() {{
     var flow = state.activeFlow, sel = state.selectedId, iso = state.isolate;
-    var conn = {{}}, hl = {{}};
+    var conn = {{}}, hl = {{}}, selEdge = {{}};
+    if (sel) {{
+      EDGES.forEach(function(e) {{ if (e.from === sel || e.to === sel) selEdge[e.id] = true; }});
+    }}
     if (flow !== 'all') {{
       NODES.forEach(function(n) {{ if (n.flow === flow) conn[n.id] = true; }});
-      EDGES.forEach(function(e) {{ if (e.flow === flow) hl[e.id] = true; }});
+      EDGES.forEach(function(e) {{ if (e.flow === flow || (conn[e.from] && conn[e.to])) hl[e.id] = true; }});
     }} else if (sel && iso) {{
       conn[sel] = true;
       EDGES.forEach(function(e) {{ if (e.from === sel || e.to === sel) {{ hl[e.id] = true; conn[e.from] = true; conn[e.to] = true; }} }});
@@ -839,22 +1272,35 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
       el.classList.toggle('is-dim', dimMode && !conn[el.dataset.id]);
     }});
     document.querySelectorAll('.fx-edge-path').forEach(function(el) {{
-      el.classList.toggle('is-hl', !!hl[el.dataset.edge]);
-      el.classList.toggle('is-dim', dimMode && !hl[el.dataset.edge]);
+      var eid = el.dataset.edge;
+      var isPrimary = el.dataset.tier !== 'secondary';
+      var visible = state.showAllEdges || isPrimary || !!hl[eid] || (!!sel && iso && !!selEdge[eid]);
+      el.classList.toggle('is-hidden', !visible);
+      el.classList.toggle('is-hl', !!hl[eid]);
+      el.classList.toggle('is-dim', dimMode && !hl[eid]);
     }});
     document.querySelectorAll('.fx-edge-badge').forEach(function(el) {{
-      el.classList.toggle('is-dim', dimMode && !hl[el.dataset.edgeBadge]);
+      var eid = el.dataset.edgeBadge;
+      var isPrimary = el.dataset.tier !== 'secondary';
+      var showBadge = (state.isolate && !!hl[eid]) || (flow !== 'all' && !!hl[eid]) || (state.showAllEdges && EDGES.length <= 24) || (isPrimary && !dimMode && NODES.length <= 24);
+      el.classList.toggle('is-hidden', !showBadge);
+      el.classList.toggle('is-dim', dimMode && !hl[eid]);
     }});
     document.getElementById('btnIsolate').classList.toggle('is-on', state.isolate);
+    if (btnEdgesMode) {{
+      btnEdgesMode.classList.toggle('is-on', state.showAllEdges);
+      btnEdgesMode.textContent = state.showAllEdges ? 'Todas setas' : 'Setas';
+    }}
   }}
 
   function updateInspector(id) {{
     var n = nodeMap[id] || NODES[0];
+    if (!n) return;
     document.getElementById('inspMeta').textContent = (n.group || '') + ' · ' + (n.platform || 'desktop');
     document.getElementById('inspTitle').textContent = n.title;
     document.getElementById('inspDesc').textContent = n.desc || '';
-    var outE = EDGES.filter(function(e) {{ return e.from === n.id; }});
-    var inE = EDGES.filter(function(e) {{ return e.to === n.id; }});
+    var outE = EDGES.filter(function(e) {{ return e.from === n.id && nodeMap[e.to]; }});
+    var inE = EDGES.filter(function(e) {{ return e.to === n.id && nodeMap[e.from]; }});
     document.getElementById('inspOutWrap').style.display = outE.length ? '' : 'none';
     document.getElementById('inspInWrap').style.display = inE.length ? '' : 'none';
     document.getElementById('inspOut').innerHTML = outE.map(function(e) {{
@@ -879,6 +1325,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
 
   function openModal(id) {{
     var n = nodeMap[id] || NODES[0];
+    if (!n) return;
     var m = document.getElementById('previewModal');
     var ifr = document.getElementById('modalIframe');
     document.getElementById('modalTitle').textContent = n.title;
@@ -932,15 +1379,41 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   }});
   document.getElementById('inspector').addEventListener('click', function(e) {{
     var hop = e.target.closest('[data-jump]');
-    if (hop) selectNode(hop.dataset.jump, true, false);
+    if (hop) selectNode(hop.dataset.jump, true, true);
   }});
   document.querySelectorAll('.fx-flow-btn').forEach(function(btn) {{
     btn.addEventListener('click', function() {{
       state.activeFlow = btn.dataset.flow; state.isolate = false;
       document.querySelectorAll('.fx-flow-btn').forEach(function(b) {{ b.classList.toggle('is-active', b === btn); }});
       updateHighlights();
+      fitFlow(state.activeFlow);
     }});
   }});
+  document.getElementById('btnJumpStart').addEventListener('click', function() {{
+    state.activeFlow = 'all'; state.isolate = false;
+    document.querySelectorAll('.fx-flow-btn').forEach(function(b) {{ b.classList.toggle('is-active', b.dataset.flow === 'all'); }});
+    selectNode(START_ID, false, false);
+    centerNode(START_ID, 0.72);
+  }});
+  var btnMob = document.getElementById('btnJumpMobile');
+  if (btnMob) {{
+    btnMob.addEventListener('click', function() {{
+      var mobNodes = NODES.filter(function(n) {{ return n.platform === 'mobile'; }});
+      if (!mobNodes.length) return;
+      var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+      mobNodes.forEach(function(n) {{
+        minX = Math.min(minX, n.x - 40); minY = Math.min(minY, n.y - 40);
+        maxX = Math.max(maxX, n.x + n.w + 40); maxY = Math.max(maxY, n.y + n.h + 40);
+      }});
+      state.activeFlow = mobNodes[0].flow; state.isolate = false;
+      document.querySelectorAll('.fx-flow-btn').forEach(function(b) {{ b.classList.toggle('is-active', b.dataset.flow === state.activeFlow); }});
+      updateHighlights();
+      fitBox(minX, minY, maxX, maxY, 0.38);
+    }});
+  }}
+  if (btnEdgesMode) {{
+    btnEdgesMode.addEventListener('click', function() {{ state.showAllEdges = !state.showAllEdges; updateHighlights(); }});
+  }}
   document.getElementById('btnIsolate').addEventListener('click', function() {{ state.isolate = !state.isolate; updateHighlights(); }});
   document.getElementById('btnToggleInsp').addEventListener('click', function() {{
     var c = document.getElementById('inspector').classList.toggle('is-collapsed');
@@ -956,7 +1429,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   document.getElementById('btnFit').addEventListener('click', fitAll);
   minimap.addEventListener('click', function(e) {{
     var r = minimap.getBoundingClientRect(), sr = stage.getBoundingClientRect();
-    var wx = ((e.clientX - r.left) / 200) * WORLD_W, wy = ((e.clientY - r.top) / 140) * WORLD_H;
+    var wx = ((e.clientX - r.left) / 204) * WORLD_W, wy = ((e.clientY - r.top) / 132) * WORLD_H;
     state.x = sr.width / 2 - wx * state.scale; state.y = sr.height / 2 - wy * state.scale; applyTransform();
   }});
   document.addEventListener('designaura:themechange', function(e) {{
@@ -968,6 +1441,8 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   document.addEventListener('keydown', function(e) {{
     if (e.key === 'Escape' && !document.getElementById('previewModal').hidden) closeModal();
     if (e.key === 'f' || e.key === 'F') fitAll();
+    if (e.key === 'h' || e.key === 'H') centerNode(START_ID, 0.72);
+    if (e.key === 'e' || e.key === 'E') {{ state.showAllEdges = !state.showAllEdges; updateHighlights(); }}
     if (e.key === 'i' || e.key === 'I') {{ state.isolate = !state.isolate; updateHighlights(); }}
     if (e.key === 't' || e.key === 'T') daToggleTheme();
   }});
@@ -977,12 +1452,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   if (window.innerWidth <= 768) {{
     document.getElementById('inspector').classList.add('is-collapsed');
     document.getElementById('btnToggleInsp').textContent = 'Expandir';
-    state.scale = 0.78;
-    var sn = nodeMap[state.selectedId] || NODES[0];
-    var sr = stage.getBoundingClientRect();
-    state.x = Math.round(sr.width / 2 - (sn.x + sn.w / 2) * state.scale);
-    state.y = Math.round(sr.height * 0.44 - (sn.y + sn.h / 2) * state.scale);
-    applyTransform();
+    centerNode(state.selectedId, 0.78);
   }} else {{
     fitAll();
   }}
@@ -1478,6 +1948,7 @@ def main():
     parser.add_argument("--tokens", default="", help="Caminho opcional para tokens.css relativo ao --out ou absoluto")
     parser.add_argument("--out", default=".", help="Diretorio de saida")
     parser.add_argument("--verify-files", action="store_true", help="Falha se alguma tela do manifesto ou href local nao existir")
+    parser.add_argument("--relayout", action="store_true", help="Forca reorganizacao panoramica Hub-and-Spoke ignorando x/y antigos")
     args = parser.parse_args()
 
     mpath = Path(args.manifest).resolve()
@@ -1487,7 +1958,7 @@ def main():
 
     try:
         manifest = json.loads(mpath.read_text(encoding="utf-8"))
-        for note in apply_auto_layout(manifest):
+        for note in apply_auto_layout(manifest, force_relayout=args.relayout):
             print(f"[layout] {note}")
         validate_manifest(manifest)
         if args.verify_files:

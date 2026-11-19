@@ -211,6 +211,18 @@ RULES = [
         "fix": "Remova a frase redundante; deixe o controle ou titulo comunicar o dado diretamente",
     },
     {
+        "id": "DA-B2-08A",
+        "severity": "BLOCK",
+        "exts": MARKUP_EXTS,
+        "pattern": re.compile(
+            r"(?:n[aã]o\s+est[aã]o\s+nesta\s+amostra|semente\s+do\s+funil|sem\s+classe\s+card"
+            r"|dados\s+de\s+exemplo\s+apenas|placeholder\s+de\s+tela|em\s+constru[cç][aã]o\s+aqui)",
+            re.I,
+        ),
+        "message": "Copy de dev/desculpa de stub vazada na interface (Bloco 2 / Bloco 5)",
+        "fix": "Substitua por dados completos e realistas do dominio, sem desculpas de amostra ou jargao de seed",
+    },
+    {
         "id": "DA-B6-02A",
         "severity": "BLOCK",
         "exts": UI_EXTS,
@@ -379,6 +391,73 @@ def check_structural_rules(raw_text: str, clean_text: str, ext: str, rel_path: s
 
     findings.extend(_nested_surface_findings(clean_text, raw_text, ext, rel_path, starts))
     findings.extend(_motion_findings(clean_text, raw_text, ext, rel_path, starts))
+    findings.extend(_craft_floor_findings(clean_text, raw_text, ext, rel_path, starts))
+    return findings
+
+
+def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: str, starts: list[int]) -> list[dict]:
+    """Checagens estaticas de piso de craft (v2.0): anti-stub, serifa em Operate e textarea cru."""
+    findings: list[dict] = []
+    lower_name = Path(rel_path).name.lower()
+    is_vitrine = lower_name in {"fluxo.html", "preview.html", "index.html", "design-bible.html"}
+
+    # DA-B4-04: fonte serifada editorial em tela operacional ou CSS de sistema
+    if not is_vitrine and ext in (MARKUP_EXTS | CSS_EXTS):
+        serif_re = re.compile(
+            r"(?:Source\s+Serif|Playfair\s+Display|Merriweather|Iowan\s+Old\s+Style|Palatino|Times\s+New\s+Roman|Garamond|Georgia\s*,?\s*serif)",
+            re.I,
+        )
+        m = serif_re.search(clean_text)
+        looks_operate = (
+            "<table" in clean_text.lower()
+            or "sidebar" in clean_text.lower()
+            or "shell" in lower_name
+            or "tokens" in lower_name
+            or "desktop-" in lower_name
+            or "mobile-" in lower_name
+            or "dashboard" in lower_name
+            or "--font-display" in clean_text.lower()
+        )
+        if m and looks_operate and 'data-allow-serif="true"' not in clean_text:
+            findings.append({
+                "rule": "DA-B4-04",
+                "severity": "HIGH",
+                "location": f"{rel_path}:{pos_to_line(starts, m.start())}",
+                "evidence": snippet_at(raw_text, m.start()),
+                "message": "Fonte serifada editorial detectada em sistema operacional Operate sem autorizacao explicita (Bloco 4)",
+                "fix": "Use sans-serif geometrica/neo-grotesca (Plus Jakarta Sans, Inter, Instrument Sans, Geist) ou anote design-aura-allow: DA-B4-04 com motivo aprovado",
+            })
+
+    # DA-B2-08B: tabela operacional estatica rasa (apenas 1 ou 2 linhas <tr> em <tbody> sem renderizacao dinamica)
+    if not is_vitrine and ext in {".html", ".htm"}:
+        for tm in re.finditer(r"<tbody\b[^>]*>(.*?)</tbody>", clean_text, re.I | re.S):
+            body_html = tm.group(1)
+            row_count = len(re.findall(r"<tr\b", body_html, re.I))
+            has_dynamic_fill = bool(re.search(r"(?:innerHTML|insertRow|appendChild|createElement\(['\"]tr['\"]\))", clean_text))
+            if 1 <= row_count <= 2 and not has_dynamic_fill:
+                findings.append({
+                    "rule": "DA-B2-08B",
+                    "severity": "HIGH",
+                    "location": f"{rel_path}:{pos_to_line(starts, tm.start())}",
+                    "evidence": snippet_at(raw_text, tm.start()),
+                    "message": f"Tabela operacional rasa com apenas {row_count} linha(s) estatica(s) em <tbody> (Bloco 2)",
+                    "fix": "Popule a tabela com pelo menos 5 registros realistas e coerentes do dominio (ou renderize a colecao real via JS)",
+                })
+
+    # DA-B9-05: <textarea> cru sem classe do design system em tela HTML
+    if not is_vitrine and ext in MARKUP_EXTS:
+        for tm in re.finditer(r"<textarea\b([^>]*)>", clean_text, re.I | re.S):
+            attrs = tm.group(1)
+            if not re.search(r"\bclass(?:Name)?\s*=", attrs, re.I):
+                findings.append({
+                    "rule": "DA-B9-05",
+                    "severity": "MEDIUM",
+                    "location": f"{rel_path}:{pos_to_line(starts, tm.start())}",
+                    "evidence": snippet_at(raw_text, tm.start()),
+                    "message": "Campo <textarea> sem classe/estilizacao propria do design system (Bloco 9)",
+                    "fix": "Aplique a classe de campo do design system (borda, padding, radius, resize: vertical e :focus-visible)",
+                })
+
     return findings
 
 

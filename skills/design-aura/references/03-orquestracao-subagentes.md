@@ -1,111 +1,148 @@
-# Orquestração de Subagentes (Limite Máximo: 8)
+# Orquestração de Subagentes (`v2.0` · Sem Teto de Subagentes · Fast-Audit por Entrega)
 
-O Orquestrador é o **Diretor de Design e Arquiteto-Chefe**. Subagentes são **especialistas de execução paralela** que constroem módulos sobre uma fundação já travada — nunca decidem cores, fontes ou regras globais por conta própria.
+O Orquestrador é o **Diretor de Design e Arquiteto-Chefe**. Subagentes são **especialistas de execução paralela** que constroem slices enxutos sobre uma fundação visual já validada (**Telas-Mãe**).
 
-**Teto rígido:** **nunca dispare mais de 8 subagentes** no ciclo inteiro de construção de um projeto (`Onda 1 + Onda 2 <= 8`).
+**Regra de ouro (`v2.0`):** **não existe teto artificial de 8 subagentes.** O que garante acabamento de estúdio é o **limite rígido de telas por subagente (`1–3` telas)** e a **Auditoria Rápida Imediata pelo Orquestrador (Fast-Audit)** assim que cada subagente entrega seu resultado.
 
 ---
 
-## O Padrão em 3 Ondas
+## O Padrão em 4 Etapas com Fast-Audit Contínuo
 
 ```text
-ONDA 0 (Orquestrador — 0 subagentes de design)
-  A ordem é a Fase 1 e a Fase 2 do SKILL.md. Este arquivo não tem um atalho paralelo.
-  ├─ Lê pedido, repo e docs. Pergunta só a decisão que ainda muda shell, stack ou Bíblia
-  ├─ Grava o Contrato de plataforma no topo da DESIGN-BIBLE.md
-  ├─ Roda design_intel.py e, para cada interação real, discover_oss_components.py
-  ├─ Fecha o resto da Bíblia, inclusive o motion do guia 10 (desktop, iOS e Android separados)
-  ├─ Gera tokens.json e exporta com generate_tokens.py. audit_contrast.py --strict é o Portão 0
-  ├─ Fecha o mapa de telas dentro da Bíblia e o screen-manifest.json (plano, ainda sem construir)
-  ├─ Gera DESIGN-BIBLE.pdf sem limite de páginas
-  └─ PARA. Entrega o PDF e espera aprovação explícita antes de qualquer tela
+ONDA 0 (Orquestrador — Bíblia Visual + Contrato)
+  ├─ Fase 1: lê repo/docs e faz entrevista curta obrigatória nos pontos críticos (incl. modelos)
+  ├─ Grava Contrato de plataforma no topo da DESIGN-BIBLE.md
+  ├─ Roda design_intel.py + discover_oss_components.py (bibliotecas reais: ECharts, Lucide/Phosphor, SortableJS, etc.)
+  ├─ Compila tokens.json → tokens.css e trava Portão 0 (audit_contrast.py --strict)
+  ├─ Fecha screen-manifest.json consolidado (alvo 12–24 telas profundas; acima de 24 exige justificativa)
+  ├─ Gera DESIGN-BIBLE.html/.pdf VISUAL com --tokens tokens.css (pranchas Light/Dark renderizadas!)
+  └─ [PORTÃO 1] PARA e aguarda aprovação explícita da Bíblia Visual
 
-ONDA 1 (só depois do "aprovado" — 1 a 7 subagentes)
-  ├─ Cada subagente usa o modelo escrito no Contrato de plataforma, não outro
-  ├─ Constrói o shell de cada superfície do contrato (não um layout único espremido)
-  ├─ Cada subagente recebe apenas seu slice do screen-manifest.json
-  ├─ Constrói todas as telas reais do seu módulo usando tokens.css + shell
-  └─ Garante estados (loading/empty/error), dados coerentes e links inter-módulos
+ONDA 0.5 (Orquestrador — Portão das Telas-Mãe / Golden Screens)
+  ├─ Constrói Design System completo: tokens.css + shell.css + shell.js + libs OSS vendored/carregadas (zero 404)
+  ├─ Constrói 1 Tela-Mãe Desktop (a mais rica/densa do sistema) + 1 Tela-Mãe Mobile (se houver mobile)
+  ├─ Audita com lint_design_aura.py + capture_and_audit.mjs e inspeciona PNGs (Dark & Light)
+  └─ [PORTÃO 2] Valida as Telas-Mãe com o usuário antes de escalar para os subagentes
+     (pule a pausa apenas se o usuário autorizou construir tudo direto sem parar nas Telas-Mãe)
 
-ONDA 2 (Consolidação + Auditoria Visual — 1 subagente Auditor + Vitrine)
-  ├─ Orquestrador confere 100% de cobertura das telas no disco e links reais
-  ├─ Orquestrador roda build_figma_canvas.py (fluxo.html, preview.html, index.html)
-  └─ 1 Subagente Auditor roda audit_contrast.py + lint_design_aura.py + capture_and_audit.mjs,
-     inspeciona PNGs (1440px e 390px, Dark/Light), corrige ou reporta e emite Verdict
+ONDA 1 + FAST-AUDIT LOOP (Subagentes — 1 a 3 telas cada · SEM teto de 8)
+  ├─ Cada subagente nasce com o modelo gravado no Contrato de plataforma
+  ├─ Orquestrador dispara em lotes paralelos (ex.: 4–6 simultâneos) até cobrir 100% das telas num único processo
+  ├─ Cada subagente recebe Briefing Rico + caminho das Telas-Mãe como régua visual + permissão para CSS local via var(--token)
+  └─ [FAST-AUDIT IMEDIATO POR SUBAGENTE — OBRIGATÓRIO]:
+     Assim que CADA subagente entrega suas 1–3 telas, o Orquestrador IMEDIATAMENTE:
+       1. Roda lint_design_aura.py <arquivos-do-slice> --strict
+       2. Roda capture_and_audit.mjs <arquivos-do-slice> --out <audit>/slices/<id> --themes dark,light --strict
+       3. Abre os PNGs e compara diretamente com a Tela-Mãe aprovada (substância, vazio, cor, hierarquia)
+       4. Se reprovar (técnico OU estético): corrige na hora ou redespacha feedback cirúrgico ao subagente ANTES de integrar!
+
+ONDA 2 (Consolidação + Vitrine Figma + Auditoria Global + Entrega Acessível)
+  ├─ Orquestrador verifica 100% de cobertura no disco e zero links quebrados
+  ├─ Roda build_figma_canvas.py --verify-files (fluxo.html Hub-and-Spoke, preview.html, index.html)
+  ├─ Roda os 3 portões globais (audit_contrast.py, lint_design_aura.py, capture_and_audit.mjs --manifest incl. vitrine)
+  └─ Inspeciona PNGs finais (inclusive fluxo.html) e entrega com preview aberto ou link acessível HTTP 200
 ```
 
 ---
 
-## Tabela de Dimensionamento (Nunca Desperdice Nem Sature)
+## Tabela de Dimensionamento por Profundidade (Qualidade > Compressão)
 
-| Escopo do Projeto | Total de Telas | Subagentes Onda 1 | Subagente Onda 2 | Total |
-|---|---|---|---|---|
-| Ajuste pontual / 1–3 telas | `1–3` | `0` (Orquestrador faz direto) | `0–1` (auditoria direta) | `0–1` |
-| App focado / MVP enxuto | `4–8` | `2–3` (por fluxo ou desktop vs mobile) | `1` Auditor | `3–4` |
-| Sistema completo / Multi-plataforma | `9–16` | `4–6` (por módulo + shell mobile) | `1` Auditor | `5–7` |
-| Ecossistema massivo (ERP + Desktop + Mobile) | `17–30+` | **máx. `7`** (agrupando módulos menores no mesmo slice) | `1` Auditor | **máx. `8`** |
+| Tipo de Tela no Slice | Telas por Subagente | Por quê |
+|---|---|---|
+| **Cockpit ultra-denso (3 zonas, gráfico ECharts, fila + documento + inspector, chat + IA)** | **`1` tela dedicada** | Exige foco total em widgets reais, massa de dados completa (`>= 6` registros) e micro-interações. |
+| **Telas operacionais padrão ou Mobile ricas (tabelas com filtros, funil, detalhes, bottom sheets)** | **`2` a `3` telas** | Equilíbrio ótimo de contexto para manter 100% de paridade visual com a Tela-Mãe sem virar stub. |
+| **Telas auxiliares simples (login/acesso, perfil, preferências)** | **máx. `3` telas** | Evita desperdício sem nunca empilhar 6–7 páginas no mesmo subagente. |
 
-**Regra de agrupamento acima de 16 telas:** nunca exceda 7 construtores; agrupe módulos afins com 3–5 telas cada no mesmo subagente (ex.: Subagente 1 = Acesso + Portal + Configurações; Subagente 2 = Financeiro Caixa/Pagar/Receber; Subagente 3 = App Mobile 5–7 telas).
+**Sem teto de 8 subagentes:** um sistema com 18 telas ricas pode usar **7 a 10 subagentes** (`1–3` telas cada), executados em lotes paralelos (ex.: Lote A com 5 subagentes → Fast-Audit de cada entrega → Lote B com os restantes → Fast-Audit), realizando **100% das telas num processo só** com acabamento impecável.
+
+**Disciplina contra fragmentação:** não invente 40 arquivos HTML rasos de 2 KB quando **14 a 22 telas profundas** (usando abas, filtros, drawers e bottom sheets reais) resolvem o produto com muito mais qualidade. Acima de 24 telas, justifique explicitamente na Bíblia e peça aprovação do usuário.
 
 ---
 
-## Isolamento de Contexto (Por que Projetos Falham sem Isso)
+## Protocolo Obrigatório de Fast-Audit pelo Orquestrador (Por Entrega de Subagente)
+
+Nenhum slice de subagente é considerado "pronto" apenas porque o subagente disse que terminou. Assim que o subagente retorna:
+
+1. **Verificação Automática Rápida (~15–30s):**
+   ```bash
+   python3 <skill_dir>/scripts/lint_design_aura.py <arquivos-do-slice> --strict
+   node <skill_dir>/scripts/capture_and_audit.mjs <arquivos-do-slice> --out <dir_audit>/slices/<slice_id> --viewports <desktop|mobile> --themes dark,light --strict
+   ```
+2. **Inspeção Visual Comparativa contra a Tela-Mãe (~15s):**
+   Abra os screenshots gerados do slice e cheque 5 perguntas objetivas:
+   - **Paridade visual:** parece feito pela mesma diretoria de design da Tela-Mãe aprovada?
+   - **Zero vazio morto (`DA-DEAD-SPACE`):** a viewport desktop está equilibrada (sem buracos vazios de 60–75% nem inspector de 1 linha)?
+   - **Substância real (`DA-STUB-SCREEN`):** há `>= 5` registros realistas, widgets/gráficos combinados, badges semânticos e ícones coerentes?
+   - **Zero regressões proibidas:** sem links `<a>` azuis sublinhados crus, sem serifa editorial em `Operate`, sem texto cortado sob barra fixa mobile, sem `404` em scripts/CSS?
+   - **Interatividade real:** filtros, abas, seleção de linha que atualiza o inspector, modal/sheet e toast funcionam de verdade?
+3. **Decisão imediata:**
+   - **Passou nos 5 pontos + 0 BLOCK/HIGH:** slice aceito e integrado.
+   - **Ajuste pequeno (1–2 CSS/copy):** o próprio Orquestrador corrige na hora e revalida.
+   - **Slice raso, feio ou fora do padrão:** o Orquestrador **reprova e redespacha** com lista cirúrgica do que faltou (citando a Tela-Mãe e os achados exatos) antes de seguir para a vitrine!
+
+---
+
+## Isolamento de Contexto & Briefing Rico
 
 ### O que SEMPRE passar para cada subagente construtor:
-1. **Caminho exato de saída** de cada tela do seu slice (ex.: `design/telas/desktop-caixa.html` ou `src/pages/Caixa.tsx`).
-2. **Contrato do Slice** recortado do `screen-manifest.json` (ID, título, plataforma, viewport, links de entrada e links de saída exatos para que todos os botões/âncoras naveguem para rotas reais).
-3. **Referência direta aos artefatos travados**: o Contrato de plataforma e as seções da `DESIGN-BIBLE.md` que cabem no slice (paleta, planos Z0–Z4, tipografia, componentes, motion daquela superfície), mais `tokens.css` e o shell da plataforma dele.
-4. **Bloco de Dados Fictícios Compartilhados**: lista curta com os números, nomes, CNPJs/IDs fictícios e alertas oficiais que aparecem em múltiplos módulos (ex.: `"Fatura #7273 = R$ 75.657,36 vence em 2 dias"`).
-5. **Lembrete explícito dos 10 Blocos de Leis Inegociáveis** e do checklist local antes de finalizar (`lint_design_aura.py` no próprio slice).
+1. **Caminho exato das Telas-Mãe aprovadas** (ex.: `design/telas/desktop-pagar.html` e `design/telas/mobile-hoje.html`) para o subagente ler e espelhar o nível de riqueza, espaçamento, componentes `Z2` e acabamento.
+2. **Caminho exato de saída** das `1–3` telas do slice + recorte do `screen-manifest.json` (ID, título, plataforma, viewport, links de entrada e links de saída reais).
+3. **Referência direta aos artefatos travados:** `DESIGN-BIBLE.md`, `tokens.css`, `shell.css`, `shell.js` e os caminhos exatos das bibliotecas OSS da seção 8 (ex.: `vendor/echarts.min.js`, `vendor/sortable.min.js`).
+4. **Anatomia funcional e widgets obrigatórios de cada tela do slice:** o que vai em cada zona (fila, documento, gráfico/telemetria, inspector, bottom sheet), massa mínima realista (`>= 5` registros) e interações que precisam responder ao clique.
+5. **Dados Fictícios Compartilhados:** mesmos números, nomes, datas e alertas usados nas demais telas.
+6. **Liberdade controlada de CSS local:** o subagente **não edita** `tokens.css` nem `shell.css` compartilhados, mas **PODE e DEVE** adicionar `<style>` ou folha CSS local da sua tela usando **exclusivamente** `var(--token)` do `tokens.css` para construir layouts ricos (3 zonas, grids de KPIs, timelines, cards `Z2`, painéis de gráfico).
 
-### O que NUNCA fazer na delegação:
-- Não peça para um subagente "inventar o design system" ou "escolher cores próprias".
-- Não deixe dois subagentes editarem o mesmo arquivo (`tokens.css`, `shell.css`, `index.html`, `fluxo.html`). **Arquivos compartilhados pertencem exclusivamente ao Orquestrador.**
-- Não deixe o subagente pesquisar ou criar telas fora do seu slice sem registrar antes no manifesto.
-- Nunca passe o histórico inteiro de conversas ou PDFs gigantes brutos no prompt do subagente; passe o contrato destilado.
+### O que NUNCA colocar no briefing de um subagente:
+- **NUNCA** escreva `"sem classe card"`, `"proibido usar cards"` ou `"faça só 2 linhas porque o resto não está na amostra"`.
+- **NUNCA** proíba estilos locais necessários para a riqueza da tela (a camisa de força de "só use classes prontas de um shell.css mínimo" produz páginas peladas).
+- **NUNCA** deixe dois subagentes editarem o mesmo arquivo compartilhado (`tokens.css`, `shell.css`, `shell.js`, `index.html`, `fluxo.html`).
+- **NUNCA** entregue 5–7 telas num único subagente.
 
 ---
 
-## Template Obrigatório de Briefing de Subagente
-
-Copie e preencha este bloco para cada subagente da Onda 1:
+## Template Obrigatório de Briefing de Subagente (`v2.0`)
 
 ```markdown
-### Tarefa: Construir Slice [NOME_DO_MODULO] — Projeto [NOME_DO_PROJETO]
+### Tarefa: Construir Slice [NOME_DO_MODULO] ([1 a 3] tela(s)) — Projeto [NOME_DO_PROJETO]
 
-Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve seguir 100% a Bíblia de Design e os 10 Blocos de Leis Inegociáveis, sem criar tokens soltos ou estilos paralelos. Se o contrato diz remodelar, não reproduza a cara antiga. Cada tela do slice liga para a próxima e oferece volta.
+Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve igualar ou superar o acabamento visual e funcional das **Telas-Mãe aprovadas**, seguindo 100% a Bíblia de Design e os 10 Blocos de Leis Inegociáveis.
 
-1. **Artefatos de Fundação (LEITURA OBRIGATÓRIA antes de codar):**
-   - `DESIGN-BIBLE.md`, começando pelo Contrato de plataforma. Use só os componentes da seção 8, pelos caminhos escritos lá. Não troque superfície, stack nem shell.
-   - `tokens.css` (e o shell desta superfície em `<caminho>`)
+1. **Fundação & Régua Visual (LEITURA OBRIGATÓRIA antes de codar):**
+   - Tela(s)-Mãe aprovada(s) (espelhe este nível de acabamento): `<caminho/tela-mae-desktop.html>` / `<caminho/tela-mae-mobile.html>`
+   - `DESIGN-BIBLE.md` (Contrato de plataforma, planos Z0–Z4, tipografia, seção 8 de libs OSS e seção 8.1)
+   - `tokens.css`, `shell.css` e `shell.js` (não edite estes arquivos compartilhados; crie estilos específicos da sua tela em `<style>` local usando exclusivamente `var(--token)`).
 
-2. **Telas do Seu Slice (TODAS devem ser entregues completas):**
-   - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Destino dos links: `<arquivo-destino>`)
+2. **Telas do Seu Slice (1–3 telas, TODAS ricas e completas):**
+   - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Zonas: `<ex: 3 zonas — fila 320px + documento + telemetria com gráfico>` | Links de saída: `<arquivos-destino>`)
    - `[id-2]` -> `<caminho/arquivo-2>` (...)
 
-3. **Dados Fictícios Compartilhados (USE EXATAMENTE ESTES VALORES):**
+3. **Widgets OSS & Interatividade Obrigatória:**
+   - Bibliotecas disponíveis no projeto: `<ex.: vendor/echarts.min.js, ícones SVG consistentes, bottom sheet>`
+   - Massa realista mínima: `>= 5` registros concretos em tabelas/listas (proibido stub de 1–2 linhas ou texto de desculpa).
+   - Interações reais: filtros funcionais, seleção de item atualizando o inspector completo (nunca 1 linha só), busca/tabs, modal/drawer/sheet com fechar por `Esc` e toast com Desfazer.
+
+4. **Dados Fictícios Compartilhados (USE EXATAMENTE ESTES VALORES):**
    - Empresa/Sistema: <...>
    - Perfis/Usuários: <...>
    - Métricas/Alertas integrados: <...>
 
-4. **Restrições Técnicas e os 10 Blocos:**
-   - Suporte completo a `data-theme="dark"` e `data-theme="light"` via variáveis do `tokens.css`.
-   - Zero `transition-all`, zero `Lorem ipsum`, zero emojis como ícones, zero card-dentro-de-card, zero gradientes roxo-neon, zero magic numbers fora da escala 4/8px.
-   - `tabular-nums` em todos os valores numéricos, tabelas alinhadas à direita para números, `<label>` em todo input, `:focus-visible` preservado, touch target >= 44px em mobile.
-   - Inclua estados interativos reais (tabs/filtros funcionais, modal/sheet/drawer com fechar por `Esc` e feedback com toast).
+5. **Os 10 Blocos & Regras Anti-Regressão (`v2.0`):**
+   - Suporte completo a `data-theme="dark"` e `data-theme="light"` via variáveis de `tokens.css`.
+   - Use superfícies elevadas `Z2` nítidas (proibido card-dentro-de-card, mas obrigatório ter hierarquia real de painéis/cards `Z2`).
+   - Proibido vazio morto em desktop (`DA-DEAD-SPACE`), proibido links `<a>` azuis sublinhados crus em listas/menus (`DA-RAW-LINK-LIST`), proibido fonte serifada editorial em sistema `Operate` (`DA-SERIF-OPERATE`), proibido texto cortado por barra fixa mobile (`DA-FIXED-OVERLAP`).
+   - `tabular-nums` + alinhamento à direita em números de tabela, `<label>` visível em inputs, `<textarea>` estilizado, `:focus-visible`, touch target `>= 44px` em mobile, zero `transition-all`, zero emojis clichês.
 
-5. **Validação Local Obrigatória antes de Responder:**
-   - Rode `python3 <skill_dir>/scripts/lint_design_aura.py <seus-arquivos> --strict` e corrija qualquer falha `BLOCK`.
-   - Responda listando: arquivos criados/editados, links internos conectados e resultado do linter.
+6. **Validação Local Obrigatória antes de Responder:**
+   - Rode `python3 <skill_dir>/scripts/lint_design_aura.py <seus-arquivos> --strict` e corrija qualquer falha `BLOCK`/`HIGH`.
+   - Responda listando: arquivos criados, widgets/interações implementadas, links conectados e resultado do linter. (O Orquestrador rodará Fast-Audit visual em Chromium imediatamente após sua entrega.)
 ```
 
 ---
 
-## Reconciliação Final de Cobertura (Checklist do Orquestrador)
+## Reconciliação Final (Onda 2)
 
-Antes de chamar `build_figma_canvas.py` e o Auditor da Onda 2, o Orquestrador verifica:
-1. **100% das telas listadas em `screen-manifest.json`** existem no disco e têm tamanho > 0.
-2. **Zero links quebrados**: todos os `href`/`to` entre telas de módulos diferentes batem exatamente com os nomes de arquivo/rota do manifesto.
-3. **Coerência de dados**: os números mostrados no Portal/Home batem com os números detalhados nas telas internas.
-4. **Vitrine gerada**: executar `build_figma_canvas.py` para produzir `fluxo.html`, `preview.html` e `index.html`.
-5. **Onda 2 disparada**: o subagente Auditor (ou o Orquestrador se escopo pequeno) roda os 3 portões (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs`) e inspeciona visualmente os PNGs antes de encerrar.
+Após todos os slices passarem no Fast-Audit individual:
+1. Confirme **100% de cobertura** no disco contra `screen-manifest.json` e zero links quebrados.
+2. Gere a vitrine com `build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <dir_telas> --verify-files`.
+3. Execute os 3 portões globais (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs --manifest` que agora audita também `fluxo.html`, `preview.html` e `index.html`).
+4. Inspecione visualmente os PNGs finais e entregue links acessíveis validados (`HTTP 200`).

@@ -3,18 +3,16 @@
 Ao final da construção, o Orquestrador compila todas as telas do projeto em uma **vitrine navegável estilo Figma** usando `scripts/build_figma_canvas.py`. Isso permite ao usuário inspecionar o sistema inteiro, testar fluxos ponta a ponta e validar a navegação Desktop + Mobile no navegador.
 
 ```bash
-python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <pasta_saida>
+python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <pasta_saida> --verify-files [--relayout]
 ```
 
 Arquivos gerados automaticamente na pasta `<pasta_saida>`:
-1. **`fluxo.html`** — Canvas Infinito Estilo Figma:
-   - Pan livre (arrastar fundo), zoom centrado no cursor (`wheel` + `+`/`-`), `Fit All (F)`, `100% (0)`.
-   - Seções coloridas por módulo/plataforma com pill de título e destaque para tela inicial (`isStart`) e módulo mobile (`isMobileSection`).
-   - Artboards com previews ao vivo em `<iframe>` escalados (carregamento progressivo em lotes de 2) ou modo Esquemático leve (`L`).
-   - Conexões SVG Bézier cúbicas com setas e pílulas clicáveis de fluxo que centralizam na tela de destino.
-   - Modo **Isolar Conexões (`I`)**: clicar em qualquer artboard destaca apenas suas entradas e saídas.
-   - **Inspetor flutuante** (canto inferior esquerdo) com resumo da tela, saltos clicáveis de entrada/saída, botão **Preview Modal** e **Abrir Tela Completa**.
-   - **Minimapa interativo** (canto inferior direito) + sincronização Light/Dark (`T`) propagada ao vivo para todos os iframes.
+1. **`fluxo.html`** — Canvas Infinito Estilo Figma (`v2.0` Hub-and-Spoke):
+   - **Estúdio Dark-First** (`project.canvasTheme` padrão `"dark"`, independente do tema padrão do app; tecla `T` alterna Dark/Light e propaga para todos os iframes).
+   - **Auto-Layout Hub-and-Spoke panorâmico:** organiza automaticamente Acesso/Conta à esquerda → **`★ Tela Inicial / Hub`** em destaque central com borda laranja → módulos Desktop em **raias horizontais equilibradas** à direita → faixa dedicada **Mobile** embaixo. Detecta torres verticais degeneradas (`height > width * 1.12` com `>= 10` telas) e reorganiza automaticamente (use `--relayout` para forçar ou `project.lockManualLayout: true` para travar coordenadas manuais).
+   - **Higiene de arestas (`tier: "primary" | "secondary"`):** em mapas grandes (`> 22` arestas), exibe apenas as setas principais coloridas por módulo na visão geral — eliminando a macarronada de linhas cruzadas. Ao clicar/isolar uma tela ou ativar **`Setas: Todas (E)`**, todas as conexões secundárias/de retorno acendem instantaneamente.
+   - **Barra superior de estúdio:** filtros por fluxo com contagem (`Todos (21)`, `Financeiro (6)`), botões de salto rápido **`★ Início (H)`** e **`Mobile`**, alternância **`Setas (E)`**, previews ao vivo em lotes (`L`), `Fit (F)` e barra inferior de atalhos.
+   - **Inspetor flutuante** (canto inferior esquerdo) com saltos clicáveis de entrada/saída, **Abrir Modal** e **Tela Cheia**, mais **Minimapa interativo** (canto inferior direito).
 2. **`preview.html`** — Player Guiado de Uso Real:
    - Seletor de jornadas por perfil/persona, breadcrumb dinâmico, `Voltar` / `Portal` / `Abrir pura`.
    - Palco ao vivo que detecta automaticamente quando o usuário clica em links internos das telas e sincroniza a trilha de passos; ajusta automaticamente o enquadramento quando a tela é `platform: "mobile"`.

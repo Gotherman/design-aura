@@ -21,13 +21,14 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
-| `DA-B2-01` | Proibido "cardite aguda" (colocar tudo dentro de caixas com borda e sombra quando espaço negativo, divisores sutis, lista alinhada ou tabela resolvem melhor) e **proibido card dentro de card**. | `lint_design_aura.py` + inspeção visual |
+| `DA-B2-01` | **Anti-Cardite ≠ Proibir Cards:** proibido "cardite aguda" (colocar caixas decorativas onde lista/tabela resolve melhor) e **proibido card dentro de card**. Por outro lado, superfícies elevadas `Z2` (cards, painéis, KPIs estruturados, drawers) são **obrigatórias** para dar profundidade e separação visual — é **estritamente proibido** banir cards (`"sem classe card"`) no briefing de subagentes ou achá-los dispensáveis em dashboards/módulos. | `lint_design_aura.py` + `DA-SURFACE-FLAT` + inspeção visual |
 | `DA-B2-02` | Proibido repetir o template preguiçoso de "3 cards idênticos com ícone em círculo/quadrado colorido + título + 2 linhas" como solução padrão de seção. | Inspeção visual |
 | `DA-B2-03` | Proibido centralizar blocos de texto longos ou listas de leitura; alinhamento deve favorecer escaneabilidade pela margem esquerda. | `lint_design_aura.py` |
 | `DA-B2-04` | Proibido espaçamento uniforme sem agrupamento lógico (**Lei da Proximidade**): elementos relacionados ficam mais próximos entre si do que de grupos distintos; sempre há mais espaço acima de um título do que abaixo dele. | Inspeção visual + CSS |
 | `DA-B2-05` | Proibido múltiplos CTAs primários competindo com o mesmo peso visual na mesma dobra/tela. Cada vista tem no máximo 1 ação primária dominante. | `lint_design_aura.py` + inspeção visual |
-| `DA-B2-06` | **Alto Contraste Ótico & Zero Espaços Mortos**: Light Mode usa canvas aterrado com separação clara entre fundo (`Z0/Z1`) e cartões (`Z2`) por contorno nítido (`1.25px`) + sombra dupla sutil — proibido branco lavado onde tudo se mistura. Desktop operacional usa composição de 2 ou 3 zonas sem 60–70% de vazio morto. | Inspeção de `tokens.css` e renders 1440×900 |
+| `DA-B2-06` | **Alto Contraste Ótico & Zero Espaços Mortos**: Light Mode usa canvas aterrado com separação clara entre fundo (`Z0/Z1`) e cartões (`Z2`) por contorno nítido (`1.25px`) + sombra dupla sutil — proibido branco lavado onde tudo se mistura. Desktop operacional usa composição de 2 ou 3 zonas sem vazio morto (`DA-DEAD-SPACE`). | `capture_and_audit.mjs` + inspeção 1440×900 |
 | `DA-B2-07` | **Anti-poluição e uso humano.** Em poucos segundos a pessoa entende onde está, para onde pode ir, onde clicar e o que pode fazer. Proibido despejar o sistema inteiro numa tela, espalhar botões do mesmo peso, ou posicionar a navegação fora do lugar que a plataforma ensinou. Densidade é permitida quando o trabalho é denso e os grupos estão separados. Proibido esconder a ação principal ou a saída para a tela parecer vazia. | Revisão da tela e do fluxo |
+| `DA-B2-08` | **Piso de Substância & Zero Telas Casca (`DA-STUB-SCREEN` / `DA-RAW-LINK-LIST` / `DA-DEAD-SPACE`):** proibidas telas rasas com apenas 1–2 linhas em tabelas operacionais, inspectors laterais quase vazios (ex.: só 1 linha de texto e um buraco branco), copy de desculpa de stub (*"não estão nesta amostra"*, *"semente do funil"*) ou links `<a>` azuis sublinhados crus servindo de lista/menu de aplicativo. | `lint_design_aura.py` (`DA-B2-08A/B`) + `capture_and_audit.mjs` |
 
 ---
 
@@ -38,6 +39,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B3-01` | Obrigatório respeitar no mínimo **WCAG AA** (`>= 4.5:1` texto normal e placeholders; `>= 3.0:1` texto grande `>= 18pt` / `14pt bold` e componentes UI) e **APCA** (`|Lc| >= 60` corpo, `>= 45` grande/UI). | `audit_contrast.py --strict` + `capture_and_audit.mjs` |
 | `DA-B3-02` | Proibido usar preto puro (`#000000`) com branco puro (`#FFFFFF`) sem controle de elevação de superfície, ou textos cinza lavados que prejudicam a leitura em Dark Mode. Em superfícies coloridas, matizar o texto secundário pela cor do fundo/frente, nunca cinza genérico. | `audit_contrast.py` + `lint_design_aura.py` |
 | `DA-B3-03` | Proibido áreas de toque/clique menores que **44×44px** em interfaces mobile/iOS (e **48×48dp** com 8dp de respiro em Android), com texto de corpo mínimo de **14px** (ideal 15–16px web, 17pt iOS). | `capture_and_audit.mjs` + `lint_design_aura.py` |
+| `DA-B3-04` | **Vitalidade Cromática da Marca:** proibido degradar/escurecer uma cor vibrante da marca até virar marrom, bege sujo ou cinza apagado apenas para forçar texto branco no botão. Quando a cor vibrante (ex.: laranja, âmbar, verde-lima) tem luminância alta, use texto escuro calibrado (`#101822` / `#140804`) sobre o acento vivo ou variante deep saturada, mantendo WCAG AA `>= 4.5:1`. | `audit_contrast.py` + inspeção da Prancha Visual |
 
 ---
 
@@ -48,6 +50,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B4-01` | Obrigatório contraste tipográfico claro entre título, subtítulo, corpo e metadados (escala, peso e `line-height`), com medida de leitura confortável (`65–75ch`). Proibido peso `800`/`900` gratuito em textos corridos ou UI comum. | `lint_design_aura.py` + inspeção |
 | `DA-B4-02` | Obrigatório `font-variant-numeric: tabular-nums` (`tabular-nums`) em todos os números dinâmicos, preços, contadores, timers e colunas numéricas de tabela. | `lint_design_aura.py` + inspeção |
 | `DA-B4-03` | Obrigatório `text-wrap: balance` em títulos curtos (≤6 linhas) e `text-wrap: pretty` em parágrafos/descrições, além de `-webkit-font-smoothing: antialiased` no root. Todo texto dinâmico deve prever quebra limpa ou `text-overflow: ellipsis` sem estourar containers. | `capture_and_audit.mjs` + CSS |
+| `DA-B4-04` | **Tipografia Adequada ao Modo `Operate` (`DA-SERIF-OPERATE`):** em sistemas operacionais, ERPs e dashboards (`Operate`), proibido usar fontes serifadas editoriais (`Source Serif`, `Georgia`, `Palatino`, `Times`, `Merriweather`, `Playfair`) em títulos ou corpo sem autorização explícita do usuário. Use sans-serif geométrica/neo-grotesca nítida + mono tabular. | `lint_design_aura.py` + `capture_and_audit.mjs` |
 
 ---
 
@@ -100,6 +103,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B9-02` | Proibido remover `:focus-visible` (`outline: none` / `outline-none`) sem fornecer anel de foco acessível equivalente (`2px+`, contraste >= 3:1). | `lint_design_aura.py` |
 | `DA-B9-03` | Obrigatório prever estados reais (`hover`, `active`, `disabled`, `focus`, `invalid`) com mensagens de erro junto ao campo que dizem o que aconteceu e como corrigir. | Revisão de fluxo |
 | `DA-B9-04` | Proibido empilhar modais (modal sobre modal) ou executar ações destrutivas sem confirmação explícita ou mecanismo imediato de **Desfazer (Undo)**. | Revisão de fluxo |
+| `DA-B9-05` | Proibido deixar `<textarea>`, `<select>` ou `<input>` com visual cru do navegador sem classe/estilização do design system (borda, padding, raio e `:focus-visible`). | `lint_design_aura.py` + inspeção visual |
 
 ---
 
@@ -111,6 +115,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B10-02` | Proibido criar áreas de scroll aninhado (scroll interno dentro de página rolável) sem justificativa estrita de layout (ex.: painel lateral fixo em cockpit desktop `h-dvh`). Evitar `100vh` rígido em mobile (usar `100dvh` + `env(safe-area-inset-*)`). | `lint_design_aura.py` + `capture_and_audit.mjs` |
 | `DA-B10-03` | Proibido exibir imagens/avatares sem preservação de proporção (`object-fit: cover` / `object-cover`), sem `alt` adequado ou sem estado de fallback (iniciais/ícone) em caso de falha. | `lint_design_aura.py` + `capture_and_audit.mjs` |
 | `DA-B10-05` | Proibido espremer o shell desktop no mobile ou esticar o shell mobile no desktop. Web: sidebar a partir de `1024px`, rail ou drawer entre `768` e `1023px`, drawer ou bottom nav abaixo de `768px`. Tabela densa vira lista no mobile. Tokens continuam os mesmos. | Revisão contra `04` e `05` |
+| `DA-B10-06` | **Zero Recorte por Barras Fixas (`DA-FIXED-OVERLAP`):** conteúdo rolável em mobile ou desktop nunca pode ficar cortado ou escondido atrás da barra inferior (`bottom bar` / `tab bar`) ou cabeçalho fixo — garanta `padding-bottom` compensando a altura total da barra + `env(safe-area-inset-bottom)`. | `capture_and_audit.mjs` (`DA-FIXED-OVERLAP`) |
 
 ---
 

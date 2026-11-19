@@ -8,8 +8,9 @@ Nenhuma entrega da **Design Aura** é considerada pronta por "leitura de código
 
 | Modo | Quando usar | Cobertura | Limite de Achados no Resumo |
 |---|---|---|---|
+| **`fast-slice`** (novo `v2.0`) | **Obrigatório imediatamente após CADA entrega de subagente na Onda 1** | `lint_design_aura.py` + `capture_and_audit.mjs` nas 1–3 telas do slice + comparação visual direta dos PNGs contra a **Tela-Mãe aprovada** | Todos os `BLOCK`/`HIGH` + desvios estéticos (corrige/redespacha NA HORA) |
 | **`quick`** | Revisão rápida de um componente ou ajuste focal | Fluxo principal e estados de maior tráfego; reporta `BLOCK`, `HIGH` e `MEDIUM` | Até `5` principais (correções mecânicas vão todas na tabela) |
-| **`full`** (padrão Onda 2) | Entrega completa de sistema, app ou pós-construção dos subagentes | Todos os **10 Blocos** + **5 Categorias de Micro-Craft** em `desktop` (`1440×900`), `tablet` (`768×1024`) e `mobile` (`390×844`) em **Dark e Light** | Até `15` achados estruturais agrupados |
+| **`full`** (padrão Onda 2) | Entrega completa pós-construção de todos os slices | Todos os **10 Blocos** + **Piso de Substância `v2.0`** + Vitrine (`fluxo.html`, `preview.html`, `index.html`) em `desktop` (`1440×900`), `tablet` (`768×1024`) e `mobile` (`390×844`) em **Dark e Light** | Até `15` achados estruturais agrupados |
 
 ---
 
@@ -29,27 +30,31 @@ python3 <skill_dir>/scripts/lint_design_aura.py <caminho-do-projeto> --strict
 ```
 Varre todos os arquivos HTML/CSS/JS/TS/TSX/Vue/Svelte/Swift/Kotlin/Dart contra as regras determinísticas dos Blocos 1 a 10 (AI tells, copy clichê, `transition-all`, magic numbers, inputs sem label, falta de `tabular-nums`, foco removido, etc.).
 
-### Passo 3 — Renderização Real + Auditoria DOM (`capture_and_audit.mjs`)
+### Passo 3 — Renderização Real + Auditoria DOM & Craft (`capture_and_audit.mjs` v2.0)
 ```bash
-node <skill_dir>/scripts/capture_and_audit.mjs <arquivos-ou-urls> --out <dir_audit> --viewports desktop,tablet,mobile --themes dark,light --strict
+node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
 ```
-Abre Chromium headless real via CDP, captura PNGs de cada viewport × tema e inspeciona em runtime:
-- Overflow horizontal (`scrollWidth > clientWidth`)
-- Imagens quebradas ou sem `alt`
-- Controles mobile `< 44×44px`
-- Corpo de texto `< 14px`
-- Inputs com placeholder sem label acessível
-- Contraste real computado no navegador
-- Erros de console e exceções JavaScript
+Abre Chromium headless real via CDP, audita automaticamente as telas **e a vitrine (`fluxo.html`, `preview.html`, `index.html`)**, captura PNGs de cada viewport × tema e inspeciona em runtime:
+- Overflow horizontal (`DA-DOM-OVERFLOW`), imagens quebradas/sem `alt`, alvos mobile `< 44×44px`, corpo `< 12px`, inputs sem label (`DA-B9-01`), contraste real WCAG AA (`DA-B3-01`), raios beliscados (`DA-B7-01`), scroll aninhado e números desalinhados (`DA-B8-03`)
+- Erros de console/exceções JS com stack completo (`DA-JS-ERROR`) e assets/scripts locais com HTTP 404 (`DA-ASSET-404`)
+- **Piso de Craft & Composição (`v2.0`):**
+  - `DA-DEAD-SPACE`: detecta vazio morto em desktop (`1440×900`) e inspectors/painéis laterais quase vazios (ex.: apenas 1 linha de dado)
+  - `DA-STUB-SCREEN`: bloqueia/alerta tabelas operacionais rasas (`1–2` linhas) e telas casca com `< 4` elementos úteis
+  - `DA-RAW-LINK-LIST`: detecta links `<a>` azuis sublinhados crus em listas/tabelas/menus de app
+  - `DA-FIXED-OVERLAP`: bloqueia conteúdo cortado ou escondido sob barra fixa inferior/superior mesmo no fim da rolagem
+  - `DA-SERIF-OPERATE`: detecta tipografia serifada editorial indevida em telas operacionais `Operate`
+  - `DA-SURFACE-FLAT`: detecta falta de separação visual entre canvas `Z1` e painéis/cards `Z2`
 
-*(Para apps nativos iOS/Android compilados: capture diretamente pelo Simulator via `device_screenshot` / `xcrun simctl io booted screenshot` em Dark Mode + Dynamic Type grande, ou Emulator Android com `uimode night yes` + `font_scale 1.3`. Nunca aprove app nativo apenas olhando simulação web.)*
+### Passo 4 — Inspeção Visual Comparativa contra a Tela-Mãe (Batch Review)
+Abra e analise os PNGs gerados em `<dir_audit>` (incluindo `fluxo-desktop-dark.png`) — **zero erros automáticos NÃO basta se a tela estiver feia**:
+1. **Paridade com a Tela-Mãe & Zero Telas Casca**: cada tela parece desenhada pela mesma diretoria de design da Tela-Mãe aprovada, com dados completos, gráficos/widgets OSS vivos e sem 60–75% de espaço morto?
+2. **Alto Contraste Ótico & Vitalidade Cromática**: os planos `Z0→Z4` separam com nitidez sem clarão branco no Light nem borrão escuro no Dark? A cor da marca continua viva (sem virar marrom/bege apagado)?
+3. **Alinhamento, Badges & Densidade**: números à direita, ícones consistentes, sem links azuis crus, sem badges brigando e sem texto cortado sob a barra mobile?
+4. **Vitrine Estilo Figma**: `fluxo.html` está panorâmico (Hub-and-Spoke), legível (sem torre vertical a 25% de zoom e sem macarronada de setas) e com zero erro JS?
 
-### Passo 4 — Inspeção Visual das Imagens (Batch Review)
-Abra e analise os PNGs gerados em `<dir_audit>` (sem fazer uma viagem separada por regra — analise todas as categorias de uma vez):
-1. **Hierarquia & Anti-Cardite**: a ação principal salta aos olhos em 1 segundo? Há espaço morto? Há cardite/card-dentro-de-card?
-2. **Alto Contraste Ótico**: os planos `Z0→Z4` separam claramente sem clarão branco no Light nem borrão escuro no Dark?
-3. **Alinhamento & Densidade**: números à direita, sem quebra feia de texto, sem badges brigando?
-4. **Fidelidade à Bíblia**: a assinatura visual do domínio aparece com coerência entre todas as telas?
+### Passo 5 — Regra de Entrega Acessível (Local ou Sandbox Remoto)
+Antes de encerrar, verifique como o usuário vai abrir o protótipo:
+- Se estiver em ambiente remoto/cloud onde o navegador do usuário não alcança `localhost`, **nunca** entregue apenas caminhos locais ou `http://localhost:...` — abra no preview integrado do ambiente (quando disponível) ou forneça uma URL acessível verificada com `HTTP 200` junto dos caminhos no repositório.
 
 *(Opcional: se o usuário tiver conectado o MCP Uizze com token válido, `find_ui_references` e `get_ui_flow` podem servir para comparar soluções de referência em telas problemáticas — sempre distinguindo claramente o que foi inspecionado do que foi inferido.)*
 
