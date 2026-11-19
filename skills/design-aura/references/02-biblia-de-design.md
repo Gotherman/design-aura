@@ -4,6 +4,8 @@ A **Bíblia de Design** é o contrato visual, ergonômico e estrutural criado pe
 
 Use o template copiável em [assets/design-bible-template.md](../assets/design-bible-template.md).
 
+O primeiro bloco do arquivo, antes das 12 seções, é o **Contrato de plataforma**: trabalho (remodelar, completar ou criar), tipo de produto, superfícies, qual é a principal, stack, tema, uso das cores da marca, sinal do domínio, como o trabalho se organiza e o que o projeto recusa do molde do catálogo. Também lista as hipóteses que não foram confirmadas. Cor, tipo e tela só começam depois desse bloco. Um subagente que não leu o contrato não escolhe shell nem recupera a cara antiga numa remodelação.
+
 ---
 
 ## As 12 Seções Obrigatórias da Bíblia
@@ -15,14 +17,15 @@ Use o template copiável em [assets/design-bible-template.md](../assets/design-b
 
 ### 2. Direção Criativa, Modo de Superfície & Assinatura Única
 Classifique a superfície primária do produto:
-- **`Operate`** (ERP, SaaS operacional, Fintech, DevTools, App de produtividade): o usuário veio executar trabalho. A estética empresta **apenas 4 coisas**: tipografia, paleta, densidade e **1 assinatura visual (*signature move*)**. Controles e navegação permanecem 100% familiares à plataforma.
+- **`Operate`** (ERP, SaaS operacional, Fintech, DevTools, App de produtividade): o usuário veio executar trabalho. A estética empresta **apenas 4 coisas**: tipografia, paleta, densidade e **1 assinatura visual (*signature move*)**. Controles e navegação permanecem familiares à plataforma. A composição da área de trabalho segue o fluxo real do projeto, não um cockpit genérico.
+- **Multiplataforma:** a Bíblia repete os tokens e descreve um shell por plataforma. Não existe um layout único que só muda de largura.
 - **`Read`** (documentação, relatórios, portal analítico, leitor): foco em medida tipográfica (65–75ch), ritmo vertical e clareza editorial.
 - **`Persuade / Experience`** (landing page, vitrine de produto, onboarding de impacto): compromisso expressivo máximo sem sacrificar legibilidade ou velocidade.
 
-Defina **1 assinatura visual concreta** enraizada no domínio (ex.: barra de cobertura financeira estilo *boarding pass*, linha temporal de rota logística, trilho de SLA em tempo real). Se a direção só muda cores, ainda não há assinatura.
+Defina **1 assinatura visual concreta** enraizada num fato do planejamento, e só se a Fase 1 autorizou o sinal do domínio. Uma agência de viagens pode ter uma linha de rota ou um horizonte. Não ganha avião, nuvem e paisagem em todo card. Se a direção só muda cores, ainda não há assinatura. Se o sinal não foi autorizado, a identidade fica no vocabulário, na hierarquia e nos dados reais.
 
 ### 3. DNA da Marca sem Clichês
-Traduza a essência do negócio para **linguagem de UI** sem ilustrações literais ou infantilizadas:
+Traduza a essência do negócio para **linguagem de UI**. Ilustração literal (avião, nuvem, mala) só entra se o sinal do domínio foi autorizado, e ainda assim uma vez, não como tema repetido:
 - O que a marca representa no mundo real → como isso vira geometria, superfície, ritmo e nomenclatura.
 - Vocabulário oficial do domínio (verbos de ação, rótulos de status, métricas reais).
 
@@ -31,6 +34,7 @@ Traduza a essência do negócio para **linguagem de UI** sem ilustrações liter
 - **30% Estrutura & Autoridade**: barras de navegação, textos principais, contornos nítidos (`1.25px`), separadores.
 - **10% Ação & Decisão**: cor primária reservada exclusivamente para o CTA dominante, foco e itens ativos.
 - **Cores Semânticas**: `success` (esmeralda), `warning` (âmbar), `danger` (carmim/coral), `info` (azul técnico) — sempre em pares `bg-soft + border + fg` validados pelo `audit_contrast.py` em **Light e Dark**.
+- **Cores da marca, quando a Fase 1 autorizou:** elas ocupam os 10% de ação e podem tintar a estrutura. Os 60% de superfície e os neutros de texto continuam uma família própria, com contraste real. Sucesso, alerta, erro e informação não são o azul da marca clareado e escurecido. Paleta de uma cor só é falha, não fidelidade.
 
 ### 5. Sistema de Profundidade & 5 Planos (`Z0 → Z4`)
 Documente explicitamente os 5 planos físicos da interface nos dois temas:
@@ -53,7 +57,7 @@ Documente explicitamente os 5 planos físicos da interface nos dois temas:
 ### 8. Arsenal Open-Source de Elite
 Rode `scripts/discover_oss_components.py` com a interação real, a stack e o modo de superfície. O procedimento e a diferença entre registry, galeria e licença própria estão em [09-pesquisa-componentes-oss.md](09-pesquisa-componentes-oss.md).
 
-Registre só o que for usado, com licença e tipo de uso (Referência, Dependência ou Código copiado):
+Registre só o que for usado. Cada linha traz licença, uso e caminho completo: URL, comando de instalação e o arquivo no projeto depois de copiado. Sem caminho, a peça não entra na Bíblia.
 
 - Web/React: shadcn/ui, coss ui, Kibo UI, Dice UI, Base UI, TanStack Table, cmdk.
 - Desktop: Dockview ou `react-resizable-panels`, mais o frame nativo da janela.
@@ -68,27 +72,38 @@ Defina regras exatas de:
 - Estados obrigatórios: Loading (skeleton proporcional), Empty (diagnóstico + CTA), Error (causa + retry), Disabled, Foco.
 - Motion: preencha o contrato do guia [10-motion-anti-slop.md](10-motion-anti-slop.md). Diga o que anima, o que fica quieto, e as durações de desktop, iOS e Android separadas. Uma curva CSS não serve para as três.
 
-### 10. Arquitetura de Fluxos & Horizontes Temporais
-Reestruture a operação do usuário em torno de velocidade cognitiva:
-- **Agora (Intervenção Imediata)**: pendências críticas, aprovações, alertas vencidos.
-- **Em Rota (Próximos passos / 7 dias)**: fila programada, vencimentos, revisões.
-- **Radar / Observabilidade**: indicadores de tendência, saúde de integrações, histórico.
-- Mapeie o **fluxo de navegação completo** (entrada → painel central → módulos → mobile/detalhe → volta).
+### 10. Arquitetura de Fluxos, tirada do trabalho real
+A organização da tela repete a organização do trabalho que o planejamento e o repositório descrevem: a ordem das decisões, o que fica visível junto, o que é fila, o que é documento, o que é consulta.
+
+Nomeie as zonas com a língua do projeto. "Agora / Em Rota / Radar" só vale quando o negócio de fato separa o dia assim. Uma agência de viagens pode organizar por reserva, embarque e pós-viagem. Um caixa pode organizar por vencido, a compensar e conciliado. Copiar o horizonte de outro projeto é molde, não leitura.
+
+Antes de acrescentar um bloco, um botão ou um item de navegação, a tela ainda precisa responder a quatro perguntas: onde estou, para onde posso ir, o que posso fazer aqui, qual é o próximo passo. O que não serve a uma delas sai da tela ou vai para uma tela seguinte. A navegação usa poucos destinos, com o nome da tarefa, no lugar que a plataforma ensinou (tab bar, sidebar, rail). Vários botões primários no mesmo olhar são poluição, não atalho.
+
+Mapeie o **fluxo de navegação completo**. Cada tela alcança a próxima e volta para onde o usuário estava. Uma jornada válida: inicial, tela específica, volta à inicial, outra específica, volta. Lista, detalhe e confirmação seguem o mesmo vai-e-volta. A vitrine em [08-canvas-figma-manifest.md](08-canvas-figma-manifest.md) desenha essas arestas. Tela solta, sem ida nem volta, não entra.
 
 ### 11. Mapa Completo de Telas & Dados Fictícios Coerentes
-Tabela mestre com **todas** as telas que existem no projeto (`id`, `titulo`, `arquivo/rota`, `plataforma`, `viewport`, `modulo`, `acoes_principais`, `links_saida`) + bloco de **Dados Fictícios Oficiais** (nomes de pessoas, valores, datas, empresas, contagens) que TODOS os subagentes devem usar identicamente para que o sistema pareça vivo e integrado.
+Tabela mestre com **todas** as telas que o produto precisa (`id`, `titulo`, `arquivo/rota`, `plataforma`, `viewport`, `modulo`, `acoes_principais`, `links_saida`), não só as que o planejamento listou. Perfil, configurações, sessão, notificação e automação entram quando alguém precisa governar conta, preferência ou rotina. Um sistema com logins e automações tem essas telas mesmo se o documento esqueceu. Um quiosque sem conta não ganha perfil para completar o mapa. Ao lado de cada tela extra, escreva o fato que a exigiu.
+
+Inclua o bloco de **Dados Fictícios Oficiais** (nomes, valores, datas, empresas, contagens) alinhado ao planejamento. Todos os subagentes usam os mesmos valores.
 
 ### 12. Portões CDO de Aprovação
 Critérios objetivos de saída ligados aos 10 Blocos e aos 3 scripts (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs`).
 
 ---
 
-## Bíblia Visual Executiva (HTML → PDF Opcional)
+## O papel da Bíblia
 
-Quando o projeto exigir apresentação visual para cliente, diretoria ou handoff de estúdio (como em propostas de sistema):
-1. Copie e preencha [assets/biblia-visual-template.html](../assets/biblia-visual-template.html) usando os tokens reais do `tokens.css`.
-2. Gere o PDF em A4 paisagem via Chromium headless:
-   ```bash
-   google-chrome --headless=new --disable-gpu --no-sandbox --print-to-pdf=Biblia-Direcao-Design.pdf --no-pdf-header-footer biblia-visual.html
-   ```
-3. Inspecione todas as páginas geradas garantindo zero corte de prancha e contraste legível.
+A Bíblia é um documento só, em duas faces do mesmo texto:
+
+- **`DESIGN-BIBLE.md`** é o que o subagente executa. Títulos, tabelas e caminhos ficam literais.
+- **`DESIGN-BIBLE.html` e `DESIGN-BIBLE.pdf`** são o papel para leitura humana. Não há número máximo de páginas. O conteúdo manda. Seção longa continua na página seguinte. Nada fica escondido por altura fixa.
+
+```bash
+python3 <skill_dir>/scripts/render_design_bible.py DESIGN-BIBLE.md --out-dir .
+```
+
+O PDF sai em A4 retrato, com margem, título que não fica órfão e tabela que não parte no meio. Se não houver Chromium, o HTML já imprime do mesmo jeito.
+
+A seção 8 lista cada componente, card ou elemento escolhido fora do projeto, com licença, uso e **caminho**: URL, comando de instalação e o arquivo no repositório depois de copiado. Sem essa linha, o subagente não adota a peça.
+
+As pranchas de [assets/biblia-visual-template.html](../assets/biblia-visual-template.html) são um resumo de uma página por tema, opcional e fácil de cortar. Elas não substituem este papel.

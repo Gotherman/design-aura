@@ -1,17 +1,18 @@
 # Guia Mobile Nativo & Cross-Platform (iOS HIG · Android M3 · RN · Flutter · PWA)
 
-Um aplicativo mobile falha imediatamente quando parece **um site espremido em tela pequena** ou **um app iOS fantasiado rodando no Android**. A regra central: respeite a física do polegar e as convenções do sistema operacional em que o usuário está segurando o telefone.
+Um aplicativo mobile falha imediatamente quando parece **um site espremido em tela pequena** ou **um app iOS fantasiado rodando no Android**. A regra central: respeite a física do polegar e as convenções do sistema operacional em que o usuário está segurando o telefone. Cor, tipo, espaço e ícone podem ser os do sistema desktop irmão. Navegação, densidade e overlay, não. O shell largo está no guia [04-desktop-e-sistemas.md](04-desktop-e-sistemas.md).
 
 ---
 
 ## 1. Ergonomia Universal Mobile (Obrigatória para Todos)
 
-- **Safe Areas & Window Insets**: nenhum elemento interativo ou texto crítico pode invadir o notch, a Dynamic Island, a barra de status, o Home Indicator ou a área coberta pelo teclado virtual (IME).
+- **Safe Areas & Window Insets**: nenhum controle ou texto crítico invade a status bar, a Dynamic Island, o notch, o home indicator ou o teclado. O conteúdo pode rolar por baixo das barras, edge-to-edge. O que a pessoa precisa tocar fica dentro da área segura.
 - **Zona do Polegar (Thumb Zone)**:
-  - **Ações primárias frequentes** ficam na metade inferior (Tab Bar / Bottom Sheet / botão fixo acima da safe-area inferior).
+  - **Ações primárias e a navegação principal** ficam no terço inferior (Tab Bar, bottom navigation, sheet, botão fixo acima da safe area).
   - **Topo da tela** serve para título, contexto, filtro rápido ou ação secundária de saída/compartilhamento.
+- **Uma tarefa principal por tela.** Tabela densa horizontal vira lista agrupada ou cards empilhados, com a hierarquia do registro preservada. O desktop é que fica com a grade. A pessoa aponta a tab bar, a ação e o próximo passo sem caçar. Botões do mesmo peso espalhados pela tela são poluição.
 - **Alvos de toque**:
-  - **iOS / Web Mobile / PWA**: mínimo absoluto **44×44px** (`44pt`). Se o ícone visual for `20px`, estenda a área clicável via `min-width/min-height: 44px` ou pseudo-elemento invisível.
+  - **iOS / Web Mobile / PWA**: mínimo absoluto **44×44px** (`44pt`), com pelo menos **8px** entre alvos vizinhos. Se o ícone visual for `20px`, estenda a área clicável via `min-width/min-height: 44px` ou pseudo-elemento invisível.
   - **Android**: mínimo **48×48dp** com pelo menos **8dp** de espaçamento entre alvos vizinhos.
 - **Zero scroll aninhado acidental**: não coloque listas longas com scroll interno dentro de uma página que já rola verticalmente sem delimitação explícita. Em Web/PWA mobile, use `100dvh` em vez de `100vh` rígido.
 - **Feedback háptico e visual imediato**: todo toque precisa reagir (`active:scale-[0.97]` ou ripple/opacity nativa). Nunca dependa de `:hover` em mobile.
@@ -35,6 +36,7 @@ Um usuário fluente de iPhone confiaria neste app na primeira abertura? Os erros
 - **Cores & Materiais**:
   - Cores semânticas adaptativas (`label`, `secondaryLabel`, `systemBackground`, `secondarySystemGroupedBackground`, `separator`, `tint`).
   - **1 cor de tintagem (`tint`)** conduz as ações interativas.
+  - **Liquid Glass e materiais do sistema** ficam nas superfícies que o UIKit/SwiftUI já desenham. Não recrie o vidro em CSS para "parecer iPhone" num WebView ou no Android.
   - **Grouped Inset Lists** (`insetGrouped`) para menus, ajustes e detalhes de registro — muito superiores a inventar card solto sobre card solto.
   - **Sheets (detents `.medium`, `.large`)** para sub-tarefas focadas e dispensáveis por arrasto; `fullScreenCover` apenas para imersão/edição longa com `Cancelar` e `Concluir` claros.
 - **Verificação em Simulator**:
@@ -50,8 +52,9 @@ O erro clássico de IA no Android é copiar um iPhone (switches estilo Cupertino
 
 ### Regras Material Design 3
 - **Navegação Adaptativa por Tamanho**:
-  - **Compacto (Celular)**: `NavigationBar` inferior com `3 a 5` destinos.
+  - **Compacto (Celular)**: `NavigationBar` inferior com `3 a 5` destinos. A toolbar flutuante do Material 3 Expressive substitui a barra quando o guia atual da plataforma pede isso. Não empilhe as duas.
   - **Expandido (Tablet / Foldable)**: migre para `NavigationRail` ou `NavigationDrawer` permanente — nunca estique uma barra inferior de celular por 1000px.
+  - **Expressive** (forma e movimento mais soltos) cabe em superfície de marca. Em Operate, o scheme padrão e a navegação adaptativa vencem o efeito.
 - **Predictive Back & Insets**:
   - Respeite sempre o botão/gesto Back do sistema; nunca prenda o usuário nem bloqueie a animação de retorno preditivo.
   - **Edge-to-Edge**: trate `statusBars`, `navigationBars`, `displayCutout` e `imePadding()` para o teclado nunca cobrir inputs ou botões de envio.

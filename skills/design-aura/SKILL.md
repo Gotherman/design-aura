@@ -1,12 +1,12 @@
 ---
 name: design-aura
 description: >-
-  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards. Use sempre que o usuario pedir para planejar, especificar, desenhar, criar ou revisar interfaces, fluxos, design systems, tokens, telas ou prototipos navegaveis, aplicar anti-AI-slop, garantir alto contraste otico, micro-craft e acessibilidade WCAG/APCA, procurar componentes free/open source que caibam na interface, ou definir animacoes com vida para desktop, iOS e Android. Tambem use para transformar requisitos e repositorios existentes em uma Biblia de Design com construcao fiel orquestrada por ate 8 subagentes e entrega em vitrine interativa estilo Figma (fluxo.html, preview.html, index.html).
+  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards. Use sempre que o usuario pedir para planejar, especificar, desenhar, criar, revisar ou remodelar o visual de interfaces e telas já existentes, fluxos, design systems, tokens ou prototipos navegaveis, aplicar anti-AI-slop, garantir alto contraste otico, micro-craft e acessibilidade WCAG/APCA, procurar componentes free/open source que caibam na interface, ou definir animacoes com vida para desktop, iOS e Android. Tambem use para ler um repositorio ou planejamento e transformar isso em uma Biblia de Design propria daquele projeto, com construcao fiel orquestrada por ate 8 subagentes e vitrine estilo Figma (fluxo.html, preview.html, index.html).
 license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.1.0"
+  version: "1.1.7"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -17,26 +17,45 @@ Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual 
 
 ## Ponto de partida universal
 
-Esta skill funciona em **qualquer** estágio do projeto:
-1. **Repositório existente** (código web, desktop ou mobile já iniciado): leia tokens, componentes, rotas e telas atuais antes de propor qualquer mudança. Preserve o que já funciona bem.
-2. **Planejamento / Concepção** (`CONCEPCAO.md`, PRD, requisitos, proposta): extraia domínio, perfis, módulos, fluxos e restrições reais já decididas.
-3. **Ideia do zero**: conduza a especificação enxuta antes de gerar código ou telas.
+Leia o repositório e o planejamento por completo antes de desenhar: concepção, PRD, proposta, rotas, telas, tokens, componentes, logo e o vocabulário real do negócio. Cada projeto ganha um design saído desse material. Uma agência de viagens e um caixa de banco não compartilham a mesma pele.
 
-Regra absoluta: **nunca invente dados de negócio, diferenciais ou métricas.** Para demonstrações, use dados fictícios realistas e consistentes entre todas as telas.
+1. **Repositório que já tem design e telas.** Dois caminhos, e eles não se misturam:
+   - **Remodelar o visual:** o pedido é trocar a linguagem inteira pela Design Aura. Mantenha rotas, tarefas e dados reais. Substitua tokens, tipografia, shell, densidade e componentes. Não conserve a cara antiga por cautela.
+   - **Ajuste pontual:** altere só o que foi pedido e preserve o que já funciona.
+2. **Planejamento sem telas** (`CONCEPCAO.md`, PRD, requisitos, proposta): extraia domínio, perfis, módulos, fluxos e restrições já decididas.
+3. **Ideia do zero:** conduza a especificação enxuta antes de gerar código ou telas.
+
+Regra absoluta: **nunca invente dados de negócio, diferenciais ou métricas.** Demonstração usa dados fictícios coerentes com o que o planejamento descreve, e os mesmos valores em todas as telas.
 
 ---
 
 ## Fluxo End-to-End (4 Fases · 3 Ondas)
 
-### Fase 1 — Especificação Enxuta (Perguntas Essenciais)
-Antes de definir paleta, tipografia ou layout, absorva o contexto disponível. Pergunte **apenas o que ainda falta e muda decisões reais**, em lotes de no máximo **4 perguntas objetivas** (sempre com opção recomendada marcada):
+### Fase 1 — Especificação Enxuta
+Antes de paleta, tipografia ou layout, leia o pedido, o repositório e os documentos. Pergunte só o que ainda muda o shell, a stack ou a Bíblia. Não há teto: se faltam seis decisões, pergunte as seis de uma vez. Se falta uma, pergunte uma. Não pergunte gosto, nome de fonte nem o que o pedido já respondeu. Em cada pergunta, marque uma opção recomendada.
 
-1. **Alvo e stack**: Sistema Web/SaaS, App Desktop (Electron/Tauri/Nativo), App Mobile (iOS/Android/Cross-platform) ou multi-plataforma?
-2. **Perfis e tarefa principal**: quem opera a interface diariamente e qual decisão ou ação precisa ser resolvida em segundos?
-3. **Cenário de uso e tema**: ambiente iluminado/campo (Light-first ou Alto Contraste Ótico), turno noturno/cabine (Dark-first) ou alternância obrigatória Light + Dark?
-4. **Identidade e referências**: existe marca/logo/paleta oficial ou devemos derivar uma direção do domínio? Há pedido de Bíblia Visual executiva (HTML/PDF)?
+Pule a linha inteira quando a resposta já existe:
 
-Se o usuário já deu uma solicitação detalhada e clara, não transforme em workshop longo: assuma hipóteses conservadoras, sinalize brevemente e avance.
+1. **Trabalho:** remodelar o visual do que já existe, completar em cima do que há, ou criar do zero.
+2. **Tipo de produto:** sistema de trabalho diário (ERP, operação, backoffice), SaaS, app, ou uma combinação. Isso escolhe `Operate`, `Read` ou `Persuade`.
+3. **Superfícies:** web, desktop nativo, mobile, ou quais juntas. Se houver mais de uma, qual é a principal.
+4. **Mobile, só se essa superfície existir:** iOS, Android ou os dois. Entrega nativa (SwiftUI e/ou Compose), compartilhada (React Native/Expo ou Flutter) ou PWA.
+5. **Desktop nativo, só se existir:** macOS, Windows ou os dois. Electron, Tauri ou nativo do sistema.
+6. **Web, só se existir:** só o desktop largo, ou também o mobile web.
+7. **Quem usa e a tarefa de um segundo:** o perfil e a decisão que a tela principal precisa resolver.
+8. **Tema:** light-first, dark-first, ou os dois obrigatórios.
+9. **Cores da marca:** usar a paleta oficial como base? Recomendado **sim** quando logo ou paleta existem. Se a resposta for sim, a cor da marca conduz a ação e pode tintar a estrutura. Fundos, neutros e cores semânticas não são variações da mesma tinta. Interface monocromática reprova.
+10. **Sinal do domínio:** o planejamento traz um fato visual. Exemplo: a Brasitur é agência de turismo e viagens, o que sustenta céu, rota e horizonte. Pergunte se esse fato vira um sinal no visual. Recomendado **sim** quando cabe num gesto só. Recomendado **não** quando viraria ilustração repetida. Sem o sim, não desenhe avião, nuvem nem paisagem. Com o sim, um sinal contido. Vários, não.
+
+**Regra-mãe, antes de qualquer layout:** tokens (cor, tipo, espaçamento, elevação, ícone) atravessam as superfícies. Navegação, densidade, alvo de entrada e overlay mudam. Espremer um desktop em colunas estreitas, ou esticar um celular até sobrar vazio, reprova. O shell de cada uma está em [04-desktop-e-sistemas.md](references/04-desktop-e-sistemas.md) e [05-mobile-ios-android.md](references/05-mobile-ios-android.md).
+
+**A estrutura visual sai do trabalho deste projeto**, lido no planejamento e no repositório: quem faz o quê, em que ordem, o que fica aberto ao mesmo tempo e como a pessoa volta. Dois projetos só ficam parecidos se esses fatos forem parecidos. Parecer com o exemplo da skill, com o primeiro arquétipo da lista ou com a ficha do catálogo não é decisão.
+
+**Anti-poluição.** Cada tela responde, sem esforço, a quatro perguntas: onde estou, para onde posso ir, o que posso fazer aqui, qual é o próximo passo. Informação junta, botão competindo com botão e navegação sem nome claro reprovam. Densidade de trabalho é bem-vinda quando está agrupada. Esconder a ação principal para "limpar" a tela também reprova.
+
+Grave as respostas no **Contrato de plataforma**, no topo da `DESIGN-BIBLE.md`, antes de cor e de tela. O que você assumiu entra marcado como hipótese.
+
+Se o pedido já fechou todas as linhas, não abra entrevista: escreva o contrato com o que foi dito e avance.
 
 ---
 
@@ -47,6 +66,7 @@ Antes de delegar ou codar qualquer tela, o Orquestrador cria o **Contrato Único
    ```bash
    python3 <skill_dir>/scripts/design_intel.py "<domínio e objetivo>" --platform <desktop|mobile|system|all> --stack <stack> --format markdown
    ```
+   A saída é hipótese. Paleta, arquétipo e assinatura do catálogo só entram na Bíblia se combinam com o fluxo de trabalho já lido. Antes de travar, escreva no contrato o que este projeto recusa do molde: outro arquétipo quando a tarefa não for fila mais documento mais telemetria, outra organização do tempo quando "Agora / Em Rota / Radar" não for a língua do negócio, outra paleta quando a marca não for a cor da ficha.
    *(Opcional: se o servidor MCP Uizze estiver conectado e houver dúvida concreta de composição/fluxo, consulte-o como evidência complementar; nunca dependa dele.)*
 
    Para cada interação que o projeto realmente precisa (tabela editável, sheet, command palette, gantt), rode o caçador antes de escolher biblioteca:
@@ -65,7 +85,11 @@ Antes de delegar ou codar qualquer tela, o Orquestrador cria o **Contrato Único
    - Componentes free/OSS: [09-pesquisa-componentes-oss.md](references/09-pesquisa-componentes-oss.md).
 
 3. **Gerar os 4 artefatos fundacionais (nesta ordem)**:
-   - **`DESIGN-BIBLE.md`** (use [assets/design-bible-template.md](assets/design-bible-template.md)): diagnóstico/autópsia, modo de superfície (`Operate` / `Read` / `Persuade`), *1 signature move* ligado ao domínio, sistema cromático 60-30-10, 5 planos `Z0→Z4` Light & Dark, trio tipográfico, escala 4/8px + raios concêntricos, arsenal OSS escolhido, estados obrigatórios e mapa completo de telas.
+   - **`DESIGN-BIBLE.md`** (use [assets/design-bible-template.md](assets/design-bible-template.md)): comece pelo Contrato de plataforma. Depois diagnóstico, modo de superfície, assinatura, cor, tipo, espaço, arsenal com caminho de cada componente, motion, estados, fluxo do trabalho e mapa de telas. Em seguida gere o papel, sem limite de páginas:
+     ```bash
+     python3 <skill_dir>/scripts/render_design_bible.py DESIGN-BIBLE.md --out-dir .
+     ```
+     O Markdown é a cópia que o subagente executa. O HTML e o PDF são a mesma Bíblia para leitura. A seção 8 traz URL, comando e caminho de arquivo de cada peça open source adotada.
    - **`tokens.json` → `tokens.css`**: modele com base em [assets/tokens.example.json](assets/tokens.example.json) e compile:
      ```bash
      python3 <skill_dir>/scripts/generate_tokens.py tokens.json --out tokens.css --format all --check-contrast
@@ -73,8 +97,8 @@ Antes de delegar ou codar qualquer tela, o Orquestrador cria o **Contrato Único
      ```
      **Portão 0**: não avance com `tokens.css` se `audit_contrast.py --strict` falhar.
    - **Shell / Primitivos compartilhados**: header/sidebar/dock, tema switcher (`data-theme`), tipografia base, botões, badges, tabelas, drawers/sheets e toast com Desfazer.
-   - **`screen-manifest.json`** (contrato em [08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)): liste **100% das telas necessárias**, suas seções, posições, viewports, métricas reais de preview, todas as arestas (`edges`) de navegação e jornadas guiadas (`journeys`).
-   - *(Opcional sob demanda / apresentação executiva)*: preencha [assets/biblia-visual-template.html](assets/biblia-visual-template.html) e gere o PDF com Chromium headless `--print-to-pdf`.
+   - **`screen-manifest.json`** (contrato em [08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)): liste **100% das telas necessárias**, inclusive perfil e configurações quando o produto tem conta, sessão, preferência ou automação para governar, mesmo que o planejamento tenha esquecido. Inclua seções, viewports, arestas de ida e volta e jornadas que atravessam o fluxo de verdade (inicial, específica, volta, outra específica).
+   - As pranchas de [assets/biblia-visual-template.html](assets/biblia-visual-template.html) são resumo opcional. Não substituem o PDF da Bíblia.
 
 ---
 
@@ -123,7 +147,7 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
 Qualquer violação abaixo **reprova automaticamente** na auditoria (`BLOCK`). Detalhes completos e regras automatizadas em [01-leis-inegociaveis.md](references/01-leis-inegociaveis.md):
 
 1. **Zero Estética "SaaS de IA Genérico"**: proibido gradientes roxo/índigo/neon gratuitos, glow/glass decorativo, emojis clichês (`✨🚀⚡🛡️`) como ícones, mistura de estilos/traços de ícones, eyebrows decorativos, numeração `01 //`, gradiente em texto, barrinha lateral em card e dots/badges `LIVE` sem estado real.
-2. **Hierarquia, Layout & Anti-Cardite**: proibido "cardite aguda" e card dentro de card; proibido repetir "3 cards iguais de ícone em círculo + título + 2 linhas"; proibido centralizar textos longos/listas; respeitar Lei da Proximidade; 1 CTA primário dominante por dobra; Alto Contraste Ótico com 5 planos `Z0→Z4` e zero espaços mortos em desktop.
+2. **Hierarquia, Layout & Anti-Cardite**: proibido "cardite aguda" e card dentro de card; proibido repetir "3 cards iguais de ícone em círculo + título + 2 linhas"; proibido centralizar textos longos/listas; respeitar Lei da Proximidade; 1 CTA primário dominante por dobra; navegação nomeada e no lugar da plataforma; a tela responde onde estou, para onde vou e o que posso fazer; Alto Contraste Ótico com 5 planos `Z0→Z4` e zero espaços mortos em desktop.
 3. **Contraste, Cor & Acessibilidade**: WCAG AA mínimo `4.5:1` (texto normal/placeholder) e `3:1` (grande/UI), APCA `|Lc| >= 60` corpo; proibido `#000000`/`#FFFFFF` puros sem elevação controlada ou cinzas lavados em dark mode; touch targets `>= 44×44px` (mobile/iOS) e `>= 48×48dp` (Android); corpo `>= 14px`.
 4. **Tipografia Intencional**: contraste claro de escala/peso; `tabular-nums` obrigatório em dados dinâmicos, preços, tabelas e timers; `text-wrap: balance` em títulos curtos e `pretty` em parágrafos; `-webkit-font-smoothing: antialiased` no root; proteção real contra overflow/truncamento.
 5. **Conteúdo Real & Zero Copy de Template**: proibido *Lorem ipsum*, *John Doe*, *Acme Corp*; proibido clichês ("Transforme seu negócio", "Eleve sua experiência", "Solução definitiva", "Potencializado por IA"); zero subtítulos redundantes e zero *botsplaining*.
@@ -154,8 +178,8 @@ Quando o usuário pedir uma ação específica em um projeto existente, execute 
 - `references/01-leis-inegociaveis.md` — Especificação completa dos 10 Blocos e regras de reprovação.
 - `references/02-biblia-de-design.md` — Estrutura das 12 seções da Bíblia de Design + Bíblia Visual PDF.
 - `references/03-orquestracao-subagentes.md` — Dimensionamento (máx. 8 subagentes), contratos e briefing.
-- `references/04-desktop-e-sistemas.md` — Sistemas operacionais, ERPs, SaaS, Electron/Tauri, `⌘K` e janelas.
-- `references/05-mobile-ios-android.md` — iOS HIG, Android Material 3, React Native/Expo, Flutter e PWA.
+- `references/04-desktop-e-sistemas.md` — Janela nativa, cockpit, shell web por largura, tabela que vira lista.
+- `references/05-mobile-ios-android.md` — iOS HIG, Android Material 3, polegar, safe area, RN/Flutter/PWA.
 - `references/06-micro-craft-e-motion.md` — Raios concêntricos, alinhamento óptico, sombras, tipografia e motion de controle.
 - `references/07-auditoria-e-veredito.md` — Protocolo de revisão, formato de relatório e evidências reais.
 - `references/08-canvas-figma-manifest.md` — Schema do `screen-manifest.json` e vitrine estilo Figma.

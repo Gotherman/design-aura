@@ -31,7 +31,8 @@ Se a frase servir para qualquer produto, ela ainda nao e uma necessidade.
 | Registry copiavel, licenca permissiva | shadcn/ui, coss ui (ex-Origin UI), Kibo UI, Dice UI, HyperUI | Copiar, re-tematizar, assumir a manutencao |
 | Dependencia mantida | Base UI, React Aria, TanStack Table, cmdk, Dockview, Mantine, gluestack, Tamagui, Forui | Instalar se o peso couber. Nao embrulhar um segundo kit por cima |
 | Primitivo da plataforma | SwiftUI, Material 3 | Preferir ao kit web portado. Nao e pacote para colar |
-| Galeria de referencia | Mobbin, Refero, Godly, Page Flows, Screenlane, Component Gallery, 21st.dev | Estudar fluxo e hierarquia. Nao ha codigo com licenca unica |
+| Galeria de referencia | Mobbin, Refero, Godly, Page Flows, Screenlane, Banani, Component Gallery, 21st.dev | Estudar fluxo e hierarquia. Nao ha codigo com licenca unica |
+| Guia oficial e anatomia | Apple HIG, Material 3, Fluent 2, APG, Primer, Polaris, Geist, Laws of UX, Inclusive Components | Consultar a estrutura canonica. Nao instalar a pele visual, salvo se o produto ja vive naquela plataforma |
 | Armadilha de licenca | Aceternity UI, React Bits (MIT + Commons Clause), Tailwind Plus | Pode ser bonito e ainda assim nao entrar como open source |
 
 Sites renomados entram nesta skill em dois grupos, de proposito. Mobbin, Refero, Godly, Page Flows e Screenlane ensinam composicao de produto real. HyperUI, Kibo, Dice, coss ui, Magic UI e Cult UI entregam codigo. Misturar os dois grupos e como copiar um print e chamar de componente.
@@ -81,3 +82,34 @@ Na secao 8 da Biblia, uma linha por peca de fato usada:
 | Landing hero | Godly | n/a | Referencia | So a ordem da prova; nenhum codigo |
 
 Nao escreva "a mais atual" ou "a mais bonita" sem a comparacao que sustenta a frase.
+
+## 7. Onde olhar anatomia, sem copiar a pele
+
+Abra o guia da plataforma antes de inventar navegacao. O catalogo `registries_oss.json` devolve estas fontes na secao de referencia, nunca como dependencia.
+
+- **Nativo:** [Apple HIG](https://developer.apple.com/design/human-interface-guidelines) (iOS, iPadOS, macOS), [Material 3](https://m3.material.io) (Android, tablet, dobravel), [Fluent 2](https://fluent2.microsoft.design) (Windows e desktop denso).
+- **Shell de produto web:** [Primer](https://primer.style) para densidade, [Polaris](https://polaris.shopify.com) para admin, [Geist](https://vercel.com/geist) para tipo e dark mode. Estudar o shell. Instalar so quando o app ja e Shopify ou GitHub, ou quando a equipe adotou aquele sistema de proposito.
+- **Comportamento:** [Base UI](https://base-ui.com), [React Aria](https://react-spectrum.adobe.com/react-aria) e o [APG](https://www.w3.org/WAI/ARIA/apg) para teclado, foco e nome acessivel. [Inclusive Components](https://inclusive-components.design) e [Laws of UX](https://lawsofux.com) para a decisao, nao para um componente pronto.
+- **Telas e movimento reais:** Mobbin, [Banani](https://banani.co/references) e [60fps.design](https://60fps.design). Banani e galeria gratuita: nao exporte o HTML que a IA deles gera. 60fps ensina microinteracao; o que entrar no produto ainda passa pelo guia 10. Pixlpin mistura campanha, poster e motion: serve para persuasao, nao para a estrutura de um sistema.
+
+Liquid Glass e Material 3 Expressive sao a linguagem atual das plataformas nativas. No app Apple ou Android, use o que o sistema desenha. No web operacional, nao simule o vidro nem a toolbar expressiva por cima de uma sidebar.
+
+## 8. Produtos reais para estudar, nao para clonar
+
+`data/study_references.json` guarda uma curadoria curta de apps, paineis e galerias com acabamento alto. A busca devolve isso em **referencia**. Nunca como dependencia e nunca como pele do projeto.
+
+O que entrou, e como usar:
+
+- **SaaS e paineis** (Cal.com, Dub, Plane, Umami, PostHog, Grafana, Metabase): olhar shell, densidade e um fluxo parecido com a tarefa. A estrutura continua saindo do trabalho deste projeto.
+- **Desktop** (Zed, Penpot, AppFlowy, Yaak, LocalSend, NetNewsWire): olhar janela, atalho e coluna. Nao porte a janela do Mac para a web.
+- **Mobile** (Bluesky, Ice Cubes, Breezy, Signal, Bitwarden, Organic Maps): olhar polegar, gesto e o sistema certo. Ice Cubes nao vira a cara de um ERP.
+- **Landing, preco e paywall** (Tailark, Lapa, Saaspo, PaywallScreens, Stripe Checkout): so quando a tarefa e convencer ou cobrar. Uma peca, re-tematizada.
+- **Recortes** (Navbar Gallery, Dark.design, CallToInspiration, Siteinspire): estudar um pedaco. Nao montar a tela como colagem.
+
+O que ficou de fora de proposito:
+
+- **Aceternity UI e React Bits** continuam no portao de licenca. Nao sao MIT livre para copiar.
+- **Templates de dashboard** (shadcn-admin e starters parecidos) ensinam chrome generico. Usar um deles como base repete a mesma cara em todo cliente.
+- **AGPL e GPL** (Cal.com, Plane, Grafana, Signal, Zed) servem para ler. Copiar o codigo para o repositorio do cliente exige a licenca, e a skill nao faz isso sozinha.
+
+Uma referencia por necessidade. Se a tela seguinte precisa de outra, busque de novo. Tres produtos misturados na mesma tela viram colcha.

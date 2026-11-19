@@ -27,6 +27,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B2-04` | Proibido espaçamento uniforme sem agrupamento lógico (**Lei da Proximidade**): elementos relacionados ficam mais próximos entre si do que de grupos distintos; sempre há mais espaço acima de um título do que abaixo dele. | Inspeção visual + CSS |
 | `DA-B2-05` | Proibido múltiplos CTAs primários competindo com o mesmo peso visual na mesma dobra/tela. Cada vista tem no máximo 1 ação primária dominante. | `lint_design_aura.py` + inspeção visual |
 | `DA-B2-06` | **Alto Contraste Ótico & Zero Espaços Mortos**: Light Mode usa canvas aterrado com separação clara entre fundo (`Z0/Z1`) e cartões (`Z2`) por contorno nítido (`1.25px`) + sombra dupla sutil — proibido branco lavado onde tudo se mistura. Desktop operacional usa composição de 2 ou 3 zonas sem 60–70% de vazio morto. | Inspeção de `tokens.css` e renders 1440×900 |
+| `DA-B2-07` | **Anti-poluição e uso humano.** Em poucos segundos a pessoa entende onde está, para onde pode ir, onde clicar e o que pode fazer. Proibido despejar o sistema inteiro numa tela, espalhar botões do mesmo peso, ou posicionar a navegação fora do lugar que a plataforma ensinou. Densidade é permitida quando o trabalho é denso e os grupos estão separados. Proibido esconder a ação principal ou a saída para a tela parecer vazia. | Revisão da tela e do fluxo |
 
 ---
 
@@ -109,6 +110,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B10-01` | Proibido ignorar Safe Areas (notch, Dynamic Island, home indicator, IME/window insets) ou posicionar ações primárias mobile fora da zona natural do polegar (thumb zone). iOS respeita HIG (Tab Bar 2–5 seções, edge-swipe back vivo, Large Titles); Android respeita Material 3 (Nav Bar/Rail adaptativo, Predictive Back vivo, máx 1 FAB). | `05-mobile-ios-android.md` + `capture_and_audit.mjs` |
 | `DA-B10-02` | Proibido criar áreas de scroll aninhado (scroll interno dentro de página rolável) sem justificativa estrita de layout (ex.: painel lateral fixo em cockpit desktop `h-dvh`). Evitar `100vh` rígido em mobile (usar `100dvh` + `env(safe-area-inset-*)`). | `lint_design_aura.py` + `capture_and_audit.mjs` |
 | `DA-B10-03` | Proibido exibir imagens/avatares sem preservação de proporção (`object-fit: cover` / `object-cover`), sem `alt` adequado ou sem estado de fallback (iniciais/ícone) em caso de falha. | `lint_design_aura.py` + `capture_and_audit.mjs` |
+| `DA-B10-05` | Proibido espremer o shell desktop no mobile ou esticar o shell mobile no desktop. Web: sidebar a partir de `1024px`, rail ou drawer entre `768` e `1023px`, drawer ou bottom nav abaixo de `768px`. Tabela densa vira lista no mobile. Tokens continuam os mesmos. | Revisão contra `04` e `05` |
 
 ---
 

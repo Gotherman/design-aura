@@ -124,6 +124,16 @@ Veja um exemplo completo funcional em [assets/screen-manifest.example.json](../a
 }
 ```
 
+## Fluxo navegável
+
+A vitrine é um percurso, não um cartaz de telas soltas.
+
+- `startScreenId` é a tela inicial de verdade, a mesma para onde o produto volta.
+- Toda tela tem aresta de saída e caminho de volta para o lugar de onde a pessoa veio. Beco sem retorno é aresta faltando.
+- O botão dentro da tela e a seta do `fluxo.html` contam a mesma história. Se o canvas diz "voltar ao início", a tela tem esse controle.
+- Jornadas atravessam um workflow inteiro. Formas válidas: inicial → específica → volta à inicial → outra específica → volta. Lista → detalhe → ação → confirmação → lista. Perfil → configurações → volta ao perfil.
+- Perfil e configurações entram no mapa quando o produto tem conta, sessão, preferência, notificação ou automação para governar, mesmo que o planejamento não tenha nomeado a tela. Não entram para enfeitar um produto sem conta. A Bíblia registra o motivo.
+
 ### Regras de Posicionamento no Canvas (Evite Sobreposição)
 - Mantenha pelo menos **60px de folga horizontal** e **70px de folga vertical** entre artboards vizinhos dentro da mesma seção.
 - Telas Desktop recomendam artboard `w: 360, h: 330–360` com `vw: 1440, vh: 900`.

@@ -178,8 +178,9 @@ def format_markdown(report: dict) -> str:
     lines = [
         f"# Design Aura Intel — Consulta: `{report['query']}`",
         f"- **Filtros:** plataforma=`{report['filters']['platform']}` · stack=`{report['filters']['stack']}`",
+        "- **Isto é hipótese de catálogo, não a pele do projeto.** Paleta, arquétipo e assinatura só entram na Bíblia se combinam com o planejamento, o repositório e o fluxo de trabalho já lidos. Se não combinam, recuse e escreva a recusa no contrato.",
         "",
-        "## 1. Domínios & Direções Recomendadas",
+        "## 1. Domínios & Direções (hipótese, a confirmar)",
     ]
     for i, d in enumerate(report["domains"], 1):
         pl = d["palette_light"]

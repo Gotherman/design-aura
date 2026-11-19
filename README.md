@@ -22,7 +22,7 @@ Transforma um repositório existente, um planejamento (`CONCEPCAO.md`/PRD) ou um
 7. **Precisão Geométrica & Sistema**: raios concêntricos (`Raio Interno = Raio Externo - Padding`); escala estrita 4/8px sem magic numbers; profundidade em Dark Mode por luminosidade de superfície; alinhamento óptico de ícones.
 8. **Semântica & Higiene de Dados**: cores semânticas apenas com significado real; sem excesso de badges competindo em listas/tabelas; colunas numéricas alinhadas à direita; gráficos proporcionais sem título de tipo de gráfico nem instruções de leitura.
 9. **Formulários, Estados & Interação**: proibido placeholder substituindo `<label>`; proibido remover `:focus-visible` sem substituto equivalente; estados `hover`/`active`/`disabled`/`focus`/`invalid` + mensagens orientando correção; proibido modal sobre modal e ações destrutivas sem confirmação ou Desfazer.
-10. **Ergonomia Nativa Mobile, Desktop & Mídia**: iOS HIG e Android Material 3 nativos (safe areas, insets, navigation bar/rail, predictive back, thumb zone); desktop (`⌘K`, atalhos, cockpit); proibido scroll aninhado sem justificativa; `object-fit: cover` e fallback em mídias.
+10. **Ergonomia Nativa Mobile, Desktop & Mídia**: tokens iguais entre plataformas, shell diferente. iOS HIG e Android Material 3 nativos (safe areas, insets, navigation bar/rail, predictive back, thumb zone); desktop (`⌘K`, atalhos, cockpit); web com sidebar, rail ou bottom nav conforme a largura; proibido scroll aninhado sem justificativa; `object-fit: cover` e fallback em mídias.
 
 ---
 

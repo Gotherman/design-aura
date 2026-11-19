@@ -10,10 +10,13 @@ O Orquestrador é o **Diretor de Design e Arquiteto-Chefe**. Subagentes são **e
 
 ```text
 ONDA 0 (Orquestrador — 0 subagentes de design)
-  ├─ Absorve repo/docs + faz perguntas essenciais (máx. 4 por lote)
-  ├─ Roda design_intel.py e gera DESIGN-BIBLE.md
-  ├─ Gera tokens.json -> tokens.css + valida com audit_contrast.py --strict
-  ├─ Constrói shell compartilhado (header/nav/theme-toggle/CSS base/componentes)
+  A ordem é a Fase 1 e a Fase 2 do SKILL.md. Este arquivo não tem um atalho paralelo.
+  ├─ Lê pedido, repo e docs. Pergunta só a decisão que ainda muda shell, stack ou Bíblia
+  ├─ Grava o Contrato de plataforma no topo da DESIGN-BIBLE.md
+  ├─ Roda design_intel.py e, para cada interação real, discover_oss_components.py
+  ├─ Fecha o resto da Bíblia, inclusive o motion do guia 10 (desktop, iOS e Android separados)
+  ├─ Gera tokens.json e exporta com generate_tokens.py. audit_contrast.py --strict é o Portão 0
+  ├─ Constrói o shell de cada superfície do contrato (não um layout único espremido)
   └─ Fecha o screen-manifest.json com 100% das telas + dados compartilhados
 
 ONDA 1 (Construção Paralela — 1 a 7 subagentes)
@@ -48,7 +51,7 @@ ONDA 2 (Consolidação + Auditoria Visual — 1 subagente Auditor + Vitrine)
 ### O que SEMPRE passar para cada subagente construtor:
 1. **Caminho exato de saída** de cada tela do seu slice (ex.: `design/telas/desktop-caixa.html` ou `src/pages/Caixa.tsx`).
 2. **Contrato do Slice** recortado do `screen-manifest.json` (ID, título, plataforma, viewport, links de entrada e links de saída exatos para que todos os botões/âncoras naveguem para rotas reais).
-3. **Referência direta aos artefatos travados**: `DESIGN-BIBLE.md` (seções de Paleta, Planos Z0–Z4, Tipografia, Componentes), `tokens.css` e arquivo do shell compartilhado.
+3. **Referência direta aos artefatos travados**: o Contrato de plataforma e as seções da `DESIGN-BIBLE.md` que cabem no slice (paleta, planos Z0–Z4, tipografia, componentes, motion daquela superfície), mais `tokens.css` e o shell da plataforma dele.
 4. **Bloco de Dados Fictícios Compartilhados**: lista curta com os números, nomes, CNPJs/IDs fictícios e alertas oficiais que aparecem em múltiplos módulos (ex.: `"Fatura #7273 = R$ 75.657,36 vence em 2 dias"`).
 5. **Lembrete explícito dos 10 Blocos de Leis Inegociáveis** e do checklist local antes de finalizar (`lint_design_aura.py` no próprio slice).
 
@@ -67,11 +70,11 @@ Copie e preencha este bloco para cada subagente da Onda 1:
 ```markdown
 ### Tarefa: Construir Slice [NOME_DO_MODULO] — Projeto [NOME_DO_PROJETO]
 
-Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve seguir 100% a Bíblia de Design e os 10 Blocos de Leis Inegociáveis, sem criar tokens soltos ou estilos paralelos.
+Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve seguir 100% a Bíblia de Design e os 10 Blocos de Leis Inegociáveis, sem criar tokens soltos ou estilos paralelos. Se o contrato diz remodelar, não reproduza a cara antiga. Cada tela do slice liga para a próxima e oferece volta.
 
 1. **Artefatos de Fundação (LEITURA OBRIGATÓRIA antes de codar):**
-   - `DESIGN-BIBLE.md`
-   - `tokens.css` (e `shell.css` / `shell.js` ou layout base em `<caminho>`)
+   - `DESIGN-BIBLE.md`, começando pelo Contrato de plataforma. Use só os componentes da seção 8, pelos caminhos escritos lá. Não troque superfície, stack nem shell.
+   - `tokens.css` (e o shell desta superfície em `<caminho>`)
 
 2. **Telas do Seu Slice (TODAS devem ser entregues completas):**
    - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Destino dos links: `<arquivo-destino>`)

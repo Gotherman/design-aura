@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Casa uma necessidade de interacao com componentes free/OSS e referencias visuais.
 
-Modo offline: BM25 em registries_oss.json + components_oss.json.
+Modo offline: BM25 em registries_oss.json, components_oss.json e study_references.json.
 Modo --online: completa com a API publica do GitHub e o registry do npm,
 aceitando so licenca permissiva (MIT, Apache-2.0, BSD, ISC).
 """
@@ -48,13 +48,13 @@ STACK_ALIASES = {
 
 
 def load_catalog() -> list[dict]:
-    registries = json.loads((DATA_DIR / "registries_oss.json").read_text(encoding="utf-8"))
-    components = json.loads((DATA_DIR / "components_oss.json").read_text(encoding="utf-8"))
     items = []
-    for raw in registries:
-        items.append(normalize_item(raw, "registries_oss.json"))
-    for raw in components:
-        items.append(normalize_item(raw, "components_oss.json"))
+    for name in ("registries_oss.json", "components_oss.json", "study_references.json"):
+        path = DATA_DIR / name
+        if not path.exists():
+            continue
+        for raw in json.loads(path.read_text(encoding="utf-8")):
+            items.append(normalize_item(raw, name))
     return items
 
 
@@ -154,12 +154,12 @@ def search_local(need: str, stack: str, platform: str, mode: str, top: int) -> d
     items = load_catalog()
 
     def adopt_filter(item: dict) -> bool:
-        if item["kind"] in {"gallery", "license-trap"} or not item["license_ok"]:
+        if item["kind"] in {"gallery", "anatomy", "official", "study", "license-trap"} or not item["license_ok"]:
             return False
         return stack_ok(item, stack) and mode_ok(item, mode)
 
     def gallery_filter(item: dict) -> bool:
-        return item["kind"] == "gallery" and stack_ok(item, stack)
+        return item["kind"] in {"gallery", "anatomy", "official", "study"} and stack_ok(item, stack)
 
     def trap_filter(item: dict) -> bool:
         return item["kind"] == "license-trap"
@@ -275,11 +275,11 @@ def format_markdown(need: str, mode: str, stack: str, platform: str, local: dict
         )
         if item.get("a11y_notes"):
             lines.append(f"  - A11y: {item['a11y_notes']}")
-    lines.extend(["", "## So referencia visual (nao copie codigo)"])
+    lines.extend(["", "## So referencia (guias oficiais, anatomia e galerias; nao copie codigo)"])
     if not local["reference"]:
         lines.append("- Nenhuma galeria local casou com esta busca.")
     for item in local["reference"]:
-        lines.append(f"- **{item['name']}** ({item['url']}): {item['use_case']}")
+        lines.append(f"- **{item['name']}** ({item['kind']} · {item['url']}): {item['use_case']}")
     if local["traps"]:
         lines.extend(["", "## Nao tratar como open source"])
         for item in local["traps"]:

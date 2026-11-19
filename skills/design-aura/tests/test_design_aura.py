@@ -14,6 +14,7 @@ sys.path.insert(0, str(SCRIPTS))
 from audit_contrast import color_to_opaque_rgb, evaluate_pair  # noqa: E402
 from build_figma_canvas import apply_auto_layout  # noqa: E402
 from discover_oss_components import search_local  # noqa: E402
+from render_design_bible import build_html  # noqa: E402
 from lint_design_aura import scan_file  # noqa: E402
 
 
@@ -126,6 +127,16 @@ class LintTests(unittest.TestCase):
         self.assertIn("DA-B1-01", {f["rule"] for f in bare})
 
 
+class BiblePaperTests(unittest.TestCase):
+    def test_paper_has_no_fixed_board(self):
+        sample = "# Biblia\n\n## 8. Arsenal\n\n| Peça | Caminho |\n|---|---|\n| Tabela | `npm install @tanstack/react-table` |\n"
+        page = build_html(sample, "Biblia")
+        self.assertNotIn("overflow: hidden", page)
+        self.assertNotIn("height: 210mm", page)
+        self.assertIn("<table>", page)
+        self.assertIn("npm install", page)
+
+
 class DiscoverTests(unittest.TestCase):
     def test_filters_mode_license_and_gallery(self):
         operate = search_local("marquee hero landing", "react", "system", "operate", 8)
@@ -144,6 +155,27 @@ class DiscoverTests(unittest.TestCase):
 
         refs = search_local("referencia fluxo onboarding ios", "ios", "ios", "operate", 4)
         self.assertTrue(any(item["usage"] == "reference" for item in refs["reference"]))
+
+    def test_anatomy_is_reference_not_a_dependency(self):
+        ios = search_local("tab bar safe area", "ios", "ios", "operate", 4)
+        self.assertTrue(any("Human Interface" in item["name"] for item in ios["reference"]))
+        self.assertFalse(any("Human Interface" in item["name"] for item in ios["adopt"]))
+
+        admin = search_local("shopify admin polaris", "react", "system", "operate", 4)
+        self.assertTrue(any(item["name"] == "Shopify Polaris" for item in admin["reference"]))
+        self.assertFalse(any(item["name"] == "Shopify Polaris" for item in admin["adopt"]))
+
+        gantt = search_local("gantt timeline", "react", "system", "operate", 6)
+        self.assertFalse(any(item["kind"] in {"official", "anatomy"} for item in gantt["reference"]))
+
+    def test_real_products_are_study_not_a_skin(self):
+        calendar = search_local("calendario agendamento", "react", "system", "operate", 4)
+        self.assertTrue(any(item["name"] == "Cal.com" for item in calendar["reference"]))
+        self.assertFalse(any(item["name"] == "Cal.com" for item in calendar["adopt"]))
+        gantt = search_local("gantt timeline", "react", "system", "operate", 6)
+        names = {item["name"] for item in gantt["reference"] + gantt["adopt"]}
+        self.assertNotIn("Cal.com", names)
+        self.assertNotIn("Grafana", names)
 
 
 class CanvasTests(unittest.TestCase):
