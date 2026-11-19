@@ -18,6 +18,11 @@ def inline(text: str) -> str:
     escaped = html.escape(text)
     escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
     escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
+    escaped = re.sub(
+        r"#([0-9A-Fa-f]{6})",
+        r'<span class="swatch" style="background:#\1"></span>#\1',
+        escaped,
+    )
     return escaped
 
 
@@ -111,6 +116,7 @@ ul { margin: 0 0 4mm; padding-left: 5mm; }
 li { margin: 0.6mm 0; }
 code, pre { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9pt; }
 code { background: #e7e1d6; padding: 0 1.5mm; }
+.swatch { display: inline-block; width: 3.2mm; height: 3.2mm; margin-right: 1mm; border: 0.25mm solid rgba(20,32,51,0.35); vertical-align: -0.4mm; }
 pre, table, blockquote { break-inside: avoid; }
 pre { white-space: pre-wrap; background: #172033; color: #f3f6fa; padding: 4mm; }
 table { width: 100%; border-collapse: collapse; margin: 0 0 5mm; }

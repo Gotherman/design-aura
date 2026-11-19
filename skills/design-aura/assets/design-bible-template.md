@@ -75,6 +75,20 @@ Cada componente, card ou elemento vindo de código aberto ou de um produto estud
 |---|---|---|---|---|---|
 | Nome do componente | Tela ou shell | MIT / Apache-2.0 / BSD / ISC | Dependência, registry ou só referência | URL do repo, comando de instalação e caminho do arquivo no projeto depois de copiado | ... |
 
+## 8.1 Anatomia que o subagente copia
+Prosa não basta. Antes da aprovação, esta seção traz CSS real, nos dois temas, usando só `var(--token)`. Sem isto, cada tela inventa um botão.
+
+- **Variáveis:** tabela `token` → hex claro → hex escuro. O arquivo é `tokens.css`. Proibido hex solto na tela.
+- **Ordem do shell:** a sequência do DOM (faixa, navegação, miolo, inspector). Igual em todas as telas daquela largura.
+- **Botão primário:** onde ele fica no desktop, no tablet e no telefone. Um lugar por largura, não um botão solto em cada canto.
+- **Estados:** repouso, hover, ativo, foco e desabilitado de botão, campo, linha de tabela e item de navegação.
+- **Seleção e gráfico:** cor da linha selecionada e a única cor de série. Sem uma segunda paleta.
+- **Toast, gaveta e vazio:** canto, largura, e o desenho do esqueleto.
+
+```css
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+```
+
 ## 9. Matriz de Componentes & Estados Obrigatórios
 - **Botões:** máximo 1 primário por dobra; `iconPad = textPad - 2px`; `active:scale-[0.97]`.
 - **Formulários:** `<label>` sempre visível + `:focus-visible` `2px` + erro acionável junto ao campo.

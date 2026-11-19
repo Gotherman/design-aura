@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura e auditoria visual headless.
 metadata:
-  version: "1.1.11"
+  version: "1.1.12"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -101,7 +101,7 @@ Antes de delegar ou codar qualquer tela, o Orquestrador cria o **Contrato Único
    - **`screen-manifest.json`** (contrato em [08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)): liste **100% das telas necessárias**, inclusive perfil e configurações quando o produto tem conta, sessão, preferência ou automação para governar, mesmo que o planejamento tenha esquecido. Inclua seções, viewports, arestas de ida e volta e jornadas que atravessam o fluxo de verdade (inicial, específica, volta, outra específica).
    - As pranchas de [assets/biblia-visual-template.html](assets/biblia-visual-template.html) são resumo opcional. Não substituem o PDF da Bíblia.
 
-4. **Pare para aprovação.** Entregue o caminho de `DESIGN-BIBLE.pdf` e de `DESIGN-BIBLE.md`, com um resumo curto: superfícies, o que foi recusado do molde, a assinatura e a lista de telas. Não construa shell, telas nem vitrine. Não chame subagente construtor. A Fase 3 só começa quando a pessoa aprovar com clareza ("aprovado", "pode construir", "segue"). Se pedir ajuste, revise a Bíblia, gere o PDF de novo e pare outra vez.
+4. **Pare para aprovação** só quando a Bíblia já puder ser executada sem invenção. Além do contrato, da cor e do mapa, ela precisa da seção de anatomia: variáveis CSS, ordem do shell, lugar do botão primário em cada largura, estados de botão, campo, linha e navegação, cor da seleção e do gráfico, e o caminho de cada peça da seção 8. Se faltar isso, complete e só então entregue o PDF. Entregue o caminho de `DESIGN-BIBLE.pdf` e de `DESIGN-BIBLE.md`, com um resumo curto: superfícies, o que foi recusado do molde, a assinatura e a lista de telas. Não construa shell, telas nem vitrine. Não chame subagente construtor. A Fase 3 só começa quando a pessoa aprovar com clareza ("aprovado", "pode construir", "segue"). Se pedir ajuste, revise a Bíblia, gere o PDF de novo e pare outra vez.
 
 ---
 

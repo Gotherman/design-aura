@@ -135,6 +135,7 @@ class BiblePaperTests(unittest.TestCase):
         self.assertNotIn("height: 210mm", page)
         self.assertIn("<table>", page)
         self.assertIn("npm install", page)
+        self.assertIn('class="swatch"', build_html("# T\n\nCor `#B53C0C`.\n", "T"))
 
 
 class DiscoverTests(unittest.TestCase):
