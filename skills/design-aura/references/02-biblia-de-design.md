@@ -31,12 +31,17 @@ Traduza a essência do negócio para **linguagem de UI**. Um avião, um carimbo 
 - O que a marca representa no mundo real → como isso vira geometria, superfície, ritmo e nomenclatura.
 - Vocabulário oficial do domínio (verbos de ação, rótulos de status, métricas reais).
 
-### 4. Sistema Cromático (Regra 60 · 30 · 10) + Semântica Cirúrgica
-- **60% Superfícies & Fundos**: Light Mode com canvas aterrado (nunca branco puro lavado) e Dark Mode com grafite/ardósia profundo de baixa fadiga (nunca `#000000` chapado sem elevação).
-- **30% Estrutura & Autoridade**: barras de navegação, textos principais, contornos nítidos (`1.25px`), separadores.
-- **10% Ação & Decisão**: cor primária reservada exclusivamente para o CTA dominante, foco e itens ativos.
-- **Cores Semânticas**: `success` (esmeralda), `warning` (âmbar), `danger` (carmim/coral), `info` (azul técnico) — sempre em pares `bg-soft + border + fg` validados pelo `audit_contrast.py` em **Light e Dark**.
-- **Cores da marca, quando a Fase 1 autorizou:** elas ocupam os 10% de ação e podem tintar a estrutura. Os 60% de superfície e os neutros de texto continuam uma família própria, com contraste real. Sucesso, alerta, erro e informação não são o azul da marca clareado e escurecido. Paleta de uma cor só é falha, não fidelidade.
+### 4. Sistema Cromático `65 / 20 / 10 / 5` (Presença da Marca "Estou Aqui!" + Harmonia Multi-Cor)
+- **65% Base Arquitetônica com Subtom Sutil (Nem Massa Monocromática, Nem Carvão Morto):**
+  - **Dark Mode:** planos `Z0–Z3` em Obsidiana com subtom calibrado da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`). Proibido saturar tudo no mesmo azul (`S > 36%` → `DA-DARK-MONOCHROME`) e proibido cinza puro sem identidade.
+  - **Light Mode:** Porcelana/Alabastro aterrado (`Z0 #DCE3EC`, `Z1 #E6ECF3`, `Z2 #FFFFFF`, `Z3 #F3F6FA`) com **bordas nítidas** (`border-subtle >= 1.22:1` contra `Z2`, ex.: `#B4C1D1` e `#7A8CA3` → `DA-LIGHT-WASHED-OUT`).
+- **20% Presença Estrutural da Marca (3 Zonas Fixas Obrigatórias):**
+  1. **Identidade na Navegação:** cabeçalho institucional da Sidebar/Mobile (`.sidebar-brand-card`) + item ativo com cápsula `18% --primary` e filete `3px --accent`;
+  2. **Card-Rei de cada Tela (`.card-brand-hero`):** gradiente direcional `135deg` com `20% --primary → --surface-z2` + borda `35% --primary` + chanfro especular;
+  3. **Controles Ativos:** `.subtab.is-active`, `.seg-btn.is-active` e foco de tabela na cor primária.
+- **10% Acento Complementar + Paleta Categórica Harmônica de 6 Cores (`--chart-1` a `--chart-6`):**
+  - Acento quente/contrastante da marca no CTA Primário único + **6 tokens categóricos harmônicos em OKLCH** (`--chart-1` Azul Marca, `--chart-2` Teal/Oceano, `--chart-3` Índigo, `--chart-4` Laranja/Âmbar, `--chart-5` Esmeralda, `--chart-6` Coral/Rosa) para gráficos, barras de composição e setores nunca ficarem monocromáticos.
+- **5% Cores Semânticas Puras:** `success` (esmeralda), `warning` (âmbar), `danger` (carmim/coral), `info` (azul técnico) — validados por `audit_contrast.py --strict` em **Light e Dark**.
 
 ### 5. Sistema de Profundidade & 5 Planos (`Z0 → Z4`)
 Documente explicitamente os 5 planos físicos da interface nos dois temas:
@@ -46,25 +51,27 @@ Documente explicitamente os 5 planos físicos da interface nos dois temas:
 - **`Z3` Superfície Flutuante**: popovers, dropdowns, command palette (`⌘K`), barras fixas de ação.
 - **`Z4` Modal / Drawer / Sheet**: diálogos críticos, gavetas de detalhe, bottom sheets nativos.
 
-### 6. Tipografia (Display · UI · Telemetria)
-- **Display**: fonte com presença para títulos e métricas hero (tracking fechado `-0.02em` a `-0.03em`, `text-wrap: balance`).
-- **UI / Corpo**: máxima legibilidade em densidades médias/altas (`>= 14px`, `text-wrap: pretty`, `-webkit-font-smoothing: antialiased`).
-- **Mono / Telemetria**: códigos, IDs, valores financeiros e timers com `font-variant-numeric: tabular-nums`.
-- **Nativo**: especifique quando usar `SF Pro` (iOS/macOS), `Roboto` (Android) ou `Segoe UI Variable` (Windows).
+### 6. Tipografia (Display · UI · Números Tabulares vs Mono Técnico)
+- **Display & UI (`Operate`):** prefira sans-serif de precisão executiva (**`Geist`** ou **`Inter`**, ou **`IBM Plex Sans`**; `SF Pro` em iOS/macOS, `Roboto` em Android, `Segoe UI Variable` em Windows), com tracking `-0.02em` a `-0.03em` em headings, `text-wrap: balance/pretty` e `-webkit-font-smoothing: antialiased`.
+- **Valores Financeiros & KPIs (`.num`):** usam a **própria sans-serif principal com `font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1`** (alinhamento perfeito em colunas sem os buracos largos da monoespaçada).
+- **Mono Técnico (`.mono` — `Geist Mono` / `JetBrains Mono`):** restrito exclusivamente a códigos técnicos (CNPJ, linha digitável, IDs, protocolos, hashes, `<kbd> ⌘K`).
 
 ### 7. Escala Espacial (4/8px) & Raios Concêntricos
 - Defina os tokens permitidos (`4, 8, 12, 16, 20, 24, 32, 40, 48, 64` + `2, 6, 10, 14` apenas internos de controles).
 - Documente os pares de **raios concêntricos** usados no sistema (ex.: container `20px` + padding `8px` → filho `12px`; card `16px` + padding `8px` → botão/item interno `8px`).
 
-### 8. Arsenal Open-Source de Elite
-Rode `scripts/discover_oss_components.py` com a interação real, a stack e o modo de superfície. O procedimento e a diferença entre registry, galeria e licença própria estão em [09-pesquisa-componentes-oss.md](09-pesquisa-componentes-oss.md).
+### 8. Arsenal Open-Source de Elite & Mapeamento Categórico (`16 Categorias Canônicas`)
+Rode **`scripts/discover_oss_components.py --scan <caminho-do-repositorio-ou-plano> --stack <stack> --platform <platform> --mode <mode>`** na Fase 2. Ele analisa o projeto automaticamente, ativa as categorias exatas entre as **16 Categorias Canônicas de UI/UX** (`ui_elements_recipes.json`) e entrega **bibliotecas permissivas (`MIT`/`Apache-2.0`/`ISC`) + Receitas de Micro-Componentes (`.icon-emblem`, `.chip-sla`, `.chip-status`, `BarList`, `Tracker`, `Combo HUD Chart`) + Curadoria de Ícones Específicos** prontos para esta seção!
 
-Registre só o que for usado. Cada linha traz licença, uso e caminho completo: URL, comando de instalação e o arquivo no projeto depois de copiado. Sem caminho, a peça não entra na Bíblia.
+Registre só o que for usado. Cada linha traz categoria, licença, uso e caminho completo (URL/comando/vendor local).
 
-- Web/React: shadcn/ui, coss ui, Kibo UI, Dice UI, Base UI, TanStack Table, cmdk.
-- Desktop: Dockview ou `react-resizable-panels`, mais o frame nativo da janela.
-- Mobile: SwiftUI e Material 3 primeiro; depois React Native Reusables, gluestack, `@gorhom/bottom-sheet`, FlashList, Forui ou `shadcn_ui` conforme a stack.
-- Galerias (Mobbin, Refero, Godly, Page Flows, Screenlane) entram como referência de fluxo, nunca como código.
+- **Gráficos & Telemetria:** TradingView Lightweight Charts, Apache ECharts (Combo HUD + Waterfall com conectores), ApexCharts.js, Tremor Raw (`BarList`, `Tracker`, `CategoryBar`), EvilCharts, Observable Plot, uPlot, Frappe Charts.
+- **Ícones Vetoriais & Emblemas:** Tabler Icons (`5700+` SVGs `1.75px`), Solar Icons Duotone (`4800+` SVGs 2 camadas), Lucide, Heroicons Micro (`16px` p/ chips), Radix Icons (`15px`), Iconify (`<iconify-icon>`), SVGL.
+- **Tabelas, Kanban, Formulários, Calendário & Chat:** Tabulator, TanStack Table, AG Grid Community, SortableJS, Atlassian Pragmatic DnD, coss ui, shadcn/ui, Kibo UI, Dice UI, IMask.js, Flatpickr, Tom Select, Uppy, FullCalendar Core, Frappe Gantt, Prompt Kit, Tiptap, Floating UI, AutoAnimate, tinykeys, Vaul, Konsta UI.
+- **Mobile Nativo:** SwiftUI, Jetpack Compose Material 3, Flutter M3, `@gorhom/bottom-sheet`, FlashList, Zeego, Burnt.
+- **Galerias (referência de fluxo, nunca copiar código):** Mobbin, Refero, Godly, Page Flows, Screenlane, Banani.
+
+*Nota de sincronia (`v2.2.0`): sempre que atualizar `tokens.css` após a Onda 0.5, re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css --out-dir .` — o script sincroniza automaticamente os hexes das tabelas do Markdown contra o `tokens.css` atual!*
 
 ### 9. Biblioteca de Componentes & Matriz de Estados
 Defina regras exatas de:

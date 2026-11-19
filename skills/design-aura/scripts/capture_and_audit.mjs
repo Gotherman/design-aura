@@ -618,6 +618,40 @@ const DOM_AUDIT_FN = `(() => {
         }
       }
     }
+
+    // 16. DA-CARD-INTERNAL-VOID (v2.2): buraco vertical vazio (> 95px) dentro de um card Z2 esticado em Bento Grid
+    if (isDesktop && !isAuthPage) {
+      let voidCards = 0;
+      const voidSamples = [];
+      const cards = mainEl.querySelectorAll('article, section, [class*="panel-z2"], [class*="card"]');
+      for (const card of Array.from(cards).slice(0, 30)) {
+        const st = getComputedStyle(card);
+        const cr = card.getBoundingClientRect();
+        if (st.display === 'none' || cr.width < 220 || cr.height < 220 || cr.width > window.innerWidth * 0.75) continue;
+        const kids = Array.from(card.children).filter((ch) => {
+          const cs = getComputedStyle(ch);
+          const r = ch.getBoundingClientRect();
+          return cs.display !== 'none' && cs.visibility !== 'hidden' && cs.position !== 'absolute' && r.height >= 12 && r.width >= 40;
+        });
+        if (kids.length >= 2 && kids.length <= 6) {
+          kids.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+          for (let i = 0; i < kids.length - 1; i++) {
+            const r1 = kids[i].getBoundingClientRect();
+            const r2 = kids[i + 1].getBoundingClientRect();
+            const gap = r2.top - r1.bottom;
+            if (gap > 95) {
+              voidCards++;
+              const title = (card.querySelector('h2, h3, h4, strong')?.textContent || card.className || 'card').trim().slice(0, 32);
+              if (voidSamples.length < 2) voidSamples.push(title + ' (' + Math.round(gap) + 'px vazio interno)');
+              break;
+            }
+          }
+        }
+      }
+      if (voidCards > 0) {
+        issues.push({ severity: 'MEDIUM', rule: 'DA-CARD-INTERNAL-VOID', detail: voidCards + ' card(s) com buraco vertical interno > 95px (provavel space-between/margin-top:auto em Bento Grid): ' + voidSamples.join(', ') });
+      }
+    }
   }
 
   return {
@@ -774,7 +808,24 @@ async function main() {
           });
           await cdp.send('Page.navigate', { url: target.url });
           await loadPromise;
-          await new Promise((r) => setTimeout(r, target.isVitrine ? 650 : 400));
+          if (target.isVitrine) {
+            await cdp.send('Runtime.evaluate', {
+              expression: `new Promise((resolve) => {
+                const start = Date.now();
+                function check() {
+                  const frames = Array.from(document.querySelectorAll('iframe.fx-preview-frame'));
+                  const allLoaded = frames.length === 0 || frames.every((f) => f.classList.contains('is-loaded'));
+                  if (allLoaded || Date.now() - start > 1900) return resolve(true);
+                  setTimeout(check, 120);
+                }
+                setTimeout(check, 450);
+              })`,
+              awaitPromise: true,
+              returnByValue: true,
+            });
+          } else {
+            await new Promise((r) => setTimeout(r, 400));
+          }
 
           await cdp.send('Runtime.evaluate', {
             expression: `(() => {

@@ -16,24 +16,26 @@ Em sistemas operacionais (ERPs, CRMs, portais financeiros, painéis de SRE, IDEs
 
 ---
 
-## 2. Arquitetura de Composição Desktop (Zero Espaços Mortos)
+## 2. Arquitetura de Composição Desktop (Anti-Poluição & Zero Espaços Mortos)
 
-O erro clássico de sistemas web/desktop é deixar **60–70% do painel direito vazio** ou empurrar a ação principal para o rodapé isolada do contexto. Os arquétipos abaixo são opções. Escolha pelo fluxo de trabalho deste projeto. O primeiro da lista não é o padrão, e dois produtos não usam o mesmo só porque os dois são sistemas:
+O erro clássico de sistemas web/desktop tem dois polos opostos: **(1) deixar 60–70% do painel direito vazio** ou **(2) espremer 3 colunas permanentes em telas cheias de números criando poluição visual**. Escolha o arquétipo pela lógica real da tarefa de cada tela:
 
-### A. Cockpit Operacional de 3 Zonas (Triagem e Aprovação)
-Ideal para contas a pagar/receber, atendimento/inbox, revisão de pedidos, editais e filas operacionais:
-1. **Zona Esquerda (280–340px)**: fila priorizada e filtrável com divisórias nítidas, indicador claro de urgência e seleção por teclado (`↑`/`↓`).
-2. **Zona Central (1fr — Documento Vivo)**: detalhe completo do item selecionado + **barra fixa de decisão** visível sem scroll excessivo.
-3. **Zona Direita (260–320px — Telemetria & Contexto Imediato)**: saldo/cobertura, histórico do registro, vínculos e risco — tudo visível na mesma leitura para decidir em 1 clique.
+### A. Revelação Progressiva Anti-Poluição: `Lista Limpa → Detalhe Focado na Mesma Página` (Arquétipo #1 para Filas & Tabelas Densas)
+Ideal para **Contas a Pagar, Contas a Receber, Radar de Editais, Cofre de Certidões, Pedidos e Contratos**:
+1. **Estado 1 — Visão Geral Limpa (largura total):** faixa executiva de KPIs (com `.card-brand-hero` no indicador principal) + barra de busca e filtros em poço `.well-z0` + tabela respirável e escaneável em `.panel-z2` com hover de elevação (`inset 3px 0 0 var(--primary)`).
+2. **Estado 2 — Detalhe Focado Inline na Mesma Página (ao clicar em qualquer linha ou abrir `?item=id`):** a lista dá lugar suavemente (`180ms`) à ficha completa do registro em largura total com:
+   - Barra fixa superior: **`← Voltar à lista` (`Esc`)**, contador (`Item 1 de 8`) e navegação **`‹ Anterior · Próxima ›`**;
+   - Documento completo (com picote técnico se for fatura/edital) + simulação de cobertura bancária/risco + 1 CTA dominante com **Toast Desfazer**.
 
-### B. Master-Detail com Inspector Lateral
-Ideal para catálogos grandes, usuários, contratos, logs e registros administrativos:
-- Tabela ou lista densa no corpo principal.
-- Inspector lateral direito (drawer não-bloqueante de 380–460px) que abre ao clicar em uma linha **sem tirar o usuário do contexto da tabela**.
+### B. Inbox 2 Colunas + Drawer de Contexto Sob Demanda (Atendimento / Chat / Mensageria)
+Ideal para atendimento omnichannel (WhatsApp/Site), tickets em tempo real e simuladores:
+1. **Coluna Esquerda (`300–340px`):** fila priorizada por SLA (`.chip-sla` com anel SVG circular) + seleção por teclado (`↑`/`↓`).
+2. **Coluna Principal (`1fr`):** conversa viva + cabeçalho com janela SLA + notas internas + compositor; o **contexto de contrato/cliente abre num Drawer lateral sob demanda** em vez de espremer a conversa o tempo todo.
 
-### C. Workbench / Split-Pane Redimensionável
-Ideal para apps desktop (IDEs, clientes de dados, estúdios, editores, comparação):
-- Barra lateral colapsável (`⌘B` / `Ctrl+B`), área de trabalho central limpa e painel auxiliar inferior/direito retrátil.
+### C. Cockpit 3 Zonas / Master-Detail / Kanban / Bento Executivo (Sob Medida por Módulo)
+- **Kanban:** poços `.well-z0` por etapa com soma financeira ao vivo + barra de progresso de habilitação nos cards + `SortableJS` + setas `<` `>` para teclado.
+- **Bento Grid Executivo (Portal):** **PROIBIDO buraco vazio interno (`> 95px`, `DA-CARD-INTERNAL-VOID`)** causado por `justify-content: space-between` / `margin-top: auto` quando dois cards na mesma linha têm alturas diferentes! Equilibre a densidade interna (ex.: linha de destaque/próximo prazo no miolo) ou empilhe o conteúdo com `gap` constante.
+- **Workbench / Split-Pane Redimensionável:** para IDEs, clientes de dados e ferramentas técnicas (`Split.js` / `Dockview` / `react-resizable-panels`).
 
 ---
 
@@ -67,28 +69,45 @@ Se o projeto compila para janela desktop nativa (Electron, Tauri, SwiftUI macOS,
 
 ---
 
-## 5. Alto Contraste Ótico em Sistemas Corporativos
+## 5. Equilíbrio Cromático `65 / 20 / 10 / 5` & Alto Contraste Ótico
 
-Para ambientes de escritório iluminados (Light Mode) e operações noturnas (Dark Mode):
-- **Light Mode Aterrado**: evite fundo `#FFFFFF` com borda `rgba(0,0,0,0.06)` onde tudo vira um clarão branco. Use canvas areia/pedra suave (`Z1`) com cartões elevados (`Z2`), contorno nítido (`1.25px` com contraste perceptível) e sombra dupla suave.
-- **Dark Mode Estruturado**: evite `#000000` absoluto. Use base profunda (`#0B1220` / `#0E1624`), painéis em `+6%` a `+10%` de luminosidade (`#132033`), e borda de destaque superior sutil (`rgba(255,255,255,0.12)`).
-- **Semântica antes de texto**: um item vencido ou bloqueado deve comunicar urgência em < 1 segundo por contraste cromático controlado (borda/badge/indicador), nunca escondido num bloco todo azul ou todo cinza.
+- **Light Mode Aterrado & Nítido (`DA-LIGHT-WASHED-OUT`):** canvas `Z0` (`#DCE3EC`) / `Z1` (`#E6ECF3`) com cartões `Z2` (`#FFFFFF`), bordas visíveis (`border-subtle >= 1.22:1` contra `Z2`, ex.: `#B4C1D1` e `#7A8CA3`), chanfro branco `inset 0 1px 0 #FFFFFF` e sombra física de 3 camadas.
+- **Dark Mode com Subtom Arquitetônico & Presença da Marca (`DA-DARK-MONOCHROME`):** evite tanto a **massa azul 50%-saturada** quanto o **carvão morto sem marca**. Use base `Z0–Z3` em Obsidiana com subtom sutil da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`) e expresse a cor oficial da empresa com clareza em **3 Zonas Fixas**:
+  1. Bloco de identidade na Sidebar/Header (`.sidebar-brand-card`) + item ativo (`18% --primary` + filete `3px --accent`);
+  2. **Card-Rei (`.card-brand-hero`)** no topo de cada tela com gradiente direcional `135deg` (`20% --primary`) + borda luminosa;
+  3. Controles selecionados (`.subtab.is-active`, `.seg-btn.is-active`) + paleta categórica harmônica de 6 cores (`--chart-1..6`).
 
 ---
 
-## 6. Shell web que muda de forma
+## 6. Shell Web que Muda de Forma (Sidebar Minimizável + Zero Navegação Duplicada)
 
-O mesmo produto web não tem um layout só. Tem um shell por largura, com os mesmos tokens.
+O mesmo produto web não tem um layout só. Tem um shell por largura, com os mesmos tokens:
 
 | Largura | Shell | O que cabe |
 |---|---|---|
-| Desktop, `>= 1024px` | Sidebar fixa ou retrátil + barra superior enxuta (busca, breadcrumb, ação da página, perfil) | Tabela densa, master-detail, inspector |
-| Tablet, `768–1023px` | Rail compacta ou drawer recolhível | Dois painéis quando a tarefa for lista + detalhe. Terceira coluna sai |
-| Mobile web, `< 768px` | A sidebar vira drawer, ou bottom navigation com no máximo 5 destinos | Uma tarefa. Lista no lugar da tabela |
+| Desktop, `>= 1024px` | **Sidebar esquerda minimizável (`232px ↔ 68px` rail)** com botão `«`/`»` + atalho `[` persistido em `localStorage` + Topbar enxuta (`56px`) | Breadcrumb + **Sub-abas internas do módulo atual** + `⌘K` + Tema + Conta |
+| Tablet, `768–1023px` | Sidebar recolhe automaticamente para rail `68px` com tooltips | Lista + detalhe ou painel focado |
+| Mobile web, `< 768px` | Drawer ou Tab Bar inferior fixa de `4–5` destinos (`height: 68px`, `padding-bottom >= 96px`) | Uma tarefa. Tabela densa vira lista com `.icon-emblem` |
 
-- Altura de tela: `100dvh` ou `svh`, com `env(safe-area-inset-*)`. `100vh` esconde o botão fixo atrás da barra do navegador.
-- Tabela no desktop: cabeçalho sticky, ordenação, filtro visível, paginação ou virtualização. Abaixo de 768px a mesma informação vira lista ou card resumido que expande. Scroll horizontal não é o plano principal de leitura.
-- Formulário longo: seções ou passos, erro ao lado do campo, ação primária alcançável sem caçar o fim da página.
-- Landmarks reais: `header`, `nav`, `main`, `aside`. Um `h1` por tela, headings sem pular nível, e o mesmo caminho percorrível por teclado.
+- **Regra Anti-Duplicação na Topbar:** NUNCA repita os mesmos módulos globais da Sidebar esquerda dentro da Topbar da tela inicial/Portal! Na tela de módulo, a Topbar mostra as **sub-abas internas** daquele módulo; no Portal, mostra seletor de período/visão ou atalhos rápidos.
+- Altura de tela: `100dvh` ou `svh`, com `env(safe-area-inset-*)`.
+- Landmarks reais: `header`, `nav`, `main`, `aside`. Um `h1` por tela, headings sem pular nível e operação 100% por teclado.
 
-Geist, Primer e Polaris servem para estudar esse shell e a densidade. Não são a pele do produto, salvo quando o app já vive nessa plataforma (Shopify → Polaris, GitHub → Primer). A lista e o jeito de consultar estão no guia [09-pesquisa-componentes-oss.md](09-pesquisa-componentes-oss.md).
+---
+
+## 7. Gráficos de Estúdio & Micro-Componentes Analíticos OSS (`v2.2.0`)
+
+Nunca entregue gráficos "tutorial" (1 linha quase reta no topo com paredão monocromático até o zero):
+1. **Fluxo de Caixa / Séries Financeiras (`TradingView Lightweight Charts` / `Apache ECharts` / `ApexCharts`):**
+   - **Escala Y Dinâmica Calibrada (`DA-FLAT-CHART-AXIS`):** nunca trave `min: 0` numa série que varia entre `3,2M` e `3,5M`; ajuste `min` à faixa real ou combine **Combo Barras Diárias (`+Entradas` / `-Saídas`) + Curva Suave de Saldo Acumulado**;
+   - **HUD Vivo no Cabeçalho do Card:** ao mover o mouse no gráfico (`updateAxisPointer` / `crosshairMove`), atualize no topo do card a Data em foco, Saldo exato (`.num`), Entradas/Saídas e Delta `%` vs piso operacional;
+   - **Anotações Reais:** pinos `markPoint` nos dias críticos (maior saída / maior entrada) + `markLine`/`markArea` para o piso/meta.
+2. **Cascata Financeira (`Waterfall DRE`):**
+   - Use **paleta categórica multi-cor (`--chart-1` a `--chart-6`)** por função (Receita, Custos/Repasses, Estrutura, Tributos, Resultado Líquido) — nunca 4 barras do mesmo azul — com **linhas conectoras tracejadas** entre degraus e badge de `% da receita` no topo de cada barra.
+3. **Micro-Componentes Analíticos Estilo Tremor Raw (para acabar com cards "só texto"):**
+   - **`BarList`:** listas de ranking/setor com barra horizontal translúcida proporcional ao valor por trás do rótulo;
+   - **`Tracker` (24–45 blocos):** faixa de blocos semânticos para SLA, saúde de integrações ou validade de certidões com tooltip por bloco;
+   - **`CategoryBar`:** barra segmentada multi-cor (`--chart-1..5`) sincronizada no hover com os sub-cards abaixo;
+   - **`Sparklines`:** mini-tendência de 7 dias dentro de cards de banco/KPI.
+
+Geist, Primer, Polaris, TradingView e Tremor servem de referência técnica. A busca automática categorizada está em [09-pesquisa-componentes-oss.md](09-pesquisa-componentes-oss.md).

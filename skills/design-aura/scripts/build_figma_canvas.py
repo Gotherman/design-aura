@@ -545,8 +545,10 @@ def apply_auto_layout(manifest: dict, force_relayout: bool = False) -> list[str]
     all_missing = all(s.get("x") is None or s.get("y") is None for s in screens)
     all_placed = all(s.get("x") is not None and s.get("y") is not None for s in screens)
 
-    # Detecta layout torre vertical degenerado (ex.: 2800x3700 com >= 10 telas) e reorganiza automaticamente
+    # Detecta layout torre vertical degenerado ou manifesto >= 6 telas ainda nao organizado em Hub-and-Spoke
     is_vertical_tower = False
+    has_hub_section = any(sec.get("id") == "sec-start-hub" for sec in manifest.get("sections", []))
+    needs_hub_tree = len(screens) >= 6 and not has_hub_section and not proj.get("lockManualLayout")
     if all_placed and len(screens) >= 10 and not proj.get("lockManualLayout"):
         xs = [float(s["x"]) + float(s.get("w") or 360) for s in screens]
         ys = [float(s["y"]) + float(s.get("h") or 350) for s in screens]
@@ -555,9 +557,11 @@ def apply_auto_layout(manifest: dict, force_relayout: bool = False) -> list[str]
         if span_h > span_w * 1.12:
             is_vertical_tower = True
 
-    if force_relayout or (all_missing and len(screens) >= 4) or is_vertical_tower:
+    if force_relayout or (all_missing and len(screens) >= 4) or is_vertical_tower or needs_hub_tree:
         if is_vertical_tower and not force_relayout:
             notes.append("torre vertical detectada; reorganizando para Hub-and-Spoke panoramico")
+        elif needs_hub_tree and not force_relayout and not all_missing:
+            notes.append("layout manual sem sec-start-hub detectado; aplicando arvore Hub-and-Spoke canonica")
         notes.extend(apply_hub_and_spoke_layout(manifest))
         return notes
 
@@ -782,18 +786,18 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     min-height: 54px; padding: 6px 14px; background: var(--surface-glass);
     border-bottom: 1.25px solid var(--border-card); box-shadow: var(--shadow-z1);
   }}
-  .fx-brand {{ display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: none; }}
-  .fx-brand strong {{ font-family: var(--da-font-display); font-size: 13.5px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }}
-  .fx-brand span {{ font-family: var(--da-font-mono); font-size: 11.5px; color: var(--text-muted); white-space: nowrap; }}
+  .fx-brand {{ display: flex; flex-direction: column; gap: 1px; min-width: 0; max-width: 240px; flex: 0 1 auto; }}
+  .fx-brand strong {{ font-family: var(--da-font-display); font-size: 13px; font-weight: 700; color: var(--text-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+  .fx-brand span {{ font-family: var(--da-font-mono); font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
   .fx-flows {{
-    display: flex; align-items: center; gap: 3px; padding: 3px; border-radius: 10px;
+    display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 10px;
     background: var(--surface-z0); border: 1px solid var(--border-card); overflow-x: auto; scrollbar-width: none; flex: 1 1 auto; min-width: 0;
   }}
   .fx-flows::-webkit-scrollbar {{ display: none; }}
   .fx-flow-btn {{
-    display: inline-flex; align-items: center; gap: 5px; min-height: 32px; padding: 0 9px;
+    display: inline-flex; align-items: center; gap: 4px; min-height: 30px; padding: 0 7px;
     border-radius: 7px; border: 1px solid transparent; background: transparent; color: var(--text-body);
-    font-family: var(--da-font-ui); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    font-family: var(--da-font-ui); font-size: 11.5px; font-weight: 600; cursor: pointer; white-space: nowrap;
     transition-property: background-color, border-color, color; transition-duration: 150ms; transition-timing-function: ease-out;
   }}
   .fx-flow-btn:hover {{ color: var(--text-strong); background: var(--surface-z2); }}

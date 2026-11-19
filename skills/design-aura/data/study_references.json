@@ -1,47 +1,1321 @@
 [
-  {"id": "cal-com", "name": "Cal.com", "kind": "study", "stack": ["react", "all"], "platforms": ["system", "desktop", "mobile"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/calcom/cal.com", "needs": ["calendar", "calendario", "agendamento", "scheduling", "booking"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar agenda e fluxo desktop/mobile. Nao copie o codigo AGPL para o projeto."},
-  {"id": "dub", "name": "Dub", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/dubinc/dub", "needs": ["dashboard", "analytics", "tipografia", "cards", "grafico"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar hierarquia de dashboard. Nao clone o app nem a paleta."},
-  {"id": "midday", "name": "Midday", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/midday-ai/midday", "needs": ["financeiro", "invoice", "tabela", "dark mode"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar tabela financeira e dark mode. Confirme a licenca antes de qualquer copia."},
-  {"id": "twenty", "name": "Twenty", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/twentyhq/twenty", "needs": ["crm", "kanban", "tabela", "views"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar views de CRM. A composicao ainda sai do fluxo deste projeto."},
-  {"id": "plane", "name": "Plane", "kind": "study", "stack": ["react", "all"], "platforms": ["system", "desktop"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/makeplane/plane", "needs": ["projeto", "issue", "sidebar", "densidade"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar sidebar densa de gestao de projeto. Nao copie o codigo AGPL."},
-  {"id": "documenso", "name": "Documenso", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/documenso/documenso", "needs": ["assinatura", "wizard", "passo a passo", "documento"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar fluxo em passos. Nao copie o codigo AGPL."},
-  {"id": "formbricks", "name": "Formbricks", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/formbricks/formbricks", "needs": ["split view", "editor", "preview", "pesquisa", "formulario"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar editor ao lado do preview. Nao copie o codigo AGPL."},
-  {"id": "openstatus", "name": "OpenStatus", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/openstatusHQ/openstatus", "needs": ["status page", "monitoramento", "grafico"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar pagina de status e grafico sem ruido."},
-  {"id": "infisical", "name": "Infisical", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/Infisical/infisical", "needs": ["segredo", "hierarquia", "dado tecnico"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar hierarquia de dado tecnico. Confirme a licenca antes de copiar."},
-  {"id": "supabase-studio", "name": "Supabase Studio", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/supabase/supabase", "needs": ["tabela", "database", "ide", "sql"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar tabela densa de dados no navegador."},
-  {"id": "directus", "name": "Directus", "kind": "study", "stack": ["vue", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/directus/directus", "needs": ["admin", "master detail", "cms"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar master-detail de painel. A licenca mudou ao longo do tempo: confirme no commit."},
-  {"id": "appwrite-console", "name": "Appwrite Console", "kind": "study", "stack": ["all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/appwrite/console", "needs": ["console", "developer", "sidebar"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar navegacao lateral de console. Nao adote o visual inteiro."},
-  {"id": "hoppscotch", "name": "Hoppscotch", "kind": "study", "stack": ["vue", "all"], "platforms": ["system", "desktop"], "license": "MIT", "license_ok": false, "url": "https://github.com/hoppscotch/hoppscotch", "needs": ["api client", "painel", "multipainel"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar layout de varios paineis. O app e MIT, mas nao se instala como kit de UI."},
-  {"id": "umami", "name": "Umami", "kind": "study", "stack": ["react", "all"], "platforms": ["system", "mobile"], "license": "MIT", "license_ok": false, "url": "https://github.com/umami-software/umami", "needs": ["analytics", "metrica", "clareza"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar dashboard de metrica sem poluicao. Nao clone o produto."},
-  {"id": "plausible", "name": "Plausible", "kind": "study", "stack": ["all"], "platforms": ["system", "mobile"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/plausible/analytics", "needs": ["analytics", "single page", "metrica"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar painel de uma tela so. Nao copie o codigo AGPL."},
-  {"id": "zed", "name": "Zed", "kind": "study", "stack": ["all"], "platforms": ["desktop"], "license": "GPL-3.0", "license_ok": false, "url": "https://zed.dev", "needs": ["editor", "painel", "janela", "atalho"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar paineis e tipografia de editor nativo. GPL: nao copie o codigo."},
-  {"id": "penpot", "name": "Penpot", "kind": "study", "stack": ["all"], "platforms": ["desktop", "system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://penpot.app", "needs": ["canvas", "inspector", "app chrome", "toolbar"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar chrome complexo: barra, inspetor e canvas."},
-  {"id": "appflowy", "name": "AppFlowy", "kind": "study", "stack": ["flutter", "all"], "platforms": ["desktop", "mobile"], "license": "confirme LICENSE", "license_ok": false, "url": "https://appflowy.io", "needs": ["documento", "workspace", "flutter", "multiplataforma"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar o mesmo produto em desktop e mobile sem espremer o layout."},
-  {"id": "yaak", "name": "Yaak", "kind": "study", "stack": ["tauri", "all"], "platforms": ["desktop"], "license": "confirme LICENSE", "license_ok": false, "url": "https://yaak.app", "needs": ["tauri", "api client", "janela nativa"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar cliente desktop em Tauri com cara de app nativo."},
-  {"id": "localsend", "name": "LocalSend", "kind": "study", "stack": ["flutter", "all"], "platforms": ["desktop", "mobile"], "license": "confirme LICENSE", "license_ok": false, "url": "https://localsend.org", "needs": ["transferencia", "simples", "flutter"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar uma tarefa so, clara, adaptada a cada tela."},
-  {"id": "netnewswire", "name": "NetNewsWire", "kind": "study", "stack": ["ios", "all"], "platforms": ["desktop", "ios"], "license": "confirme LICENSE", "license_ok": false, "url": "https://netnewswire.com", "needs": ["macos", "hig", "tres colunas", "reader"], "modes": ["read", "operate"], "flashy": false, "usage": "reference", "use_case": "Estudar coluna tripla no HIG. Nao porte essa janela para a web."},
-  {"id": "bluesky", "name": "Bluesky", "kind": "study", "stack": ["rn", "all"], "platforms": ["mobile", "ios", "android"], "license": "MIT", "license_ok": false, "url": "https://github.com/bluesky-social/social-app", "needs": ["feed", "tab bar", "react native", "gesto"], "modes": ["read", "persuade"], "flashy": false, "usage": "reference", "use_case": "Estudar feed e tab bar em React Native. Nao copie o produto."},
-  {"id": "ice-cubes", "name": "Ice Cubes", "kind": "study", "stack": ["ios", "swiftui"], "platforms": ["ios", "mobile"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/Dimillian/IceCubesApp", "needs": ["swiftui", "ios", "feed", "liquid glass"], "modes": ["read"], "flashy": false, "usage": "reference", "use_case": "Estudar SwiftUI atual. Liquid Glass fica no app Apple, nao no web."},
-  {"id": "breezy", "name": "Breezy Weather", "kind": "study", "stack": ["android", "compose"], "platforms": ["android", "mobile"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/breezy-weather/breezy-weather", "needs": ["material 3", "android", "card", "clima"], "modes": ["read"], "flashy": false, "usage": "reference", "use_case": "Estudar Material 3 no celular. Nao copie o tema do clima para outro dominio."},
-  {"id": "signal", "name": "Signal", "kind": "study", "stack": ["ios", "android", "all"], "platforms": ["ios", "android", "mobile"], "license": "GPL-3.0", "license_ok": false, "url": "https://github.com/signalapp", "needs": ["mensagem", "lista", "ios", "android", "acessibilidade"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar lista de conversa com padrao nativo separado por sistema. GPL: nao copie o codigo."},
-  {"id": "bitwarden", "name": "Bitwarden", "kind": "study", "stack": ["ios", "android", "all"], "platforms": ["ios", "android", "mobile"], "license": "GPL-3.0", "license_ok": false, "url": "https://github.com/bitwarden/android", "needs": ["formulario", "cofre", "empty state", "lista"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar formulario e lista no celular. GPL: nao copie o codigo."},
-  {"id": "organic-maps", "name": "Organic Maps", "kind": "study", "stack": ["ios", "android", "all"], "platforms": ["ios", "android", "mobile"], "license": "Apache-2.0", "license_ok": false, "url": "https://github.com/organicmaps/organicmaps", "needs": ["mapa", "edge to edge", "controle flutuante"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar mapa em tela cheia com poucos controles. Nao instale o app como kit."},
-  {"id": "read-you", "name": "Read You", "kind": "study", "stack": ["android", "compose"], "platforms": ["android", "mobile"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/Ashinch/ReadYou", "needs": ["material 3", "rss", "compose", "expressive"], "modes": ["read"], "flashy": false, "usage": "reference", "use_case": "Estudar Compose e Material 3. Expressive nao entra em Operate web."},
-  {"id": "posthog", "name": "PostHog", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "MIT", "license_ok": false, "url": "https://github.com/PostHog/posthog", "needs": ["analytics", "produto", "densidade", "insight"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar densidade de analytics. Nao herde a cara do PostHog."},
-  {"id": "grafana", "name": "Grafana", "kind": "study", "stack": ["all"], "platforms": ["system", "desktop"], "license": "AGPL-3.0", "license_ok": false, "url": "https://github.com/grafana/grafana", "needs": ["telemetria", "grafico", "dark mode", "painel"], "modes": ["operate"], "flashy": false, "usage": "reference", "use_case": "Estudar painel de telemetria. AGPL: nao copie o codigo."},
-  {"id": "metabase", "name": "Metabase", "kind": "study", "stack": ["all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/metabase/metabase", "needs": ["bi", "relatorio", "pergunta", "grafico"], "modes": ["read", "operate"], "flashy": false, "usage": "reference", "use_case": "Estudar como uma pergunta vira um grafico legivel."},
-  {"id": "evidence", "name": "Evidence", "kind": "study", "stack": ["all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/evidence-dev/evidence", "needs": ["relatorio", "editorial", "dado"], "modes": ["read"], "flashy": false, "usage": "reference", "use_case": "Estudar relatorio com ritmo editorial, nao dashboard de cards iguais."},
-  {"id": "visx", "name": "Visx", "kind": "study", "stack": ["react"], "platforms": ["system"], "license": "MIT", "license_ok": false, "url": "https://airbnb.io/visx", "needs": ["grafico", "chart", "primitivo"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Primitivo de grafico. So vira dependencia se o projeto precisa de grafico proprio e a licenca MIT do pacote for confirmada no repo."},
-  {"id": "nivo", "name": "Nivo", "kind": "study", "stack": ["react"], "platforms": ["system"], "license": "MIT", "license_ok": false, "url": "https://nivo.rocks", "needs": ["grafico", "chart", "responsivo"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar grafico responsivo. Confirme MIT no pacote antes de instalar."},
-  {"id": "polar", "name": "Polar", "kind": "study", "stack": ["react", "all"], "platforms": ["system"], "license": "confirme LICENSE", "license_ok": false, "url": "https://github.com/polarsource/polar", "needs": ["checkout", "assinatura", "preco", "billing"], "modes": ["operate", "persuade"], "flashy": false, "usage": "reference", "use_case": "Estudar checkout e assinatura. Nao copie a tela sem ler a licenca."},
-  {"id": "stripe-checkout", "name": "Stripe Checkout", "kind": "study", "stack": ["all"], "platforms": ["system", "mobile"], "license": "documentacao", "license_ok": false, "url": "https://docs.stripe.com/payments/checkout", "needs": ["checkout", "pagamento", "pricing"], "modes": ["operate", "persuade"], "flashy": false, "usage": "reference", "use_case": "Estudar a friccao do pagamento. Nao redesenhe o Checkout hospedado sem necessidade."},
-  {"id": "tailark", "name": "Tailark", "kind": "gallery", "stack": ["react", "tailwind"], "platforms": ["system"], "license": "confirme por bloco", "license_ok": false, "url": "https://tailark.com", "needs": ["hero", "pricing", "landing"], "modes": ["persuade"], "flashy": true, "usage": "reference", "use_case": "Blocos de marketing. So em Persuade, e um bloco re-tematizado, nao a pagina inteira."},
-  {"id": "taxonomy", "name": "Taxonomy", "kind": "study", "stack": ["react"], "platforms": ["system"], "license": "MIT", "license_ok": false, "url": "https://github.com/shadcn-ui/taxonomy", "needs": ["landing", "template", "next"], "modes": ["persuade"], "flashy": false, "usage": "reference", "use_case": "Exemplo de landing com app. Nao use o repositorio como casca do produto do cliente."},
-  {"id": "lapa", "name": "Lapa Ninja", "kind": "gallery", "stack": ["all"], "platforms": ["system"], "license": "capturas", "license_ok": false, "url": "https://www.lapa.ninja", "needs": ["landing", "pricing", "hero"], "modes": ["persuade"], "flashy": true, "usage": "reference", "use_case": "Galeria de landing e preco. Estude a ordem da prova. Nao copie o layout."},
-  {"id": "saaspo", "name": "Saaspo", "kind": "gallery", "stack": ["all"], "platforms": ["system"], "license": "capturas", "license_ok": false, "url": "https://saaspo.com", "needs": ["landing", "saas", "hero"], "modes": ["persuade"], "flashy": true, "usage": "reference", "use_case": "Galeria de landing de SaaS. Referencia de ordem, nao de codigo."},
-  {"id": "paywallscreens", "name": "PaywallScreens", "kind": "gallery", "stack": ["ios", "android"], "platforms": ["mobile", "ios", "android"], "license": "capturas", "license_ok": false, "url": "https://paywallscreens.com", "needs": ["paywall", "assinatura", "pricing", "mobile"], "modes": ["persuade"], "flashy": false, "usage": "reference", "use_case": "Telas reais de paywall. Estude hierarquia de plano. Nao copie a tela de outro app."},
-  {"id": "siteinspire", "name": "Siteinspire", "kind": "gallery", "stack": ["all"], "platforms": ["system"], "license": "capturas", "license_ok": false, "url": "https://www.siteinspire.com", "needs": ["editorial", "web", "inspiracao"], "modes": ["persuade", "read"], "flashy": false, "usage": "reference", "use_case": "Curadoria de sites. Serve para leitura e persuasao, nao para a estrutura de um sistema."},
-  {"id": "dark-design", "name": "Dark.design", "kind": "gallery", "stack": ["all"], "platforms": ["system", "desktop"], "license": "capturas", "license_ok": false, "url": "https://www.dark.design", "needs": ["dark mode", "inspiracao"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar dark mode de produtos reais. A paleta do projeto continua sendo a da marca e dos neutros proprios."},
-  {"id": "navbar-gallery", "name": "Navbar Gallery", "kind": "gallery", "stack": ["all"], "platforms": ["system", "mobile"], "license": "capturas", "license_ok": false, "url": "https://www.navbar.gallery", "needs": ["navbar", "navegacao", "header"], "modes": ["operate", "persuade"], "flashy": false, "usage": "reference", "use_case": "Comparar barras de navegacao. Escolha a que cabe no shell desta plataforma, nao a mais cheia."},
-  {"id": "calltoinspiration", "name": "CallToInspiration", "kind": "gallery", "stack": ["all"], "platforms": ["system"], "license": "capturas", "license_ok": false, "url": "https://www.calltoinspiration.com", "needs": ["empty state", "login", "404", "modal", "filtro"], "modes": ["operate", "read"], "flashy": false, "usage": "reference", "use_case": "Estudar um estado especifico (vazio, login, erro). Nao monte a tela como colagem desses recortes."}
+  {
+    "id": "cal-com",
+    "name": "Cal.com",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/calcom/cal.com",
+    "needs": [
+      "calendar",
+      "calendario",
+      "agendamento",
+      "scheduling",
+      "booking"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar agenda e fluxo desktop/mobile. Nao copie o codigo AGPL para o projeto.",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "category": "calendar-gantt-timelines"
+  },
+  {
+    "id": "dub",
+    "name": "Dub",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/dubinc/dub",
+    "needs": [
+      "dashboard",
+      "analytics",
+      "tipografia",
+      "cards",
+      "grafico"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar hierarquia de dashboard. Nao clone o app nem a paleta.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "midday",
+    "name": "Midday",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/midday-ai/midday",
+    "needs": [
+      "financeiro",
+      "invoice",
+      "tabela",
+      "dark mode"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar tabela financeira e dark mode. Confirme a licenca antes de qualquer copia.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "twenty",
+    "name": "Twenty",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/twentyhq/twenty",
+    "needs": [
+      "crm",
+      "kanban",
+      "tabela",
+      "views"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar views de CRM. A composicao ainda sai do fluxo deste projeto.",
+    "taxonomy_category": "kanban-drag-drop-workflows",
+    "category": "kanban-drag-drop-workflows"
+  },
+  {
+    "id": "plane",
+    "name": "Plane",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/makeplane/plane",
+    "needs": [
+      "projeto",
+      "issue",
+      "sidebar",
+      "densidade"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar sidebar densa de gestao de projeto. Nao copie o codigo AGPL.",
+    "taxonomy_category": "kanban-drag-drop-workflows",
+    "category": "kanban-drag-drop-workflows"
+  },
+  {
+    "id": "documenso",
+    "name": "Documenso",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/documenso/documenso",
+    "needs": [
+      "assinatura",
+      "wizard",
+      "passo a passo",
+      "documento"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar fluxo em passos. Nao copie o codigo AGPL.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "formbricks",
+    "name": "Formbricks",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/formbricks/formbricks",
+    "needs": [
+      "split view",
+      "editor",
+      "preview",
+      "pesquisa",
+      "formulario"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar editor ao lado do preview. Nao copie o codigo AGPL.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "openstatus",
+    "name": "OpenStatus",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/openstatusHQ/openstatus",
+    "needs": [
+      "status page",
+      "monitoramento",
+      "grafico"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar pagina de status e grafico sem ruido.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "infisical",
+    "name": "Infisical",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/Infisical/infisical",
+    "needs": [
+      "segredo",
+      "hierarquia",
+      "dado tecnico"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar hierarquia de dado tecnico. Confirme a licenca antes de copiar.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "supabase-studio",
+    "name": "Supabase Studio",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/supabase/supabase",
+    "needs": [
+      "tabela",
+      "database",
+      "ide",
+      "sql"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar tabela densa de dados no navegador.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "directus",
+    "name": "Directus",
+    "kind": "study",
+    "stack": [
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/directus/directus",
+    "needs": [
+      "admin",
+      "master detail",
+      "cms"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar master-detail de painel. A licenca mudou ao longo do tempo: confirme no commit.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "appwrite-console",
+    "name": "Appwrite Console",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/appwrite/console",
+    "needs": [
+      "console",
+      "developer",
+      "sidebar"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar navegacao lateral de console. Nao adote o visual inteiro.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "hoppscotch",
+    "name": "Hoppscotch",
+    "kind": "study",
+    "stack": [
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://github.com/hoppscotch/hoppscotch",
+    "needs": [
+      "api client",
+      "painel",
+      "multipainel"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar layout de varios paineis. O app e MIT, mas nao se instala como kit de UI.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "umami",
+    "name": "Umami",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://github.com/umami-software/umami",
+    "needs": [
+      "analytics",
+      "metrica",
+      "clareza"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar dashboard de metrica sem poluicao. Nao clone o produto.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "plausible",
+    "name": "Plausible",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/plausible/analytics",
+    "needs": [
+      "analytics",
+      "single page",
+      "metrica"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar painel de uma tela so. Nao copie o codigo AGPL.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "zed",
+    "name": "Zed",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "desktop"
+    ],
+    "license": "GPL-3.0",
+    "license_ok": false,
+    "url": "https://zed.dev",
+    "needs": [
+      "editor",
+      "painel",
+      "janela",
+      "atalho"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar paineis e tipografia de editor nativo. GPL: nao copie o codigo.",
+    "taxonomy_category": "desktop-native-workbenches",
+    "category": "desktop-native-workbenches"
+  },
+  {
+    "id": "penpot",
+    "name": "Penpot",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://penpot.app",
+    "needs": [
+      "canvas",
+      "inspector",
+      "app chrome",
+      "toolbar"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar chrome complexo: barra, inspetor e canvas.",
+    "taxonomy_category": "desktop-native-workbenches",
+    "category": "desktop-native-workbenches"
+  },
+  {
+    "id": "appflowy",
+    "name": "AppFlowy",
+    "kind": "study",
+    "stack": [
+      "flutter",
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "mobile"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://appflowy.io",
+    "needs": [
+      "documento",
+      "workspace",
+      "flutter",
+      "multiplataforma"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar o mesmo produto em desktop e mobile sem espremer o layout.",
+    "taxonomy_category": "desktop-native-workbenches",
+    "category": "desktop-native-workbenches"
+  },
+  {
+    "id": "yaak",
+    "name": "Yaak",
+    "kind": "study",
+    "stack": [
+      "tauri",
+      "all"
+    ],
+    "platforms": [
+      "desktop"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://yaak.app",
+    "needs": [
+      "tauri",
+      "api client",
+      "janela nativa"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar cliente desktop em Tauri com cara de app nativo.",
+    "taxonomy_category": "desktop-native-workbenches",
+    "category": "desktop-native-workbenches"
+  },
+  {
+    "id": "localsend",
+    "name": "LocalSend",
+    "kind": "study",
+    "stack": [
+      "flutter",
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "mobile"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://localsend.org",
+    "needs": [
+      "transferencia",
+      "simples",
+      "flutter"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar uma tarefa so, clara, adaptada a cada tela.",
+    "taxonomy_category": "desktop-native-workbenches",
+    "category": "desktop-native-workbenches"
+  },
+  {
+    "id": "netnewswire",
+    "name": "NetNewsWire",
+    "kind": "study",
+    "stack": [
+      "ios",
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "ios"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://netnewswire.com",
+    "needs": [
+      "macos",
+      "hig",
+      "tres colunas",
+      "reader"
+    ],
+    "modes": [
+      "read",
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar coluna tripla no HIG. Nao porte essa janela para a web.",
+    "taxonomy_category": "desktop-native-workbenches",
+    "category": "desktop-native-workbenches"
+  },
+  {
+    "id": "bluesky",
+    "name": "Bluesky",
+    "kind": "study",
+    "stack": [
+      "rn",
+      "all"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://github.com/bluesky-social/social-app",
+    "needs": [
+      "feed",
+      "tab bar",
+      "react native",
+      "gesto"
+    ],
+    "modes": [
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar feed e tab bar em React Native. Nao copie o produto.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "ice-cubes",
+    "name": "Ice Cubes",
+    "kind": "study",
+    "stack": [
+      "ios",
+      "swiftui"
+    ],
+    "platforms": [
+      "ios",
+      "mobile"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/Dimillian/IceCubesApp",
+    "needs": [
+      "swiftui",
+      "ios",
+      "feed",
+      "liquid glass"
+    ],
+    "modes": [
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar SwiftUI atual. Liquid Glass fica no app Apple, nao no web.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "breezy",
+    "name": "Breezy Weather",
+    "kind": "study",
+    "stack": [
+      "android",
+      "compose"
+    ],
+    "platforms": [
+      "android",
+      "mobile"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/breezy-weather/breezy-weather",
+    "needs": [
+      "material 3",
+      "android",
+      "card",
+      "clima"
+    ],
+    "modes": [
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar Material 3 no celular. Nao copie o tema do clima para outro dominio.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "signal",
+    "name": "Signal",
+    "kind": "study",
+    "stack": [
+      "ios",
+      "android",
+      "all"
+    ],
+    "platforms": [
+      "ios",
+      "android",
+      "mobile"
+    ],
+    "license": "GPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/signalapp",
+    "needs": [
+      "mensagem",
+      "lista",
+      "ios",
+      "android",
+      "acessibilidade"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar lista de conversa com padrao nativo separado por sistema. GPL: nao copie o codigo.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "bitwarden",
+    "name": "Bitwarden",
+    "kind": "study",
+    "stack": [
+      "ios",
+      "android",
+      "all"
+    ],
+    "platforms": [
+      "ios",
+      "android",
+      "mobile"
+    ],
+    "license": "GPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/bitwarden/android",
+    "needs": [
+      "formulario",
+      "cofre",
+      "empty state",
+      "lista"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar formulario e lista no celular. GPL: nao copie o codigo.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "organic-maps",
+    "name": "Organic Maps",
+    "kind": "study",
+    "stack": [
+      "ios",
+      "android",
+      "all"
+    ],
+    "platforms": [
+      "ios",
+      "android",
+      "mobile"
+    ],
+    "license": "Apache-2.0",
+    "license_ok": false,
+    "url": "https://github.com/organicmaps/organicmaps",
+    "needs": [
+      "mapa",
+      "edge to edge",
+      "controle flutuante"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar mapa em tela cheia com poucos controles. Nao instale o app como kit.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "read-you",
+    "name": "Read You",
+    "kind": "study",
+    "stack": [
+      "android",
+      "compose"
+    ],
+    "platforms": [
+      "android",
+      "mobile"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/Ashinch/ReadYou",
+    "needs": [
+      "material 3",
+      "rss",
+      "compose",
+      "expressive"
+    ],
+    "modes": [
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar Compose e Material 3. Expressive nao entra em Operate web.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "posthog",
+    "name": "PostHog",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://github.com/PostHog/posthog",
+    "needs": [
+      "analytics",
+      "produto",
+      "densidade",
+      "insight"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar densidade de analytics. Nao herde a cara do PostHog.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "grafana",
+    "name": "Grafana",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "license": "AGPL-3.0",
+    "license_ok": false,
+    "url": "https://github.com/grafana/grafana",
+    "needs": [
+      "telemetria",
+      "grafico",
+      "dark mode",
+      "painel"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar painel de telemetria. AGPL: nao copie o codigo.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "metabase",
+    "name": "Metabase",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/metabase/metabase",
+    "needs": [
+      "bi",
+      "relatorio",
+      "pergunta",
+      "grafico"
+    ],
+    "modes": [
+      "read",
+      "operate"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar como uma pergunta vira um grafico legivel.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "evidence",
+    "name": "Evidence",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/evidence-dev/evidence",
+    "needs": [
+      "relatorio",
+      "editorial",
+      "dado"
+    ],
+    "modes": [
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar relatorio com ritmo editorial, nao dashboard de cards iguais.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "visx",
+    "name": "Visx",
+    "kind": "study",
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://airbnb.io/visx",
+    "needs": [
+      "grafico",
+      "chart",
+      "primitivo"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Primitivo de grafico. So vira dependencia se o projeto precisa de grafico proprio e a licenca MIT do pacote for confirmada no repo.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "nivo",
+    "name": "Nivo",
+    "kind": "study",
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://nivo.rocks",
+    "needs": [
+      "grafico",
+      "chart",
+      "responsivo"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar grafico responsivo. Confirme MIT no pacote antes de instalar.",
+    "taxonomy_category": "charts-telemetry-financial",
+    "category": "charts-telemetry-financial"
+  },
+  {
+    "id": "polar",
+    "name": "Polar",
+    "kind": "study",
+    "stack": [
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme LICENSE",
+    "license_ok": false,
+    "url": "https://github.com/polarsource/polar",
+    "needs": [
+      "checkout",
+      "assinatura",
+      "preco",
+      "billing"
+    ],
+    "modes": [
+      "operate",
+      "persuade"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar checkout e assinatura. Nao copie a tela sem ler a licenca.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  },
+  {
+    "id": "stripe-checkout",
+    "name": "Stripe Checkout",
+    "kind": "study",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
+    "license": "documentacao",
+    "license_ok": false,
+    "url": "https://docs.stripe.com/payments/checkout",
+    "needs": [
+      "checkout",
+      "pagamento",
+      "pricing"
+    ],
+    "modes": [
+      "operate",
+      "persuade"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar a friccao do pagamento. Nao redesenhe o Checkout hospedado sem necessidade.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  },
+  {
+    "id": "tailark",
+    "name": "Tailark",
+    "kind": "gallery",
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "confirme por bloco",
+    "license_ok": false,
+    "url": "https://tailark.com",
+    "needs": [
+      "hero",
+      "pricing",
+      "landing"
+    ],
+    "modes": [
+      "persuade"
+    ],
+    "flashy": true,
+    "usage": "reference",
+    "use_case": "Blocos de marketing. So em Persuade, e um bloco re-tematizado, nao a pagina inteira.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  },
+  {
+    "id": "taxonomy",
+    "name": "Taxonomy",
+    "kind": "study",
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "MIT",
+    "license_ok": false,
+    "url": "https://github.com/shadcn-ui/taxonomy",
+    "needs": [
+      "landing",
+      "template",
+      "next"
+    ],
+    "modes": [
+      "persuade"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Exemplo de landing com app. Nao use o repositorio como casca do produto do cliente.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  },
+  {
+    "id": "lapa",
+    "name": "Lapa Ninja",
+    "kind": "gallery",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://www.lapa.ninja",
+    "needs": [
+      "landing",
+      "pricing",
+      "hero"
+    ],
+    "modes": [
+      "persuade"
+    ],
+    "flashy": true,
+    "usage": "reference",
+    "use_case": "Galeria de landing e preco. Estude a ordem da prova. Nao copie o layout.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  },
+  {
+    "id": "saaspo",
+    "name": "Saaspo",
+    "kind": "gallery",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://saaspo.com",
+    "needs": [
+      "landing",
+      "saas",
+      "hero"
+    ],
+    "modes": [
+      "persuade"
+    ],
+    "flashy": true,
+    "usage": "reference",
+    "use_case": "Galeria de landing de SaaS. Referencia de ordem, nao de codigo.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  },
+  {
+    "id": "paywallscreens",
+    "name": "PaywallScreens",
+    "kind": "gallery",
+    "stack": [
+      "ios",
+      "android"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://paywallscreens.com",
+    "needs": [
+      "paywall",
+      "assinatura",
+      "pricing",
+      "mobile"
+    ],
+    "modes": [
+      "persuade"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Telas reais de paywall. Estude hierarquia de plano. Nao copie a tela de outro app.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "siteinspire",
+    "name": "Siteinspire",
+    "kind": "gallery",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://www.siteinspire.com",
+    "needs": [
+      "editorial",
+      "web",
+      "inspiracao"
+    ],
+    "modes": [
+      "persuade",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Curadoria de sites. Serve para leitura e persuasao, nao para a estrutura de um sistema.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "dark-design",
+    "name": "Dark.design",
+    "kind": "gallery",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://www.dark.design",
+    "needs": [
+      "dark mode",
+      "inspiracao"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar dark mode de produtos reais. A paleta do projeto continua sendo a da marca e dos neutros proprios.",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "category": "mobile-native-pwa-touch"
+  },
+  {
+    "id": "navbar-gallery",
+    "name": "Navbar Gallery",
+    "kind": "gallery",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://www.navbar.gallery",
+    "needs": [
+      "navbar",
+      "navegacao",
+      "header"
+    ],
+    "modes": [
+      "operate",
+      "persuade"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Comparar barras de navegacao. Escolha a que cabe no shell desta plataforma, nao a mais cheia.",
+    "taxonomy_category": "shell-navigation",
+    "category": "shell-navigation"
+  },
+  {
+    "id": "calltoinspiration",
+    "name": "CallToInspiration",
+    "kind": "gallery",
+    "stack": [
+      "all"
+    ],
+    "platforms": [
+      "system"
+    ],
+    "license": "capturas",
+    "license_ok": false,
+    "url": "https://www.calltoinspiration.com",
+    "needs": [
+      "empty state",
+      "login",
+      "404",
+      "modal",
+      "filtro"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "usage": "reference",
+    "use_case": "Estudar um estado especifico (vazio, login, erro). Nao monte a tela como colagem desses recortes.",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "category": "auth-onboarding-governance-settings"
+  }
 ]

@@ -18,12 +18,12 @@ ONDA 0 (Orquestrador — Bíblia Visual + Contrato)
   ├─ Gera DESIGN-BIBLE.html/.pdf VISUAL com --tokens tokens.css (pranchas Light/Dark renderizadas!)
   └─ [PORTÃO 1] PARA e aguarda aprovação explícita da Bíblia Visual
 
-ONDA 0.5 (Orquestrador — Portão das Telas-Mãe / Golden Screens)
-  ├─ Constrói Design System completo: tokens.css + shell.css + shell.js + libs OSS vendored/carregadas (zero 404)
-  ├─ Constrói 1 Tela-Mãe Desktop (a mais rica/densa do sistema) + 1 Tela-Mãe Mobile (se houver mobile)
+ONDA 0.5 (Orquestrador — Portão das Telas-Mãe / Golden Screens + SHELL-CONTRACT.md)
+  ├─ Constrói Design System completo: tokens.css (65/20/10/5 + --chart-1..6) + shell.css (5 camadas de profundidade + sidebar minimizável + .card-brand-hero + .icon-emblem + .chip-sla) + shell.js + libs OSS vendored (zero 404)
+  ├─ Gera SHELL-CONTRACT.md (~100 linhas): esqueleto HTML copiável do <head>/sidebar/topbar/mobile-frame + mapa de classes CSS de shell.css + funções de shell.js (evita que cada subagente perca o turno lendo 4.000+ linhas!)
+  ├─ Constrói 1 Tela-Mãe Desktop (Lista Limpa → Detalhe Focado ou painel principal + gráfico de estúdio) + 1 Tela-Mãe Mobile (se houver mobile)
   ├─ Audita com lint_design_aura.py + capture_and_audit.mjs e inspeciona PNGs (Dark & Light)
-  └─ [PORTÃO 2] Valida as Telas-Mãe com o usuário antes de escalar para os subagentes
-     (pule a pausa apenas se o usuário autorizou construir tudo direto sem parar nas Telas-Mãe)
+  └─ [PORTÃO 2] Valida as Telas-Mãe com o usuário (se houver ajuste em tokens/cores, re-roda render_design_bible.py --tokens para manter a Bíblia 100% sincronizada antes da Onda 1!)
 
 ONDA 1 + FAST-AUDIT LOOP (Subagentes — 1 a 3 telas cada · SEM teto de 8)
   ├─ Cada subagente nasce com o modelo gravado no Contrato de plataforma
@@ -101,43 +101,44 @@ Nenhum slice de subagente é considerado "pronto" apenas porque o subagente diss
 
 ---
 
-## Template Obrigatório de Briefing de Subagente (`v2.0`)
+## Template Obrigatório de Briefing de Subagente (`v2.2.0` · Turno Único Turbo)
+
+> **Por que `SHELL-CONTRACT.md` + Escrita Incremental (`v2.2.0`)?**
+> Quando cada subagente era obrigado a ler integralmente `DESIGN-BIBLE.md` + `tokens.css` + `shell.css` (`1.500` linhas) + `shell.js` (`450` linhas) + `Tela-Mãe` (`1.700` linhas) = **`4.126` linhas**, 30% dos subagentes estouravam o turno planejando e encerravam sem gravar nenhum HTML; outros gastavam 30+ chamadas tentando improvisar Puppeteer/Playwright. Com o `SHELL-CONTRACT.md` (`~100 linhas`) + a Trava de Escrita Incremental + comando pronto de `capture_and_audit.mjs`, cada subagente conclui seu slice em **1 único turno limpo** com qualidade máxima!
 
 ```markdown
 ### Tarefa: Construir Slice [NOME_DO_MODULO] ([1 a 3] tela(s)) — Projeto [NOME_DO_PROJETO]
 
-Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve igualar ou superar o acabamento visual e funcional das **Telas-Mãe aprovadas**, seguindo 100% a Bíblia de Design e os 10 Blocos de Leis Inegociáveis.
+Você é um Engenheiro de UI Sênior da Design Aura (`v2.2.0`). Sua entrega deve igualar ou superar o acabamento visual das **Telas-Mãe aprovadas**, seguindo 100% os tokens `65/20/10/5`, a profundidade tátil em 5 camadas e os 10 Blocos.
 
-1. **Fundação & Régua Visual (LEITURA OBRIGATÓRIA antes de codar):**
-   - Tela(s)-Mãe aprovada(s): `<caminho/tela-mae-desktop.html>` / `<caminho/tela-mae-mobile.html>`
-     - **O QUE HERDAR DA TELA-MÃE:** tokens (`Z0–Z4`, paleta, contraste, Dark/Light), tipografia, espaçamento `4/8px`, shell externo, gramática de botões/badges/cards/inputs/toasts e **nível de acabamento**.
-     - **O QUE NÃO COPIAR DA TELA-MÃE:** o layout interno, o número de colunas/zonas ou o fluxo de trabalho! Construa a organização interna que faz sentido natural para a tarefa deste módulo (ex.: Kanban para funil, Master-Detail para lista/catálogo, Formulário em seções agrupadas para configurações/perfil, Inbox+Chat para atendimento, Cockpit 3 zonas para triagem).
-   - `DESIGN-BIBLE.md` (Contrato de plataforma, planos Z0–Z4, tipografia, seção 8 de libs OSS e seção 8.1)
-   - `tokens.css`, `shell.css` e `shell.js` (não edite estes arquivos compartilhados; crie estilos específicos da sua tela em `<style>` local usando exclusivamente `var(--token)`).
+1. **Leitura Rápida & Direta (MÁXIMO 2 leituras antes de gravar o 1º HTML!):**
+   - Leia `<caminho/SHELL-CONTRACT.md>` (`~100 linhas` — já contém `<head>`, esqueleto HTML do shell, sidebar minimizável, classes `.card-brand-hero`, `.panel-z2`, `.well-z0`, `.icon-emblem`, `.chip-sla`, `.chip-status`, `.chip-kv`, `.num`/`.mono` e helpers de `shell.js`).
+   - Consulte a Tela-Mãe (`<caminho/tela-mae.html>`) apenas se precisar verificar algum trecho pontual — **NÃO** leia `4.000` linhas em sequência antes de começar a codar!
+   - **Fronteira Anti-Clone Estrutural:** herde 100% dos tokens, shell e acabamento, mas construa a arquitetura interna própria de cada tela do slice (ex.: `Lista Limpa → Detalhe Focado` para filas/tabelas, `Combo Chart HUD` para caixa, `Waterfall com conectores` para DRE, `Kanban` para funil, `Inbox 2 colunas + Drawer` para atendimento).
 
 2. **Telas do Seu Slice (1–3 telas, TODAS ricas e com arquitetura própria):**
-   - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Arquétipo próprio desta tela: `<ex: Kanban 5 colunas + drawer lateral OU Configurações em 2 colunas de seções agrupadas>` | Links de saída: `<arquivos-destino>`)
+   - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Arquétipo próprio: `<...>` | Widgets OSS & Receitas: `<ex.: Combo Cashflow HUD, BarList, .icon-emblem Duotone, .chip-sla anel SVG>` | Links de saída: `<...>`)
    - `[id-2]` -> `<caminho/arquivo-2>` (...)
 
-3. **Widgets OSS & Interatividade Obrigatória:**
-   - Bibliotecas disponíveis no projeto: `<ex.: vendor/echarts.min.js, ícones SVG consistentes, bottom sheet>`
-   - Massa realista mínima: `>= 5` registros concretos em tabelas/listas (proibido stub de 1–2 linhas ou texto de desculpa).
-   - Interações reais: filtros funcionais, seleção de item atualizando o inspector completo (nunca 1 linha só), busca/tabs, modal/drawer/sheet com fechar por `Esc` e toast com Desfazer.
+3. **Padrão Visual Obrigatório `v2.2.0` (Anti-Slop + Craft):**
+   - **Presença da Marca `65/20/10/5`:** use `.card-brand-hero` no card-rei da tela, paleta categórica `--chart-1..6` em gráficos/rankings (nunca 4 barras do mesmo azul) e semânticas puras para risco.
+   - **Zero Ícones/Badges Genéricos:** use **`.icon-emblem` com spotlight + SVG Duotone/1.75px específico do domínio** (ou monograma `.bank-emblem` para bancos), **`.chip-sla` com anel SVG circular** para tempos/janelas, **`.chip-status` com halo + ícone vetorial** para estados (ex.: Transbordo) e **`.chip-kv`** para pares Chave|Valor. PROIBIDO repetir `ph-bank` ou `ph-warning-circle` como muleta (`DA-ICON-GENERIC-REPEAT`).
+   - **Gráficos de Estúdio:** nunca trave `yAxis: { min: 0 }` em série de saldo com baixa variação (`DA-FLAT-CHART-AXIS`); use escala Y dinâmica ou Combo Barras+Curva + cabeçalho HUD vivo no crosshair + pinos de anotação.
+   - **Bento Grid & Tabelas:** proibido buraco interno `> 95px` em cards (`DA-CARD-INTERNAL-VOID`), proibido duplicar a sidebar na topbar do Portal, massa mínima `>= 5` registros reais, números à direita com `.num` (`Geist`/`Inter` tabular-nums) e `.mono` apenas em códigos técnicos.
+   - **CSS local liberado:** não edite `tokens.css`, `shell.css` nem `shell.js`; coloque estilos específicos da tela em `<style>` local usando exclusivamente `var(--token)`.
 
 4. **Dados Fictícios Compartilhados (USE EXATAMENTE ESTES VALORES):**
-   - Empresa/Sistema: <...>
-   - Perfis/Usuários: <...>
-   - Métricas/Alertas integrados: <...>
+   - Empresa/Sistema: <...> · Perfis: <...> · Métricas/Registros: <...>
 
-5. **Os 10 Blocos & Regras Anti-Regressão (`v2.0`):**
-   - Suporte completo a `data-theme="dark"` e `data-theme="light"` via variáveis de `tokens.css`.
-   - Use superfícies elevadas `Z2` nítidas (proibido card-dentro-de-card, mas obrigatório ter hierarquia real de painéis/cards `Z2`).
-   - Proibido vazio morto em desktop (`DA-DEAD-SPACE`), proibido links `<a>` azuis sublinhados crus em listas/menus (`DA-RAW-LINK-LIST`), proibido fonte serifada editorial em sistema `Operate` (`DA-SERIF-OPERATE`), proibido texto cortado por barra fixa mobile (`DA-FIXED-OVERLAP`).
-   - `tabular-nums` + alinhamento à direita em números de tabela, `<label>` visível em inputs, `<textarea>` estilizado, `:focus-visible`, touch target `>= 44px` em mobile, zero `transition-all`, zero emojis clichês.
-
-6. **Validação Local Obrigatória antes de Responder:**
-   - Rode `python3 <skill_dir>/scripts/lint_design_aura.py <seus-arquivos> --strict` e corrija qualquer falha `BLOCK`/`HIGH`.
-   - Responda listando: arquivos criados, widgets/interações implementadas, links conectados e resultado do linter. (O Orquestrador rodará Fast-Audit visual em Chromium imediatamente após sua entrega.)
+5. **REGRA DE ESCRITA INCREMENTAL EM TURNO ÚNICO (OBRIGATÓRIA):**
+   - **PROIBIDO** encerrar seu turno apenas com um plano ou após ler arquivos!
+   - **Ordem estrita:** (a) Leia `SHELL-CONTRACT.md`; (b) Grave imediatamente o **Arquivo 1 completo** no disco; (c) Grave imediatamente o **Arquivo 2 completo** no disco; (d) Rode o comando único de auditoria abaixo e corrija qualquer `BLOCK`/`HIGH`:
+     ```bash
+     python3 <skill_dir>/scripts/lint_design_aura.py <arquivo-1> <arquivo-2> --strict && \
+     node <skill_dir>/scripts/capture_and_audit.mjs <arquivo-1> <arquivo-2> --out /tmp/audit-<slice> --viewports <desktop|mobile> --themes dark,light --strict
+     ```
+   - **PROIBIDO** procurar ou tentar instalar Puppeteer, Playwright ou Selenium — o `capture_and_audit.mjs` acima já funciona sem dependências externas!
+   - Só responda depois que **todos** os arquivos do slice estiverem gravados no disco e auditados com `0 BLOCK · 0 HIGH`.
 ```
 
 ---

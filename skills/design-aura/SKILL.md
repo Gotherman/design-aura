@@ -6,12 +6,12 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.1.0"
+  version: "2.2.0"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.0.0`)
+# Design Aura (`v2.2.0`)
 
 Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual e orquestração multi-agente para produzir **sistemas web operacionais, apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero telas casca vazias, contraste irretocável, ergonomia nativa e verificação visual real em cada etapa.
 
@@ -41,21 +41,25 @@ FASE 4 (Onda 2 · Vitrine + QA) → build_figma_canvas.py (Hub-and-Spoke) + Audi
 
 ---
 
-### Fase 1 — Especificação Enxuta (Pontos Críticos Nunca Puláveis)
+### Fase 1 — Especificação Enxuta (Linguagem Clara, Sem Jargão e Zero Atropelo)
 
-Antes de paleta, tipografia ou layout, leia o pedido, o repositório e os documentos. Pergunte **em uma única rodada clara**, sempre marcando uma opção **(Recomendada)** em cada pergunta.
+Antes de paleta, tipografia ou layout, leia o pedido, o repositório e os documentos. Pergunte **em uma única rodada clara**, marcando uma opção **(Recomendada)** em cada pergunta.
 
-**Pontos críticos obrigatórios** (nunca assuma silenciosamente se o prompt atual do usuário não respondeu explicitamente):
-1. **Em remodelação — o que manter vs o que incomoda:** o que já existe nas telas atuais que o usuário gosta e o que ele quer ver radicalmente melhorado.
-2. **Superfícies & papel do Mobile:** web desktop, desktop nativo, mobile (iOS / Android / ambos; nativo, RN/Flutter ou PWA) — e, quando houver mobile junto com desktop, se o mobile é um **app focado/executivo dedicado** ou as **mesmas rotinas do desktop adaptadas**.
-3. **Tema principal:** dark-first, light-first ou os dois obrigatórios.
-4. **Detalhes do domínio (opcional, com proposta fechada):** proponha apenas se fizer sentido real (ação, formato, duração, reduced motion e onde não entra). Sem aprovação, não desenhe cenário decorativo.
-5. **Modelos de execução (OBRIGATÓRIO):** qual modelo conduz o **Orquestrador** e qual constrói as telas nos **subagentes**. Grave ambos no Contrato de plataforma e obedeça rigorosamente na Fase 3.
+**Regras de ouro da entrevista (`v2.2.0`):**
+- **Português simples e efeito visual concreto:** NUNCA jogue jargão de design/técnico solto (*"WCAG/APCA"*, *"assinatura contida"*, *"Contrato de Plataforma"*) sem traduzir em 1 frase curta o que o usuário vai **ver e sentir na tela**.
+- **Trava Anti-Atropelo em Caso de Dúvida:** se o usuário responder *"não entendi"*, *"como assim?"* ou demonstrar dúvida em qualquer pergunta, **PARE IMEDIATAMENTE** — **NUNCA assuma a opção por conta própria nem gere a Bíblia ainda!** Explique em português direto com exemplo visual do produto e peça a confirmação dele antes de seguir para a Onda 0.
+
+**6 pontos críticos obrigatórios** (nunca assuma silenciosamente se o prompt atual não respondeu):
+1. **Em remodelação — o que manter vs o que incomoda:** o que já existe que precisa sobreviver e o que o usuário quer ver drasticamente melhorado.
+2. **Tema padrão & Equilíbrio da Cor da Marca (`65/20/10/5`):** qual tema abre por padrão (*Escuro com alternância para Claro* ou *Claro com alternância para Escuro*) e se prefere o **equilíbrio 65/20/10/5 (Recomendado)** — fundo arquitetônico com subtom suave, a cor oficial da empresa presente com personalidade nas zonas principais (*Sidebar, Card-Rei de cada tela e abas ativas*) e acompanhada de cores harmônicas nos gráficos e alertas (nem "tudo azul pesado", nem "preto morto onde a marca sumiu").
+3. **Estratégia Anti-Poluição em Telas Densas no Desktop:** **(Recomendado) Lista Limpa → Detalhe Focado na mesma página** (abre em lista espaçosa com KPIs e filtros; ao clicar num item, expande o detalhe completo em tela cheia na mesma página com `← Voltar à lista / Esc` e `‹ Anterior · Próxima ›`), ou painéis em 3 colunas simultâneas (reservado apenas para Chat/Inbox em tempo real).
+4. **Superfícies & papel do Mobile:** web desktop, desktop nativo, mobile (iOS / Android / PWA) — e se o mobile será um **app executivo focado** ou as **mesmas rotinas do desktop adaptadas**.
+5. **Personalidade Tipográfica & Detalhes do Domínio:** **(Recomendado) Precisão executiva (`Geist` / `Inter` com números monetários tabulares proporcionais + mono só para códigos/CNPJ/atalhos)** e se entra algum detalhe sutil do ofício (com descrição prática).
+6. **Modelos de execução (OBRIGATÓRIO):** qual modelo conduz o **Orquestrador** (desenha Bíblia, Telas-Mãe e audita) e qual modelo constrói as demais telas em paralelo nos **subagentes** (`1–3` telas cada). Grave ambos no Contrato de plataforma e obedeça na Fase 3.
 
 Pergunte também, somente se o repositório/pedido ainda não fechou:
-6. **Tipo de produto:** `Operate` (sistema de trabalho diário, ERP, operação, backoffice, DevTools), `Read` (editorial/analítico) ou `Persuade` (landing/vitrine).
-7. **Quem usa e a decisão de 1 segundo:** perfil principal e a primeira decisão acionável ao abrir o sistema.
-8. **Cores da marca:** usar a paleta oficial como base (recomendado **sim** quando existe logo/marca). A marca conduz ação (10%) e estrutura (30%), preservando vitalidade cromática — nunca transforme uma cor viva em marrom/cinza morto e nunca faça interface monocromática.
+7. **Tipo de produto:** `Operate` (sistema de trabalho diário, ERP, operação, backoffice, DevTools), `Read` (editorial/analítico) ou `Persuade` (landing/vitrine).
+8. **Quem usa e a decisão de 1 segundo:** perfil principal e a primeira decisão acionável ao abrir o sistema.
 
 **Regra-mãe de superfície:** tokens (cor, tipo, espaço, elevação, ícone) atravessam as superfícies; navegação, densidade, alvo de entrada e overlay mudam por plataforma ([04-desktop-e-sistemas.md](references/04-desktop-e-sistemas.md) e [05-mobile-ios-android.md](references/05-mobile-ios-android.md)).
 
@@ -67,13 +71,14 @@ Grave tudo no **Contrato de plataforma**, no topo da `DESIGN-BIBLE.md`.
 
 Antes de construir ou delegar qualquer tela, o Orquestrador cria o **Contrato Único de Verdade**:
 
-1. **Pesquisa determinística + Caçador de Componentes OSS**:
+1. **Pesquisa determinística + Mapeamento Categórico Automático de Componentes OSS (`16 Categorias Canônicas`)**:
    ```bash
    python3 <skill_dir>/scripts/design_intel.py "<domínio e objetivo>" --platform <desktop|mobile|system|all> --stack <stack> --format markdown
-   python3 <skill_dir>/scripts/discover_oss_components.py --need "<interação>" --stack <stack> --platform <desktop|mobile|system|ios|android> --mode <operate|read|persuade> [--online]
+   python3 <skill_dir>/scripts/discover_oss_components.py --scan <caminho-do-repositorio-ou-plano> --stack <stack> --platform <desktop|mobile|system|ios|android> --mode <operate|read|persuade>
    ```
-   - Use bibliotecas OSS de alto impacto visual e funcional com licença MIT / Apache-2.0 / BSD / ISC (ex.: Phosphor/Lucide SVG icons, Apache ECharts / Chart.js para gráficos reais, SortableJS para kanban, Floating UI para menus/popovers, cmdk / ninja-keys para `⌘K`, Vaul / bottom sheets reais).
-   - **Adapte o vocabulário e o fluxo do molde ao domínio real** — mas **NUNCA** descarte engenharia visual boa (superfícies `Z2`, 3 zonas quando o trabalho pede triagem+documento+contexto, gráficos interativos, ícones coerentes, badges semânticos) só para "ser diferente do molde".
+   *(Para consultas pontuais ou pesquisa ao vivo no GitHub/npm, use também `discover_oss_components.py --need "<interação>" [--online]` ou `--category <id>`.)*
+   - O `--scan` lê o repositório/planejamento, identifica automaticamente quais das **16 Categorias Canônicas de UI/UX** o projeto precisa (`charts-telemetry-financial`, `icons-emblems-avatars`, `badges-chips-timers-status`, `kpi-metrics-sparklines`, `data-tables-lists-progressive`, `kanban-drag-drop-workflows`, `forms-inputs-pickers-upload`, `calendar-gantt-timelines`, `inbox-chat-omnichannel-ai`, etc.) e devolve **bibliotecas permissivas (`MIT`/`Apache-2.0`/`ISC`) + Receitas de Micro-Componentes de Estúdio + Curadoria de Ícones Específicos do Domínio** prontos para a Seção 8 da Bíblia!
+   - **Adapte o vocabulário e o fluxo do molde ao domínio real** — nunca descarte componentes OSS sofisticados (TradingView Lightweight Charts / ECharts Combo com HUD vivo, Tremor BarList & Tracker, Tabler/Solar Duotone SVGs, SortableJS, IMask, AutoAnimate, tinykeys, FullCalendar, Floating UI).
 
 2. **Ler as referências obrigatórias do escopo**:
    - Sempre: [01-leis-inegociaveis.md](references/01-leis-inegociaveis.md) e [02-biblia-de-design.md](references/02-biblia-de-design.md).
@@ -109,15 +114,16 @@ Antes de construir ou delegar qualquer tela, o Orquestrador cria o **Contrato Ú
 Imediatamente após a aprovação da Bíblia, **ANTES** de disparar os subagentes construtores em paralelo:
 
 1. O Orquestrador constrói a fundação real completa:
-   - `tokens.css` + `shell.css` + `shell.js` (Design System rico: superfícies `Z0–Z4`, cards, badges semânticos, tabelas, inputs, modais/drawers/sheets, `⌘K`, toast com Desfazer, tema Light/Dark e bibliotecas OSS vendored/carregadas com zero 404).
-   - **1 Tela-Mãe Desktop** (a tela operacional mais importante/densa do produto, ex.: cockpit de 3 zonas ou painel principal com gráfico real, filtros vivos, inspector completo e >= 5 registros).
-   - **1 Tela-Mãe Mobile** (se o projeto possui mobile: navegação nativa no terço inferior, safe areas, zero texto cortado sob a bottom bar, cards/listas agrupadas e bottom sheet interativo).
+   - `tokens.css` + `shell.css` + `shell.js` (Design System rico: equilíbrio cromático `65/20/10/5` com 3 Zonas de Presença da Marca e `--chart-1..6`, profundidade tátil de 5 camadas, **Sidebar Desktop minimizável `232px ↔ 68px` com `«` e `[` em `localStorage`**, zero duplicação de navegação na Topbar, `.card-brand-hero`, `.icon-emblem` com spotlight, `.chip-sla` com anel SVG circular, `.chip-status` com halo, `.chip-kv`, modais/drawers/sheets, `⌘K`, toast com Desfazer, Light nítido & Dark com subtom sutil e bibliotecas OSS vendored com zero 404).
+   - **`SHELL-CONTRACT.md` (`~100 linhas`, OBRIGATÓRIO em `v2.2.0`):** resumo executável do `<head>`, esqueleto HTML do shell, catálogo de classes CSS de `shell.css` e helpers de `shell.js` para que cada subagente comece a gravar telas no passo 2 sem perder o turno lendo `4.000+ linhas`!
+   - **1 Tela-Mãe Desktop** (usando o padrão **Lista Limpa → Detalhe Focado na Mesma Página** quando for fila/tabela densa + gráfico/telemetria de estúdio com HUD vivo, `>= 5` registros reais e interações completas).
+   - **1 Tela-Mãe Mobile** (se o projeto possui mobile: navegação nativa no terço inferior, `.card-brand-hero`, `.icon-emblem` específicos do domínio, safe areas, zero texto cortado sob a bottom bar e bottom sheet interativo).
 2. O Orquestrador audita as Telas-Mãe imediatamente:
    ```bash
    python3 <skill_dir>/scripts/lint_design_aura.py <telas-mae> --strict
    node <skill_dir>/scripts/capture_and_audit.mjs <telas-mae> --out <dir_audit_golden> --viewports desktop,mobile --themes dark,light --strict
    ```
-   Abre e inspeciona visualmente os PNGs gerados (Dark & Light) até ficarem impecáveis — nível de estúdio, **zero** vazio morto, **zero** links azuis crus, **zero** erro JS ou 404.
+   Se houver ajustes após a revisão do usuário no Portão 2, atualize `tokens.css`, `shell.css`, `SHELL-CONTRACT.md` e re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css` (sincronizando automaticamente as tabelas da Bíblia) antes de disparar os subagentes!
 3. **Portão 2 — Validação rápida do padrão visual:**
    Mostre os PNGs (ou link preview) das 2 Telas-Mãe ao usuário para confirmar que o visual real bate 100% com a expectativa (pule esta pausa apenas se o usuário já pediu explicitamente *"aprovado, construa tudo direto sem parar nas telas-mãe"*).
    - **Fronteira rígida — o que a Tela-Mãe trava vs o que NUNCA se copia:**
@@ -135,9 +141,10 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
   - **Telas operacionais padrão ou mobile ricas**: **máximo `2–3` telas por subagente**.
   - **Telas auxiliares leves** (acesso, perfil, preferências): **máximo `3` telas por subagente**.
   - Dispare quantos subagentes forem necessários para cobrir **100% das telas num único processo**, agrupando em lotes paralelos (ex.: 4–6 simultâneos conforme a capacidade do ambiente) usando **exatamente o modelo gravado no Contrato de plataforma**.
-- **Briefing Rico & Sem Camisa de Força:**
-  - Passe a cada subagente: seu slice exato (`1–3` telas), o caminho das **Telas-Mãe aprovadas** como referência viva de acabamento, `DESIGN-BIBLE.md` + `tokens.css` + `shell.css`, os widgets/gráficos OSS obrigatórios para aquela tela, os dados fictícios compartilhados (`>= 5` linhas realistas em tabelas/listas) e os **10 Blocos**.
-  - **Proibido** escrever `"sem classe card"` ou engessar o subagente impedindo estilos locais da tela: o subagente **pode** escrever `<style>` ou CSS local da sua tela usando **exclusivamente** `var(--token)` do `tokens.css` para alcançar máxima sofisticação.
+- **Briefing Rico com `SHELL-CONTRACT.md` & Protocolo de Turno Único (`v2.2.0`):**
+  - Passe a cada subagente: seu slice exato (`1–3` telas), o caminho do **`SHELL-CONTRACT.md` (~100 linhas)** + a Tela-Mãe como referência visual, os widgets/gráficos OSS e receitas de micro-componentes das categorias daquela tela (`.card-brand-hero`, `.icon-emblem`, `.chip-sla`, Combo HUD Chart, BarList, Tracker), os dados fictícios compartilhados (`>= 5` registros) e o **comando único de auto-auditoria** (`lint_design_aura.py` + `capture_and_audit.mjs`).
+  - **Trava de Escrita Incremental em Turno Único:** instrua o subagente a gravar a Tela 1 imediatamente no disco, depois a Tela 2, e só então rodar a validação — **proibido** ler `4.000+` linhas antes de escrever, encerrar o turno apenas com plano ou tentar instalar Puppeteer/Playwright.
+  - **Proibido** escrever `"sem classe card"` ou engessar o subagente impedindo estilos locais da tela: o subagente **pode** escrever `<style>` ou CSS local da sua tela usando **exclusivamente** `var(--token)` do `tokens.css`.
 - **OBRIGATÓRIO — Fast-Audit Imediato pelo Orquestrador a cada Entrega de Subagente:**
   - Assim que **cada** subagente concluir seu slice (`1–3` telas), o Orquestrador **não acumula erros para o final**: ele audita aquele slice **imediatamente**:
     1. Executa `lint_design_aura.py <arquivos-do-slice> --strict`.
@@ -164,7 +171,7 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
    python3 <skill_dir>/scripts/lint_design_aura.py <dir_projeto> --strict
    node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
    ```
-   *(Em `v2.0`, `--manifest` audita automaticamente também `fluxo.html`, `preview.html` e `index.html`, além de checar `DA-JS-ERROR`, `DA-ASSET-404`, `DA-DEAD-SPACE`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE` e `DA-SURFACE-FLAT`.)*
+   *(Em `v2.2.0`, `--manifest` audita automaticamente também `fluxo.html` aguardando todos os iframes `.is-loaded`, `preview.html` e `index.html`, além de checar `DA-JS-ERROR`, `DA-ASSET-404`, `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE` e `DA-SURFACE-FLAT`; e `audit_contrast.py` + `lint_design_aura.py` checam também `DA-DARK-MONOCHROME`, `DA-LIGHT-WASHED-OUT`, `DA-ICON-GENERIC-REPEAT` e `DA-FLAT-CHART-AXIS`.)*
 
 3. **Inspeção visual final & Entrega real em ambiente local ou remoto**:
    - Inspecione os PNGs finais (inclusive `fluxo.html`, `preview.html`, `index.html`). Só encerre com veredito **`Approve`** (`0 BLOCK`, `0 HIGH` e qualidade estética validada).

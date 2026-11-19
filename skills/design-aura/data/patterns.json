@@ -1,182 +1,543 @@
 [
   {
+    "id": "progressive-drill-in-list",
+    "name": "Revelacao Progressiva Anti-Poluicao (Lista Limpa -> Detalhe Focado na Mesma Pagina)",
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "taxonomy_category": "data-tables-lists-progressive",
+    "when_to_use": "Arquetipo #1 para filas e tabelas operacionais densas (Contas a Pagar, Contas a Receber, Radar de Editais, Cofre de Certidoes, Pedidos, Contratos) onde 3 colunas simultaneas gerariam poluicao visual",
+    "anatomy": [
+      "Estado 1 (Lista Limpa em largura total): Faixa executiva de KPIs (.card-brand-hero no KPI-rei) + barra de busca/filtros (.seg / .well-z0) + tabela respiravel com hover interativo",
+      "Estado 2 (Detalhe Focado Inline na mesma pagina ao clicar na linha ou via ?item=id): Barra superior fixa com '<- Voltar a lista (Esc)' + contador + botoes '< Anterior / Proxima >' + documento completo + telemetria de cobertura/risco + CTA dominante com Desfazer"
+    ],
+    "states": [
+      "Visao Lista Limpa (padrao ao abrir)",
+      "Visao Detalhe Focado Inline (transicao suave sem recarregar pagina e URL sincronizada ?item=id)",
+      "Navegacao Anterior/Proxima sem voltar a lista",
+      "Baixa/Aprovacao concluida com Toast Desfazer"
+    ],
+    "avoid": [
+      "Espremer fila + documento completo + coluna direita ao mesmo tempo em tabelas com 6+ colunas",
+      "Abrir um modal estreito de 400px que esconde metade dos dados do documento"
+    ]
+  },
+  {
+    "id": "studio-combo-chart-hud",
+    "name": "Grafico Financeiro/Telemetria de Estudio (Combo + Escala Dinamica + HUD Vivo de Crosshair + Pinos)",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "taxonomy_category": "charts-telemetry-financial",
+    "when_to_use": "Projecao de caixa 15/30/45d, curvas de receita/despesa, cascata DRE (Waterfall), SLA por hora e telemetria operacional",
+    "anatomy": [
+      "Cabecalho HUD Vivo acima do canvas: exibe Data/Ponto em foco no mouse + Valor principal tabular + Badge de Delta (% vs piso/meta) + Breakdown Entradas/Saidas",
+      "Composicao Visual Rica: Combo Barras Diarias (+Entradas / -Saidas) + Curva Suave de Saldo Acumulado com preenchimento gradiente + Faixa de Piso Operacional (markArea/markLine) + Pinos de Anotacao nos dias criticos (markPoint)",
+      "Escala Y Dinamica Calibrada: min ajustado a faixa real dos dados (nunca min: 0 quando a serie varia apenas entre 3,2M e 3,5M, evitando linha reta com paredao morto embaixo)"
+    ],
+    "states": [
+      "Repouso (HUD mostra consolidado do periodo + pinos de maior entrada/saida visiveis)",
+      "Scrubbing/Hover (crosshair atualiza os numeros do HUD superior em tempo real)",
+      "Troca de janela (15d / 30d / 45d ou filtro por banco/setor) com re-escala imediata"
+    ],
+    "avoid": [
+      "Grafico tutorial de 1 linha reta no topo com paredao monocromatico de 0 ate 4M embaixo",
+      "Cascata (Waterfall) com 4 barras do mesmo azul sem linhas conectoras tracejadas e sem % da receita"
+    ]
+  },
+  {
+    "id": "brand-presence-65-20-10-5",
+    "name": "Equilibrio Cromatico 65/20/10/5 com 3 Zonas de Presenca da Marca ('Estou Aqui!') + Paleta Harmonica",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "taxonomy_category": "shell-navigation",
+    "when_to_use": "Todo sistema ou aplicativo que precisa manter a identidade da empresa presente e reconhecivel sem virar nem uma massa monocromatica pesada nem um preto/carvao generico sem alma",
+    "anatomy": [
+      "65% Base Arquitetonica com Subtom Sutil (Obsidiana Fria/Quente S=18-25% no Dark; Porcelana Aterrada com bordas nitidas >= 1.25:1 no Light)",
+      "20% Presenca da Marca em 3 Zonas Fixas: (1) Bloco de identidade da Sidebar/Header institucional, (2) Card-Rei (.card-brand-hero) no topo de cada tela com gradiente direcional 20% primary + borda luminosa, (3) Controles ativos (.subtab.is-active, .seg-btn.is-active)",
+      "10% Acento Complementar no CTA Primario + Paleta Categorica Harmonica de 6 Cores (--chart-1..6 em OKLCH de mesma energia luminosa)",
+      "5% Semanticas Puras (Esmeralda, Ambar, Coral/Carmim) reservadas para status reais"
+    ],
+    "states": [
+      "Dark Mode com subtom arquitetonico e brilho especular",
+      "Light Mode com separacao nitida entre Z0, Z1, Z2 e bordas visiveis"
+    ],
+    "avoid": [
+      "Extremo 1: tingir Z0-Z4, bordas e textos com 50% de saturacao azul (massa monocromatica cansativa)",
+      "Extremo 2: usar cinza carvao puro S=0% onde a cor da empresa some e so aparece num logo de 32px"
+    ]
+  },
+  {
+    "id": "tactile-emblems-and-sla-chips",
+    "name": "Emblemas de Icone com Spotlight Duplo Anel (.icon-emblem) + Chips de SLA com Anel SVG (.chip-sla)",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "taxonomy_category": "icons-emblems-avatars",
+    "when_to_use": "Cards de KPI, filas de decisao, listas financeiras, alertas de certidoes, timers de SLA/WhatsApp 24h e estados de bot/atendimento",
+    "anatomy": [
+      "Emblema de Icone (.icon-emblem 38x38px, raio 10px): Spotlight radial no topo esquerdo (30% -> 6% da cor) + dupla borda optica (inset 0 1px 0 rgba(255,255,255,0.20) + 1px border calibrada) + SVG Duotone/1.75px especifico do dominio ou Monograma Vetorial do Banco (BB, CX, ST, BTG)",
+      "Chip de SLA/Timer (.chip-sla, raio 8px): Mini anel SVG circular de progresso (14x14px stroke-dasharray mostrando consumo do prazo) + rotulo curto ('SLA' / 'Janela 24h') + tempo em negrito tabular ('41m' / '22h 18m')",
+      "Chip de Status com Halo (.chip-status) & Badge Key-Value (.chip-kv): Ponto luminoso com halo duplo (box-shadow 3px) + micro-icone vetorial de transicao (ex: setas de transbordo) ou chip bipartido [Chave | Valor]"
+    ],
+    "states": [
+      "Normal / Em dia (anel verde/azul)",
+      "Atencao / Transbordo (anel ambar + halo)",
+      "Critico / Vencido (anel coral + destaque)"
+    ],
+    "avoid": [
+      "Quadrado marrom-avermelhado chapado com icone de fonte borrado (<i class='ph ph-bank'> ou '!') repetido em tudo",
+      "Pilula oval 999px chapada escrita apenas '41 min' ou '• Transbordo' sem anel de progresso e sem chanfro"
+    ]
+  },
+  {
     "id": "cockpit-3-zonas",
     "name": "Cockpit Operacional de 3 Zonas",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "when_to_use": "Triagem e decisao em filas operacionais (Contas a Pagar, Inbox de Atendimento, Editais, Aprovacoes)",
-    "anatomy": ["Zona 1 (Esquerda 300px): Fila filtravel e priorizada", "Zona 2 (Centro 1fr): Documento/Registro vivo + barra fixa de acao", "Zona 3 (Direita 280px): Contexto imediato, saldo/cobertura e riscos"],
-    "states": ["Item selecionado", "Fila filtrada vazia", "Carregamento por skeleton", "Acao concluida com Toast Desfazer"],
-    "avoid": ["Deixar 70% da direita vazia", "Esconder o botao de acao no fim de um scroll longo"]
+    "anatomy": [
+      "Zona 1 (Esquerda 300px): Fila filtravel e priorizada",
+      "Zona 2 (Centro 1fr): Documento/Registro vivo + barra fixa de acao",
+      "Zona 3 (Direita 280px): Contexto imediato, saldo/cobertura e riscos"
+    ],
+    "states": [
+      "Item selecionado",
+      "Fila filtrada vazia",
+      "Carregamento por skeleton",
+      "Acao concluida com Toast Desfazer"
+    ],
+    "avoid": [
+      "Deixar 70% da direita vazia",
+      "Esconder o botao de acao no fim de um scroll longo"
+    ]
   },
   {
     "id": "master-detail-inspector",
     "name": "Tabela Densa + Inspector Lateral (Drawer)",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "when_to_use": "Listagens administrativas, faturas, pedidos, contratos e logs com muitas linhas",
-    "anatomy": ["Header com busca e chips de filtro ativo", "Tabela com cabecalho sticky e numeros a direita", "Inspector direito nao-bloqueante (400-460px) ao clicar na linha"],
-    "states": ["Nenhuma linha selecionada", "Selecao multipla com barra de acoes em lote", "Ordenacao ativa"],
-    "avoid": ["Abrir modal central que apaga o contexto da tabela para ver detalhes simples"]
+    "anatomy": [
+      "Header com busca e chips de filtro ativo",
+      "Tabela com cabecalho sticky e numeros a direita",
+      "Inspector direito nao-bloqueante (400-460px) ao clicar na linha"
+    ],
+    "states": [
+      "Nenhuma linha selecionada",
+      "Selecao multipla com barra de acoes em lote",
+      "Ordenacao ativa"
+    ],
+    "avoid": [
+      "Abrir modal central que apaga o contexto da tabela para ver detalhes simples"
+    ]
   },
   {
     "id": "command-palette-cmdk",
     "name": "Command Palette Global (Cmd+K / Ctrl+K)",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "when_to_use": "Todo sistema ou app desktop com 5 ou mais telas ou acoes frequentes por teclado",
-    "anatomy": ["Input focalizado automaticamente no topo", "Resultados agrupados (Telas, Acoes, Registros)", "Atalho exibido com <kbd> a direita"],
-    "states": ["Busca vazia (recentes)", "Busca com resultado", "Zero resultados com sugestao limpa"],
-    "avoid": ["Exigir mouse para navegar ou fechar a paleta"]
+    "anatomy": [
+      "Input focalizado automaticamente no topo",
+      "Resultados agrupados (Telas, Acoes, Registros)",
+      "Atalho exibido com <kbd> a direita"
+    ],
+    "states": [
+      "Busca vazia (recentes)",
+      "Busca com resultado",
+      "Zero resultados com sugestao limpa"
+    ],
+    "avoid": [
+      "Exigir mouse para navegar ou fechar a paleta"
+    ]
   },
   {
     "id": "triagem-horizontes",
     "name": "Triagem por Horizontes Temporais (Agora / Em Rota / Radar)",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Portais iniciais e paineis executivos onde o usuario precisa decidir prioridades do dia",
-    "anatomy": ["Bloco 1 Agora: vencidos e bloqueios criticos", "Bloco 2 Em Rota: proximos 7 dias", "Bloco 3 Radar: oportunidades e saude do sistema"],
-    "states": ["Tudo em dia (estado positivo calmo)", "Pendencia critica em destaque semantico"],
-    "avoid": ["Misturar 12 cards KPI sem dizer o que precisa de acao hoje"]
+    "anatomy": [
+      "Bloco 1 Agora: vencidos e bloqueios criticos",
+      "Bloco 2 Em Rota: proximos 7 dias",
+      "Bloco 3 Radar: oportunidades e saude do sistema"
+    ],
+    "states": [
+      "Tudo em dia (estado positivo calmo)",
+      "Pendencia critica em destaque semantico"
+    ],
+    "avoid": [
+      "Misturar 12 cards KPI sem dizer o que precisa de acao hoje"
+    ]
   },
   {
     "id": "desktop-split-workbench",
     "name": "Workbench Desktop Redimensionavel",
-    "platforms": ["desktop"],
+    "platforms": [
+      "desktop"
+    ],
     "when_to_use": "Apps Electron/Tauri, IDEs, clientes de dados, editores e ferramentas tecnicas",
-    "anatomy": ["Titlebar integrada respeitando traffic lights / window controls", "Sidebar colapsavel", "Area principal + Painel auxiliar inferior/direito redimensionavel"],
-    "states": ["Janela ativa vs janela sem foco (unfocused)", "Painel lateral recolhido"],
-    "avoid": ["Impedir arraste da titlebar ou colocar controles sem no-drag"]
+    "anatomy": [
+      "Titlebar integrada respeitando traffic lights / window controls",
+      "Sidebar colapsavel",
+      "Area principal + Painel auxiliar inferior/direito redimensionavel"
+    ],
+    "states": [
+      "Janela ativa vs janela sem foco (unfocused)",
+      "Painel lateral recolhido"
+    ],
+    "avoid": [
+      "Impedir arraste da titlebar ou colocar controles sem no-drag"
+    ]
   },
   {
     "id": "ios-tab-large-title-sheet",
     "name": "iOS Tab Bar (2-5) + Large Title + Bottom Sheet",
-    "platforms": ["mobile", "ios"],
+    "platforms": [
+      "mobile",
+      "ios"
+    ],
     "when_to_use": "Apps iPhone/iOS onde o polegar alterna entre secoes principais e decide em segundos",
-    "anatomy": ["Tab Bar inferior fixa com icones SF/fill ativos", "Large Title no topo colapsando para inline ao rolar", "Sheet de acao (detents .medium/.large) na metade inferior"],
-    "states": ["Safe areas respeitadas", "Edge-swipe back preservado", "Dynamic Type grande sem corte"],
-    "avoid": ["Botao de voltar customizado que mata o swipe da borda", "Acoes avulsas na Tab Bar"]
+    "anatomy": [
+      "Tab Bar inferior fixa com icones SF/fill ativos",
+      "Large Title no topo colapsando para inline ao rolar",
+      "Sheet de acao (detents .medium/.large) na metade inferior"
+    ],
+    "states": [
+      "Safe areas respeitadas",
+      "Edge-swipe back preservado",
+      "Dynamic Type grande sem corte"
+    ],
+    "avoid": [
+      "Botao de voltar customizado que mata o swipe da borda",
+      "Acoes avulsas na Tab Bar"
+    ]
   },
   {
     "id": "android-adaptive-m3",
     "name": "Android M3 Adaptive (Nav Bar -> Rail) + Single FAB",
-    "platforms": ["mobile", "android"],
+    "platforms": [
+      "mobile",
+      "android"
+    ],
     "when_to_use": "Apps Android nativos e cross-platform rodando em celulares e tablets",
-    "anatomy": ["NavigationBar (3-5 destinos) no celular virando NavigationRail em tela larga", "TopAppBar contextual", "No maximo 1 FAB para a acao primaria dominante"],
-    "states": ["Predictive Back preservado", "Teclado aberto (IME inset) sem cobrir acao", "Snackbar acionavel"],
-    "avoid": ["Empilhar 2 ou 3 FABs", "Usar barra de iPhone esticada em tablet"]
+    "anatomy": [
+      "NavigationBar (3-5 destinos) no celular virando NavigationRail em tela larga",
+      "TopAppBar contextual",
+      "No maximo 1 FAB para a acao primaria dominante"
+    ],
+    "states": [
+      "Predictive Back preservado",
+      "Teclado aberto (IME inset) sem cobrir acao",
+      "Snackbar acionavel"
+    ],
+    "avoid": [
+      "Empilhar 2 ou 3 FABs",
+      "Usar barra de iPhone esticada em tablet"
+    ]
   },
   {
     "id": "optimistic-undo-toast",
     "name": "Acao Rapida Otimista + Toast Desfazer",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Aprovacoes, arquivamentos e conclusao de itens de fila operacional",
-    "anatomy": ["Feedback instantaneo no clique", "Toast inferior com resumo factual e botao Desfazer por 5-8s"],
-    "states": ["Executado", "Desfeito com restauracao exata", "Erro com rollback claro"],
-    "avoid": ["Modal 'Tem certeza?' para acoes facilmente reversiveis"]
+    "anatomy": [
+      "Feedback instantaneo no clique",
+      "Toast inferior com resumo factual e botao Desfazer por 5-8s"
+    ],
+    "states": [
+      "Executado",
+      "Desfeito com restauracao exata",
+      "Erro com rollback claro"
+    ],
+    "avoid": [
+      "Modal 'Tem certeza?' para acoes facilmente reversiveis"
+    ]
   },
   {
     "id": "progressive-disclosure-form",
     "name": "Formulario em Etapas / Revelacao Progressiva",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Cadastros longos, configuracoes complexas e fluxos com opcoes avancadas",
-    "anatomy": ["Labels visiveis sempre acima do campo", "Campos principais visiveis; opcoes avancadas em acordeon explicito", "Erro exibido logo abaixo do campo invalido"],
-    "states": ["Focus visivel", "Erro com orientacao de correcao", "Salvando (botao disabled + spinner)"],
-    "avoid": ["Usar placeholder no lugar de label", "Jogar 25 campos obrigatorios numa unica coluna sem agrupamento"]
+    "anatomy": [
+      "Labels visiveis sempre acima do campo",
+      "Campos principais visiveis; opcoes avancadas em acordeon explicito",
+      "Erro exibido logo abaixo do campo invalido"
+    ],
+    "states": [
+      "Focus visivel",
+      "Erro com orientacao de correcao",
+      "Salvando (botao disabled + spinner)"
+    ],
+    "avoid": [
+      "Usar placeholder no lugar de label",
+      "Jogar 25 campos obrigatorios numa unica coluna sem agrupamento"
+    ]
   },
   {
     "id": "direct-label-telemetry-chart",
     "name": "Grafico de Telemetria Limpo com Rotulo Direto",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Curvas de caixa, SLA, comparativos mensais e funis executivos",
-    "anatomy": ["Titulo descritivo ou conclusao factual (nunca 'Grafico de barras de...')", "Gridlines sutis apenas para leitura", "Rotulo direto junto da serie quando <= 4 series"],
-    "states": ["Serie com valor real em tabular-nums", "Tooltip pontual no foco/hover", "Estado vazio quando sem historico"],
-    "avoid": ["Caixa de legenda separada para 2 linhas", "3D, brilho neon e valores duplicados em barra + eixo + subtitulo"]
+    "anatomy": [
+      "Titulo descritivo ou conclusao factual (nunca 'Grafico de barras de...')",
+      "Gridlines sutis apenas para leitura",
+      "Rotulo direto junto da serie quando <= 4 series"
+    ],
+    "states": [
+      "Serie com valor real em tabular-nums",
+      "Tooltip pontual no foco/hover",
+      "Estado vazio quando sem historico"
+    ],
+    "avoid": [
+      "Caixa de legenda separada para 2 linhas",
+      "3D, brilho neon e valores duplicados em barra + eixo + subtitulo"
+    ]
   },
   {
     "id": "inline-row-editing",
     "name": "Edicao Direta em Linha de Tabela",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "when_to_use": "Ajuste rapido de quantidades, status, datas de vencimento e atribuicoes em grade",
-    "anatomy": ["Celula editavel sinalizada no foco/hover", "Enter confirma e avanca; Esc cancela sem gravar"],
-    "states": ["Leitura", "Edicao ativa com foco visivel", "Erro de validacao inline na celula"],
-    "avoid": ["Abrir pagina inteira separada so para mudar 1 campo de uma linha"]
+    "anatomy": [
+      "Celula editavel sinalizada no foco/hover",
+      "Enter confirma e avanca; Esc cancela sem gravar"
+    ],
+    "states": [
+      "Leitura",
+      "Edicao ativa com foco visivel",
+      "Erro de validacao inline na celula"
+    ],
+    "avoid": [
+      "Abrir pagina inteira separada so para mudar 1 campo de uma linha"
+    ]
   },
   {
     "id": "grouped-inset-settings",
     "name": "Lista Agrupada de Configuracoes (Inset Grouped)",
-    "platforms": ["mobile", "ios", "android", "desktop"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android",
+      "desktop"
+    ],
     "when_to_use": "Preferencias de conta, permissoes, notificacoes e integracoes",
-    "anatomy": ["Secoes agrupadas por tema com cabecalho claro", "Linhas de controle com valor atual a direita ou toggle nativo"],
-    "states": ["Alterado", "Desabilitado por permissao com explicacao curta"],
-    "avoid": ["Empilhar 15 cards gigantes de marketing dentro da tela de configuracoes"]
+    "anatomy": [
+      "Secoes agrupadas por tema com cabecalho claro",
+      "Linhas de controle com valor atual a direita ou toggle nativo"
+    ],
+    "states": [
+      "Alterado",
+      "Desabilitado por permissao com explicacao curta"
+    ],
+    "avoid": [
+      "Empilhar 15 cards gigantes de marketing dentro da tela de configuracoes"
+    ]
   },
   {
     "id": "destructive-guard-confirmation",
     "name": "Protecao de Acao Destrutiva / Irreversivel",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Exclusao definitiva, cancelamento fiscal, estorno irreversivel ou desconexao de integracao",
-    "anatomy": ["Modal/AlertDialog unico (nunca empilhado)", "Resumo concreto do impacto (ex: quais 3 registros serao removidos)", "Botao secundario neutro vs botao destrutivo explicitamente rotulado"],
-    "states": ["Aguardando confirmacao", "Executando", "Concluido"],
-    "avoid": ["Botoes rotulados apenas como 'Sim' e 'Nao'"]
+    "anatomy": [
+      "Modal/AlertDialog unico (nunca empilhado)",
+      "Resumo concreto do impacto (ex: quais 3 registros serao removidos)",
+      "Botao secundario neutro vs botao destrutivo explicitamente rotulado"
+    ],
+    "states": [
+      "Aguardando confirmacao",
+      "Executando",
+      "Concluido"
+    ],
+    "avoid": [
+      "Botoes rotulados apenas como 'Sim' e 'Nao'"
+    ]
   },
   {
     "id": "split-checkin-auth",
     "name": "Acesso Split-Screen com Verificacao Segura",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "when_to_use": "Entrada corporativa, troca de perfil/ambiente e autenticacao 2FA",
-    "anatomy": ["Lado esquerdo: identidade real do produto e contexto operacional", "Lado direito: formulario focado com labels claros, 2FA 6 digitos e foco visivel"],
-    "states": ["Credenciais", "Codigo 2FA", "Erro especifico com recuperacao"],
-    "avoid": ["Esconder o campo de senha sem opcao de revelar ou colocar ilustracoes genéricas ocupando tudo"]
+    "anatomy": [
+      "Lado esquerdo: identidade real do produto e contexto operacional",
+      "Lado direito: formulario focado com labels claros, 2FA 6 digitos e foco visivel"
+    ],
+    "states": [
+      "Credenciais",
+      "Codigo 2FA",
+      "Erro especifico com recuperacao"
+    ],
+    "avoid": [
+      "Esconder o campo de senha sem opcao de revelar ou colocar ilustracoes genéricas ocupando tudo"
+    ]
   },
   {
     "id": "offline-sync-banner",
     "name": "Indicador Real de Sincronizacao & Fila Offline",
-    "platforms": ["mobile", "desktop"],
+    "platforms": [
+      "mobile",
+      "desktop"
+    ],
     "when_to_use": "Apps de campo, logistica, PDV e clientes desktop local-first",
-    "anatomy": ["Pílula ligada ao estado real de rede/fila ('3 envios pendentes')", "Botao sincronizar agora e resolucao de conflito"],
-    "states": ["Online sincronizado (discreto ou oculto)", "Offline com fila local", "Conflito exigindo escolha"],
-    "avoid": ["Bolha verde 'Conectado' falsa sem listener real de conectividade"]
+    "anatomy": [
+      "Pílula ligada ao estado real de rede/fila ('3 envios pendentes')",
+      "Botao sincronizar agora e resolucao de conflito"
+    ],
+    "states": [
+      "Online sincronizado (discreto ou oculto)",
+      "Offline com fila local",
+      "Conflito exigindo escolha"
+    ],
+    "avoid": [
+      "Bolha verde 'Conectado' falsa sem listener real de conectividade"
+    ]
   },
   {
     "id": "empty-state-actionable",
     "name": "Estado Vazio Orientado a Acao",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Primeira utilizacao, busca sem correspondencia ou fila zerada",
-    "anatomy": ["Titulo factual do estado ('Nenhuma fatura vencida hoje')", "Frase curta explicando o motivo ou filtro ativo", "1 CTA unico (ex: 'Limpar filtros' ou 'Registrar lancamento')"],
-    "states": ["Zero resultados de busca", "Fila zerada positiva", "Onboarding inicial"],
-    "avoid": ["Ilustracoes gigantes com 'Oops! Nada por aqui!' e zero acao"]
+    "anatomy": [
+      "Titulo factual do estado ('Nenhuma fatura vencida hoje')",
+      "Frase curta explicando o motivo ou filtro ativo",
+      "1 CTA unico (ex: 'Limpar filtros' ou 'Registrar lancamento')"
+    ],
+    "states": [
+      "Zero resultados de busca",
+      "Fila zerada positiva",
+      "Onboarding inicial"
+    ],
+    "avoid": [
+      "Ilustracoes gigantes com 'Oops! Nada por aqui!' e zero acao"
+    ]
   },
   {
     "id": "bulk-selection-bar",
     "name": "Barra Flutuante de Acoes em Lote",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "when_to_use": "Aprovar varios pagamentos, reatribuir tickets ou exportar registros selecionados",
-    "anatomy": ["Contagem tabular de selecionados ('4 selecionados')", "2-3 acoes em lote claras", "Botao 'Limpar selecao' e atalho Esc"],
-    "states": ["Oculta quando 0 selecionados", "Visivel na base Z3 quando >= 1 selecionado"],
-    "avoid": ["Esconder acoes em lote dentro de menu oculto no topo da pagina"]
+    "anatomy": [
+      "Contagem tabular de selecionados ('4 selecionados')",
+      "2-3 acoes em lote claras",
+      "Botao 'Limpar selecao' e atalho Esc"
+    ],
+    "states": [
+      "Oculta quando 0 selecionados",
+      "Visivel na base Z3 quando >= 1 selecionado"
+    ],
+    "avoid": [
+      "Esconder acoes em lote dentro de menu oculto no topo da pagina"
+    ]
   },
   {
     "id": "multi-theme-contrast-switcher",
     "name": "Alternador de Tema Sem Flash (FOUC-Free)",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Todo produto com suporte Light + Dark (cabine diurna vs noturna)",
-    "anatomy": ["Script inline no <head> lendo preferencia salva antes da primeira pintura", "Propagacao sincronizada para iframes/paineis via evento customizado"],
-    "states": ["Light (alto contraste aterrado)", "Dark (elevacao por luminosidade)"],
-    "avoid": ["Piscar branco por 200ms ao carregar no modo escuro"]
+    "anatomy": [
+      "Script inline no <head> lendo preferencia salva antes da primeira pintura",
+      "Propagacao sincronizada para iframes/paineis via evento customizado"
+    ],
+    "states": [
+      "Light (alto contraste aterrado)",
+      "Dark (elevacao por luminosidade)"
+    ],
+    "avoid": [
+      "Piscar branco por 200ms ao carregar no modo escuro"
+    ]
   },
   {
     "id": "context-menu-desktop",
     "name": "Menu Contextual Nativo & Atalhos Descobertos",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "when_to_use": "Linhas de tabela, arquivos em arvore, abas de workbench e cards operacionais",
-    "anatomy": ["Acoes agrupadas por risco", "Separacao antes da acao destrutiva", "Tag <kbd> alinhada a direita para ensinar o atalho"],
-    "states": ["Aberto via clique direito ou tecla Menu", "Navegavel por setas"],
-    "avoid": ["Replicar o menu inteiro dentro de cada linha da tabela em botoes visiveis"]
+    "anatomy": [
+      "Acoes agrupadas por risco",
+      "Separacao antes da acao destrutiva",
+      "Tag <kbd> alinhada a direita para ensinar o atalho"
+    ],
+    "states": [
+      "Aberto via clique direito ou tecla Menu",
+      "Navegavel por setas"
+    ],
+    "avoid": [
+      "Replicar o menu inteiro dentro de cada linha da tabela em botoes visiveis"
+    ]
   },
   {
     "id": "timeline-audit-trail",
     "name": "Linha do Tempo de Auditoria & Eventos",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "when_to_use": "Historico de aprovacao financeira, rastreio de contrato, prontuario e SLA",
-    "anatomy": ["Timestamp mono tabular", "Ator e acao concreta", "Evidencia ou payload expandivel apenas sob demanda"],
-    "states": ["Cronologia continua", "Evento de erro/bloqueio destacado semanticamente"],
-    "avoid": ["Empilhar cards enormes para cada micro-evento de log"]
+    "anatomy": [
+      "Timestamp mono tabular",
+      "Ator e acao concreta",
+      "Evidencia ou payload expandivel apenas sob demanda"
+    ],
+    "states": [
+      "Cronologia continua",
+      "Evento de erro/bloqueio destacado semanticamente"
+    ],
+    "avoid": [
+      "Empilhar cards enormes para cada micro-evento de log"
+    ]
   }
 ]

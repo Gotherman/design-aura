@@ -1,14 +1,15 @@
-# Design Aura (`design-aura`)
+# Design Aura (`design-aura` · `v2.2.0`)
 
 Skill de direção de design, arquitetura de informação e engenharia UI/UX para **Apps Desktop**, **Apps Mobile** (iOS HIG / SwiftUI, Android Material 3 / Jetpack Compose, React Native / Expo, Flutter, PWA) e **Sistemas Complexos** (SaaS, ERPs, Dashboards Operacionais).
 
 Transforma um repositório existente, um planejamento (`CONCEPCAO.md`/PRD) ou uma ideia do zero em:
-1. **Especificação Enxuta** (autópsia seletiva + entrevista curta obrigatória nos pontos críticos que mudam shell, tema, mobile e modelos).
-2. **Bíblia Visual de Design** (`DESIGN-BIBLE.md` + `tokens.json`/`tokens.css` validado em WCAG/APCA + `DESIGN-BIBLE.pdf` com pranchas visuais reais renderizadas).
-3. **Portão das Telas-Mãe (Onda 0.5)** (1 Tela-Mãe Desktop + 1 Tela-Mãe Mobile validadas visualmente antes de escalar).
-4. **Construção Fiel por Subagentes + Fast-Audit Imediato** (`1–3` telas ricas por subagente, **sem teto artificial de 8 subagentes**, com auditoria rápida automática e visual do Orquestrador a cada entrega de subagente).
-5. **Vitrine Interativa Estilo Figma** (`fluxo.html` canvas Hub-and-Spoke panorâmico com higiene de arestas, `preview.html` player guiado de uso real e `index.html` galeria com `⌘K`).
-6. **Auditoria Objetiva dos 10 Blocos + Piso de Craft `v2.0`** (contraste WCAG/APCA, linter estático e inspeção DOM real em Chromium headless incluindo `DA-DEAD-SPACE`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT` e `DA-ASSET-404`).
+1. **Especificação Enxuta sem Jargão** (autópsia seletiva + entrevista curta obrigatória em português direto com trava anti-atropelo quando o usuário tem dúvida).
+2. **Mapeamento Categórico Automático de Componentes OSS (`16 Categorias Canônicas`)** (`discover_oss_components.py --scan <repo>` sobre `106+` registries/bibliotecas permissivas + `ui_elements_recipes.json` cobrindo gráficos de estúdio, `BarList`/`Tracker`, SVGs Duotone, emblemas `.icon-emblem`, chips `.chip-sla` com anel SVG, Kanban, calendários, máscaras e micro-interações).
+3. **Bíblia Visual de Design** (`DESIGN-BIBLE.md` + `tokens.json`/`tokens.css` em equilíbrio cromático **`65/20/10/5`** com 3 Zonas de Presença da Marca e `--chart-1..6` + `DESIGN-BIBLE.pdf` com pranchas visuais reais e sincronia automática de hexes).
+4. **Portão das Telas-Mãe + `SHELL-CONTRACT.md` (Onda 0.5)** (Design System com profundidade tátil em 5 camadas, Sidebar minimizável `232px ↔ 68px`, padrão **Lista Limpa → Detalhe Focado na mesma página**, `SHELL-CONTRACT.md` enxuto + 1 Tela-Mãe Desktop + 1 Tela-Mãe Mobile validadas visualmente antes de escalar).
+5. **Construção Turbo em Turno Único por Subagentes + Fast-Audit Imediato** (`1–3` telas por subagente, **sem teto de 8**, escrita incremental em turno único + auditoria rápida automática e visual do Orquestrador a cada entrega).
+6. **Vitrine Interativa Estilo Figma** (`fluxo.html` canvas Hub-and-Spoke canônico com higiene de arestas e espera de iframes `.is-loaded`, `preview.html` player guiado e `index.html` galeria com `⌘K`).
+7. **Auditoria Objetiva dos 10 Blocos + Craft `v2.2.0`** (`DA-DARK-MONOCHROME`, `DA-LIGHT-WASHED-OUT`, `DA-ICON-GENERIC-REPEAT`, `DA-FLAT-CHART-AXIS`, `DA-CARD-INTERNAL-VOID`, `DA-DEAD-SPACE`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT` e `DA-ASSET-404`).
 
 ---
 

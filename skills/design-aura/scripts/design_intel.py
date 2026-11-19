@@ -153,6 +153,8 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
         if stack == "all":
             return True
         c_stack = c.get("stack", "all")
+        if isinstance(c_stack, list):
+            return stack in c_stack or "all" in c_stack
         return c_stack in (stack, "all")
 
     top_components = rank_items(
@@ -189,18 +191,22 @@ def format_markdown(report: dict) -> str:
             f"### {i}. {d['name']} (`{d['id']}`)",
             f"- **Modo de Superfície:** `{d['surface_mode']}` · **Densidade:** `{d['density']}` · **Plataformas:** `{', '.join(d['platforms'])}`",
             f"- **Arquétipo de Layout:** {d['layout_archetype']}",
-            f"- **Light Mode (Aterrado):** Z0 `{pl['z0_well']}` | Z1 `{pl['z1_canvas']}` | Z2 `{pl['z2_card']}` | 30% `{pl['primary_30']}` | 10% `{pl['accent_10']}` | Texto `{pl['text_strong']}` / `{pl['text_muted']}`",
-            f"- **Dark Mode (Luminosidade):** Z0 `{pd['z0_well']}` | Z1 `{pd['z1_canvas']}` | Z2 `{pd['z2_card']}` | 30% `{pd['primary_30']}` | 10% `{pd['accent_10']}` | Texto `{pd['text_strong']}` / `{pd['text_muted']}`",
+            f"- **Light Mode (Aterrado Nítido):** Z0 `{pl['z0_well']}` | Z1 `{pl['z1_canvas']}` | Z2 `{pl['z2_card']}` | Borda `{pl.get('border', '#B4C1D1')}` | 30% `{pl['primary_30']}` | 10% `{pl['accent_10']}` | Texto `{pl['text_strong']}` / `{pl['text_muted']}`",
+            f"- **Dark Mode (Equilíbrio 65/20/10/5 com Subtom Sutil):** Z0 `{pd['z0_well']}` | Z1 `{pd['z1_canvas']}` | Z2 `{pd['z2_card']}` | Borda `{pd.get('border', '#263347')}` | 30% `{pd['primary_30']}` | 10% `{pd['accent_10']}` | Texto `{pd['text_strong']}` / `{pd['text_muted']}`",
+            f"- **Paleta Categórica Harmônica (6 Cores `--chart-1..6`):** `{', '.join(d.get('chart_palette', []))}`",
+            f"- **3 Zonas de Presença da Marca ('Estou Aqui!'):** {' · '.join(d.get('brand_presence_zones', []))}",
             f"- **Assinaturas Visuais:** {'; '.join(d.get('signature_moves', []))}",
             f"- **Anti-Padrões do Domínio:** {'; '.join(d.get('anti_patterns', []))}",
             "",
         ])
 
-    lines.append("## 2. Combinações Tipográficas")
+    lines.append("## 2. Combinações Tipográficas & Regra Numérica")
     for t in report["typography"]:
         lines.append(
             f"- **{t['name']}** (`{t['id']}`): {t['mood']} · Display tracking `{t['tracking_display']}` · Medida `{t['body_measure']}`"
         )
+        if t.get("numeric_rule"):
+            lines.append(f"  - *Regra de Números vs Códigos:* {t['numeric_rule']}")
     lines.append("")
 
     lines.append("## 3. Padrões de Arquitetura & Interação")
@@ -214,7 +220,7 @@ def format_markdown(report: dict) -> str:
     for c in report["components_oss"]:
         lines.append(f"- **{c['name']}** (`{c['stack']}` · {c['license']} · {c['url']}): {c['use_case']}")
     lines.append("")
-    lines.append("Para casar uma interação com registries, galerias e o filtro de licença, rode `discover_oss_components.py --need \"...\"`.")
+    lines.append("Para mapear automaticamente as 16 categorias de elementos UI/UX do projeto, rode `discover_oss_components.py --scan <caminho-do-projeto> --stack <stack> --platform <platform> --mode operate`.")
 
     return "\n".join(lines)
 
@@ -231,7 +237,7 @@ def main():
     parser.add_argument(
         "--stack",
         default="all",
-        choices=["all", "react", "vue", "svelte", "electron", "tauri", "rn", "flutter", "ios", "android"],
+        choices=["all", "html", "react", "vue", "svelte", "electron", "tauri", "rn", "flutter", "ios", "android"],
         help="Filtrar bibliotecas OSS por stack",
     )
     parser.add_argument("--top", type=int, default=3, help="Quantidade maxima de dominios/tipografias")

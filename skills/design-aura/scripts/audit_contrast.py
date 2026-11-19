@@ -442,6 +442,77 @@ def _resolve_token_key(tmap: dict[str, str], key: str) -> str | None:
     return tmap.get(key) or tmap.get(f"da-{key}")
 
 
+def _rgb_to_hls_deg(rgb: tuple[int, int, int]) -> tuple[float, float, float]:
+    import colorsys
+    h, l, s = colorsys.rgb_to_hls(rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0)
+    return h * 360.0, l, s
+
+
+def _hue_dist(h1: float, h2: float) -> float:
+    d = abs(h1 - h2) % 360.0
+    return min(d, 360.0 - d)
+
+
+def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
+    """Verifica equilibrio cromatico 65/20/10/5: evita massa monocromatica no Dark e contornos apagados no Light."""
+    findings: list[dict] = []
+    z1_val = _resolve_token_key(tmap, "surface-z1")
+    z2_val = _resolve_token_key(tmap, "surface-z2")
+    b_sub_val = _resolve_token_key(tmap, "border-subtle")
+    prim_val = _resolve_token_key(tmap, "primary")
+    if not (z1_val and z2_val and b_sub_val and prim_val):
+        return findings
+
+    z1_rgb = color_to_opaque_rgb(z1_val, tmap, backdrop_for(theme))
+    z2_rgb = color_to_opaque_rgb(z2_val, tmap, backdrop_for(theme))
+    b_rgb = color_to_opaque_rgb(b_sub_val, tmap, z2_rgb or backdrop_for(theme))
+    p_rgb = color_to_opaque_rgb(prim_val, tmap, z1_rgb or backdrop_for(theme))
+    if not (z1_rgb and z2_rgb and b_rgb and p_rgb):
+        return findings
+
+    if theme == "dark":
+        h1, _, s1 = _rgb_to_hls_deg(z1_rgb)
+        h2, _, s2 = _rgb_to_hls_deg(z2_rgb)
+        hp, _, sp = _rgb_to_hls_deg(p_rgb)
+        if s1 > 0.36 and s2 > 0.36 and sp > 0.35 and _hue_dist(h1, hp) <= 28 and _hue_dist(h2, hp) <= 28:
+            findings.append({
+                "theme": "dark",
+                "label": "DA-DARK-MONOCHROME (surface-z1/z2 vs primary)",
+                "fg": f"#{z2_rgb[0]:02x}{z2_rgb[1]:02x}{z2_rgb[2]:02x}",
+                "bg": f"#{z1_rgb[0]:02x}{z1_rgb[1]:02x}{z1_rgb[2]:02x}",
+                "kind": "ui",
+                "wcag": round(wcag_ratio(z2_rgb, z1_rgb), 2),
+                "apca_lc": round(apca_lc(z2_rgb, z1_rgb), 1),
+                "severity": "MEDIUM",
+                "status": "FAIL",
+                "reason": (
+                    f"DA-DARK-MONOCHROME: Superficies Dark saturadas demais (S={int(round(s1*100))}%/{int(round(s2*100))}%) "
+                    "no mesmo matiz da cor primaria (massa monocromatica pesada). Calibre Z0-Z3 para subtom sutil (S=18-26%) "
+                    "e expresse a marca nas 3 Zonas (.sidebar-brand-card, .card-brand-hero e controles .is-active) + --chart-1..6"
+                ),
+            })
+
+    if theme == "light":
+        border_vs_z2 = round(wcag_ratio(b_rgb, z2_rgb), 2)
+        if border_vs_z2 < 1.22:
+            findings.append({
+                "theme": "light",
+                "label": "DA-LIGHT-WASHED-OUT (border-subtle sobre surface-z2)",
+                "fg": f"#{b_rgb[0]:02x}{b_rgb[1]:02x}{b_rgb[2]:02x}",
+                "bg": f"#{z2_rgb[0]:02x}{z2_rgb[1]:02x}{z2_rgb[2]:02x}",
+                "kind": "ui",
+                "wcag": border_vs_z2,
+                "apca_lc": round(apca_lc(b_rgb, z2_rgb), 1),
+                "severity": "MEDIUM",
+                "status": "FAIL",
+                "reason": (
+                    f"DA-LIGHT-WASHED-OUT: Borda sutil clara demais no Light Mode ({border_vs_z2}:1 < 1.22:1 contra Z2), "
+                    "apagando contornos de cards e linhas divisórias. Use border-subtle mais definida (ex.: #B4C1D1) e Z0/Z1 aterrados (#DCE3EC / #E6ECF3)"
+                ),
+            })
+    return findings
+
+
 def audit_file(path: Path) -> list[dict]:
     results = []
     if path.suffix.lower() == ".json":
@@ -457,6 +528,7 @@ def audit_file(path: Path) -> list[dict]:
                 bg_val = _resolve_token_key(tmap, bg_k)
                 if fg_val and bg_val:
                     results.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
+            results.extend(audit_theme_harmony(tname, tmap))
     else:
         css_text = path.read_text(encoding="utf-8")
         themes = parse_css_themes(css_text)
@@ -466,6 +538,7 @@ def audit_file(path: Path) -> list[dict]:
                 bg_val = _resolve_token_key(tmap, bg_k)
                 if fg_val and bg_val:
                     results.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
+            results.extend(audit_theme_harmony(tname, tmap))
     return results
 
 

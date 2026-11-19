@@ -33,47 +33,90 @@ A geometria matemática às vezes parece torta ao olho humano; corrija opticamen
 
 ---
 
-## 3. Profundidade Física (Light Mode vs Dark Mode)
+## 3. Profundidade Física Tátil em 5 Camadas (`Z0 → Z4` · Light & Dark)
 
-### Light Mode: Contorno Nítido + Sombra-como-Borda (3 Camadas)
-Bordas opacas grossas pesam, e bordas de `6–8%` somem em telas lavadas. Combine contorno perceptível ou sombra em 3 camadas:
+Um card chapado com 1 borda simples parece 2D mesmo passando no WCAG. Construa profundidade real combinando **5 técnicas táteis**:
+
+### 3.1 Chanfro Óptico Duplo (`Double-Ring Bevel`) nos Cards `Z2`
 ```css
-:root {
-  --shadow-card:
-    0 0 0 1px rgba(15, 23, 42, 0.10),
-    0 1px 2px -1px rgba(15, 23, 42, 0.08),
-    0 4px 10px -2px rgba(15, 23, 42, 0.06);
+/* Dark Mode: Obsidiana com subtom arquitetonico sutil (S=18-25%) + luz zenital + chanfro duplo */
+.panel-z2 {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0) 38%), var(--surface-z2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card-md);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 1px 2px rgba(0, 0, 0, 0.34),
+    0 8px 20px -6px rgba(0, 0, 0, 0.42),
+    0 18px 36px -14px rgba(0, 0, 0, 0.34);
+}
+
+/* Light Mode: Porcelana aterrada + contorno nitido (>= 1.22:1 contra Z2) + chanfro branco + 3 sombras */
+html[data-theme="light"] .panel-z2 {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFD 100%);
+  border: 1px solid var(--border-subtle);
+  box-shadow:
+    inset 0 1px 0 #FFFFFF,
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 6px 16px -4px rgba(15, 23, 42, 0.10),
+    0 14px 28px -10px rgba(15, 23, 42, 0.07);
 }
 ```
-- **Nunca substitua divisores internos** (`border-bottom` de linhas de tabela, separadores horizontais) por `box-shadow` — divisores de layout devem permanecer como bordas finas.
 
-### Dark Mode: Hierarquia por Luminosidade de Superfície
-Em Dark Mode, **sombras pretas chapadas desaparecem** e não criam elevação real. Construa os 5 planos `Z0→Z4` subindo a luminosidade (`L` em OKLCH/HSL) progressivamente + borda sutil translúcida:
-- `Z0` Poço/Recesso: `#080D14`
-- `Z1` Canvas Base: `#0D1520`
-- `Z2` Card/Painel: `#131E2E` + `1px solid rgba(255, 255, 255, 0.10)` + topo `inset 0 1px 0 rgba(255, 255, 255, 0.06)`
-- `Z3` Popover / Dock: `#19273C` + `1px solid rgba(255, 255, 255, 0.14)`
-- `Z4` Modal / Sheet: `#1F3049` + `1px solid rgba(255, 255, 255, 0.18)`
-
----
-
-## 4. Tipografia de Precisão
-
-- **`font-variant-numeric: tabular-nums`**: obrigatório em tabelas numéricas, saldos, moedas, percentuais, badges de contagem, timers e relógios. Evita que os números dancem quando o valor atualiza.
-- **`text-wrap: balance`**: obrigatório em headings (`h1`–`h3`) e títulos curtos (`<= 6 linhas`) para evitar uma palavra solitária na última linha.
-- **`text-wrap: pretty`**: padrão em parágrafos, descrições de card, tooltips e captions (`< 10 linhas`) para evitar órfãs tipográficas.
-- **Anti-aliasing no root**: aplique `-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;` uma única vez no `html`/`body`.
-- **Medida e Tracking**: corpo entre `60–75ch`; display grande com tracking `-0.02em` a `-0.035em` (piso `-0.04em`).
+### 3.2 Anatomia em 2 Planos dentro de Painéis Compostos + Poços `Z0` + Card-Rei da Marca (`.card-brand-hero`)
+- **Painéis compostos** (tabelas, gráficos, formulários): separe o cabeçalho e o rodapé de resumo em uma faixa sutil (`background: color-mix(in srgb, var(--surface-z3) 55%, var(--surface-z2))` + hairline `1px`), evitando caixotes lisos do topo à base.
+- **Poços `.well-z0`** (trilhos `.subtabs`, `.seg`, inputs, colunas Kanban): recesso físico com `box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.30), 0 1px 0 rgba(255, 255, 255, 0.05)`.
+- **Card-Rei Institucional (`.card-brand-hero`):** destaque o painel focal de cada tela com a cor da marca dizendo *"Estou aqui!"*:
+  ```css
+  .card-brand-hero {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 20%, var(--surface-z2)) 0%, var(--surface-z2) 62%);
+    border: 1px solid color-mix(in srgb, var(--primary) 36%, var(--border-subtle));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+  }
+  ```
+- **Elevação Interativa em Linhas Clicáveis (`tbody tr:hover`):** fundo `--surface-z3`, filete indicador esquerdo `box-shadow: inset 3px 0 0 var(--primary)` e transformação do link `"Abrir →"` em pílula preenchida.
 
 ---
 
-## 5. Iconografia Consistente
+## 4. Tipografia de Precisão (Números Proporcionais Tabulares vs Mono Técnico)
 
-- **Uma única família por superfície** (Phosphor Duotone/Regular, Lucide, Heroicons, SF Symbols ou Material Symbols). Nunca misture espessuras ou estilos diferentes.
-- **Stroke casado com peso tipográfico** (grade 24px): texto `400` → ícone `1.5px`; texto `500–600` → ícone `2px`; `700` → `2.25–2.5px`.
-- **Outline no padrão, Fill apenas no estado ativo** (ex.: aba selecionada, favorito marcado).
-- **Um SVG com `currentColor`**: deixe CSS controlar hover, ativo e disabled em vez de manter dois arquivos de imagem.
-- Ícone puramente decorativo junto de rótulo visível recebe `aria-hidden="true"`; botão somente-ícone exige `aria-label`.
+- **Sans-Serif Executiva (`Geist` / `Inter` / `IBM Plex Sans`) + `.num`:** valores financeiros (`R$ 1.248.920,50`), KPIs grandes, percentuais e colunas numéricas usam a **sans-serif principal com `font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1`** — alinha perfeitamente sem criar buracos largos de monoespaçada!
+- **Mono Técnico (`.mono` — `Geist Mono` / `JetBrains Mono`):** reservado exclusivamente para CNPJ, linha digitável de boleto, IDs/protocolos, hashes e tags `<kbd>`.
+- **`text-wrap: balance`** em títulos (`h1–h3`), **`text-wrap: pretty`** em parágrafos e **`-webkit-font-smoothing: antialiased`** no root.
+
+---
+
+## 5. Iconografia de Alta Precisão, Emblemas Spotlight & Micro-Chips de Status (`v2.2.0` · Anti-Ícone Fraco)
+
+Elimine ícones genéricos borrados em quadrados marrons chapados e pílulas de tempo/status sem vida:
+
+1. **SVG Vetorial Nítido (`Tabler 1.75px` / `Solar Duotone` / `Lucide` / `Heroicons Micro 16px` / `<iconify-icon>`):**
+   - Prefira `<svg>` inline ou Duotone em 2 camadas (base `fill-opacity="0.18"` + traço `stroke-width="1.75"`) em vez de fontes de ícones borradas;
+   - **Vocabulário Semântico do Domínio (`DA-ICON-GENERIC-REPEAT`):** PROIBIDO repetir `ph-bank` (templo grego) ou `ph-warning-circle` (`!`) em 5 cards diferentes! Use `plane-departure`/`receipt-tax` para fatura aérea, `file-certificate`/`shield-check` para certidão, `gavel` para pregão, e **Monogramas Vetoriais (`.bank-emblem`: `BB`, `CX`, `ST`, `BTG`)** para bancos!
+
+2. **Emblema de Ícone com Spotlight Radial e Duplo Anel (`.icon-emblem` — substitui quadrados marrons chapados):**
+   ```css
+   .icon-emblem {
+     width: 38px; height: 38px; border-radius: 10px;
+     display: inline-flex; align-items: center; justify-content: center; flex: none;
+     background: radial-gradient(120% 120% at 25% 18%,
+       color-mix(in srgb, var(--tone, var(--primary)) 32%, transparent) 0%,
+       color-mix(in srgb, var(--tone, var(--primary)) 7%, var(--surface-z3)) 75%,
+       var(--surface-z2) 100%);
+     border: 1px solid color-mix(in srgb, var(--tone, var(--primary)) 40%, var(--border-subtle));
+     color: var(--tone, var(--primary));
+     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 4px 10px -2px rgba(0, 0, 0, 0.30);
+   }
+   .icon-emblem svg { width: 18px; height: 18px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.32)); }
+   ```
+
+3. **Pílula de SLA / Janela 24h com Anel SVG Circular (`.chip-sla` — substitui `[ 41 min ]` e `[ Janela aberta: 22h 18m ]` chapados):**
+   - Usa **`border-radius: 8px`** (squircle técnico, não oval `999px` em tudo), chanfro `inset 0 1px 0 rgba(255,255,255,0.14)`, um **anel `<svg width="14" height="14" viewBox="0 0 16 16">` com `stroke-dasharray`** mostrando a fração real do prazo consumido, rótulo de contexto (`SLA` / `Janela 24h`) e valor tabular em negrito (`41m` / `22h 18m`).
+
+4. **Chip de Status com Halo Duplo + Glifo Vetorial (`.chip-status`) & Chip Bipartido (`.chip-kv`):**
+   - Em vez de uma bolinha CSS morta (`[ • Transbordo ]`), use ponto luminoso com halo (`box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 24%, transparent)`) ou micro-ícone SVG de transição (`13px`, ex.: `⇄` para transbordo).
+   - Para métricas rotuladas (`[ Nota | 96 ]`, `[ Atraso | 2d ]`, `[ Regra | #04 ]`), use `.chip-kv` bipartido (compartimento esquerdo `--surface-z0`, direito semântico calibrado).
 
 ---
 

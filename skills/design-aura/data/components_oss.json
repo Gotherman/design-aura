@@ -3,330 +3,1098 @@
     "id": "base-ui",
     "name": "Base UI",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless-primitives",
     "license": "MIT",
     "url": "https://base-ui.com",
     "use_case": "Primitivos acessiveis sem estilo preso (Dialog, Select, Tabs, Popover, Menu) para design systems autorais",
-    "a11y_notes": "ARIA completo, roving tabindex e gerenciamento de foco nativo"
+    "a11y_notes": "ARIA completo, roving tabindex e gerenciamento de foco nativo",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "radix-primitives",
     "name": "Radix UI Primitives / shadcn/ui",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "primitives-system",
     "license": "MIT",
     "url": "https://ui.shadcn.com",
     "use_case": "Componentes copiaveis sob tokens semanticos proprios em React + Tailwind",
-    "a11y_notes": "Atalhos de teclado e focus trap validados em producao"
+    "a11y_notes": "Atalhos de teclado e focus trap validados em producao",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "react-aria",
     "name": "React Aria Components",
     "stack": "react",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "headless-primitives",
     "license": "Apache-2.0",
     "url": "https://react-spectrum.adobe.com/react-aria",
     "use_case": "DatePickers, ComboBox, GridList e tabelas com acessibilidade internacional completa",
-    "a11y_notes": "Padrao ouro em leitores de tela, RTL e interacao hibrida mouse/touch/teclado"
+    "a11y_notes": "Padrao ouro em leitores de tela, RTL e interacao hibrida mouse/touch/teclado",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "tanstack-table",
     "name": "TanStack Table",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "data-table",
     "license": "MIT",
     "url": "https://tanstack.com/table",
     "use_case": "Tabelas financeiras e ERPs com ordenacao, filtros, colunas fixas e virtualizacao",
-    "a11y_notes": "Semantica de <table> real preservada e controle de selecao por teclado"
+    "a11y_notes": "Semantica de <table> real preservada e controle de selecao por teclado",
+    "taxonomy_category": "data-tables-lists-progressive"
   },
   {
     "id": "tanstack-virtual",
     "name": "TanStack Virtual",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "virtualization",
     "license": "MIT",
     "url": "https://tanstack.com/virtual",
     "use_case": "Virtualizacao de 10.000+ linhas de logs, extratos e catalogos sem travar scroll",
-    "a11y_notes": "Preserva indices aria-rowindex e foco em listas extensas"
+    "a11y_notes": "Preserva indices aria-rowindex e foco em listas extensas",
+    "taxonomy_category": "data-tables-lists-progressive"
   },
   {
     "id": "cmdk",
     "name": "cmdk",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "command-palette",
     "license": "MIT",
     "url": "https://cmdk.paco.me",
     "use_case": "Command Palette Cmd+K / Ctrl+K com filtragem rapida e navegacao por setas",
-    "a11y_notes": "aria-activedescendant e suporte completo a Escape/Enter"
+    "a11y_notes": "aria-activedescendant e suporte completo a Escape/Enter",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "vaul",
     "name": "Vaul",
     "stack": "react",
-    "platforms": ["mobile", "system"],
+    "platforms": [
+      "mobile",
+      "system"
+    ],
     "category": "drawer-sheet",
     "license": "MIT",
     "url": "https://vaul.emilkowal.ski",
     "use_case": "Bottom sheet tatil com fisica de arrasto estilo iOS para mobile web e PWA",
-    "a11y_notes": "Dialog trap e fechamento por Esc/arrasto com snap points"
+    "a11y_notes": "Dialog trap e fechamento por Esc/arrasto com snap points",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "sonner",
     "name": "Sonner",
     "stack": "react",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "toast-undo",
     "license": "MIT",
     "url": "https://sonner.emilkowal.ski",
     "use_case": "Toasts empilhaveis com botao de Desfazer imediato apos acoes criticas",
-    "a11y_notes": "aria-live polite/assertive com pausa no hover e foco"
+    "a11y_notes": "aria-live polite/assertive com pausa no hover e foco",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "react-resizable-panels",
     "name": "react-resizable-panels",
     "stack": "react",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "category": "split-pane",
     "license": "MIT",
     "url": "https://github.com/bvaughn/react-resizable-panels",
     "use_case": "Paineis redimensionaveis para workbenches desktop, IDEs e cockpits de 3 zonas",
-    "a11y_notes": "Separador focalizavel com role=separator e ajuste por setas"
+    "a11y_notes": "Separador focalizavel com role=separator e ajuste por setas",
+    "taxonomy_category": "desktop-native-workbenches"
   },
   {
     "id": "reka-ui",
     "name": "Reka UI (ex-Radix Vue)",
     "stack": "vue",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless-primitives",
     "license": "MIT",
     "url": "https://reka-ui.com",
     "use_case": "Primitivos acessiveis nativos para Vue 3 e Nuxt sob design system proprio",
-    "a11y_notes": "Gerenciamento de foco e ARIA alinhado ao WAI-ARIA"
+    "a11y_notes": "Gerenciamento de foco e ARIA alinhado ao WAI-ARIA",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "bits-ui",
     "name": "Bits UI (Svelte)",
     "stack": "svelte",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "headless-primitives",
     "license": "MIT",
     "url": "https://bits-ui.com",
     "use_case": "Primitivos headless leves para sistemas em Svelte 5 / SvelteKit / Tauri",
-    "a11y_notes": "Teclado completo e foco acessivel sem CSS acoplado"
+    "a11y_notes": "Teclado completo e foco acessivel sem CSS acoplado",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "echarts",
     "name": "Apache ECharts",
     "stack": "all",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "charts",
     "license": "Apache-2.0",
     "url": "https://echarts.apache.org",
     "use_case": "Sankey, curvas financeiras, barras empilhadas e telemetria com rotulos diretos",
-    "a11y_notes": "Suporta aria decals e renderizacao SVG/Canvas nitida 2x"
+    "a11y_notes": "Suporta aria decals e renderizacao SVG/Canvas nitida 2x",
+    "taxonomy_category": "charts-telemetry-financial"
   },
   {
     "id": "observable-plot",
     "name": "Observable Plot",
     "stack": "all",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "charts",
     "license": "ISC",
     "url": "https://observablehq.com/plot",
     "use_case": "Visualizacoes estatisticas e series limpas com tipografia editorial e zero poluicao",
-    "a11y_notes": "SVG semantico com suporte direto a aria-label por marca"
+    "a11y_notes": "SVG semantico com suporte direto a aria-label por marca",
+    "taxonomy_category": "charts-telemetry-financial"
   },
   {
     "id": "recharts",
     "name": "Recharts",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "charts",
     "license": "MIT",
     "url": "https://recharts.org",
     "use_case": "Graficos composaveis React para paineis financeiros e metricas operacionais",
-    "a11y_notes": "Integracao direta com tooltips acessiveis e tokens CSS"
+    "a11y_notes": "Integracao direta com tooltips acessiveis e tokens CSS",
+    "taxonomy_category": "charts-telemetry-financial"
   },
   {
     "id": "phosphor-icons",
     "name": "Phosphor Icons",
     "stack": "all",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "icons",
     "license": "MIT",
     "url": "https://phosphoricons.com",
     "use_case": "Biblioteca unificada com pesos Regular (padrao) e Fill (ativo) consistentes",
-    "a11y_notes": "SVGs currentColor escalaveis na grade 16/20/24px"
+    "a11y_notes": "SVGs currentColor escalaveis na grade 16/20/24px",
+    "taxonomy_category": "icons-emblems-avatars"
   },
   {
     "id": "lucide-icons",
     "name": "Lucide Icons",
     "stack": "all",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "icons",
     "license": "ISC",
     "url": "https://lucide.dev",
     "use_case": "Conjunto cirurgico de icones lineares de traco uniforme 1.5px-2px",
-    "a11y_notes": "Tree-shakeable em React/Vue/Svelte e SVG limpo"
+    "a11y_notes": "Tree-shakeable em React/Vue/Svelte e SVG limpo",
+    "taxonomy_category": "icons-emblems-avatars"
   },
   {
     "id": "tabler-icons",
     "name": "Tabler Icons",
     "stack": "all",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "icons",
     "license": "MIT",
     "url": "https://tabler.io/icons",
     "use_case": "Amplo acervo de icones operacionais (ERP, logistica, financeiro) com stroke 1.5px-2px",
-    "a11y_notes": "Versoes outline e filled disponiveis com viewBox 24x24 uniforme"
+    "a11y_notes": "Versoes outline e filled disponiveis com viewBox 24x24 uniforme",
+    "taxonomy_category": "icons-emblems-avatars"
   },
   {
     "id": "tauri-window-api",
     "name": "Tauri v2 Window & Tray API",
     "stack": "tauri",
-    "platforms": ["desktop"],
+    "platforms": [
+      "desktop"
+    ],
     "category": "desktop-shell",
     "license": "MIT/Apache-2.0",
     "url": "https://v2.tauri.app",
     "use_case": "App desktop leve com titlebar nativa customizada, atalhos globais e menu de bandeja",
-    "a11y_notes": "Respeita acessibilidade nativa de macOS, Windows e Linux"
+    "a11y_notes": "Respeita acessibilidade nativa de macOS, Windows e Linux",
+    "taxonomy_category": "desktop-native-workbenches"
   },
   {
     "id": "electron-frameless",
     "name": "Electron TitleBarOverlay & NativeTheme",
     "stack": "electron",
-    "platforms": ["desktop"],
+    "platforms": [
+      "desktop"
+    ],
     "category": "desktop-shell",
     "license": "MIT",
     "url": "https://www.electronjs.org",
     "use_case": "Integracao nativa de traffic lights macOS, Window Controls Overlay e tema do SO",
-    "a11y_notes": "Menus nativos e atalhos globais registrados no OS"
+    "a11y_notes": "Menus nativos e atalhos globais registrados no OS",
+    "taxonomy_category": "desktop-native-workbenches"
   },
   {
     "id": "gorhom-bottom-sheet",
     "name": "@gorhom/bottom-sheet",
     "stack": "rn",
-    "platforms": ["mobile", "ios", "android"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-sheet",
     "license": "MIT",
     "url": "https://gorhom.dev/react-native-bottom-sheet",
     "use_case": "Bottom sheet nativo 60fps com snap points e teclado em React Native / Expo",
-    "a11y_notes": "Gestos nativos via Reanimated e foco acessivel"
+    "a11y_notes": "Gestos nativos via Reanimated e foco acessivel",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "shopify-flashlist",
     "name": "@shopify/flash-list",
     "stack": "rn",
-    "platforms": ["mobile", "ios", "android"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-list",
     "license": "MIT",
     "url": "https://shopify.github.io/flash-list",
     "use_case": "Listas densas sem queda de frame em React Native iOS/Android",
-    "a11y_notes": "Reciclagem de celulas mantendo ordem de leitura TalkBack/VoiceOver"
+    "a11y_notes": "Reciclagem de celulas mantendo ordem de leitura TalkBack/VoiceOver",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "zeego",
     "name": "Zeego (Native Menus)",
     "stack": "rn",
-    "platforms": ["mobile", "ios", "android"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-menus",
     "license": "MIT",
     "url": "https://zeego.dev",
     "use_case": "Context menus e dropdowns 100% nativos (UIMenu iOS e PopupMenu Android) no Expo/RN",
-    "a11y_notes": "Usa os controles reais do sistema operacional"
+    "a11y_notes": "Usa os controles reais do sistema operacional",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "burnt-toasts",
     "name": "Burnt (Native Toasts)",
     "stack": "rn",
-    "platforms": ["mobile", "ios", "android"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-feedback",
     "license": "MIT",
     "url": "https://github.com/nandorojo/burnt",
     "use_case": "HUDs e toasts nativos com haptic feedback em React Native",
-    "a11y_notes": "Anuncios acessiveis respeitando Reduce Motion"
+    "a11y_notes": "Anuncios acessiveis respeitando Reduce Motion",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "rn-reanimated",
     "name": "React Native Reanimated + Gesture Handler",
     "stack": "rn",
-    "platforms": ["mobile", "ios", "android"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-motion",
     "license": "MIT",
     "url": "https://docs.swmansion.com/react-native-reanimated",
     "use_case": "Animacoes interrompiveis na UI thread e gestos nativos sem travar JS bridge",
-    "a11y_notes": "Suporta useReducedMotion() nativo do sistema"
+    "a11y_notes": "Suporta useReducedMotion() nativo do sistema",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "expo-symbols",
     "name": "expo-symbols & react-native-safe-area-context",
     "stack": "rn",
-    "platforms": ["mobile", "ios", "android"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
     "category": "mobile-native-core",
     "license": "MIT",
     "url": "https://docs.expo.dev/versions/latest/sdk/symbols/",
     "use_case": "SF Symbols nativos no iOS e insets seguros em iPhone/Android sem corte",
-    "a11y_notes": "Escala automaticamente com Dynamic Type e window insets"
+    "a11y_notes": "Escala automaticamente com Dynamic Type e window insets",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "swiftui-native",
     "name": "SwiftUI NavigationStack, TabView & Sheet Detents",
     "stack": "ios",
-    "platforms": ["ios", "mobile"],
+    "platforms": [
+      "ios",
+      "mobile"
+    ],
     "category": "ios-native",
     "license": "Apple SDK",
     "url": "https://developer.apple.com/documentation/swiftui",
     "use_case": "Navegacao nativa iOS com edge-swipe back, Dynamic Type e SF Symbols",
-    "a11y_notes": "Suporte automatico a VoiceOver, Dynamic Type e Reduce Motion"
+    "a11y_notes": "Suporte automatico a VoiceOver, Dynamic Type e Reduce Motion",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "jetpack-compose-m3",
     "name": "Jetpack Compose Material 3 Adaptive",
     "stack": "android",
-    "platforms": ["android", "mobile"],
+    "platforms": [
+      "android",
+      "mobile"
+    ],
     "category": "android-native",
     "license": "Apache-2.0",
     "url": "https://developer.android.com/jetpack/compose/designsystems/material3",
     "use_case": "NavigationSuiteScaffold (NavBar -> NavRail), Predictive Back e WindowInsets",
-    "a11y_notes": "Alvos minimos 48dp, Dynamic Color e TalkBack integrado"
+    "a11y_notes": "Alvos minimos 48dp, Dynamic Color e TalkBack integrado",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "flutter-m3-adaptive",
     "name": "Flutter Material 3 + Cupertino Adaptive",
     "stack": "flutter",
-    "platforms": ["mobile", "ios", "android", "desktop"],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android",
+      "desktop"
+    ],
     "category": "cross-platform-native",
     "license": "BSD-3-Clause",
     "url": "https://docs.flutter.dev/ui/adaptive-responsive",
     "use_case": "Widgets adaptativos por plataforma com ColorScheme.fromSeed e SafeArea",
-    "a11y_notes": "Semantics tree completa e suporte a fontScale"
+    "a11y_notes": "Semantics tree completa e suporte a fontScale",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "motion-framer",
     "name": "Motion (ex-Framer Motion)",
     "stack": "react",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "category": "motion",
     "license": "MIT",
     "url": "https://motion.dev",
     "use_case": "Transicoes interrompiveis de layout e AnimatePresence com respeito a reduced-motion",
-    "a11y_notes": "Suporta MotionConfig reducedMotion='user'"
+    "a11y_notes": "Suporta MotionConfig reducedMotion='user'",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "number-flow",
     "name": "NumberFlow",
     "stack": "react",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "category": "telemetry-numbers",
     "license": "MIT",
     "url": "https://number-flow.barvian.me",
     "use_case": "Transicao numerica suave em tabular-nums para saldos, metricas e simuladores financeiros",
-    "a11y_notes": "Usa role e aria-label acessivel enquanto anima digitos sem reflow"
+    "a11y_notes": "Usa role e aria-label acessivel enquanto anima digitos sem reflow",
+    "taxonomy_category": "kpi-metrics-sparklines"
+  },
+  {
+    "id": "solar-icons-duotone",
+    "name": "Solar Icons (Bold Duotone & Line Duotone SVGs)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://github.com/480Design/Solar-Icon-Set",
+    "use_case": "4.800+ icones SVG Duotone em 2 camadas (Bold Duotone / Line Duotone) com profundidade real para emblemas .icon-emblem e KPIs",
+    "a11y_notes": "Renderize como <svg> real ou <iconify-icon> com aria-hidden='true' para nitidez vetorial sem borrao de webfont"
+  },
+  {
+    "id": "heroicons",
+    "name": "Heroicons (Outline 24px, Solid 20px & Micro 16px)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://heroicons.com",
+    "use_case": "Conjunto da Tailwind Labs com variante Micro 16x16 desenhada especificamente para dentro de badges, chips de status e botoes compactos",
+    "a11y_notes": "SVGs puros otimizados para 16px, 20px e 24px"
+  },
+  {
+    "id": "radix-icons",
+    "name": "Radix Icons (15x15 Dense UI SVGs)",
+    "stack": "all",
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://www.radix-ui.com/icons",
+    "use_case": "Icones cirurgicos em grade 15x15px para interfaces desktop densas, cabecalhos de tabela, popovers e chips",
+    "a11y_notes": "Alinhamento pixel-perfect em telas 1x e 2x"
+  },
+  {
+    "id": "iconify-svg",
+    "name": "Iconify SVG Web Component (<iconify-icon>)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://iconify.design",
+    "use_case": "Motor universal MIT que renderiza 200.000+ icones open-source (Solar Duotone, Tabler, Lucide, Heroicons, Radix) como <svg> real em HTML/JS puro ou frameworks",
+    "a11y_notes": "Elimina webfonts borradas renderizando <svg> vetorial sob demanda ou offline"
+  },
+  {
+    "id": "remix-icon",
+    "name": "Remix Icon (3000+ Line & Fill Paired SVGs)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "Apache-2.0",
+    "url": "https://remixicon.com",
+    "use_case": "3.000+ icones neutros corporativos com pares exatos Line (inativo) e Fill (ativo) para sidebars e tab bars",
+    "a11y_notes": "Grade 24x24 consistente com peso optico equilibrado"
+  },
+  {
+    "id": "iconoir",
+    "name": "Iconoir",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://iconoir.com",
+    "use_case": "1.600+ icones SVG refinados com excelente cobertura de aviacao, financeiro, documentos e dev tools",
+    "a11y_notes": "SVGs limpos com currentColor"
+  },
+  {
+    "id": "mingcute-icons",
+    "name": "MingCute Icons",
+    "stack": "all",
+    "platforms": [
+      "mobile",
+      "system",
+      "desktop"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "Apache-2.0",
+    "url": "https://www.mingcute.com",
+    "use_case": "3.000+ icones geometricos com curvas suaves ideais para apps mobile executivos e tab bars",
+    "a11y_notes": "Variantes Line e Fill pareadas"
+  },
+  {
+    "id": "svgl-brand-logos",
+    "name": "SVGL (Open-Source Vector Brand Logos)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://svgl.app",
+    "use_case": "Logos SVG vetoriais oficiais (WhatsApp, bancos, provedores, ERPs, ferramentas) com variantes Light e Dark",
+    "a11y_notes": "Inclua role='img' e aria-label quando o logo comunicar o canal ou instituicao"
+  },
+  {
+    "id": "boring-avatars",
+    "name": "Boring Avatars & DiceBear",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "url": "https://boringavatars.com",
+    "use_case": "Avatares SVG geometricos deterministicos sincronizados com a paleta de cores da marca (substitui fotos quebradas)",
+    "a11y_notes": "Sempre mantenha aspect-ratio: 1/1 e iniciais acessiveis"
+  },
+  {
+    "id": "lightweight-charts",
+    "name": "TradingView Lightweight Charts",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "Apache-2.0",
+    "url": "https://tradingview.github.io/lightweight-charts/",
+    "use_case": "Padrao ouro open-source (45 KB) da TradingView para fluxo de caixa, projecao de saldo, baseline-area acima/abaixo do piso e crosshair HUD vivo",
+    "a11y_notes": "Combine com cabecalho HUD HTML acessivel que anuncia data, saldo e delta"
+  },
+  {
+    "id": "apexcharts",
+    "name": "ApexCharts.js",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "url": "https://apexcharts.com",
+    "use_case": "Graficos interativos prontos para HTML/JS ou React com anotacoes de eventos (annotations), Combo Bar+Area, Range-Area e Sparklines embutidos",
+    "a11y_notes": "Desative animacoes longas em Operate e re-tematize cores pelos tokens --chart-1..6"
+  },
+  {
+    "id": "tremor-raw",
+    "name": "Tremor Raw (Dashboards, BarList, Tracker & CategoryBar)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "kpi-metrics-sparklines",
+    "license": "Apache-2.0",
+    "url": "https://tremor.so",
+    "use_case": "Os melhores micro-componentes analiticos open-source: BarList (ranking com barra proporcional), Tracker (30 blocos de SLA/status), CategoryBar (De cada R$ 100) e ComboChart",
+    "a11y_notes": "Construido sobre Radix/Recharts com excelente contraste e semantica tabular"
+  },
+  {
+    "id": "evilcharts",
+    "name": "EvilCharts (Shadcn Animated & Glowing Charts)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "url": "https://evilcharts.com",
+    "use_case": "Graficos sofisticados com preenchimento hachurado/pontilhado SVG, gradientes suaves, barras com destaque ativo e cartoes de metrica com HUD",
+    "a11y_notes": "Re-tematize os gradientes SVG usando --chart-1 a --chart-6 do projeto"
+  },
+  {
+    "id": "shadcn-charts",
+    "name": "shadcn/ui Charts",
+    "stack": "react",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "url": "https://ui.shadcn.com/charts",
+    "use_case": "Tooltips HTML customizados, legendas interativas e composicao de graficos acoplada diretamente às variaveis CSS --chart-1..5",
+    "a11y_notes": "Acessibilidade de teclado e contraste automatico Dark/Light"
+  },
+  {
+    "id": "uplot",
+    "name": "uPlot (Ultra-Fast Time Series & Sparklines)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "url": "https://github.com/leeoniya/uPlot",
+    "use_case": "Motor Canvas 2D ultraleve (~45 KB) usado pelo Grafana para series temporais, cursores sincronizados e sparklines em tabelas",
+    "a11y_notes": "Sincronize o cursor com uma legenda HTML visivel fora do canvas"
+  },
+  {
+    "id": "frappe-charts",
+    "name": "Frappe Charts (Charts & Activity Heatmap)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "url": "https://frappe.io/charts",
+    "use_case": "Graficos SVG limpos inspirados no ERPNext/GitHub, incluindo Heatmap anual de atividade, barras de composicao percentual e graficos mistos",
+    "a11y_notes": "Renderiza SVG puro facil de estilizar via CSS tokens"
+  },
+  {
+    "id": "visx",
+    "name": "visx (Airbnb Low-Level Visualization Primitives)",
+    "stack": "react",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "url": "https://airbnb.io/visx",
+    "use_case": "Primitivos D3+React da Airbnb para visualizacoes financeiras sob medida, curvas com brush e diagramas de fluxo",
+    "a11y_notes": "Total controle sobre SVG <title>, <desc> e foco"
+  },
+  {
+    "id": "countup-js",
+    "name": "CountUp.js",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "kpi-metrics",
+    "taxonomy_category": "kpi-metrics-sparklines",
+    "license": "MIT",
+    "url": "https://inorganik.github.io/countUp.js/",
+    "use_case": "Transicao numerica suave em HTML/JS puro ao trocar filtro de socio, banco ou competencia (com formatacao pt-BR R$)",
+    "a11y_notes": "Use duracao curta (<= 350ms) e desative sob prefers-reduced-motion"
+  },
+  {
+    "id": "ag-grid-community",
+    "name": "AG Grid Community (MIT Core)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "data-table",
+    "taxonomy_category": "data-tables-lists-progressive",
+    "license": "MIT",
+    "url": "https://www.ag-grid.com",
+    "use_case": "Data grid financeiro de alta densidade com ordenacao multi-coluna, filtro instantaneo, navegacao por setas de planilha e virtualizacao",
+    "a11y_notes": "Suporte ARIA Grid completo; aplique tema customizado com as variaveis de tokens.css"
+  },
+  {
+    "id": "grid-js",
+    "name": "Grid.js",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "data-table",
+    "taxonomy_category": "data-tables-lists-progressive",
+    "license": "MIT",
+    "url": "https://gridjs.io",
+    "use_case": "Tabela leve em HTML/JS ou React com busca instantanea, ordenacao e celulas customizadas",
+    "a11y_notes": "Renderiza <table> semantica real"
+  },
+  {
+    "id": "pragmatic-drag-and-drop",
+    "name": "Atlassian Pragmatic drag and drop",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "drag-and-drop",
+    "taxonomy_category": "kanban-drag-drop-workflows",
+    "license": "Apache-2.0",
+    "url": "https://atlassian.design/components/pragmatic-drag-and-drop",
+    "use_case": "Motor de drag-and-drop ultraleve (~4 KB) da Atlassian (Trello/Jira) para quadros Kanban, listas e arvores em qualquer framework ou HTML",
+    "a11y_notes": "Inclua sempre botoes de avancar/voltar etapa para operacao 100% por teclado"
+  },
+  {
+    "id": "imask-js",
+    "name": "IMask.js (Masks for CNPJ, CPF, Currency R$ & Barcodes)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "url": "https://imask.js.org",
+    "use_case": "Mascaras de digitacao precisas em vanilla JS ou React para CNPJ, CPF, valores em R$, linha digitavel de boleto, CEP e datas",
+    "a11y_notes": "Mantem posicao do cursor e colagem limpa"
+  },
+  {
+    "id": "flatpickr",
+    "name": "Flatpickr (Date & Date-Range Picker)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "url": "https://flatpickr.js.org",
+    "use_case": "Seletor de data e intervalo de datas leve e sem dependencias para HTML/JS, com localizacao pt-BR",
+    "a11y_notes": "Re-estilize o popup em --surface-z4 com --border-strong"
+  },
+  {
+    "id": "tom-select",
+    "name": "Tom Select (Accessible Combobox & Multi-Tag Select)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "Apache-2.0",
+    "url": "https://tom-select.js.org",
+    "use_case": "Combobox com busca instantanea, selecao de multiplas tags e navegacao por teclado em HTML/JS puro",
+    "a11y_notes": "Atributos ARIA combobox e listbox integrados"
+  },
+  {
+    "id": "uppy",
+    "name": "Uppy (Modular File Uploader & Dropzone)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "url": "https://uppy.io",
+    "use_case": "Importador de arquivos com arrasto, barra de progresso, previa de PDF/planilha e recuperacao de falha",
+    "a11y_notes": "Botoes navegaveis por teclado e status anunciado via aria-live"
+  },
+  {
+    "id": "filepond",
+    "name": "FilePond",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "url": "https://pqina.nl/filepond/",
+    "use_case": "Dropzone elegante com validacao de formato/tamanho e animacao fluida de upload",
+    "a11y_notes": "Totalmente operavel via Tab/Enter/Space"
+  },
+  {
+    "id": "input-otp",
+    "name": "input-otp (Accessible One-Time Password 2FA)",
+    "stack": "react",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "license": "MIT",
+    "url": "https://input-otp.rodz.dev",
+    "use_case": "Campo 2FA/OTP de 6 digitos com colagem automatica, foco continuo e zero friccao",
+    "a11y_notes": "Usa um unico <input> real oculto sob os slots visuais para compatibilidade total com leitores de tela e autofill do SO"
+  },
+  {
+    "id": "fullcalendar-core",
+    "name": "FullCalendar Standard (MIT Core)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "calendar",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "license": "MIT",
+    "url": "https://fullcalendar.io",
+    "use_case": "Grade mensal, semanal e diária interativa para agendas de licitacoes, vencimentos financeiros e sessoes",
+    "a11y_notes": "Navegacao por teclado nas celulas e eventos com cores semanticas"
+  },
+  {
+    "id": "frappe-gantt",
+    "name": "Frappe Gantt",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "calendar",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "license": "MIT",
+    "url": "https://frappe.io/gantt",
+    "use_case": "Cronograma Gantt SVG interativo em HTML/JS puro para acompanhar fases de editais, contratos e projetos",
+    "a11y_notes": "Estilize barras e linhas de dependencia usando os tokens --chart-1..5"
+  },
+  {
+    "id": "schedule-x",
+    "name": "Schedule-X (Modern Calendar & Date Picker)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "calendar",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "license": "MIT",
+    "url": "https://schedule-x.dev",
+    "use_case": "Calendario moderno com Dark Mode nativo para agendas operacionais e reservas",
+    "a11y_notes": "Suporte completo a teclado e fuso horario"
+  },
+  {
+    "id": "prompt-kit",
+    "name": "Prompt Kit (AI & Chat UI Primitives)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "chat-ai",
+    "taxonomy_category": "inbox-chat-omnichannel-ai",
+    "license": "MIT",
+    "url": "https://www.prompt-kit.com",
+    "use_case": "Componentes copiaveis de alta precisao para simuladores de bot, compositores de mensagem, citacoes de regras e steps de raciocinio",
+    "a11y_notes": "Baseado em shadcn/ui com foco e atalhos Enter / Shift+Enter corretos"
+  },
+  {
+    "id": "quill",
+    "name": "Quill Rich Text Editor",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "editor",
+    "taxonomy_category": "inbox-chat-omnichannel-ai",
+    "license": "BSD-3-Clause",
+    "url": "https://quilljs.com",
+    "use_case": "Editor rico em HTML/JS para editar respostas da base do bot, pareceres de licitacao e templates com variaveis",
+    "a11y_notes": "Estilize a toolbar em --surface-z3 e a area de texto em --surface-z0"
+  },
+  {
+    "id": "notyf",
+    "name": "Notyf (Minimal Accessible Vanilla Toasts)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "toast-undo",
+    "taxonomy_category": "overlays-drawers-sheets-toasts",
+    "license": "MIT",
+    "url": "https://carlosroso.com/notyf/",
+    "use_case": "Toasts leves (~3 KB, zero dependencias) em HTML/JS puro com aria-live, facilmente combinados com botao Desfazer",
+    "a11y_notes": "Anuncio a11y automatico via role='alert' / aria-live='polite'"
+  },
+  {
+    "id": "driver-js",
+    "name": "Driver.js (Focus Highlight & Onboarding Tour)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "overlay",
+    "taxonomy_category": "overlays-drawers-sheets-toasts",
+    "license": "MIT",
+    "url": "https://driverjs.com",
+    "use_case": "Destaque de elementos e tour guiado (~5 KB, vanilla JS) para explicar novas rotinas operacionais ou destacar campos pendentes",
+    "a11y_notes": "Gerencia trap de foco e fechamento por Esc"
+  },
+  {
+    "id": "pdf-js",
+    "name": "Mozilla PDF.js",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "documents",
+    "taxonomy_category": "documents-tickets-ledgers-import",
+    "license": "Apache-2.0",
+    "url": "https://mozilla.github.io/pdf.js/",
+    "use_case": "Renderizacao e inspecao real de PDFs de editais, certidoes, faturas e relatorios ERP dentro do drawer/detalhe",
+    "a11y_notes": "Mantenha a camada de texto selecionavel ativa"
+  },
+  {
+    "id": "papaparse",
+    "name": "PapaParse (Fast In-Browser CSV / Ledger Parser)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "documents",
+    "taxonomy_category": "documents-tickets-ledgers-import",
+    "license": "MIT",
+    "url": "https://www.papaparse.com",
+    "use_case": "Leitura e exportacao real de arquivos CSV/planilhas de conciliação diretamente no navegador sem servidor",
+    "a11y_notes": "Exiba resumo de linhas validas vs linhas com erro antes de confirmar a importacao"
+  },
+  {
+    "id": "split-js",
+    "name": "Split.js (Lightweight Resizable Split Views)",
+    "stack": "all",
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "category": "workspace",
+    "taxonomy_category": "desktop-native-workbenches",
+    "license": "MIT",
+    "url": "https://split.js.org",
+    "use_case": "Divisores de painel redimensionaveis (~2 KB, zero dependencias) em HTML/JS puro para workbenches desktop e simuladores",
+    "a11y_notes": "Adicione role='separator' e tabindex='0' no gutter"
+  },
+  {
+    "id": "tinykeys",
+    "name": "tinykeys (1 KB Keyboard Shortcut Manager)",
+    "stack": "all",
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "category": "command-palette",
+    "taxonomy_category": "shell-navigation",
+    "license": "MIT",
+    "url": "https://github.com/jamiebuilds/tinykeys",
+    "use_case": "Gerenciador de atalhos de teclado de 600 bytes (suporta '$mod+KeyK', '[', 'Escape', e sequencias 'g p' / 'g f' estilo Linear/GitHub)",
+    "a11y_notes": "Ignore eventos disparados quando o foco estiver dentro de <input>, <textarea> ou <select>"
+  },
+  {
+    "id": "konsta-ui",
+    "name": "Konsta UI (iOS & Material 3 Mobile UI for Tailwind/HTML/React)",
+    "stack": "all",
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "category": "mobile-kit",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "license": "MIT",
+    "url": "https://konstaui.com",
+    "use_case": "Componentes mobile pixel-perfect (Tab Bar, Segmented Control, Action Sheet, Inset Lists) para PWAs e prototipos executivos",
+    "a11y_notes": "Alvos >= 44px e safe-area-inset integrados"
+  },
+  {
+    "id": "auto-animate",
+    "name": "AutoAnimate (@formkit/auto-animate)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "motion",
+    "taxonomy_category": "motion-microinteractions-feedback",
+    "license": "MIT",
+    "url": "https://auto-animate.formkit.com",
+    "use_case": "Adiciona transicoes suaves automaticas (1 linha de JS, 2 KB) ao filtrar tabelas, reordenar linhas, abrir detalhes ou mover cards",
+    "a11y_notes": "Respeita automaticamente prefers-reduced-motion do sistema operacional"
+  },
+  {
+    "id": "open-props",
+    "name": "Open Props (CSS Custom Properties & Easings)",
+    "stack": "all",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "foundations",
+    "taxonomy_category": "motion-microinteractions-feedback",
+    "license": "MIT",
+    "url": "https://open-props.style",
+    "use_case": "Curvas de easing fisicas, sombras em camadas e escalas CSS modulares prontas para combinar com tokens.css",
+    "a11y_notes": "Zero JS runtime"
   }
 ]

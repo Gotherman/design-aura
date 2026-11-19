@@ -11,10 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from audit_contrast import color_to_opaque_rgb, evaluate_pair  # noqa: E402
+from audit_contrast import audit_file, color_to_opaque_rgb, evaluate_pair  # noqa: E402
 from build_figma_canvas import apply_auto_layout  # noqa: E402
-from discover_oss_components import search_local  # noqa: E402
-from render_design_bible import build_html  # noqa: E402
+from discover_oss_components import scan_project_categories, search_local  # noqa: E402
+from render_design_bible import build_html, sync_markdown_token_tables  # noqa: E402
 from lint_design_aura import scan_file  # noqa: E402
 
 
@@ -346,6 +346,101 @@ class CanvasTests(unittest.TestCase):
         # Re-coloriu setas monocromaticas por fluxo
         colors = {e.get("color") for e in manifest["edges"]}
         self.assertGreater(len(colors), 1)
+
+
+class V22UpgradeTests(unittest.TestCase):
+    def test_v22_harmony_monochrome_dark_and_washed_out_light(self):
+        # 1. Tokens v2.2.0 calibrados (65/20/10/5) passam com 0 BLOCK e 0 achados de monocromia/light-lavado
+        good_rows = audit_file(ROOT / "assets" / "tokens.example.json")
+        self.assertFalse(any(r["severity"] == "BLOCK" for r in good_rows))
+        self.assertFalse(any("DA-DARK-MONOCHROME" in r["label"] for r in good_rows))
+        self.assertFalse(any("DA-LIGHT-WASHED-OUT" in r["label"] for r in good_rows))
+
+        # 2. Dark tudo-azul saturado (S > 45%) dispara DA-DARK-MONOCHROME; Light com borda lavada dispara DA-LIGHT-WASHED-OUT
+        bad_css = """
+        :root, [data-theme="light"] {
+          --surface-z1: #F5F7FA;
+          --surface-z2: #FFFFFF;
+          --border-subtle: #EAEFF5;
+          --primary: #1F5CB8;
+          --text-strong: #101822;
+        }
+        [data-theme="dark"] {
+          --surface-z1: #0B1522;
+          --surface-z2: #122033;
+          --border-subtle: #243852;
+          --primary: #76B8FA;
+          --text-strong: #F3F6FA;
+        }
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "bad.css"
+            p.write_text(bad_css, encoding="utf-8")
+            rows = audit_file(p)
+        labels = [r["label"] for r in rows]
+        self.assertTrue(any("DA-DARK-MONOCHROME" in lb for lb in labels), labels)
+        self.assertTrue(any("DA-LIGHT-WASHED-OUT" in lb for lb in labels), labels)
+
+    def test_v22_categorical_project_scanner_and_icon_recipes(self):
+        # Escaneia um mini projeto simulando financeiro + licitacoes + whatsapp bot + mobile
+        with tempfile.TemporaryDirectory() as tmp:
+            proj = Path(tmp)
+            (proj / "CONCEPCAO.md").write_text(
+                "Sistema ERP financeiro com contas a pagar, fluxo de caixa 45 dias, grafico DRE cascata, "
+                "radar de editais PNCP, funil kanban arrastavel, agenda de prazos .ics, inbox WhatsApp SLA 24h com bot e transbordo, "
+                "importacao PDF/OFX e app mobile executivo para socios.",
+                encoding="utf-8",
+            )
+            rep = scan_project_categories(scan_path=proj, stack="html", platform="all", mode="operate")
+        cat_ids = {c["id"] for c in rep["categories"]}
+        for expected in (
+            "shell-navigation",
+            "icons-emblems-avatars",
+            "badges-chips-timers-status",
+            "charts-telemetry-financial",
+            "data-tables-lists-progressive",
+            "kanban-drag-drop-workflows",
+            "calendar-gantt-timelines",
+            "inbox-chat-omnichannel-ai",
+            "mobile-native-pwa-touch",
+        ):
+            self.assertIn(expected, cat_ids)
+
+        # Verifica presenca de bibliotecas sofisticadas e receitas de icones/badges
+        chart_cat = next(c for c in rep["categories"] if c["id"] == "charts-telemetry-financial")
+        chart_names = {it["name"] for it in chart_cat["adopt_oss"]}
+        self.assertTrue(any("Lightweight Charts" in n or "ECharts" in n for n in chart_names), chart_names)
+
+        badge_cat = next(c for c in rep["categories"] if c["id"] == "badges-chips-timers-status")
+        recipe_ids = {r["id"] for r in badge_cat["studio_recipes"]}
+        self.assertIn("sla-progress-ring-pill", recipe_ids)
+        self.assertIn("halo-status-vector-chip", recipe_ids)
+
+    def test_v22_lint_generic_icons_flat_chart_and_bible_hex_sync(self):
+        # 1. Repeticao de ph-bank >= 5x dispara DA-ICON-GENERIC-REPEAT; yAxis min: 0 sem bar dispara DA-FLAT-CHART-AXIS
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "desktop-caixa.html"
+            p.write_text(
+                "<div>" + '<i class="ph ph-bank"></i>' * 6 + "</div>"
+                "<script>echarts.init(el).setOption({ yAxis: { type: 'value', min: 0 }, series: [{ type: 'line', data: [3400, 3350] }] });</script>",
+                encoding="utf-8",
+            )
+            findings = scan_file(p, Path(tmp))
+        rules = {f["rule"] for f in findings}
+        self.assertIn("DA-ICON-GENERIC-REPEAT", rules)
+        self.assertIn("DA-FLAT-CHART-AXIS", rules)
+
+        # 2. render_design_bible sincroniza hexes defasados na tabela 8.1 contra tokens.css
+        stale_md = "| `--surface-z1` | `#0B1522` | `#F1F4F8` |\n"
+        synced, vars_changed = sync_markdown_token_tables(
+            stale_md,
+            tokens_light={"--surface-z1": "#E6ECF3"},
+            tokens_dark={"--surface-z1": "#0E131D"},
+        )
+        self.assertIn("--surface-z1", vars_changed)
+        self.assertIn("#0E131D", synced)
+        self.assertIn("#E6ECF3", synced)
+        self.assertNotIn("#0B1522", synced)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,792 @@
+[
+  {
+    "id": "shell-navigation",
+    "name": "1. Shell, Navegação, Sidebar Minimizável & Command Palette (Cmd+K)",
+    "always_include": true,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "portal",
+      "sidebar",
+      "topbar",
+      "menu",
+      "navegacao",
+      "modulo",
+      "rota",
+      "atalho",
+      "cmdk",
+      "command",
+      "breadcrumb",
+      "abas",
+      "subtabs"
+    ],
+    "recommended_oss_ids": [
+      "coss-ui",
+      "shadcn-ui",
+      "ninja-keys",
+      "cmdk",
+      "tinykeys",
+      "dockview",
+      "react-resizable-panels",
+      "split-js"
+    ],
+    "studio_recipes": [
+      {
+        "id": "collapsible-sidebar-rail",
+        "name": "Sidebar Desktop Minimizável (232px <-> 68px Icon Rail) com Persistência",
+        "anatomy": "Cabeçalho com Bloco de Identidade da Marca (.sidebar-brand-card) + botão '«' (atalho '[') persistido em localStorage + itens com cápsula ativa 18% primary e filete vertical 3px accent. Recolhida em 68px, exibe ícones centralizados 44x40px com title/tooltip.",
+        "anti_slop": "PROIBIDO duplicar os mesmos módulos globais da Sidebar dentro da Topbar do Portal. A Topbar exibe apenas Breadcrumb + Sub-abas do módulo atual (ou seletor de período/visão no Portal) + Cmd+K + Tema + Conta."
+      },
+      {
+        "id": "brand-hero-surface",
+        "name": "3 Zonas de Presença da Marca ('Estou Aqui!' — Regra 65/20/10/5)",
+        "anatomy": "Zona 1: Identidade institucional no topo da Sidebar/Mobile; Zona 2: .card-brand-hero no painel principal de cada tela (gradiente 135deg com 20% --primary -> --surface-z2 + borda 35% --primary + chanfro especular); Zona 3: Abas e filtros ativos (.is-active) na cor primária.",
+        "anti_slop": "Evita tanto o 'tudo azul' monocromático quanto o 'preto carvão morto' onde a cor da empresa desaparece."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Use ícones SVG com traço 1.75px uniforme (Tabler / Lucide / Solar Duotone) na Sidebar; estado ativo muda cor para --accent/--primary e preenche o fundo com cápsula translúcida.",
+      "avoid": "Nunca misture famílias de ícones diferentes na mesma navegação nem use emojis no menu lateral."
+    }
+  },
+  {
+    "id": "icons-emblems-avatars",
+    "name": "2. Iconografia de Alta Precisão, Emblemas com Spotlight (.icon-emblem) & Monogramas",
+    "always_include": true,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "icone",
+      "icon",
+      "logo",
+      "banco",
+      "avatar",
+      "perfil",
+      "marca",
+      "status",
+      "alerta",
+      "kpi",
+      "emblema"
+    ],
+    "recommended_oss_ids": [
+      "tabler-icons",
+      "solar-icons-duotone",
+      "lucide-icons",
+      "heroicons",
+      "radix-icons",
+      "iconify-svg",
+      "remix-icon",
+      "iconoir",
+      "mingcute-icons",
+      "svgl-brand-logos",
+      "boring-avatars"
+    ],
+    "studio_recipes": [
+      {
+        "id": "double-ring-spotlight-emblem",
+        "name": "Emblema de Ícone com Spotlight Radial e Duplo Anel (.icon-emblem 38x38px)",
+        "anatomy": "Container 38x38px (border-radius: 10px) com radial-gradient(120% 120% at 25% 20%, color-mix(in srgb, var(--tone) 32%, transparent) 0%, color-mix(in srgb, var(--tone) 7%, var(--surface-z3)) 75%, var(--surface-z2) 100%), border: 1px solid color-mix(in srgb, var(--tone) 40%, var(--border-subtle)) e box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 4px 10px -2px rgba(0,0,0,0.30). O SVG interno usa Duotone (camada base 20% + traço principal 1.75px) com drop-shadow sutil.",
+        "anti_slop": "PROIBIDO usar quadrados marrons/vermelhos chapados (color-mix plano sem luz especular) com ícone de fonte (<i class='ph ph-bank'> ou '!') borrado!"
+      },
+      {
+        "id": "entity-bank-monogram",
+        "name": "Monograma Vetorial de Instituição / Banco / Órgão (.bank-emblem)",
+        "anatomy": "Para bancos (BB, Caixa, Santander, BTG, Bradesco, Itaú) e órgãos públicos, exiba um emblema geométrico 36x36px com a cor oficial da instituição, chanfro interno superior e sigla tipográfica de alta precisão (ou SVG vetorial), nunca um templo grego genérico repetido 5 vezes.",
+        "anti_slop": "PROIBIDO colocar o ícone genérico de templo grego (ph-bank) em faturas aéreas, boletos de aluguel e cartões de bancos distintos."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Prefira <svg> inline ou <iconify-icon> (Tabler/Lucide/Solar Duotone) com vocabulário específico do domínio: fatura aérea -> plane-departure / receipt-tax; boleto/aluguel -> building-store / file-invoice; certidão -> file-certificate / shield-check; pregão -> gavel / scale; atraso -> calendar-time / alert-triangle.",
+      "avoid": "PROIBIDO repetir o mesmo ícone genérico (warning-circle '!', clock, bank) >= 4 vezes na mesma tela (regra DA-ICON-GENERIC-REPEAT)."
+    }
+  },
+  {
+    "id": "badges-chips-timers-status",
+    "name": "3. Pílulas de SLA com Anel SVG (.chip-sla), Chips com Halo (.chip-status) & Badges Bipartidos",
+    "always_include": true,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "status",
+      "sla",
+      "tempo",
+      "min",
+      "janela",
+      "24h",
+      "atraso",
+      "vencida",
+      "transbordo",
+      "badge",
+      "pilula",
+      "tag",
+      "etiqueta",
+      "prioridade"
+    ],
+    "recommended_oss_ids": [
+      "coss-ui",
+      "shadcn-ui",
+      "radix-icons",
+      "heroicons",
+      "tabler-icons"
+    ],
+    "studio_recipes": [
+      {
+        "id": "sla-progress-ring-pill",
+        "name": "Pílula de SLA / Janela 24h com Anel SVG Circular de Progresso (.chip-sla)",
+        "anatomy": "Substitui pílulas mortas como '[ 41 min ]' ou '[ Janela aberta: 22h 18m ]'. Contém: (1) <svg width='14' height='14' viewBox='0 0 16 16'> com trilha circular (stroke-opacity 0.22) + arco de progresso (stroke-dasharray proporcional ao tempo consumido), (2) rótulo de contexto curto ('SLA' ou 'Janela 24h'), (3) divisor '·' e valor em 700 tabular-nums ('41m' / '22h 18m'), (4) border-radius: 8px (squircle técnico) + chanfro inset 0 1px 0 rgba(255,255,255,0.14).",
+        "anti_slop": "PROIBIDO criar badge de tempo com apenas texto '41 min' dentro de uma oval marrom chapada sem anel visual e sem rótulo do que aquele tempo significa."
+      },
+      {
+        "id": "halo-status-vector-chip",
+        "name": "Chip de Estado Operacional com Halo Duplo + Glifo Vetorial (.chip-status)",
+        "anatomy": "Substitui '[ • Transbordo ]' chapado. Usa ponto luminoso de 6px com halo de difusão (box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 24%, transparent)) + micro-ícone SVG 13px da transição (ex.: setas de transferência ⇄ para transbordo, raio/CPU para bot, escudo para habilitação) + superfície com gradiente sutil e borda calibrada.",
+        "anti_slop": "PROIBIDO usar bolinha CSS morta sem halo nem ícone em estados operacionais críticos."
+      },
+      {
+        "id": "segmented-kv-badge",
+        "name": "Chip Bipartido Chave | Valor (.chip-kv)",
+        "anatomy": "Container squircle (border-radius: 8px, overflow: hidden, border: 1px solid var(--border-subtle)) dividido em 2 compartimentos: Esquerda em --surface-z0 com rótulo técnico ('Nota', 'Atraso', 'Regra') e Direita com fundo semântico translúcido e valor em destaque ('96', '2d', '#04').",
+        "anti_slop": "Evita que todos os selos da tela pareçam a mesma salsicha oval 999px."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Em chips e badges (altura 24-28px), use micro-SVGs de 13-14px (Heroicons Micro / Radix 15px / Tabler stroke 2px) ou anéis SVG de progresso.",
+      "avoid": "Nunca coloque ícone de 20px espremido dentro de um badge de 22px."
+    }
+  },
+  {
+    "id": "kpi-metrics-sparklines",
+    "name": "4. Faixas Executivas de KPI, BarList Proporcional, Tracker de 30 Blocos & CategoryBar",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "kpi",
+      "saldo",
+      "total",
+      "resumo",
+      "margem",
+      "setor",
+      "ranking",
+      "cobertura",
+      "pulso",
+      "executivo",
+      "metricas",
+      "indicadores",
+      "100"
+    ],
+    "recommended_oss_ids": [
+      "tremor-raw",
+      "number-flow",
+      "countup-js",
+      "uplot",
+      "coss-ui"
+    ],
+    "studio_recipes": [
+      {
+        "id": "tremor-barlist-ranking",
+        "name": "BarList Proporcional para Rankings e Margens por Setor (.bar-list)",
+        "anatomy": "Em vez de lista seca de texto para 'Margem por Setor' ou 'Top Contratos', cada linha tem uma barra horizontal translúcida (height: 36px, border-radius: 8px, width: calc(valor/max * 100%), background: linear-gradient(90deg, color-mix(in srgb, var(--chart-1) 22%, transparent), color-mix(in srgb, var(--chart-1) 8%, transparent))) por trás do nome, com o valor e % alinhados à direita em tabular-nums.",
+        "anti_slop": "Elimina cards laterais que são apenas 4 linhas de texto sem peso visual."
+      },
+      {
+        "id": "tremor-tracker-blocks",
+        "name": "Tracker de 30/45 Blocos de Saúde, SLA ou Validade (.tracker-strip)",
+        "anatomy": "Faixa horizontal de 24 a 45 pequenos blocos verticais (height: 26px, border-radius: 3px, gap: 3px) coloridos semanticamente (--success, --warning, --danger) representando dias, certidões ou janelas de SLA, com tooltip rico no hover/focus de cada bloco.",
+        "anti_slop": "Dá densidade de telemetria digna de Linear/Vercel/Datadog em 40px de altura."
+      },
+      {
+        "id": "segmented-category-bar",
+        "name": "CategoryBar Segmentada Multi-Cor (De cada R$ 100 / Composição de Carteira)",
+        "anatomy": "Barra horizontal de 12-14px em poço .well-z0 com segmentos separados por gap de 3px usando cores distintas da paleta harmônica (--chart-1, --chart-2, --chart-4, --chart-5) sincronizados no hover com os cards de legenda abaixo.",
+        "anti_slop": "PROIBIDO pintar 3 dos 4 segmentos da CategoryBar com tons do mesmo azul."
+      }
+    ],
+    "icon_curation": {
+      "rule": "O KPI-Rei usa .card-brand-hero + .icon-emblem com SVG Duotone e mini sparkline ou barra de cobertura embutida.",
+      "avoid": "Não repita 4 KPI cards brancos/cinzas idênticos sem destacar qual é o número principal da tela."
+    }
+  },
+  {
+    "id": "charts-telemetry-financial",
+    "name": "5. Gráficos Financeiros, Fluxo de Caixa Combo, Cascata DRE (Waterfall) & Sankey",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "grafico",
+      "chart",
+      "projecao",
+      "caixa",
+      "curva",
+      "sankey",
+      "dre",
+      "cascata",
+      "waterfall",
+      "serie",
+      "historico",
+      "evolucao",
+      "telemetria",
+      "echarts",
+      "fluxo"
+    ],
+    "recommended_oss_ids": [
+      "lightweight-charts",
+      "echarts",
+      "apexcharts",
+      "observable-plot",
+      "tremor-raw",
+      "evilcharts",
+      "shadcn-charts",
+      "uplot",
+      "frappe-charts",
+      "visx"
+    ],
+    "studio_recipes": [
+      {
+        "id": "combo-cashflow-live-hud",
+        "name": "Gráfico Combo de Fluxo de Caixa (Barras Entrada/Saída + Curva de Saldo + HUD Vivo + Escala Dinâmica)",
+        "anatomy": "1. Cabeçalho HUD Vivo acima do gráfico: atualiza no evento updateAxisPointer / crosshairMove mostrando Data em foco, Saldo Projetado (R$), Entradas do dia (+R$ em verde), Saídas do dia (-R$ em coral) e Delta % acima do piso operacional.\n2. Série 1 (Curva Principal): linha spline suave (width: 2.5px, cor --chart-1) com área em gradiente vertical (28% -> 2%) e escala Y dinâmica (min calibrado para dataMin * 0.88 ou faixa real, NUNCA min: 0 quando a série varia entre 3,2M e 3,5M!).\n3. Série 2 (Movimentação Diária): barras discretas de Entradas (+) e Saídas (-) ou pinos markPoint destacando o Dia de Maior Saída e o Dia de Maior Entrada + markLine tracejada do Colchão Mínimo Operacional.",
+        "anti_slop": "PROIBIDO entregar gráfico de 1 linha quase reta no topo com um retângulo azul gigante morto até o zero (DA-FLAT-CHART-AXIS)."
+      },
+      {
+        "id": "stepped-waterfall-dre",
+        "name": "Gráfico de Cascata Financeira (Waterfall DRE) com Conectores Tracejados e % da Receita",
+        "anatomy": "Cada coluna usa a cor semântica do seu papel (Receita Bruta: --chart-1 Azul; Custos/Repasses: --chart-6 Coral/Rosa; Estrutura: --chart-4 Âmbar; Tributos: --chart-3 Índigo; Resultado Líquido: --chart-5 Esmeralda), com linhas horizontais tracejadas conectando o topo/base de cada etapa à seguinte e rótulo duplo no topo (Valor R$ + pill de % da receita).",
+        "anti_slop": "PROIBIDO pintar Receita, Repasses, Estrutura e Tributos todos com tons do mesmo azul!"
+      }
+    ],
+    "icon_curation": {
+      "rule": "Botões de troca de visualização do gráfico (15d / 30d / 45d ou Linha / Combo / Tabela) usam ícones SVG de 14px (chart-area-line, chart-bar, table).",
+      "avoid": "Nunca use título de gráfico começando com 'Gráfico de...' (DA-B5-02)."
+    }
+  },
+  {
+    "id": "data-tables-lists-progressive",
+    "name": "6. Tabelas Densas, Listas Operacionais & Revelação Progressiva (Lista Limpa -> Detalhe Focado)",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "detect_keywords": [
+      "tabela",
+      "lista",
+      "fila",
+      "contas",
+      "pagar",
+      "receber",
+      "faturas",
+      "boletos",
+      "editais",
+      "certidoes",
+      "contratos",
+      "clientes",
+      "pedidos",
+      "extrato",
+      "lancamentos",
+      "registros"
+    ],
+    "recommended_oss_ids": [
+      "tabulator",
+      "tanstack-table",
+      "tanstack-virtual",
+      "ag-grid-community",
+      "grid-js",
+      "dice-ui",
+      "auto-animate"
+    ],
+    "studio_recipes": [
+      {
+        "id": "clean-list-to-focused-detail",
+        "name": "Lista Limpa -> Detalhe Focado na Mesma Página (Drill-In Inline com Esc e Anterior/Próxima)",
+        "anatomy": "A página abre 100% focada na Lista Limpa (KPI Strip + Barra de Filtros/Busca em poço .well-z0 + Tabela em .panel-z2 com cabeçalho sticky Z3 e rodapé de resumo Z3). Ao clicar em qualquer linha (ou abrir ?item=id), a lista dá lugar na mesma página à Visão de Detalhe Focado em largura total: Barra fixa superior ('<- Voltar à lista [Esc]' + 'Item X de N' + '< Anterior | Próxima >') + Card Hero do Documento (com picote técnico se for fatura/edital) + Painel de Cobertura Bancária/Simulação + Barra de Ação com Toast Desfazer.",
+        "anti_slop": "Reduz drasticamente a poluição visual de espremer 3 colunas permanentes em telas financeiras e de licitações."
+      },
+      {
+        "id": "interactive-table-lift",
+        "name": "Tabela Operacional com Hover de Elevação, Filete Focal e Barra de Resumo no Rodapé",
+        "anatomy": "Cada <tr> clicável ganha no :hover background: var(--surface-z3), box-shadow: inset 3px 0 0 var(--primary) e o botão 'Abrir ->' vira uma pílula preenchida. O painel da tabela possui um rodapé (.table-footer em Z3) com soma tabular dos itens filtrados e botão de exportação CSV/OFX.",
+        "anti_slop": "Números e moedas SEMPRE alinhados à direita com .num (Geist/Inter tabular-nums)."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Cabeçalhos ordenáveis usam setas duplas SVG discretas (arrows-sort 13px); linhas de banco usam mini-emblema do banco (BB, CX, ST, BTG) em vez de bolinha genérica.",
+      "avoid": "Proibido colocar 5 botões de ação soltos na última coluna de cada linha."
+    }
+  },
+  {
+    "id": "kanban-drag-drop-workflows",
+    "name": "7. Quadros Kanban, Funis de Disputa/Comercial & Listas Arrastáveis com Teclado",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "detect_keywords": [
+      "kanban",
+      "funil",
+      "etapa",
+      "disputa",
+      "pipeline",
+      "coluna",
+      "arrastar",
+      "drag",
+      "board",
+      "cards",
+      "proposta",
+      "ganhamos"
+    ],
+    "recommended_oss_ids": [
+      "sortablejs",
+      "dnd-kit",
+      "pragmatic-drag-and-drop",
+      "kibo-ui",
+      "dice-ui",
+      "auto-animate"
+    ],
+    "studio_recipes": [
+      {
+        "id": "tactile-kanban-board",
+        "name": "Quadro Kanban em Poços Z0 com Cabeçalho de Soma Viva, Barra de Progresso de Checklist e Steppers",
+        "anatomy": "Cada coluna é um poço .well-z0 (raio 16px, padding 10px) com cabeçalho Z3 mostrando: Ponto da cor da etapa (--chart-1..5) + Nome da etapa + Contador de cards + Soma financeira recalculada ao vivo (R$). Cada card é um .panel-z2 (raio 10px) com: Órgão/Cliente + Chip bipartido [Nota | 96] + Valor em destaque (.num 18px) + Barra fina de progresso de habilitação/checklist + Rodapé com data da sessão e botões '<' / '>' acessíveis por teclado.",
+        "anti_slop": "PROIBIDO card Kanban sem feedback visual ao arrastar (adicione .sortable-ghost com borda tracejada --primary e .sortable-chosen com leve inclinação/sombra Z4)."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Use ícone de grip pontilhado SVG (grip-vertical 14px) no canto do card para sinalizar affordance de arrasto.",
+      "avoid": "Não use alertas vermelhos gritantes em todos os cards; use chip semântico apenas onde há bloqueio real de certidão/prazo."
+    }
+  },
+  {
+    "id": "forms-inputs-pickers-upload",
+    "name": "8. Formulários, Máscaras (CNPJ/R$/Boleto), Seletores de Data, Combobox & Dropzone de Arquivos",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "formulario",
+      "input",
+      "campo",
+      "busca",
+      "filtro",
+      "select",
+      "data",
+      "periodo",
+      "upload",
+      "importar",
+      "arquivo",
+      "pdf",
+      "ofx",
+      "csv",
+      "erp",
+      "mascara",
+      "cnpj",
+      "boleto"
+    ],
+    "recommended_oss_ids": [
+      "coss-ui",
+      "imask-js",
+      "flatpickr",
+      "tom-select",
+      "uppy",
+      "filepond",
+      "react-day-picker",
+      "react-aria",
+      "dice-ui"
+    ],
+    "studio_recipes": [
+      {
+        "id": "tactile-dropzone-importer",
+        "name": "Dropzone de Importação (PDF / OFX / XML / Planilha) com Validação e Ledger de Conferência",
+        "anatomy": "Zona de arrasto em poço .well-z0 com borda tracejada calibrada, emblema central .icon-emblem Duotone (file-spreadsheet / cloud-upload), botões de simulação instantânea com arquivos reais do domínio, barra de progresso por etapa (Leitura -> Extração -> Conciliação) e tabela de prévia com diff antes de gravar.",
+        "anti_slop": "PROIBIDO <input type='file'> nativo cru ou dropzone morta que não processa nem simula a entrada de um arquivo ao clicar."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Inputs de busca trazem lupa SVG 15px à esquerda e badge <kbd>Esc</kbd> ou botão limpar à direita quando preenchidos.",
+      "avoid": "Nunca deixe <input>, <select> ou <textarea> sem classe .field e sem <label> ou aria-label (DA-B9-05)."
+    }
+  },
+  {
+    "id": "calendar-gantt-timelines",
+    "name": "9. Calendários de Prazos, Exportação .ics, Cronogramas Gantt & Linhas do Tempo",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "agenda",
+      "calendario",
+      "prazo",
+      "sessao",
+      "vencimento",
+      "ics",
+      "cronograma",
+      "gantt",
+      "timeline",
+      "historico",
+      "auditoria",
+      "mes",
+      "semana"
+    ],
+    "recommended_oss_ids": [
+      "fullcalendar-core",
+      "frappe-gantt",
+      "schedule-x",
+      "kibo-ui",
+      "react-day-picker"
+    ],
+    "studio_recipes": [
+      {
+        "id": "interactive-deadline-calendar-ics",
+        "name": "Grade Mensal/Semanal de Prazos com Eventos Coloridos por Tipo + Inspector do Dia + Download .ics Real",
+        "anatomy": "Grade de calendário de 7 colunas com células interativas: dias com pregão/vencimento exibem pílulas coloridas por categoria (--chart-1 Sessão PNCP, --danger Certidão/Fatura Vencendo, --chart-5 Recebimento). Clicar em qualquer dia filtra a lista lateral/inferior de compromissos daquele dia e permite baixar o arquivo .ics real (Blob text/calendar).",
+        "anti_slop": "Não entregue uma 'tela de agenda' que é apenas outra tabela igual à anterior sem visão de calendário ou linha do tempo temporal."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Use ícones SVG distintos por tipo de evento na agenda: gavel (sessão de pregão), file-certificate (renovação de certidão), receipt-tax (vencimento financeiro).",
+      "avoid": "Não use o mesmo ícone de calendário em todos os itens dentro da própria página de calendário."
+    }
+  },
+  {
+    "id": "inbox-chat-omnichannel-ai",
+    "name": "10. Inbox Omnichannel (WhatsApp/Site), SLA 24h, Notas Internas & Simulador de Bot/IA",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "atendimento",
+      "inbox",
+      "chat",
+      "conversa",
+      "whatsapp",
+      "mensagem",
+      "bot",
+      "ia",
+      "sla",
+      "transbordo",
+      "fila",
+      "cliente",
+      "resposta",
+      "omnichannel"
+    ],
+    "recommended_oss_ids": [
+      "assistant-ui",
+      "prompt-kit",
+      "kibo-ui",
+      "tiptap",
+      "quill",
+      "auto-animate"
+    ],
+    "studio_recipes": [
+      {
+        "id": "omnichannel-inbox-sla",
+        "name": "Inbox de 2 Colunas (Fila Priorizada por SLA + Conversa Viva) + Drawer de Contexto Sob Demanda",
+        "anatomy": "Coluna 1 (320px): Fila de conversas com avatar geométrico, emblema do canal (WhatsApp verde / Site azul), resumo da última mensagem e .chip-sla com anel SVG de tempo de espera.\nColuna 2 (1fr): Cabeçalho com .chip-sla da Janela 24h Meta (com anel SVG circular) + botão 'Ver Contrato/Histórico' (abre Drawer direito sob demanda sem poluir a tela) + histórico com bolhas do cliente, respostas do bot (com tag da regra acionada) e Notas Internas da equipe (fundo âmbar translúcido + borda pontilhada) + Compositor com alternância 'Responder Cliente' vs 'Nota Interna' e chips de resposta rápida.",
+        "anti_slop": "Substitui as pílulas chapadas '[ 41 min ]', '[ Janela aberta: 22h 18m ]' e '[ • Transbordo ]' por .chip-sla com anel SVG circular e .chip-status com halo e ícone vetorial."
+      },
+      {
+        "id": "transparent-bot-simulator",
+        "name": "Workbench do Bot: Simulador Interativo + Raio-X da Decisão + Base Editável + Telemetria de Resolução",
+        "anatomy": "Painel dividido em Simulador de Conversa à esquerda e Raio-X de Decisão à direita (mostrando barra visual de Confiança 0-100%, Regra # acionada em .chip-kv, Keywords detectadas iluminadas e Ação de Resposta Direta vs Transbordo com .chip-status).",
+        "anti_slop": "Toda pergunta clicada ou digitada no simulador deve recalcular ao vivo o painel de decisão à direita."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Diferencie claramente Canal WhatsApp (SVG brand whatsapp), Canal Web (globe/browser), Bot Automático (cpu/sparkles) e Atendente Humano (user-check).",
+      "avoid": "Nunca use uma bolinha amarela morta sem ícone para indicar Transbordo do Bot para Humano."
+    }
+  },
+  {
+    "id": "overlays-drawers-sheets-toasts",
+    "name": "11. Modais Z4, Drawers Laterais, Bottom Sheets Mobile, Popovers & Toasts com Desfazer",
+    "always_include": true,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "modal",
+      "drawer",
+      "sheet",
+      "bottom sheet",
+      "toast",
+      "desfazer",
+      "undo",
+      "popover",
+      "tooltip",
+      "confirmar",
+      "alerta",
+      "dialog"
+    ],
+    "recommended_oss_ids": [
+      "floating-ui",
+      "vaul",
+      "sonner",
+      "notyf",
+      "driver-js",
+      "base-ui",
+      "gorhom-bottom-sheet"
+    ],
+    "studio_recipes": [
+      {
+        "id": "optimistic-toast-with-undo-timer",
+        "name": "Toast Z4 com Barra de Contagem Regressiva e Botão Desfazer Real",
+        "anatomy": "Card flutuante em --surface-z4 com borda --border-strong, ícone semântico em .icon-emblem compacto (28x28px), mensagem factual ('Pagamento Fatura #4812 · R$ 48.200,00 confirmado'), botão 'Desfazer' que restaura o estado anterior da tela ao clicar e linha inferior de 2px que encolhe em 6 segundos.",
+        "anti_slop": "Toda ação crítica do protótipo (pagar, baixar, renovar, mover card, aprovar) deve disparar feedback real com Desfazer funcional."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Botões de fechar modal/drawer usam ícone X SVG 16px em botão 32x32px com tooltip 'Fechar (Esc)'.",
+      "avoid": "Nunca empilhe um modal em cima de outro modal (DA-B2-07)."
+    }
+  },
+  {
+    "id": "documents-tickets-ledgers-import",
+    "name": "12. Faturas com Picote Técnico, Boletos Copiáveis, Cofre de Certidões & Matriz de Conformidade",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "documento",
+      "fatura",
+      "boleto",
+      "nota fiscal",
+      "bilhete",
+      "certidao",
+      "habilitacao",
+      "matriz",
+      "contrato",
+      "pdf",
+      "comprovante",
+      "codigo de barras",
+      "linha digitavel"
+    ],
+    "recommended_oss_ids": [
+      "pdf-js",
+      "papaparse",
+      "imask-js",
+      "coss-ui",
+      "tabler-icons"
+    ],
+    "studio_recipes": [
+      {
+        "id": "perforated-document-ticket",
+        "name": "Card de Documento Crítico (Fatura / Edital) com Picote Técnico e Linha Digitável em Mono",
+        "anatomy": "Cabeçalho do documento em .card-brand-hero + linha divisória de picote técnico ( entalhes semicirculares 14px nas bordas laterais + linha tracejada 1.5px --border-strong ) + bloco de código técnico/linha digitável em --font-mono (.mono) dentro de poço .well-z0 com botão 'Copiar código' que muda para 'Copiado ✓'.",
+        "anti_slop": "Reserva a metáfora de bilhete/picote apenas para documentos reais (fatura, voucher, edital), mantendo o resto do sistema 100% geométrico."
+      },
+      {
+        "id": "compliance-cross-matrix",
+        "name": "Matriz Cruzada Certidão × Edital (Visão de Impacto de Habilitação)",
+        "anatomy": "Grade onde as linhas são os Documentos/Certidões e as colunas são os Editais/Contratos em disputa: células mostram check verde (Válida até a sessão), alerta âmbar (Vence antes da sessão) ou bloqueio coral (Vencida — trava habilitação), permitindo filtrar ou clicar para renovar.",
+        "anti_slop": "Mostra o impacto real de negócio em 1 segundo em vez de apenas listar datas soltas."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Certidões usam file-certificate / shield-check / shield-exclamation; faturas usam file-invoice / receipt-tax.",
+      "avoid": "Não use warning-circle ('!') genérico para representar um documento jurídico ou fiscal."
+    }
+  },
+  {
+    "id": "auth-onboarding-governance-settings",
+    "name": "13. Acesso Split-Screen, Seletor de Perfil, 2FA/OTP & Governança/Preferências",
+    "always_include": false,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "login",
+      "entrada",
+      "acesso",
+      "senha",
+      "2fa",
+      "otp",
+      "perfil",
+      "conta",
+      "preferencias",
+      "configuracoes",
+      "permissao",
+      "governanca",
+      "auditoria",
+      "sessao"
+    ],
+    "recommended_oss_ids": [
+      "input-otp",
+      "coss-ui",
+      "shadcn-ui",
+      "tailark"
+    ],
+    "studio_recipes": [
+      {
+        "id": "executive-split-auth-2fa",
+        "name": "Tela de Entrada Split-Screen com Seletor Rápido de Perfil Operacional + 2FA de 6 Dígitos",
+        "anatomy": "Coluna Esquerda (Superfície Institucional da Marca com subtom marinho/brand + resumo de status operacional do ambiente e selo de segurança); Coluna Direita (Cards de troca rápida de perfil com avatar/cargo + formulário com labels explícitos + 6 células OTP .mono com auto-focus).",
+        "anti_slop": "Nunca entregue tela de login pelada com apenas 2 inputs flutuando num fundo vazio."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Ícones distintos por perfil de acesso (crown/briefcase para Sócios, calculator/receipt para Financeiro, gavel para Licitações, headset para Atendimento).",
+      "avoid": "Não use o mesmo bonequinho genérico (ph-user) para todos os 5 perfis da empresa."
+    }
+  },
+  {
+    "id": "desktop-native-workbenches",
+    "name": "14. Ergonomia Desktop Avançada, Atalhos de Teclado (<kbd>), Multi-Panes & Status Bar",
+    "always_include": false,
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "detect_keywords": [
+      "desktop",
+      "electron",
+      "tauri",
+      "janela",
+      "painel",
+      "workbench",
+      "atalho",
+      "teclado",
+      "split",
+      "redimensionavel",
+      "totvs"
+    ],
+    "recommended_oss_ids": [
+      "tinykeys",
+      "ninja-keys",
+      "dockview",
+      "react-resizable-panels",
+      "split-js",
+      "tauri-window-api",
+      "electron-frameless"
+    ],
+    "studio_recipes": [
+      {
+        "id": "discoverable-keyboard-ergonomics",
+        "name": "Atalhos de Teclado Descobertos em Toda Ação Repetitiva (<kbd>)",
+        "anatomy": "Exiba tags <kbd> discretas nos controles principais: '[' para recolher/expandir Sidebar, '⌘K' para busca global, 'Esc' para voltar à lista ou fechar modal, '↑/↓' ou 'J/K' para navegar itens no Detalhe Focado.",
+        "anti_slop": "Todo atalho exibido num <kbd> na interface deve estar realmente conectado no JavaScript!"
+      }
+    ],
+    "icon_curation": {
+      "rule": "Botão de recolher sidebar usa sidebar-simple / caret-double-left com rotação suave de 180deg quando colapsado.",
+      "avoid": "Nunca esconda o botão de reabrir a sidebar quando ela estiver no modo rail de 68px."
+    }
+  },
+  {
+    "id": "mobile-native-pwa-touch",
+    "name": "15. App Mobile Executivo / Operacional (Tab Bar 4-5 Abas, Bottom Sheet 1-Toque & Safe Areas)",
+    "always_include": false,
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "detect_keywords": [
+      "mobile",
+      "celular",
+      "app",
+      "socios",
+      "ios",
+      "android",
+      "pwa",
+      "tab bar",
+      "pulso",
+      "polegar",
+      "touch",
+      "aprovacao"
+    ],
+    "recommended_oss_ids": [
+      "vaul",
+      "konsta-ui",
+      "swiftui-native",
+      "jetpack-compose-m3",
+      "flutter-m3-adaptive",
+      "gorhom-bottom-sheet",
+      "shopify-flashlist",
+      "zeego"
+    ],
+    "studio_recipes": [
+      {
+        "id": "executive-mobile-pulse-sheet",
+        "name": "App Executivo Mobile com Card-Rei (.card-brand-hero), Emblemas Spotlight (.icon-emblem) e Decisão via Bottom Sheet",
+        "anatomy": "Header compacto com identidade da marca + Segmented Control de Sócio/Visão (alvos >= 44px) + Card-Rei (.card-brand-hero) com Saldo Consolidado e 3 mini-métricas + Lista de Decisões do Dia com .icon-emblem específicos (fatura aérea, certidão, VIP) e .chip-sla com anel SVG + Bottom Sheet Z4 com alça (drag handle) para aprovar pagamento ou enviar resumo WhatsApp em 1 toque + Tab Bar inferior fixa de 4 destinos (height: 68px, padding-bottom seguro >= 96px no main).",
+        "anti_slop": "PROIBIDO usar quadrados marrons chapados com ícone de templo grego em todas as linhas do mobile (como no Print 4) ou deixar a Tab Bar cortar o último card (DA-FIXED-OVERLAP)."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Na Tab Bar inferior mobile, a aba ativa usa ícone preenchido/duotone + cor --accent/--primary + ponto ou pílula luminosa superior; abas inativas usam traço regular 1.75px.",
+      "avoid": "Nunca coloque mais de 5 abas na Tab Bar inferior nem alvos menores que 44x44px."
+    }
+  },
+  {
+    "id": "motion-microinteractions-feedback",
+    "name": "16. Micro-Interações, Transição Lista<->Detalhe, Auto-Animação de Listas & Press Tátil",
+    "always_include": true,
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "detect_keywords": [
+      "animacao",
+      "transicao",
+      "motion",
+      "hover",
+      "click",
+      "interacao",
+      "filtro",
+      "skeleton",
+      "loading"
+    ],
+    "recommended_oss_ids": [
+      "auto-animate",
+      "motion-primitives",
+      "number-flow",
+      "open-props"
+    ],
+    "studio_recipes": [
+      {
+        "id": "choreographed-drill-in-motion",
+        "name": "Transição Coreografada Lista Limpa <-> Detalhe Focado (180ms cubic-bezier(0.16, 1, 0.3, 1))",
+        "anatomy": "Ao alternar entre a Lista Limpa e o Detalhe Focado na mesma página, aplique uma entrada suave de 180ms (opacity 0->1 + translateY(6px->0)) respeitando prefers-reduced-motion, mantendo o scroll no topo do painel.",
+        "anti_slop": "PROIBIDO transition: all, hover:scale-105 em cards de tabela ou loops infinitos decorativos (DA-B6-01, DA-B6-04)."
+      }
+    ],
+    "icon_curation": {
+      "rule": "Setas de ação ('Abrir ->', '<- Voltar à lista') deslocam 2px horizontalmente no :hover com transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1).",
+      "avoid": "Nunca anime width/height/top/left diretamente; anime apenas transform e opacity."
+    }
+  }
+]

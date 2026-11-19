@@ -34,7 +34,8 @@
     "install": "npx shadcn@latest add button dialog",
     "usage": "registry",
     "use_case": "Primitivos copiaveis, acessiveis, para re-tematizar com os tokens do projeto",
-    "a11y_notes": "Base UI, Radix ou React Aria por baixo; teclado e foco ja encaminhados"
+    "a11y_notes": "Base UI, Radix ou React Aria por baixo; teclado e foco ja encaminhados",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "coss-ui",
@@ -69,7 +70,8 @@
     "install": "npx shadcn@latest add https://coss.com/ui/r/input.json",
     "usage": "registry",
     "use_case": "Inputs, seletores e microinteracoes de produto. O repositorio antigo origin-space/originui aponta para ca",
-    "a11y_notes": "Confirme o LICENSE no commit copiado; o snapshot legado Origin fica em apps/origin"
+    "a11y_notes": "Confirme o LICENSE no commit copiado; o snapshot legado Origin fica em apps/origin",
+    "taxonomy_category": "forms-inputs-pickers-upload"
   },
   {
     "id": "kibo-ui",
@@ -104,7 +106,8 @@
     "install": "npx shadcn@latest add @kibo-ui/gantt",
     "usage": "registry",
     "use_case": "Widgets densos de operacao: Gantt, Kanban, arvore de arquivos, dropzone",
-    "a11y_notes": "Compoe primitivos shadcn; revise foco em drag-and-drop"
+    "a11y_notes": "Compoe primitivos shadcn; revise foco em drag-and-drop",
+    "taxonomy_category": "kanban-drag-drop-workflows"
   },
   {
     "id": "dice-ui",
@@ -138,7 +141,8 @@
     "install": "npx shadcn@latest add @diceui/data-table",
     "usage": "registry",
     "use_case": "Tabelas, combobox e padroes de produto com acessibilidade explicita",
-    "a11y_notes": "Documenta teclado nos componentes de tabela e menu"
+    "a11y_notes": "Documenta teclado nos componentes de tabela e menu",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "base-ui",
@@ -173,7 +177,8 @@
     "install": "npm install @base-ui/react",
     "usage": "dependency",
     "use_case": "Primitivos sem estilo para um design system proprio",
-    "a11y_notes": "Foco, typeahead e dismiss sao responsabilidade da lib"
+    "a11y_notes": "Foco, typeahead e dismiss sao responsabilidade da lib",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "ark-ui",
@@ -208,7 +213,8 @@
     "install": "npm install @ark-ui/react",
     "usage": "dependency",
     "use_case": "Headless multi-framework quando o projeto nao e so React",
-    "a11y_notes": "Maquina de estado Zag.js; confira a porta da stack"
+    "a11y_notes": "Maquina de estado Zag.js; confira a porta da stack",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "react-aria",
@@ -242,7 +248,8 @@
     "install": "npm install react-aria-components",
     "usage": "dependency",
     "use_case": "Datas, grids e combobox com leitor de tela e RTL",
-    "a11y_notes": "Padrao mais completo para calendario e selecao complexa"
+    "a11y_notes": "Padrao mais completo para calendario e selecao complexa",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "cmdk",
@@ -274,7 +281,8 @@
     "install": "npm install cmdk",
     "usage": "dependency",
     "use_case": "Palette Cmd/Ctrl+K em desktop e sistemas",
-    "a11y_notes": "Setas, Enter e Escape precisam permanecer ligados"
+    "a11y_notes": "Setas, Enter e Escape precisam permanecer ligados",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "dockview",
@@ -307,7 +315,8 @@
     "install": "npm install dockview-react",
     "usage": "dependency",
     "use_case": "Painéis e abas arrastaveis no estilo IDE",
-    "a11y_notes": "Garanta atalho de teclado alem do drag"
+    "a11y_notes": "Garanta atalho de teclado alem do drag",
+    "taxonomy_category": "desktop-native-workbenches"
   },
   {
     "id": "react-resizable-panels",
@@ -341,7 +350,8 @@
     "install": "npm install react-resizable-panels",
     "usage": "dependency",
     "use_case": "Divisao redimensionavel de master-detail sem animar o drag",
-    "a11y_notes": "Exponha teclado para o separador"
+    "a11y_notes": "Exponha teclado para o separador",
+    "taxonomy_category": "desktop-native-workbenches"
   },
   {
     "id": "tanstack-table",
@@ -375,7 +385,8 @@
     "install": "npm install @tanstack/react-table",
     "usage": "dependency",
     "use_case": "Tabela densa com ordenacao, filtro e colunas fixas",
-    "a11y_notes": "Mantenha <table> real e numeros alinhados a direita"
+    "a11y_notes": "Mantenha <table> real e numeros alinhados a direita",
+    "taxonomy_category": "data-tables-lists-progressive"
   },
   {
     "id": "motion-primitives",
@@ -408,7 +419,8 @@
     "install": "npx motion-primitives@latest add dialog",
     "usage": "registry",
     "use_case": "Movimento interrompivel para superficies de leitura ou persuasao, nunca como enfeite de cockpit",
-    "a11y_notes": "Respeite prefers-reduced-motion e o guia 10"
+    "a11y_notes": "Respeite prefers-reduced-motion e o guia 10",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "magic-ui",
@@ -439,7 +451,8 @@
     "install": "npx shadcn@latest add @magicui/marquee",
     "usage": "registry",
     "use_case": "Pecas de impacto para landing. O catalogo Pro e pago e fica de fora",
-    "a11y_notes": "Vetado em modo Operate. Reduza a um signature move"
+    "a11y_notes": "Vetado em modo Operate. Reduza a um signature move",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "kokonut-ui",
@@ -470,7 +483,8 @@
     "install": "npx shadcn@latest add @kokonutui/particle-button",
     "usage": "registry",
     "use_case": "Pecas MIT de produto com Motion. Kokonut Pro e pago",
-    "a11y_notes": "Nao instale o botao de particulas num fluxo operacional"
+    "a11y_notes": "Nao instale o botao de particulas num fluxo operacional",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "cult-ui",
@@ -500,7 +514,8 @@
     "install": "npx shadcn@latest add @cult-ui/shift-card",
     "usage": "registry",
     "use_case": "Composicoes animadas MIT. Confirme o LICENSE no repo antes de copiar",
-    "a11y_notes": "Somente Persuade, e ainda assim um gesto por tela"
+    "a11y_notes": "Somente Persuade, e ainda assim um gesto por tela",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "hyperui",
@@ -534,7 +549,8 @@
     "install": "copiar o markup da pagina do componente",
     "usage": "registry",
     "use_case": "Blocos Tailwind v4 de marketing e comercio, sem pacote",
-    "a11y_notes": "Reescreva textos e tokens; o HTML copiado ainda precisa de label e foco"
+    "a11y_notes": "Reescreva textos e tokens; o HTML copiado ainda precisa de label e foco",
+    "taxonomy_category": "auth-onboarding-governance-settings"
   },
   {
     "id": "animata",
@@ -564,7 +580,8 @@
     "install": "copiar o componente e re-tematizar",
     "usage": "registry",
     "use_case": "Animacoes de apresentacao. Confirme o arquivo LICENSE no commit",
-    "a11y_notes": "Nao usar em Operate"
+    "a11y_notes": "Nao usar em Operate",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "mantine",
@@ -596,7 +613,8 @@
     "install": "npm install @mantine/core @mantine/hooks",
     "usage": "dependency",
     "use_case": "Kit de aplicacao completo quando o time nao quer montar primitivos",
-    "a11y_notes": "Dates e modais sao fortes; ainda assim re-tema cores e raios"
+    "a11y_notes": "Dates e modais sao fortes; ainda assim re-tema cores e raios",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "heroui",
@@ -629,7 +647,8 @@
     "install": "npm install @heroui/react",
     "usage": "dependency",
     "use_case": "Kit React estilizado. So vale se o projeto aceitar a linguagem visual dele por inteiro",
-    "a11y_notes": "Nao misture HeroUI cru com outro kit na mesma superficie"
+    "a11y_notes": "Nao misture HeroUI cru com outro kit na mesma superficie",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "tremor",
@@ -661,7 +680,8 @@
     "install": "npm install @tremor/react",
     "usage": "dependency",
     "use_case": "Graficos e KPIs de dashboard. Confirme Apache-2.0 no pacote instalado",
-    "a11y_notes": "Rotule a metrica, nao o tipo do grafico"
+    "a11y_notes": "Rotule a metrica, nao o tipo do grafico",
+    "taxonomy_category": "charts-telemetry-financial"
   },
   {
     "id": "reka-ui",
@@ -693,7 +713,8 @@
     "install": "npm install reka-ui",
     "usage": "dependency",
     "use_case": "Primitivos Vue acessiveis, sucessores do Radix Vue",
-    "a11y_notes": "Mesma expectativa de teclado dos primitivos Radix"
+    "a11y_notes": "Mesma expectativa de teclado dos primitivos Radix",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "nuxt-ui",
@@ -724,7 +745,8 @@
     "install": "npm install @nuxt/ui",
     "usage": "dependency",
     "use_case": "Kit de aplicacao Nuxt quando o projeto ja e Nuxt",
-    "a11y_notes": "Re-tema antes de misturar blocos de marketing"
+    "a11y_notes": "Re-tema antes de misturar blocos de marketing",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "bits-ui",
@@ -756,7 +778,8 @@
     "install": "npm install bits-ui",
     "usage": "dependency",
     "use_case": "Headless Svelte para um visual proprio",
-    "a11y_notes": "Foco e dismiss vem da lib"
+    "a11y_notes": "Foco e dismiss vem da lib",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "kobalte",
@@ -787,7 +810,8 @@
     "install": "npm install @kobalte/core",
     "usage": "dependency",
     "use_case": "Primitivos Solid acessiveis",
-    "a11y_notes": "Nao porte visual de React sem rever o foco"
+    "a11y_notes": "Nao porte visual de React sem rever o foco",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "rn-reusables",
@@ -823,7 +847,8 @@
     "install": "npx @react-native-reusables/cli@latest add button",
     "usage": "registry",
     "use_case": "shadcn para React Native com NativeWind",
-    "a11y_notes": "Alvo de toque 44 no iOS e 48 no Android continua obrigatorio"
+    "a11y_notes": "Alvo de toque 44 no iOS e 48 no Android continua obrigatorio",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "gluestack",
@@ -857,7 +882,8 @@
     "install": "npx gluestack-ui init",
     "usage": "registry",
     "use_case": "Componentes copiaveis para Expo com NativeWind",
-    "a11y_notes": "Nao copie o tema padrao; mapeie para a Biblia"
+    "a11y_notes": "Nao copie o tema padrao; mapeie para a Biblia",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "tamagui",
@@ -893,7 +919,8 @@
     "install": "npm install tamagui",
     "usage": "dependency",
     "use_case": "Estilo compartilhado web e nativo quando o produto e os dois",
-    "a11y_notes": "Sheets nativos ainda pedem o gesto da plataforma"
+    "a11y_notes": "Sheets nativos ainda pedem o gesto da plataforma",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "gorhom-sheet",
@@ -927,7 +954,8 @@
     "install": "npm install @gorhom/bottom-sheet",
     "usage": "dependency",
     "use_case": "Sheet arrastavel com snap points no app nativo",
-    "a11y_notes": "Ofereca fechar por botao, nao so pelo gesto"
+    "a11y_notes": "Ofereca fechar por botao, nao so pelo gesto",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "zeego",
@@ -959,7 +987,8 @@
     "install": "npm install zeego",
     "usage": "dependency",
     "use_case": "Menus nativos de iOS e Android em vez de um popover web",
-    "a11y_notes": "Usa o menu do sistema; nao reestilize o popup nativo"
+    "a11y_notes": "Usa o menu do sistema; nao reestilize o popup nativo",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "flashlist",
@@ -992,7 +1021,8 @@
     "install": "npm install @shopify/flash-list",
     "usage": "dependency",
     "use_case": "Listas longas sem perder o scroll nativo",
-    "a11y_notes": "Nao anime a entrada de cada linha"
+    "a11y_notes": "Nao anime a entrada de cada linha",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "forui",
@@ -1025,7 +1055,8 @@
     "install": "flutter pub add forui",
     "usage": "dependency",
     "use_case": "Kit Flutter no espirito shadcn. Confirme o LICENSE no pubspec",
-    "a11y_notes": "Mapeie tokens para o ThemeData, nao pinte widget por widget"
+    "a11y_notes": "Mapeie tokens para o ThemeData, nao pinte widget por widget",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "shadcn-flutter",
@@ -1059,7 +1090,8 @@
     "install": "flutter pub add shadcn_ui",
     "usage": "dependency",
     "use_case": "Port Flutter de componentes shadcn, licenca MIT no pub.dev",
-    "a11y_notes": "Semantics de Flutter continuam obrigatorios"
+    "a11y_notes": "Semantics de Flutter continuam obrigatorios",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "compose-unstyled",
@@ -1092,7 +1124,8 @@
     "install": "implementation do modulo publicado no README",
     "usage": "dependency",
     "use_case": "Primitivos Compose sem o visual Material, quando a marca pede outra superficie",
-    "a11y_notes": "Confirme a licenca no commit e mantenha predictive back"
+    "a11y_notes": "Confirme a licenca no commit e mantenha predictive back",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "material3",
@@ -1130,7 +1163,8 @@
     "install": "androidx.compose.material3:material3",
     "usage": "platform",
     "use_case": "Componentes e motion do sistema Android. Prefira isto a um kit web portado",
-    "a11y_notes": "TalkBack, 48dp e predictive back sao do sistema"
+    "a11y_notes": "TalkBack, 48dp e predictive back sao do sistema",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "swiftui",
@@ -1171,7 +1205,8 @@
     "install": "framework do SDK",
     "usage": "platform",
     "use_case": "Controles e transicoes do iOS/macOS. Nao e um pacote para copiar",
-    "a11y_notes": "Use os componentes do sistema e Reduce Motion"
+    "a11y_notes": "Use os componentes do sistema e Reduce Motion",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "swiftuix",
@@ -1203,7 +1238,8 @@
     "install": "dependencia Swift Package",
     "usage": "dependency",
     "use_case": "Extensoes SwiftUI quando o SDK nao cobre um controle",
-    "a11y_notes": "Nao substitua NavigationStack por um container caseiro"
+    "a11y_notes": "Nao substitua NavigationStack por um container caseiro",
+    "taxonomy_category": "mobile-native-pwa-touch"
   },
   {
     "id": "component-gallery",
@@ -1237,7 +1273,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Indice de padroes e de quais design systems os implementam. Nao tem codigo para copiar",
-    "a11y_notes": "Use so para achar o nome certo do padrao"
+    "a11y_notes": "Use so para achar o nome certo do padrao",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "mobbin",
@@ -1276,7 +1313,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Fluxos reais de apps. Serve para estudar hierarquia, nunca para copiar tela",
-    "a11y_notes": "Captura nao revela foco, leitor de tela nem licenca"
+    "a11y_notes": "Captura nao revela foco, leitor de tela nem licenca",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "refero",
@@ -1309,7 +1347,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Referencias de produto web por tipo de tela",
-    "a11y_notes": "So composicao. O codigo continua vindo de uma lib com licenca"
+    "a11y_notes": "So composicao. O codigo continua vindo de uma lib com licenca",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "godly",
@@ -1339,7 +1378,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Landings premiadas. Util para um signature move, toxico como receita de sistema",
-    "a11y_notes": "Ignore WebGL e scroll hijack em produto operacional"
+    "a11y_notes": "Ignore WebGL e scroll hijack em produto operacional",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "pageflows",
@@ -1374,7 +1414,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Videos de fluxo real, sobretudo mobile",
-    "a11y_notes": "Observe a ordem das decisoes, nao a animacao decorativa"
+    "a11y_notes": "Observe a ordem das decisoes, nao a animacao decorativa",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "screenlane",
@@ -1408,7 +1449,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Telas mobile por categoria",
-    "a11y_notes": "Referencia de layout apenas"
+    "a11y_notes": "Referencia de layout apenas",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "21st-dev",
@@ -1438,7 +1480,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Vitrine da comunidade. Cada peca tem dono e licenca diferentes",
-    "a11y_notes": "Nao trate o site como registry MIT"
+    "a11y_notes": "Nao trate o site como registry MIT",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "aceternity",
@@ -1469,7 +1512,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Visual famoso e licenca propria. Nao e MIT: da para usar em produto final sob a licenca deles, e proibido redistribuir o fonte",
-    "a11y_notes": "Nao copiar para a skill, para um template ou para outro registry"
+    "a11y_notes": "Nao copiar para a skill, para um template ou para outro registry",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "react-bits",
@@ -1498,7 +1542,8 @@
     "install": "",
     "usage": "end-product",
     "use_case": "Pode entrar num app. Nao pode ser revendido nem republicado como componente. Falha no portao MIT/Apache/BSD/ISC",
-    "a11y_notes": "Commons Clause bloqueia o uso como registry da skill"
+    "a11y_notes": "Commons Clause bloqueia o uso como registry da skill",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "tailwind-plus",
@@ -1530,7 +1575,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Catalogo pago. Nao e open source, mesmo quando a pagina publica mostra preview",
-    "a11y_notes": "So olhar a estrutura se a equipe tiver licenca"
+    "a11y_notes": "So olhar a estrutura se a equipe tiver licenca",
+    "taxonomy_category": "auth-onboarding-governance-settings"
   },
   {
     "id": "apple-hig",
@@ -1568,7 +1614,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Anatomia de iOS, iPadOS e macOS. Use os controles do sistema. Nao porte Liquid Glass para web ou Android",
-    "a11y_notes": "Dynamic Type, VoiceOver e Reduce Motion sao parte do guia"
+    "a11y_notes": "Dynamic Type, VoiceOver e Reduce Motion sao parte do guia",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "fluent-2",
@@ -1600,7 +1647,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Anatomia de Windows e de desktop denso. Nao e um kit para colar num ERP web",
-    "a11y_notes": "Foco, teclado e densidade estao no guia"
+    "a11y_notes": "Foco, teclado e densidade estao no guia",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "geist",
@@ -1632,7 +1680,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Estudar tipo, dark mode e shell de web app. Nao adotar a pele da Vercel como identidade do produto",
-    "a11y_notes": "Contraste do tema ainda passa pelo audit_contrast.py"
+    "a11y_notes": "Contraste do tema ainda passa pelo audit_contrast.py",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "primer",
@@ -1663,7 +1712,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Estudar sistema web denso e responsivo. Dependencia so se o produto ja e uma superficie GitHub",
-    "a11y_notes": "O codigo e aberto; so vira dependencia se a superficie ja e GitHub. Confirme o LICENSE no commit"
+    "a11y_notes": "O codigo e aberto; so vira dependencia se a superficie ja e GitHub. Confirme o LICENSE no commit",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "polaris",
@@ -1696,7 +1746,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Estudar painel administrativo e fluxo desktop/mobile. Instalar Polaris quando o app e de fato Shopify",
-    "a11y_notes": "App Shopify herda o shell da plataforma em vez de reinventar sidebar"
+    "a11y_notes": "App Shopify herda o shell da plataforma em vez de reinventar sidebar",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "aria-apg",
@@ -1733,7 +1784,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Padrao de teclado e semantica. O componente implementa o padrao; o APG nao e uma biblioteca",
-    "a11y_notes": "Fonte primaria para foco, nome e teclado"
+    "a11y_notes": "Fonte primaria para foco, nome e teclado",
+    "taxonomy_category": "forms-inputs-pickers-upload"
   },
   {
     "id": "laws-of-ux",
@@ -1770,7 +1822,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Leis cognitivas para justificar hierarquia e alcance. Nao e catalogo de componentes",
-    "a11y_notes": "Fitts explica o terco inferior no mobile e o alvo grande no desktop"
+    "a11y_notes": "Fitts explica o terco inferior no mobile e o alvo grande no desktop",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "inclusive-components",
@@ -1804,7 +1857,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Arquitetura inclusiva de componentes web, um padrao por vez",
-    "a11y_notes": "Preferir o padrao do artigo a um widget generico"
+    "a11y_notes": "Preferir o padrao do artigo a um widget generico",
+    "taxonomy_category": "forms-inputs-pickers-upload"
   },
   {
     "id": "banani",
@@ -1840,7 +1894,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Telas reais de apps, sem paywall. Estudar o fluxo. Nao exportar o HTML que a IA do site gera",
-    "a11y_notes": "Captura nao mostra foco nem leitor de tela"
+    "a11y_notes": "Captura nao mostra foco nem leitor de tela",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "60fps",
@@ -1876,7 +1931,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Estudar microinteracao real e filtrar pelo guia 10. O que estiver atras do plano pago nao entra como fonte",
-    "a11y_notes": "Reduced motion continua obrigatorio mesmo quando a referencia e exuberante"
+    "a11y_notes": "Reduced motion continua obrigatorio mesmo quando a referencia e exuberante",
+    "taxonomy_category": "motion-microinteractions-feedback"
   },
   {
     "id": "pixlpin",
@@ -1906,7 +1962,8 @@
     "install": "",
     "usage": "reference",
     "use_case": "Pecas de campanha, poster e motion. Nao e anatomia de app operacional nem de sistema",
-    "a11y_notes": "Nao usar como padrao de estrutura"
+    "a11y_notes": "Nao usar como padrao de estrutura",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "apache-echarts",
@@ -1951,7 +2008,8 @@
     "install": "npm install echarts",
     "usage": "dependency",
     "use_case": "Graficos financeiros, curvas de caixa, series temporais, comparativos e visualizacoes interativas de alta densidade em HTML puro ou qualquer framework",
-    "a11y_notes": "Suporta aria.enabled=true para gerar descricoes acessiveis e padronizacao de cores via tema proprio da Biblia"
+    "a11y_notes": "Suporta aria.enabled=true para gerar descricoes acessiveis e padronizacao de cores via tema proprio da Biblia",
+    "taxonomy_category": "charts-telemetry-financial"
   },
   {
     "id": "tabulator-tables",
@@ -1989,7 +2047,8 @@
     "install": "npm install tabulator-tables",
     "usage": "dependency",
     "use_case": "Tabelas interativas densas em JavaScript/HTML puro com ordenacao, filtros por coluna, congelamento de colunas e virtualizacao",
-    "a11y_notes": "Re-tematize as bordas, alinhamento numerico a direita e tabular-nums pelos tokens da Biblia"
+    "a11y_notes": "Re-tematize as bordas, alinhamento numerico a direita e tabular-nums pelos tokens da Biblia",
+    "taxonomy_category": "data-tables-lists-progressive"
   },
   {
     "id": "sortablejs",
@@ -2028,7 +2087,8 @@
     "install": "npm install sortablejs",
     "usage": "dependency",
     "use_case": "Arraste fluido de cards entre colunas de funil/Kanban e reordenacao de filas em HTML puro, touch e desktop",
-    "a11y_notes": "Combine sempre com acao alternativa por teclado ou menu contextual para mover etapa sem mouse"
+    "a11y_notes": "Combine sempre com acao alternativa por teclado ou menu contextual para mover etapa sem mouse",
+    "taxonomy_category": "kanban-drag-drop-workflows"
   },
   {
     "id": "floating-ui",
@@ -2068,7 +2128,8 @@
     "install": "npm install @floating-ui/dom",
     "usage": "dependency",
     "use_case": "Posicionamento inteligente sem corte de viewport para popovers, menus contextuais, tooltips e seletores em HTML/JS ou React",
-    "a11y_notes": "Sempre gerencie foco, aria-expanded e fechamento por Esc junto do posicionamento"
+    "a11y_notes": "Sempre gerencie foco, aria-expanded e fechamento por Esc junto do posicionamento",
+    "taxonomy_category": "overlays-drawers-sheets-toasts"
   },
   {
     "id": "ninja-keys",
@@ -2104,7 +2165,8 @@
     "install": "npm install ninja-keys",
     "usage": "dependency",
     "use_case": "Command Palette Cmd+K / Ctrl+K como Web Component nativo para HTML puro, sem precisar de React",
-    "a11y_notes": "Navegacao integral por setas, Enter e Esc; re-tematize as variaveis CSS --ninja-* com tokens.css"
+    "a11y_notes": "Navegacao integral por setas, Enter e Esc; re-tematize as variaveis CSS --ninja-* com tokens.css",
+    "taxonomy_category": "shell-navigation"
   },
   {
     "id": "phosphor-icons",
@@ -2147,7 +2209,8 @@
     "install": "npm install @phosphor-icons/core",
     "usage": "dependency",
     "use_case": "Familia flexivel de icones SVG (regular, bold, duotone, fill) com consistencia optica para sistemas desktop e mobile",
-    "a11y_notes": "Use regular/duotone no padrao, fill no ativo e aria-hidden=true quando acompanhado de texto"
+    "a11y_notes": "Use regular/duotone no padrao, fill no ativo e aria-hidden=true quando acompanhado de texto",
+    "taxonomy_category": "icons-emblems-avatars"
   },
   {
     "id": "lucide-icons",
@@ -2188,6 +2251,1660 @@
     "install": "npm install lucide",
     "usage": "dependency",
     "use_case": "Icones SVG limpos e leves (1.5px-2px) com recorte cirurgico de sprites SVG para prototipos HTML ou apps web",
-    "a11y_notes": "Emparelhe stroke-width com o peso tipografico e prefira sprites SVG enxutos ao bundle inteiro"
+    "a11y_notes": "Emparelhe stroke-width com o peso tipografico e prefira sprites SVG enxutos ao bundle inteiro",
+    "taxonomy_category": "icons-emblems-avatars"
+  },
+  {
+    "id": "solar-icons-duotone",
+    "name": "Solar Icons (Bold Duotone & Line Duotone SVGs)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://github.com/480Design/Solar-Icon-Set",
+    "repo": "https://github.com/480Design/Solar-Icon-Set",
+    "needs": [
+      "icon",
+      "icone",
+      "duotone",
+      "svg",
+      "emblem",
+      "kpi icon",
+      "badge icon"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @iconify-json/solar iconify-icon",
+    "usage": "dependency",
+    "use_case": "4.800+ icones SVG Duotone em 2 camadas (Bold Duotone / Line Duotone) com profundidade real para emblemas .icon-emblem e KPIs",
+    "a11y_notes": "Renderize como <svg> real ou <iconify-icon> com aria-hidden='true' para nitidez vetorial sem borrao de webfont"
+  },
+  {
+    "id": "tabler-icons",
+    "name": "Tabler Icons (5700+ Crisp 1.75px SVGs)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://tabler.io/icons",
+    "repo": "https://github.com/tabler/tabler-icons",
+    "needs": [
+      "icon",
+      "icone",
+      "erp",
+      "financeiro",
+      "fatura",
+      "certidao",
+      "pregao",
+      "svg"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @tabler/icons-react",
+    "usage": "dependency",
+    "use_case": "5.700+ icones vetoriais de alta precisao operacional (receipt-tax, file-invoice, file-certificate, gavel, plane-departure, building-bank)",
+    "a11y_notes": "Permite calibrar stroke-width='1.75' diretamente no SVG sem aberracao cromatica"
+  },
+  {
+    "id": "heroicons",
+    "name": "Heroicons (Outline 24px, Solid 20px & Micro 16px)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "tailwind",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://heroicons.com",
+    "repo": "https://github.com/tailwindlabs/heroicons",
+    "needs": [
+      "icon",
+      "icone",
+      "micro icon",
+      "badge icon",
+      "chip",
+      "pill",
+      "svg"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @heroicons/react",
+    "usage": "dependency",
+    "use_case": "Conjunto da Tailwind Labs com variante Micro 16x16 desenhada especificamente para dentro de badges, chips de status e botoes compactos",
+    "a11y_notes": "SVGs puros otimizados para 16px, 20px e 24px"
+  },
+  {
+    "id": "radix-icons",
+    "name": "Radix Icons (15x15 Dense UI SVGs)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://www.radix-ui.com/icons",
+    "repo": "https://github.com/radix-ui/icons",
+    "needs": [
+      "icon",
+      "icone",
+      "dense",
+      "toolbar",
+      "table",
+      "badge",
+      "desktop"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install @radix-ui/react-icons",
+    "usage": "dependency",
+    "use_case": "Icones cirurgicos em grade 15x15px para interfaces desktop densas, cabecalhos de tabela, popovers e chips",
+    "a11y_notes": "Alinhamento pixel-perfect em telas 1x e 2x"
+  },
+  {
+    "id": "iconify-svg",
+    "name": "Iconify SVG Web Component (<iconify-icon>)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://iconify.design",
+    "repo": "https://github.com/iconify/iconify",
+    "needs": [
+      "icon",
+      "icone",
+      "svg",
+      "duotone",
+      "solar",
+      "tabler",
+      "lucide",
+      "html"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install iconify-icon",
+    "usage": "dependency",
+    "use_case": "Motor universal MIT que renderiza 200.000+ icones open-source (Solar Duotone, Tabler, Lucide, Heroicons, Radix) como <svg> real em HTML/JS puro ou frameworks",
+    "a11y_notes": "Elimina webfonts borradas renderizando <svg> vetorial sob demanda ou offline"
+  },
+  {
+    "id": "remix-icon",
+    "name": "Remix Icon (3000+ Line & Fill Paired SVGs)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://remixicon.com",
+    "repo": "https://github.com/Remix-Design/RemixIcon",
+    "needs": [
+      "icon",
+      "icone",
+      "enterprise",
+      "finance",
+      "document",
+      "editor"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @remixicon/react",
+    "usage": "dependency",
+    "use_case": "3.000+ icones neutros corporativos com pares exatos Line (inativo) e Fill (ativo) para sidebars e tab bars",
+    "a11y_notes": "Grade 24x24 consistente com peso optico equilibrado"
+  },
+  {
+    "id": "iconoir",
+    "name": "Iconoir",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "flutter",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://iconoir.com",
+    "repo": "https://github.com/iconoir-icons/iconoir",
+    "needs": [
+      "icon",
+      "icone",
+      "svg",
+      "fintech",
+      "travel",
+      "aviation"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install iconoir-react",
+    "usage": "dependency",
+    "use_case": "1.600+ icones SVG refinados com excelente cobertura de aviacao, financeiro, documentos e dev tools",
+    "a11y_notes": "SVGs limpos com currentColor"
+  },
+  {
+    "id": "mingcute-icons",
+    "name": "MingCute Icons",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "mobile",
+      "system",
+      "desktop"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://www.mingcute.com",
+    "repo": "https://github.com/Richard9394/MingCute",
+    "needs": [
+      "icon",
+      "icone",
+      "mobile",
+      "tab bar",
+      "app"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install @iconify-json/mingcute",
+    "usage": "dependency",
+    "use_case": "3.000+ icones geometricos com curvas suaves ideais para apps mobile executivos e tab bars",
+    "a11y_notes": "Variantes Line e Fill pareadas"
+  },
+  {
+    "id": "svgl-brand-logos",
+    "name": "SVGL (Open-Source Vector Brand Logos)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://svgl.app",
+    "repo": "https://github.com/pheralb/svgl",
+    "needs": [
+      "logo",
+      "brand",
+      "whatsapp",
+      "bank",
+      "integracao",
+      "canal",
+      "svg"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "copiar SVG vetorial otimizado de https://svgl.app",
+    "usage": "registry",
+    "use_case": "Logos SVG vetoriais oficiais (WhatsApp, bancos, provedores, ERPs, ferramentas) com variantes Light e Dark",
+    "a11y_notes": "Inclua role='img' e aria-label quando o logo comunicar o canal ou instituicao"
+  },
+  {
+    "id": "boring-avatars",
+    "name": "Boring Avatars & DiceBear",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "icons",
+    "taxonomy_category": "icons-emblems-avatars",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://boringavatars.com",
+    "repo": "https://github.com/boringdesigners/boring-avatars",
+    "needs": [
+      "avatar",
+      "perfil",
+      "usuario",
+      "cliente",
+      "inbox",
+      "contato"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install boring-avatars",
+    "usage": "dependency",
+    "use_case": "Avatares SVG geometricos deterministicos sincronizados com a paleta de cores da marca (substitui fotos quebradas)",
+    "a11y_notes": "Sempre mantenha aspect-ratio: 1/1 e iniciais acessiveis"
+  },
+  {
+    "id": "lightweight-charts",
+    "name": "TradingView Lightweight Charts",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://tradingview.github.io/lightweight-charts/",
+    "repo": "https://github.com/tradingview/lightweight-charts",
+    "needs": [
+      "chart",
+      "grafico",
+      "financeiro",
+      "caixa",
+      "saldo",
+      "serie temporal",
+      "crosshair",
+      "area",
+      "baseline"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install lightweight-charts",
+    "usage": "dependency",
+    "use_case": "Padrao ouro open-source (45 KB) da TradingView para fluxo de caixa, projecao de saldo, baseline-area acima/abaixo do piso e crosshair HUD vivo",
+    "a11y_notes": "Combine com cabecalho HUD HTML acessivel que anuncia data, saldo e delta"
+  },
+  {
+    "id": "apexcharts",
+    "name": "ApexCharts.js",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://apexcharts.com",
+    "repo": "https://github.com/apexcharts/apexcharts.js",
+    "needs": [
+      "chart",
+      "grafico",
+      "combo",
+      "waterfall",
+      "cascata",
+      "anotacao",
+      "sparkline",
+      "area",
+      "bar"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install apexcharts",
+    "usage": "dependency",
+    "use_case": "Graficos interativos prontos para HTML/JS ou React com anotacoes de eventos (annotations), Combo Bar+Area, Range-Area e Sparklines embutidos",
+    "a11y_notes": "Desative animacoes longas em Operate e re-tematize cores pelos tokens --chart-1..6"
+  },
+  {
+    "id": "tremor-raw",
+    "name": "Tremor Raw (Dashboards, BarList, Tracker & CategoryBar)",
+    "kind": "registry",
+    "stack": [
+      "react",
+      "tailwind",
+      "html"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "kpi-metrics-sparklines",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://tremor.so",
+    "repo": "https://github.com/tremorlabs/tremor-raw",
+    "needs": [
+      "kpi",
+      "barlist",
+      "tracker",
+      "category bar",
+      "chart",
+      "grafico",
+      "dashboard",
+      "ranking",
+      "sla"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "copiar primitivos MIT/Apache-2.0 de https://tremor.so/docs",
+    "usage": "registry",
+    "use_case": "Os melhores micro-componentes analiticos open-source: BarList (ranking com barra proporcional), Tracker (30 blocos de SLA/status), CategoryBar (De cada R$ 100) e ComboChart",
+    "a11y_notes": "Construido sobre Radix/Recharts com excelente contraste e semantica tabular"
+  },
+  {
+    "id": "evilcharts",
+    "name": "EvilCharts (Shadcn Animated & Glowing Charts)",
+    "kind": "registry",
+    "stack": [
+      "react",
+      "tailwind",
+      "html"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://evilcharts.com",
+    "repo": "https://github.com/legions-developer/evilcharts",
+    "needs": [
+      "chart",
+      "grafico",
+      "area",
+      "bar",
+      "radar",
+      "radial",
+      "pie",
+      "gradiente"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npx shadcn@latest add https://evilcharts.com/r/area-chart",
+    "usage": "registry",
+    "use_case": "Graficos sofisticados com preenchimento hachurado/pontilhado SVG, gradientes suaves, barras com destaque ativo e cartoes de metrica com HUD",
+    "a11y_notes": "Re-tematize os gradientes SVG usando --chart-1 a --chart-6 do projeto"
+  },
+  {
+    "id": "shadcn-charts",
+    "name": "shadcn/ui Charts",
+    "kind": "registry",
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://ui.shadcn.com/charts",
+    "repo": "https://github.com/shadcn-ui/ui",
+    "needs": [
+      "chart",
+      "grafico",
+      "tooltip",
+      "area",
+      "bar",
+      "radial",
+      "donut"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npx shadcn@latest add chart",
+    "usage": "registry",
+    "use_case": "Tooltips HTML customizados, legendas interativas e composicao de graficos acoplada diretamente às variaveis CSS --chart-1..5",
+    "a11y_notes": "Acessibilidade de teclado e contraste automatico Dark/Light"
+  },
+  {
+    "id": "uplot",
+    "name": "uPlot (Ultra-Fast Time Series & Sparklines)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://github.com/leeoniya/uPlot",
+    "repo": "https://github.com/leeoniya/uPlot",
+    "needs": [
+      "chart",
+      "grafico",
+      "telemetria",
+      "sla",
+      "sparkline",
+      "performance",
+      "serie temporal"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install uplot",
+    "usage": "dependency",
+    "use_case": "Motor Canvas 2D ultraleve (~45 KB) usado pelo Grafana para series temporais, cursores sincronizados e sparklines em tabelas",
+    "a11y_notes": "Sincronize o cursor com uma legenda HTML visivel fora do canvas"
+  },
+  {
+    "id": "frappe-charts",
+    "name": "Frappe Charts (Charts & Activity Heatmap)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://frappe.io/charts",
+    "repo": "https://github.com/frappe/charts",
+    "needs": [
+      "chart",
+      "grafico",
+      "heatmap",
+      "percentage bar",
+      "mixed chart",
+      "erp"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install frappe-charts",
+    "usage": "dependency",
+    "use_case": "Graficos SVG limpos inspirados no ERPNext/GitHub, incluindo Heatmap anual de atividade, barras de composicao percentual e graficos mistos",
+    "a11y_notes": "Renderiza SVG puro facil de estilizar via CSS tokens"
+  },
+  {
+    "id": "visx",
+    "name": "visx (Airbnb Low-Level Visualization Primitives)",
+    "kind": "library",
+    "stack": [
+      "react"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "charts",
+    "taxonomy_category": "charts-telemetry-financial",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://airbnb.io/visx",
+    "repo": "https://github.com/airbnb/visx",
+    "needs": [
+      "chart",
+      "grafico",
+      "sankey",
+      "chord",
+      "heatmap",
+      "custom visualization"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install @visx/xychart @visx/network",
+    "usage": "dependency",
+    "use_case": "Primitivos D3+React da Airbnb para visualizacoes financeiras sob medida, curvas com brush e diagramas de fluxo",
+    "a11y_notes": "Total controle sobre SVG <title>, <desc> e foco"
+  },
+  {
+    "id": "countup-js",
+    "name": "CountUp.js",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "kpi-metrics",
+    "taxonomy_category": "kpi-metrics-sparklines",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://inorganik.github.io/countUp.js/",
+    "repo": "https://github.com/inorganik/countUp.js",
+    "needs": [
+      "number",
+      "kpi",
+      "contador",
+      "moeda",
+      "tabular",
+      "html"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install countup.js",
+    "usage": "dependency",
+    "use_case": "Transicao numerica suave em HTML/JS puro ao trocar filtro de socio, banco ou competencia (com formatacao pt-BR R$)",
+    "a11y_notes": "Use duracao curta (<= 350ms) e desative sob prefers-reduced-motion"
+  },
+  {
+    "id": "ag-grid-community",
+    "name": "AG Grid Community (MIT Core)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "data-table",
+    "taxonomy_category": "data-tables-lists-progressive",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://www.ag-grid.com",
+    "repo": "https://github.com/ag-grid/ag-grid",
+    "needs": [
+      "data table",
+      "tabela",
+      "grid",
+      "spreadsheet",
+      "erp",
+      "financeiro",
+      "colunas fixas"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install ag-grid-community",
+    "usage": "dependency",
+    "use_case": "Data grid financeiro de alta densidade com ordenacao multi-coluna, filtro instantaneo, navegacao por setas de planilha e virtualizacao",
+    "a11y_notes": "Suporte ARIA Grid completo; aplique tema customizado com as variaveis de tokens.css"
+  },
+  {
+    "id": "grid-js",
+    "name": "Grid.js",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "data-table",
+    "taxonomy_category": "data-tables-lists-progressive",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://gridjs.io",
+    "repo": "https://github.com/grid-js/gridjs",
+    "needs": [
+      "table",
+      "tabela",
+      "busca",
+      "ordenacao",
+      "paginacao",
+      "html"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install gridjs",
+    "usage": "dependency",
+    "use_case": "Tabela leve em HTML/JS ou React com busca instantanea, ordenacao e celulas customizadas",
+    "a11y_notes": "Renderiza <table> semantica real"
+  },
+  {
+    "id": "pragmatic-drag-and-drop",
+    "name": "Atlassian Pragmatic drag and drop",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "drag-and-drop",
+    "taxonomy_category": "kanban-drag-drop-workflows",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://atlassian.design/components/pragmatic-drag-and-drop",
+    "repo": "https://github.com/atlassian/pragmatic-drag-and-drop",
+    "needs": [
+      "kanban",
+      "funil",
+      "drag and drop",
+      "board",
+      "tree",
+      "reorder"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install @atlaskit/pragmatic-drag-and-drop",
+    "usage": "dependency",
+    "use_case": "Motor de drag-and-drop ultraleve (~4 KB) da Atlassian (Trello/Jira) para quadros Kanban, listas e arvores em qualquer framework ou HTML",
+    "a11y_notes": "Inclua sempre botoes de avancar/voltar etapa para operacao 100% por teclado"
+  },
+  {
+    "id": "imask-js",
+    "name": "IMask.js (Masks for CNPJ, CPF, Currency R$ & Barcodes)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://imask.js.org",
+    "repo": "https://github.com/uNmAnNeR/imaskjs",
+    "needs": [
+      "mask",
+      "mascara",
+      "cnpj",
+      "cpf",
+      "moeda",
+      "boleto",
+      "telefone",
+      "input",
+      "formulario"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install imask",
+    "usage": "dependency",
+    "use_case": "Mascaras de digitacao precisas em vanilla JS ou React para CNPJ, CPF, valores em R$, linha digitavel de boleto, CEP e datas",
+    "a11y_notes": "Mantem posicao do cursor e colagem limpa"
+  },
+  {
+    "id": "flatpickr",
+    "name": "Flatpickr (Date & Date-Range Picker)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://flatpickr.js.org",
+    "repo": "https://github.com/flatpickr/flatpickr",
+    "needs": [
+      "date picker",
+      "date range",
+      "calendario",
+      "data",
+      "vencimento",
+      "agendar"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install flatpickr",
+    "usage": "dependency",
+    "use_case": "Seletor de data e intervalo de datas leve e sem dependencias para HTML/JS, com localizacao pt-BR",
+    "a11y_notes": "Re-estilize o popup em --surface-z4 com --border-strong"
+  },
+  {
+    "id": "tom-select",
+    "name": "Tom Select (Accessible Combobox & Multi-Tag Select)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://tom-select.js.org",
+    "repo": "https://github.com/orchidjs/tom-select",
+    "needs": [
+      "combobox",
+      "select",
+      "autocomplete",
+      "tags",
+      "multi-select",
+      "filtro",
+      "html"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install tom-select",
+    "usage": "dependency",
+    "use_case": "Combobox com busca instantanea, selecao de multiplas tags e navegacao por teclado em HTML/JS puro",
+    "a11y_notes": "Atributos ARIA combobox e listbox integrados"
+  },
+  {
+    "id": "uppy",
+    "name": "Uppy (Modular File Uploader & Dropzone)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://uppy.io",
+    "repo": "https://github.com/transloadit/uppy",
+    "needs": [
+      "file upload",
+      "dropzone",
+      "importar",
+      "pdf",
+      "ofx",
+      "csv",
+      "anexo"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install @uppy/core @uppy/dashboard",
+    "usage": "dependency",
+    "use_case": "Importador de arquivos com arrasto, barra de progresso, previa de PDF/planilha e recuperacao de falha",
+    "a11y_notes": "Botoes navegaveis por teclado e status anunciado via aria-live"
+  },
+  {
+    "id": "filepond",
+    "name": "FilePond",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "forms-inputs-pickers-upload",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://pqina.nl/filepond/",
+    "repo": "https://github.com/pqina/filepond",
+    "needs": [
+      "file upload",
+      "dropzone",
+      "anexo",
+      "certidao",
+      "comprovante"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install filepond",
+    "usage": "dependency",
+    "use_case": "Dropzone elegante com validacao de formato/tamanho e animacao fluida de upload",
+    "a11y_notes": "Totalmente operavel via Tab/Enter/Space"
+  },
+  {
+    "id": "input-otp",
+    "name": "input-otp (Accessible One-Time Password 2FA)",
+    "kind": "library",
+    "stack": [
+      "react",
+      "tailwind"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "inputs",
+    "taxonomy_category": "auth-onboarding-governance-settings",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://input-otp.rodz.dev",
+    "repo": "https://github.com/guilhermerodz/input-otp",
+    "needs": [
+      "otp",
+      "2fa",
+      "login",
+      "codigo",
+      "autenticacao",
+      "verificacao"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install input-otp",
+    "usage": "dependency",
+    "use_case": "Campo 2FA/OTP de 6 digitos com colagem automatica, foco continuo e zero friccao",
+    "a11y_notes": "Usa um unico <input> real oculto sob os slots visuais para compatibilidade total com leitores de tela e autofill do SO"
+  },
+  {
+    "id": "fullcalendar-core",
+    "name": "FullCalendar Standard (MIT Core)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "calendar",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://fullcalendar.io",
+    "repo": "https://github.com/fullcalendar/fullcalendar",
+    "needs": [
+      "calendar",
+      "calendario",
+      "agenda",
+      "prazos",
+      "sessao",
+      "ics",
+      "mes",
+      "semana"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/timegrid",
+    "usage": "dependency",
+    "use_case": "Grade mensal, semanal e diária interativa para agendas de licitacoes, vencimentos financeiros e sessoes",
+    "a11y_notes": "Navegacao por teclado nas celulas e eventos com cores semanticas"
+  },
+  {
+    "id": "frappe-gantt",
+    "name": "Frappe Gantt",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "calendar",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://frappe.io/gantt",
+    "repo": "https://github.com/frappe/gantt",
+    "needs": [
+      "gantt",
+      "cronograma",
+      "timeline",
+      "prazos",
+      "etapas",
+      "contratos",
+      "obras"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install frappe-gantt",
+    "usage": "dependency",
+    "use_case": "Cronograma Gantt SVG interativo em HTML/JS puro para acompanhar fases de editais, contratos e projetos",
+    "a11y_notes": "Estilize barras e linhas de dependencia usando os tokens --chart-1..5"
+  },
+  {
+    "id": "schedule-x",
+    "name": "Schedule-X (Modern Calendar & Date Picker)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "calendar",
+    "taxonomy_category": "calendar-gantt-timelines",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://schedule-x.dev",
+    "repo": "https://github.com/schedule-x/schedule-x",
+    "needs": [
+      "calendar",
+      "calendario",
+      "agenda",
+      "eventos",
+      "dark mode"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install @schedule-x/calendar",
+    "usage": "dependency",
+    "use_case": "Calendario moderno com Dark Mode nativo para agendas operacionais e reservas",
+    "a11y_notes": "Suporte completo a teclado e fuso horario"
+  },
+  {
+    "id": "prompt-kit",
+    "name": "Prompt Kit (AI & Chat UI Primitives)",
+    "kind": "registry",
+    "stack": [
+      "react",
+      "tailwind",
+      "html"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "chat-ai",
+    "taxonomy_category": "inbox-chat-omnichannel-ai",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://www.prompt-kit.com",
+    "repo": "https://github.com/ibelick/prompt-kit",
+    "needs": [
+      "chat",
+      "ai",
+      "bot",
+      "inbox",
+      "prompt",
+      "mensagem",
+      "simulador",
+      "streaming"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npx shadcn@latest add https://prompt-kit.com/r/prompt-input",
+    "usage": "registry",
+    "use_case": "Componentes copiaveis de alta precisao para simuladores de bot, compositores de mensagem, citacoes de regras e steps de raciocinio",
+    "a11y_notes": "Baseado em shadcn/ui com foco e atalhos Enter / Shift+Enter corretos"
+  },
+  {
+    "id": "quill",
+    "name": "Quill Rich Text Editor",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "editor",
+    "taxonomy_category": "inbox-chat-omnichannel-ai",
+    "license": "BSD-3-Clause",
+    "license_ok": true,
+    "url": "https://quilljs.com",
+    "repo": "https://github.com/slab/quill",
+    "needs": [
+      "editor",
+      "rich text",
+      "template",
+      "resposta",
+      "parecer",
+      "nota interna",
+      "html"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install quill",
+    "usage": "dependency",
+    "use_case": "Editor rico em HTML/JS para editar respostas da base do bot, pareceres de licitacao e templates com variaveis",
+    "a11y_notes": "Estilize a toolbar em --surface-z3 e a area de texto em --surface-z0"
+  },
+  {
+    "id": "notyf",
+    "name": "Notyf (Minimal Accessible Vanilla Toasts)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "toast-undo",
+    "taxonomy_category": "overlays-drawers-sheets-toasts",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://carlosroso.com/notyf/",
+    "repo": "https://github.com/caroso1222/notyf",
+    "needs": [
+      "toast",
+      "notificacao",
+      "feedback",
+      "alerta",
+      "html"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install notyf",
+    "usage": "dependency",
+    "use_case": "Toasts leves (~3 KB, zero dependencias) em HTML/JS puro com aria-live, facilmente combinados com botao Desfazer",
+    "a11y_notes": "Anuncio a11y automatico via role='alert' / aria-live='polite'"
+  },
+  {
+    "id": "driver-js",
+    "name": "Driver.js (Focus Highlight & Onboarding Tour)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "overlay",
+    "taxonomy_category": "overlays-drawers-sheets-toasts",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://driverjs.com",
+    "repo": "https://github.com/kamranahmedse/driver.js",
+    "needs": [
+      "tour",
+      "onboarding",
+      "popover",
+      "highlight",
+      "ajuda",
+      "guia"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install driver.js",
+    "usage": "dependency",
+    "use_case": "Destaque de elementos e tour guiado (~5 KB, vanilla JS) para explicar novas rotinas operacionais ou destacar campos pendentes",
+    "a11y_notes": "Gerencia trap de foco e fechamento por Esc"
+  },
+  {
+    "id": "pdf-js",
+    "name": "Mozilla PDF.js",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "documents",
+    "taxonomy_category": "documents-tickets-ledgers-import",
+    "license": "Apache-2.0",
+    "license_ok": true,
+    "url": "https://mozilla.github.io/pdf.js/",
+    "repo": "https://github.com/mozilla/pdf.js",
+    "needs": [
+      "pdf",
+      "fatura",
+      "edital",
+      "certidao",
+      "visualizador",
+      "documento"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install pdfjs-dist",
+    "usage": "dependency",
+    "use_case": "Renderizacao e inspecao real de PDFs de editais, certidoes, faturas e relatorios ERP dentro do drawer/detalhe",
+    "a11y_notes": "Mantenha a camada de texto selecionavel ativa"
+  },
+  {
+    "id": "papaparse",
+    "name": "PapaParse (Fast In-Browser CSV / Ledger Parser)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "category": "documents",
+    "taxonomy_category": "documents-tickets-ledgers-import",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://www.papaparse.com",
+    "repo": "https://github.com/mholt/PapaParse",
+    "needs": [
+      "csv",
+      "planilha",
+      "importar",
+      "exportar",
+      "extrato",
+      "erp",
+      "conciliacao"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install papaparse",
+    "usage": "dependency",
+    "use_case": "Leitura e exportacao real de arquivos CSV/planilhas de conciliação diretamente no navegador sem servidor",
+    "a11y_notes": "Exiba resumo de linhas validas vs linhas com erro antes de confirmar a importacao"
+  },
+  {
+    "id": "split-js",
+    "name": "Split.js (Lightweight Resizable Split Views)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "category": "workspace",
+    "taxonomy_category": "desktop-native-workbenches",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://split.js.org",
+    "repo": "https://github.com/nathancahill/split",
+    "needs": [
+      "split pane",
+      "resizable",
+      "painel redimensionavel",
+      "workbench",
+      "desktop",
+      "html"
+    ],
+    "modes": [
+      "operate"
+    ],
+    "flashy": false,
+    "install": "npm install split.js",
+    "usage": "dependency",
+    "use_case": "Divisores de painel redimensionaveis (~2 KB, zero dependencias) em HTML/JS puro para workbenches desktop e simuladores",
+    "a11y_notes": "Adicione role='separator' e tabindex='0' no gutter"
+  },
+  {
+    "id": "tinykeys",
+    "name": "tinykeys (1 KB Keyboard Shortcut Manager)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
+    "category": "command-palette",
+    "taxonomy_category": "shell-navigation",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://github.com/jamiebuilds/tinykeys",
+    "repo": "https://github.com/jamiebuilds/tinykeys",
+    "needs": [
+      "keyboard",
+      "atalho",
+      "shortcut",
+      "cmdk",
+      "sidebar toggle",
+      " chords",
+      "g p"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install tinykeys",
+    "usage": "dependency",
+    "use_case": "Gerenciador de atalhos de teclado de 600 bytes (suporta '$mod+KeyK', '[', 'Escape', e sequencias 'g p' / 'g f' estilo Linear/GitHub)",
+    "a11y_notes": "Ignore eventos disparados quando o foco estiver dentro de <input>, <textarea> ou <select>"
+  },
+  {
+    "id": "konsta-ui",
+    "name": "Konsta UI (iOS & Material 3 Mobile UI for Tailwind/HTML/React)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "tailwind"
+    ],
+    "platforms": [
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "category": "mobile-kit",
+    "taxonomy_category": "mobile-native-pwa-touch",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://konstaui.com",
+    "repo": "https://github.com/konstaui/konsta",
+    "needs": [
+      "mobile",
+      "ios",
+      "android",
+      "tab bar",
+      "bottom sheet",
+      "segmented control",
+      "list",
+      "pwa"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install konsta",
+    "usage": "dependency",
+    "use_case": "Componentes mobile pixel-perfect (Tab Bar, Segmented Control, Action Sheet, Inset Lists) para PWAs e prototipos executivos",
+    "a11y_notes": "Alvos >= 44px e safe-area-inset integrados"
+  },
+  {
+    "id": "auto-animate",
+    "name": "AutoAnimate (@formkit/auto-animate)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "react",
+      "vue",
+      "svelte",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "motion",
+    "taxonomy_category": "motion-microinteractions-feedback",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://auto-animate.formkit.com",
+    "repo": "https://github.com/formkit/auto-animate",
+    "needs": [
+      "motion",
+      "animacao",
+      "lista",
+      "filtro",
+      "tabela",
+      "kanban",
+      "transicao"
+    ],
+    "modes": [
+      "operate",
+      "read"
+    ],
+    "flashy": false,
+    "install": "npm install @formkit/auto-animate",
+    "usage": "dependency",
+    "use_case": "Adiciona transicoes suaves automaticas (1 linha de JS, 2 KB) ao filtrar tabelas, reordenar linhas, abrir detalhes ou mover cards",
+    "a11y_notes": "Respeita automaticamente prefers-reduced-motion do sistema operacional"
+  },
+  {
+    "id": "open-props",
+    "name": "Open Props (CSS Custom Properties & Easings)",
+    "kind": "library",
+    "stack": [
+      "html",
+      "css",
+      "all"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "category": "foundations",
+    "taxonomy_category": "motion-microinteractions-feedback",
+    "license": "MIT",
+    "license_ok": true,
+    "url": "https://open-props.style",
+    "repo": "https://github.com/argyleink/open-props",
+    "needs": [
+      "css",
+      "tokens",
+      "easing",
+      "shadows",
+      "gradients",
+      "html"
+    ],
+    "modes": [
+      "operate",
+      "read",
+      "persuade"
+    ],
+    "flashy": false,
+    "install": "npm install open-props",
+    "usage": "dependency",
+    "use_case": "Curvas de easing fisicas, sombras em camadas e escalas CSS modulares prontas para combinar com tokens.css",
+    "a11y_notes": "Zero JS runtime"
   }
 ]

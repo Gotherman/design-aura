@@ -397,6 +397,52 @@ blockquote { margin: 0 0 4mm; padding: 2mm 3.5mm; border-left: 0.9mm solid #2563
 """
 
 
+def sync_markdown_token_tables(
+    md: str,
+    tokens_light: dict[str, str],
+    tokens_dark: dict[str, str],
+) -> tuple[str, list[str]]:
+    """Sincroniza hexes em tabelas Markdown (ex.: Secao 8.1) contra tokens.css atual."""
+    if not tokens_light and not tokens_dark:
+        return md, []
+    hex_re = re.compile(r"#[0-9A-Fa-f]{6}\b")
+    var_re = re.compile(r"--([a-zA-Z0-9_-]+)")
+    synced_vars: list[str] = []
+    new_lines: list[str] = []
+    for line in md.splitlines():
+        if line.strip().startswith("|") and "--" in line:
+            cells = line.split("|")
+            # Detecta o primeiro --token-name na linha da tabela
+            token_name = None
+            for cell in cells:
+                m_var = var_re.search(cell)
+                if m_var:
+                    cand = f"--{m_var.group(1)}"
+                    if cand in tokens_dark or cand in tokens_light:
+                        token_name = cand
+                        break
+            if token_name:
+                d_val = tokens_dark.get(token_name, "")
+                l_val = tokens_light.get(token_name, "")
+                hexes = hex_re.findall(line)
+                # Quando a linha tem 2 hexes (Dark | Light ou Light | Dark) e diverge de tokens.css
+                if len(hexes) >= 2 and d_val.startswith("#") and l_val.startswith("#"):
+                    h0, h1 = hexes[0].upper(), hexes[1].upper()
+                    du, lu = d_val.upper(), l_val.upper()
+                    if {h0, h1} != {du, lu}:
+                        # Preserva ordem Dark vs Light conforme a luminancia do primeiro hex
+                        first_is_dark = int(h0[1:3], 16) + int(h0[3:5], 16) + int(h0[5:7], 16) < 380
+                        rep0 = du if first_is_dark else lu
+                        rep1 = lu if first_is_dark else du
+                        updated = hex_re.sub("__HEX_SLOT__", line, count=2)
+                        updated = updated.replace("__HEX_SLOT__", rep0, 1).replace("__HEX_SLOT__", rep1, 1)
+                        if updated != line:
+                            line = updated
+                            synced_vars.append(token_name)
+        new_lines.append(line)
+    return "\n".join(new_lines) + ("\n" if md.endswith("\n") else ""), synced_vars
+
+
 def build_html(
     md: str,
     title: str,
@@ -404,7 +450,8 @@ def build_html(
     tokens_dark: dict[str, str] | None = None,
     golden_paths: list[tuple[str, Path]] | None = None,
 ) -> str:
-    body = markdown_to_body(md)
+    md_synced, _ = sync_markdown_token_tables(md, tokens_light or {}, tokens_dark or {})
+    body = markdown_to_body(md_synced)
     specimen = build_specimen_board(tokens_light or {}, tokens_dark or {}, title)
     golden = build_golden_gallery(golden_paths or [])
     # Insere a prancha visual logo apos o primeiro <h1> se existir
@@ -496,6 +543,11 @@ def main() -> None:
             break
 
     tokens_light, tokens_dark = load_tokens_for_bible(source, args.tokens)
+    text_synced, synced_vars = sync_markdown_token_tables(text, tokens_light, tokens_dark)
+    if synced_vars:
+        source.write_text(text_synced, encoding="utf-8")
+        text = text_synced
+        print(f"[sync] {len(synced_vars)} token(s) sincronizados em {source.name} a partir de tokens.css: {', '.join(synced_vars[:8])}")
     golden_paths: list[tuple[str, Path]] = []
     if args.golden_desktop:
         golden_paths.append(("Tela-Mae Desktop", Path(args.golden_desktop)))

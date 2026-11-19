@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
-"""Casa uma necessidade de interacao com componentes free/OSS e referencias visuais.
+"""Casa necessidades de interacao ou um repositorio/plano inteiro com componentes free/OSS,
+receitas de micro-componentes de estudio e curadoria de iconografia nas 16 Categorias Canonicas.
 
-Modo offline: BM25 em registries_oss.json, components_oss.json e study_references.json.
-Modo --online: completa com a API publica do GitHub e o registry do npm,
-aceitando so licenca permissiva (MIT, Apache-2.0, BSD, ISC).
+Modos de uso:
+1. Busca categorica automatica lendo o projeto/plano:
+   python3 discover_oss_components.py --scan /caminho/do/projeto --stack html --platform system --mode operate
+2. Busca por categoria canonica especifica (ou listar as 16 categorias):
+   python3 discover_oss_components.py --category charts-telemetry-financial --stack html
+   python3 discover_oss_components.py --list-categories
+3. Busca pontual por interacao (BM25 local + opcional --online GitHub/npm):
+   python3 discover_oss_components.py --need "grafico de fluxo de caixa com crosshair" --stack html
 """
 import argparse
 import json
 import sys
 import urllib.parse
 import urllib.request
+from collections import Counter
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -42,9 +49,17 @@ STACK_ALIASES = {
     "compose": {"android", "compose", "all"},
     "electron": {"electron", "react", "desktop", "all"},
     "tauri": {"tauri", "react", "desktop", "all"},
-    "html": {"html", "css", "tailwind", "all"},
+    "html": {"html", "css", "all"},
+    "tailwind": {"tailwind", "html", "css", "all"},
     "all": {"all"},
 }
+
+
+def load_recipes_taxonomy() -> list[dict]:
+    path = DATA_DIR / "ui_elements_recipes.json"
+    if not path.exists():
+        return []
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def load_catalog() -> list[dict]:
@@ -83,6 +98,7 @@ def normalize_item(raw: dict, catalog: str) -> dict:
         "stack": stacks,
         "platforms": raw.get("platforms") or ["system"],
         "category": raw.get("category", ""),
+        "taxonomy_category": raw.get("taxonomy_category") or raw.get("category", ""),
         "license": license_name,
         "license_ok": bool(license_ok),
         "url": raw.get("url", ""),
@@ -120,7 +136,7 @@ def mode_ok(item: dict, mode: str) -> bool:
 def blob(item: dict) -> str:
     return " ".join([
         item["name"],
-        item["category"],
+        item["category"] if item.get("catalog") != "study_references.json" else "",
         item["use_case"],
         " ".join(item.get("needs") or []),
         " ".join(item.get("stack") or []),
@@ -158,6 +174,42 @@ def rank_matching(items: list[dict], query: str, platform: str, extra_filter, to
     return [item for _, item in scored[:top]]
 
 
+def match_recipes_for_query(query: str, platform: str, top: int = 3) -> list[dict]:
+    cats = load_recipes_taxonomy()
+    if not cats:
+        return []
+    flat_recipes = []
+    for cat in cats:
+        if not match_platform(cat.get("platforms", []), platform):
+            continue
+        for rec in cat.get("studio_recipes", []):
+            flat_recipes.append({
+                "category_id": cat["id"],
+                "category_name": cat["name"],
+                "id": rec["id"],
+                "name": rec["name"],
+                "anatomy": rec["anatomy"],
+                "anti_slop": rec["anti_slop"],
+                "icon_rule": (cat.get("icon_curation") or {}).get("rule", ""),
+                "keywords": " ".join(cat.get("detect_keywords", [])),
+            })
+    if not flat_recipes:
+        return []
+    docs = [
+        normalize_text(f"{r['name']} {r['anatomy']} {r['anti_slop']} {r['keywords']} {r['category_name']}")
+        for r in flat_recipes
+    ]
+    engine = BM25(docs)
+    tokens = query_tokens(query)
+    scored = []
+    for idx, rec in enumerate(flat_recipes):
+        sc = engine.score(tokens, idx)
+        if sc > 0:
+            scored.append((sc, rec))
+    scored.sort(key=lambda p: p[0], reverse=True)
+    return [r for _, r in scored[:top]]
+
+
 def search_local(need: str, stack: str, platform: str, mode: str, top: int) -> dict:
     items = load_catalog()
 
@@ -178,7 +230,193 @@ def search_local(need: str, stack: str, platform: str, mode: str, top: int) -> d
         "adopt": rank_matching(items, need, platform, adopt_filter, top),
         "reference": rank_matching(items, need, platform, gallery_filter, 4),
         "traps": rank_matching(items, need, "all", trap_filter, 3),
+        "recipes": match_recipes_for_query(need, platform, 3),
     }
+
+
+IGNORE_DIRS = {".git", "node_modules", "vendor", "dist", "build", ".next", "__pycache__", "audit", "telas-anteriores"}
+SCAN_EXTS = {".md", ".txt", ".json", ".js", ".ts", ".tsx", ".jsx", ".vue", ".svelte", ".html"}
+
+
+def collect_project_text(scan_path: Path, max_files: int = 45, max_bytes_per_file: int = 18000) -> tuple[str, list[str]]:
+    if not scan_path.exists():
+        raise FileNotFoundError(f"Caminho para --scan nao encontrado: {scan_path}")
+    if scan_path.is_file():
+        return scan_path.read_text(encoding="utf-8", errors="ignore")[:60000], [scan_path.name]
+
+    priority_files: list[Path] = []
+    other_files: list[Path] = []
+    for p in sorted(scan_path.rglob("*")):
+        if not p.is_file():
+            continue
+        if any(part in IGNORE_DIRS or part.startswith(".") for part in p.relative_to(scan_path).parts):
+            continue
+        if p.suffix.lower() not in SCAN_EXTS:
+            continue
+        name_low = p.name.lower()
+        if any(k in name_low for k in ("readme", "leiame", "concepcao", "plan", "prd", "spec", "estado", "exemplo", "dados", "package.json", "rotas", "index")):
+            priority_files.append(p)
+        else:
+            other_files.append(p)
+
+    chosen = (priority_files + other_files)[:max_files]
+    chunks = []
+    rel_names = []
+    for f in chosen:
+        try:
+            txt = f.read_text(encoding="utf-8", errors="ignore")[:max_bytes_per_file]
+            chunks.append(f"{f.name} {txt}")
+            rel_names.append(str(f.relative_to(scan_path)))
+        except Exception:
+            continue
+    return "\n".join(chunks), rel_names
+
+
+def scan_project_categories(
+    scan_path: str | Path | None = None,
+    blueprint_text: str = "",
+    category_filter: str = "",
+    stack: str = "all",
+    platform: str = "all",
+    mode: str = "operate",
+    top_per_cat: int = 4,
+) -> dict:
+    cats = load_recipes_taxonomy()
+    catalog = load_catalog()
+    item_by_id = {it["id"]: it for it in catalog}
+
+    scanned_files: list[str] = []
+    raw_text = blueprint_text or ""
+    if scan_path:
+        proj_txt, scanned_files = collect_project_text(Path(scan_path))
+        raw_text = f"{raw_text}\n{proj_txt}".strip()
+
+    token_counts = Counter(normalize_text(raw_text))
+
+    def can_adopt(it: dict) -> bool:
+        if it["kind"] in {"gallery", "anatomy", "official", "study", "license-trap"}:
+            return False
+        if it["kind"] != "platform" and not it["license_ok"]:
+            return False
+        return match_platform(it.get("platforms", []), platform) and stack_ok(it, stack) and mode_ok(it, mode)
+
+    matched_categories = []
+    for cat in cats:
+        if category_filter and cat["id"] != category_filter:
+            continue
+        if not match_platform(cat.get("platforms", []), platform):
+            continue
+
+        matched_kw = []
+        score = 0
+        for kw in cat.get("detect_keywords", []):
+            kw_toks = normalize_text(kw)
+            if not kw_toks:
+                continue
+            hits = min(token_counts.get(t, 0) for t in kw_toks)
+            if hits > 0:
+                matched_kw.append(kw)
+                score += min(hits, 8)
+
+        include = bool(category_filter) or cat.get("always_include", False) or score > 0 or not raw_text
+        if not include:
+            continue
+
+        # Select top OSS libraries for this category
+        chosen_oss = []
+        seen_oss = set()
+        for rid in cat.get("recommended_oss_ids", []):
+            it = item_by_id.get(rid)
+            if it and can_adopt(it) and it["id"] not in seen_oss:
+                chosen_oss.append(it)
+                seen_oss.add(it["id"])
+        for it in catalog:
+            if len(chosen_oss) >= top_per_cat:
+                break
+            if it.get("taxonomy_category") == cat["id"] and can_adopt(it) and it["id"] not in seen_oss:
+                chosen_oss.append(it)
+                seen_oss.add(it["id"])
+
+        matched_categories.append({
+            "id": cat["id"],
+            "name": cat["name"],
+            "always_include": bool(cat.get("always_include", False)),
+            "score": score + (10 if cat.get("always_include") else 0),
+            "matched_keywords": matched_kw[:8],
+            "adopt_oss": chosen_oss[:top_per_cat],
+            "studio_recipes": cat.get("studio_recipes", []),
+            "icon_curation": cat.get("icon_curation", {}),
+        })
+
+    matched_categories.sort(key=lambda c: (not c["always_include"], -c["score"]))
+    return {
+        "scan_path": str(scan_path) if scan_path else None,
+        "scanned_files_count": len(scanned_files),
+        "scanned_files_sample": scanned_files[:12],
+        "filters": {"stack": stack, "platform": platform, "mode": mode, "category": category_filter or "auto"},
+        "categories": matched_categories,
+    }
+
+
+def format_scan_markdown(report: dict) -> str:
+    flt = report["filters"]
+    lines = [
+        "# Design Aura — Mapeamento Categórico Inteligente de UI/UX & Componentes OSS",
+        f"- **Stack:** `{flt['stack']}` · **Plataforma:** `{flt['platform']}` · **Modo:** `{flt['mode']}` · **Categorias ativadas:** `{len(report['categories'])}/16`",
+    ]
+    if report.get("scan_path"):
+        sample = ", ".join(f"`{x}`" for x in report["scanned_files_sample"][:8])
+        lines.append(f"- **Repositório/Plano analisado:** `{report['scan_path']}` ({report['scanned_files_count']} arquivos lidos: {sample})")
+    lines.extend([
+        "- **Como usar:** incorpore as bibliotecas permissivas e as **Receitas de Micro-Componentes e Iconografia** abaixo na Seção 8 da `DESIGN-BIBLE.md`, no `shell.css` e nas Telas-Mãe.",
+        "",
+    ])
+
+    bible_rows = []
+    seen_bible_oss = set()
+
+    for cat in report["categories"]:
+        trigger = "Pilar Obrigatório Universal" if cat["always_include"] and not cat["matched_keywords"] else (
+            f"Detectado no projeto por: `{', '.join(cat['matched_keywords'])}`" if cat["matched_keywords"] else "Categoria selecionada"
+        )
+        lines.extend([
+            f"## {cat['name']} (`{cat['id']}`)",
+            f"- **Gatilho:** {trigger}",
+        ])
+
+        if cat["adopt_oss"]:
+            lines.append("- **Bibliotecas & Registries Open Source (`MIT / Apache-2.0 / ISC`):**")
+            cat_added = 0
+            for it in cat["adopt_oss"]:
+                inst = f" · `{it['install']}`" if it.get("install") else ""
+                lines.append(f"  - **{it['name']}** ({it['usage']} · {it['license']} · {it['url']}){inst}: {it['use_case']}")
+                if it["id"] not in seen_bible_oss and cat_added < 2:
+                    seen_bible_oss.add(it["id"])
+                    bible_rows.append((cat["id"], it["name"], it["license"], it["usage"], it["use_case"]))
+                    cat_added += 1
+
+        if cat["studio_recipes"]:
+            lines.append("- **Receitas Visuais & Micro-Componentes de Estúdio Obrigatórios:**")
+            for rec in cat["studio_recipes"]:
+                lines.append(f"  - **{rec['name']}** (`{rec['id']}`): {rec['anatomy']}")
+                lines.append(f"    - *Anti-Slop:* {rec['anti_slop']}")
+
+        ic = cat.get("icon_curation") or {}
+        if ic.get("rule"):
+            lines.append(f"- **Curadoria de Ícones da Categoria:** {ic['rule']}")
+            if ic.get("avoid"):
+                lines.append(f"  - *Proibido:* {ic['avoid']}")
+        lines.append("")
+
+    lines.extend([
+        "## Tabela Pronta para a Seção 8 da `DESIGN-BIBLE.md`",
+        "| Categoria Canônica | Fonte OSS | Licença | Uso | O que aproveitar no projeto |",
+        "|---|---|---|---|---|",
+    ])
+    for cat_id, name, lic, usage, use_case in bible_rows[:24]:
+        lines.append(f"| `{cat_id}` | **{name}** | {lic} | {usage} | {use_case} |")
+
+    return "\n".join(lines)
 
 
 def _get_json(url: str, timeout: float = 12) -> dict:
@@ -280,11 +518,21 @@ def format_markdown(need: str, mode: str, stack: str, platform: str, local: dict
         lines.append("- Nenhum candidato local passou nos filtros. Alargue `--stack all` ou descreva a interacao com outras palavras.")
     for item in local["adopt"]:
         install = f" · `{item['install']}`" if item.get("install") else ""
+        cat_tag = f" [`{item.get('taxonomy_category')}`]" if item.get("taxonomy_category") else ""
         lines.append(
-            f"- **{item['name']}** ({item['usage']} · {item['license']} · {item['url']}){install}: {item['use_case']}"
+            f"- **{item['name']}**{cat_tag} ({item['usage']} · {item['license']} · {item['url']}){install}: {item['use_case']}"
         )
         if item.get("a11y_notes"):
             lines.append(f"  - A11y: {item['a11y_notes']}")
+
+    if local.get("recipes"):
+        lines.extend(["", "## Receitas Visuais & Micro-Componentes de Estúdio Recomendados"])
+        for rec in local["recipes"]:
+            lines.append(f"- **{rec['name']}** (`{rec['category_id']}`): {rec['anatomy']}")
+            lines.append(f"  - *Anti-Slop:* {rec['anti_slop']}")
+            if rec.get("icon_rule"):
+                lines.append(f"  - *Iconografia:* {rec['icon_rule']}")
+
     lines.extend(["", "## So referencia (guias oficiais, anatomia e galerias; nao copie codigo)"])
     if not local["reference"]:
         lines.append("- Nenhuma galeria local casou com esta busca.")
@@ -324,15 +572,53 @@ def format_markdown(need: str, mode: str, stack: str, platform: str, local: dict
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Descobre componentes free/OSS para uma necessidade real de UI.")
-    parser.add_argument("--need", required=True, help="Interacao necessaria, ex.: 'tabela com edicao inline'")
-    parser.add_argument("--stack", default="all", help="react, vue, svelte, solid, rn, flutter, ios, android, electron, tauri, all")
+    parser = argparse.ArgumentParser(description="Descobre componentes free/OSS e receitas visuais categorizadas para UI/UX.")
+    parser.add_argument("--need", help="Interacao necessaria, ex.: 'tabela com edicao inline'")
+    parser.add_argument("--scan", help="Caminho do repositorio, pasta ou arquivo de planejamento para mapeamento categorico automatico")
+    parser.add_argument("--blueprint", default="", help="Texto descritivo do projeto/modulos para categorizacao automatica")
+    parser.add_argument("--category", default="", help="Filtrar por uma das 16 categorias canonicas (veja --list-categories)")
+    parser.add_argument("--list-categories", action="store_true", help="Lista as 16 categorias canonicas de UI/UX da skill")
+    parser.add_argument("--stack", default="all", help="html, react, vue, svelte, solid, rn, flutter, ios, android, electron, tauri, all")
     parser.add_argument("--platform", default="all", choices=["all", "desktop", "mobile", "system", "ios", "android"])
     parser.add_argument("--mode", default="operate", choices=["operate", "read", "persuade", "all"])
     parser.add_argument("--top", type=int, default=6)
     parser.add_argument("--online", action="store_true", help="Consulta GitHub e npm e filtra licenca permissiva")
     parser.add_argument("--format", default="markdown", choices=["markdown", "json"])
     args = parser.parse_args()
+
+    if args.list_categories:
+        cats = load_recipes_taxonomy()
+        if args.format == "json":
+            print(json.dumps([{"id": c["id"], "name": c["name"], "always_include": c["always_include"]} for c in cats], ensure_ascii=False, indent=2))
+        else:
+            print("# 16 Categorias Canônicas de UI/UX — Design Aura v2.2.0\n")
+            for c in cats:
+                tag = " *(sempre ativa)*" if c.get("always_include") else ""
+                print(f"- **`{c['id']}`** — {c['name']}{tag}")
+        return
+
+    if args.scan or args.blueprint or args.category:
+        try:
+            report = scan_project_categories(
+                scan_path=args.scan,
+                blueprint_text=args.blueprint,
+                category_filter=args.category,
+                stack=args.stack,
+                platform=args.platform,
+                mode=args.mode,
+                top_per_cat=max(2, min(6, args.top)),
+            )
+        except Exception as exc:
+            print(f"Erro ao escanear categorias do projeto: {exc}", file=sys.stderr)
+            sys.exit(1)
+        if args.format == "json":
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            print(format_scan_markdown(report))
+        return
+
+    if not args.need:
+        parser.error("Informe --need '<interacao>' OU --scan '<caminho-do-projeto>' OU --category '<id>' OU --list-categories.")
 
     try:
         local = search_local(args.need, args.stack, args.platform, args.mode, max(1, args.top))

@@ -1,16 +1,50 @@
-# Pesquisa de componentes free e open source
+# Pesquisa Categorizada de Componentes Free/OSS & Elementos Gerais de UI/UX (`v2.2.0`)
 
-A interface nao fica sofisticada porque entrou um componente famoso. Fica sofisticada quando a interacao certa chega pronta, acessivel, e some dentro dos tokens do projeto.
+A interface nao fica sofisticada porque entrou um componente famoso. Fica sofisticada quando o **catalogo le o projeto real, identifica categoricamente cada elemento necessario e entrega a biblioteca permissiva + a receita de micro-componente e iconografia certa** — tudo re-tematizado pelos tokens da Biblia.
 
-Rode isto na Fase 2, antes de fechar a secao 8 da `DESIGN-BIBLE.md`:
+## 0. Mapeamento Categorico Automatico do Projeto (`16 Categorias Canonicas`)
+
+Na Fase 2, **antes** de fechar a Secao 8 da `DESIGN-BIBLE.md`, rode o scanner categorico no repositorio ou arquivo de planejamento:
 
 ```bash
 python3 <skill_dir>/scripts/discover_oss_components.py \
-  --need "tabela com edicao inline e colunas fixas" \
-  --stack react --platform system --mode operate
+  --scan <caminho-do-repositorio-ou-plano> \
+  --stack <html|react|vue|svelte|rn|flutter|ios|android> \
+  --platform <system|desktop|mobile|all> --mode <operate|read|persuade>
 ```
 
-`--online` consulta a API publica do GitHub e o registry do npm e so devolve licenca **MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause ou ISC**. Sem rede, o modo offline basta: diga que a atualidade nao foi reconfirmada.
+Em menos de 1 segundo, o script le o planejamento, rotas e arquivos de dados do projeto, ativa automaticamente as categorias relevantes entre as **16 Categorias Canonicas** (`data/ui_elements_recipes.json`) e devolve:
+1. **Bibliotecas e registries permissivos (`MIT / Apache-2.0 / BSD / ISC`)** ja filtrados para a stack (`106+` entradas em `registries_oss.json` + `71+` em `components_oss.json`);
+2. **Receitas Visuais & Micro-Componentes de Estudio** obrigatorios de cada categoria (`.icon-emblem` spotlight, `.chip-sla` com anel SVG, `.chip-status` com halo, `.chip-kv`, `.card-brand-hero`, `Combo Cashflow HUD`, `Stepped Waterfall DRE`, `BarList`, `Tracker 30 blocos`, `CategoryBar`, `Lista Limpa -> Detalhe Focado`);
+3. **Curadoria de Icones especificos da categoria** (eliminando icones genericos repetidos);
+4. **Tabela pronta para a Secao 8 da `DESIGN-BIBLE.md`**.
+
+Para listar todas as 16 categorias ou consultar uma especifica / buscar no GitHub e npm:
+```bash
+python3 <skill_dir>/scripts/discover_oss_components.py --list-categories
+python3 <skill_dir>/scripts/discover_oss_components.py --category charts-telemetry-financial --stack html
+python3 <skill_dir>/scripts/discover_oss_components.py --need "grafico de fluxo de caixa com crosshair" --stack html [--online]
+```
+
+### As 16 Categorias Canonicas de Elementos Gerais de UI/UX
+1. `shell-navigation` — Sidebar minimizavel, Topbar, `Cmd+K` (`ninja-keys`, `cmdk`, `tinykeys`, `coss ui`, `shadcn/ui`)
+2. `icons-emblems-avatars` — SVGs Duotone/1.75px (`Solar Icons Duotone`, `Tabler Icons`, `Lucide`, `Heroicons Micro`, `Radix Icons`, `Iconify`, `Remix Icon`, `Iconoir`, `MingCute`, `SVGL`, `Boring Avatars`) + `.icon-emblem` e `.bank-emblem`
+3. `badges-chips-timers-status` — `.chip-sla` com anel SVG circular, `.chip-status` com halo duplo + glifo vetorial, `.chip-kv` bipartido
+4. `kpi-metrics-sparklines` — `Tremor Raw` (`BarList`, `Tracker`, `CategoryBar`), `NumberFlow`, `CountUp.js`, Sparklines
+5. `charts-telemetry-financial` — `TradingView Lightweight Charts`, `Apache ECharts` (Combo HUD + Waterfall + Sankey), `ApexCharts.js`, `EvilCharts`, `shadcn/ui Charts`, `Observable Plot`, `uPlot`, `Frappe Charts`, `visx`
+6. `data-tables-lists-progressive` — `Lista Limpa -> Detalhe Focado`, `Tabulator`, `TanStack Table/Virtual`, `AG Grid Community`, `Grid.js`, `Dice UI`
+7. `kanban-drag-drop-workflows` — `SortableJS`, `Atlassian Pragmatic drag and drop`, `@dnd-kit`, `Kibo UI Kanban`
+8. `forms-inputs-pickers-upload` — `IMask.js` (CNPJ/CPF/R$/boleto), `Flatpickr`, `Tom Select`, `Uppy`, `FilePond`, `coss ui`, `React Day Picker`, `React Aria`
+9. `calendar-gantt-timelines` — `FullCalendar Core (MIT)`, `Frappe Gantt`, `Schedule-X`, `Kibo UI Gantt & Calendar`
+10. `inbox-chat-omnichannel-ai` — `Prompt Kit`, `assistant-ui`, `Kibo UI AI Chat`, `Tiptap`, `Quill`
+11. `overlays-drawers-sheets-toasts` — `Floating UI`, `Vaul`, `Sonner`, `Notyf`, `Driver.js`, `Base UI`, `@gorhom/bottom-sheet`
+12. `documents-tickets-ledgers-import` — `PDF.js`, `PapaParse`, picote tecnico e linha digitavel copiavel
+13. `auth-onboarding-governance-settings` — `input-otp`, split-screen auth, seletor de perfis, governanca
+14. `desktop-native-workbenches` — `Dockview`, `Split.js`, `react-resizable-panels`, `Tauri v2`, `Electron`
+15. `mobile-native-pwa-touch` — `SwiftUI`, `Jetpack Compose M3`, `Flutter M3`, `Konsta UI`, `FlashList`, `Zeego`, `Burnt`
+16. `motion-microinteractions-feedback` — `AutoAnimate`, `Motion`, `NumberFlow`, `Open Props`
+
+`--online` consulta a API publica do GitHub e o registry do npm e so devolve licenca **MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause ou ISC**. Sem rede, o modo offline basta.
 
 ## 1. Comece pela interacao
 

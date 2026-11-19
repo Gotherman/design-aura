@@ -1,17 +1,5 @@
 [
   {
-    "id": "jakarta-instrument-mono",
-    "name": "Plus Jakarta Sans + Instrument Sans + JetBrains Mono",
-    "display": "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
-    "ui": "'Instrument Sans', system-ui, -apple-system, sans-serif",
-    "mono": "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace",
-    "tracking_display": "-0.03em",
-    "body_measure": "65ch",
-    "platforms": ["system", "desktop", "mobile"],
-    "mood": "Editorial operacional de alta precisao com calor humano",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
-  },
-  {
     "id": "geist-mono-clean",
     "name": "Geist + Geist Mono",
     "display": "'Geist', 'Inter', system-ui, sans-serif",
@@ -19,21 +7,14 @@
     "mono": "'Geist Mono', 'JetBrains Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "68ch",
-    "platforms": ["desktop", "system"],
-    "mood": "Ferramenta tecnica moderna estilo Linear e Vercel",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap"
-  },
-  {
-    "id": "ibm-plex-suite",
-    "name": "IBM Plex Sans + IBM Plex Mono",
-    "display": "'IBM Plex Sans', system-ui, sans-serif",
-    "ui": "'IBM Plex Sans', system-ui, sans-serif",
-    "mono": "'IBM Plex Mono', monospace",
-    "tracking_display": "-0.02em",
-    "body_measure": "70ch",
-    "platforms": ["system", "desktop"],
-    "mood": "Engenharia corporativa, rigor financeiro e telemetria industrial",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "mood": "Precisao suica executiva estilo Linear, Vercel e Stripe (números proporcionais tabulares + mono tecnico)",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700;800&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "inter-jetbrains",
@@ -43,9 +24,47 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "68ch",
-    "platforms": ["system", "desktop", "mobile"],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
     "mood": "Neutro funcional de altissima legibilidade em tabelas densas",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
+  },
+  {
+    "id": "ibm-plex-suite",
+    "name": "IBM Plex Sans + IBM Plex Mono",
+    "display": "'IBM Plex Sans', system-ui, sans-serif",
+    "ui": "'IBM Plex Sans', system-ui, sans-serif",
+    "mono": "'IBM Plex Mono', monospace",
+    "tracking_display": "-0.02em",
+    "body_measure": "70ch",
+    "platforms": [
+      "system",
+      "desktop"
+    ],
+    "mood": "Engenharia corporativa, rigor financeiro e telemetria industrial",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
+  },
+  {
+    "id": "jakarta-instrument-mono",
+    "name": "Plus Jakarta Sans + Instrument Sans + JetBrains Mono",
+    "display": "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
+    "ui": "'Instrument Sans', system-ui, -apple-system, sans-serif",
+    "mono": "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace",
+    "tracking_display": "-0.03em",
+    "body_measure": "65ch",
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "mood": "Editorial operacional de alta precisao com calor humano",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "space-dm-mono",
@@ -55,9 +74,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.03em",
     "body_measure": "66ch",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "mood": "Tecnico geometrico para logistica, IoT e paineis operacionais",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "dm-sans-mono",
@@ -67,9 +90,14 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "66ch",
-    "platforms": ["system", "mobile", "desktop"],
+    "platforms": [
+      "system",
+      "mobile",
+      "desktop"
+    ],
     "mood": "Limpo, amigavel e direto para varejo, CRM e apps de servico",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "manrope-tabular",
@@ -79,9 +107,13 @@
     "mono": "'IBM Plex Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "65ch",
-    "platforms": ["mobile", "system"],
+    "platforms": [
+      "mobile",
+      "system"
+    ],
     "mood": "Fintech moderna e produtos executivos com numerais abertos",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "source-sans-serif",
@@ -91,9 +123,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "68ch",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "mood": "Autoridade editorial, saude, educacao e documentacao longa",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "newsreader-instrument",
@@ -103,9 +139,13 @@
     "mono": "'IBM Plex Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "65ch",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "mood": "Juridico, editorial refinado e relatorios executivos",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "fraunces-dm",
@@ -115,9 +155,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.03em",
     "body_measure": "64ch",
-    "platforms": ["system", "mobile"],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
     "mood": "Arquitetura editorial e marcas com assinatura organica",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "bricolage-inter",
@@ -127,9 +171,13 @@
     "mono": "'Geist Mono', monospace",
     "tracking_display": "-0.03em",
     "body_measure": "66ch",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "mood": "Personalidade expressiva em titulos mantendo UI neutra e veloz",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "ios-sf-native",
@@ -139,9 +187,14 @@
     "mono": "'SF Mono', ui-monospace, monospace",
     "tracking_display": "-0.025em",
     "body_measure": "65ch",
-    "platforms": ["ios", "mobile", "desktop"],
+    "platforms": [
+      "ios",
+      "mobile",
+      "desktop"
+    ],
     "mood": "Fidelidade total Apple HIG com Dynamic Type",
-    "google_fonts_url": ""
+    "google_fonts_url": "",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "android-roboto-m3",
@@ -151,9 +204,13 @@
     "mono": "'Roboto Mono', monospace",
     "tracking_display": "-0.015em",
     "body_measure": "66ch",
-    "platforms": ["android", "mobile"],
+    "platforms": [
+      "android",
+      "mobile"
+    ],
     "mood": "Fidelidade total Android Material 3 em sp e escala M3",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@500;600;700&family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@500;600;700&family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "windows-segoe-native",
@@ -163,9 +220,12 @@
     "mono": "'Cascadia Mono', Consolas, monospace",
     "tracking_display": "-0.015em",
     "body_measure": "70ch",
-    "platforms": ["desktop"],
+    "platforms": [
+      "desktop"
+    ],
     "mood": "Nativo Windows 11 Fluent / WinUI 3 / Desktop Electron",
-    "google_fonts_url": ""
+    "google_fonts_url": "",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "outfit-jakarta-mono",
@@ -175,9 +235,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "65ch",
-    "platforms": ["mobile", "system"],
+    "platforms": [
+      "mobile",
+      "system"
+    ],
     "mood": "Geometrico limpo para apps de consumo e SaaS modernos",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "figtree-mono",
@@ -187,9 +251,14 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "66ch",
-    "platforms": ["system", "mobile", "desktop"],
+    "platforms": [
+      "system",
+      "mobile",
+      "desktop"
+    ],
     "mood": "Claro, amigavel e extremamente legivel em tamanhos 13-15px",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "sora-work-mono",
@@ -199,9 +268,13 @@
     "mono": "'IBM Plex Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "67ch",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "mood": "Estruturado, nitido e moderno para produtos B2B e plataformas",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "public-sans-mono",
@@ -211,9 +284,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "70ch",
-    "platforms": ["system", "desktop"],
+    "platforms": [
+      "system",
+      "desktop"
+    ],
     "mood": "Clareza institucional para GovTech, portais publicos e compliance",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "atkinson-legibility",
@@ -223,9 +300,14 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.015em",
     "body_measure": "66ch",
-    "platforms": ["system", "mobile", "desktop"],
+    "platforms": [
+      "system",
+      "mobile",
+      "desktop"
+    ],
     "mood": "Acessibilidade maxima em saude, campo e leitura critica",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "lora-plusjakarta",
@@ -235,9 +317,13 @@
     "mono": "'IBM Plex Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "65ch",
-    "platforms": ["system", "mobile"],
+    "platforms": [
+      "system",
+      "mobile"
+    ],
     "mood": "Equilibrio entre calor editorial e UI operacional limpa",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "archivo-inter-mono",
@@ -247,9 +333,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.025em",
     "body_measure": "68ch",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "mood": "Presenca industrial solida para logistica, obras e manufatura",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "nunito-sans-mono",
@@ -259,9 +349,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "66ch",
-    "platforms": ["mobile", "system"],
+    "platforms": [
+      "mobile",
+      "system"
+    ],
     "mood": "Amigavel sem perder firmeza para atendimento, RH e educacao",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Nunito+Sans:wght@400;500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Nunito+Sans:wght@400;500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "rubik-dm-mono",
@@ -271,9 +365,13 @@
     "mono": "'JetBrains Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "65ch",
-    "platforms": ["mobile", "system"],
+    "platforms": [
+      "mobile",
+      "system"
+    ],
     "mood": "Toque geometrico suave para PDV, varejo e mobile cross-platform",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Rubik:wght@500;600;700&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Rubik:wght@500;600;700&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   },
   {
     "id": "barlow-ibm-mono",
@@ -283,8 +381,12 @@
     "mono": "'IBM Plex Mono', monospace",
     "tracking_display": "-0.015em",
     "body_measure": "68ch",
-    "platforms": ["desktop", "system"],
+    "platforms": [
+      "desktop",
+      "system"
+    ],
     "mood": "Alta densidade de cabecalho estilo painel de despacho e telemetria",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap",
+    "numeric_rule": "Valores monetarios (R$), KPIs grandes e tabelas financeiras usam a sans-serif principal (--font-ui / --font-display) com font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1 (classe .num). A fonte monoespacada (--font-mono) fica estritamente restrita a codigos tecnicos (CNPJ, linha digitavel, protocolo, hashes, <kbd> Cmd+K)."
   }
 ]

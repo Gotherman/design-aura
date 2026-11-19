@@ -459,6 +459,37 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "fix": "Aplique a classe de campo do design system (borda, padding, radius, resize: vertical e :focus-visible)",
                 })
 
+    # DA-ICON-GENERIC-REPEAT (v2.2): repeticao preguicosa do mesmo icone generico de webfont (>= 5x na mesma tela)
+    if not is_vitrine and ext in {".html", ".htm"}:
+        generic_icons = ("ph-bank", "ph-warning-circle", "ph-warning", "ph-clock", "ph-info", "ph-check-circle")
+        for g_ico in generic_icons:
+            matches = list(re.finditer(rf"\b{re.escape(g_ico)}\b", clean_text))
+            if len(matches) >= 5:
+                findings.append({
+                    "rule": "DA-ICON-GENERIC-REPEAT",
+                    "severity": "MEDIUM",
+                    "location": f"{rel_path}:{pos_to_line(starts, matches[0].start())}",
+                    "evidence": f"{g_ico} repetido {len(matches)}x na mesma tela",
+                    "message": f"Icone generico '{g_ico}' repetido {len(matches)}x como muleta visual (Bloco 7 / Craft v2.2)",
+                    "fix": "Substitua por SVGs Duotone/1.75px especificos do dominio (receipt-tax, plane-departure, file-certificate, gavel), monogramas de bancos (.bank-emblem) ou .chip-sla com anel SVG",
+                })
+                break
+
+    # DA-FLAT-CHART-AXIS (v2.2): grafico de linha/area com yAxis min: 0 fixo sem serie de barras (paredao morto)
+    if not is_vitrine and ext in {".html", ".htm", ".js", ".ts", ".tsx"}:
+        if re.search(r"echarts\.init|new\s+ApexCharts|new\s+Chart\b", clean_text):
+            m_axis = re.search(r"yAxis\s*:\s*\{[^{}]*\bmin\s*:\s*0\b", clean_text)
+            has_bar = bool(re.search(r"type\s*:\s*['\"]bar['\"]", clean_text))
+            if m_axis and not has_bar:
+                findings.append({
+                    "rule": "DA-FLAT-CHART-AXIS",
+                    "severity": "MEDIUM",
+                    "location": f"{rel_path}:{pos_to_line(starts, m_axis.start())}",
+                    "evidence": snippet_at(raw_text, m_axis.start()),
+                    "message": "Grafico de linha/area com eixo Y travado em min: 0 sem serie de barras comparativa (risco de linha reta com paredao morto)",
+                    "fix": "Use escala Y dinamica calibrada (ex.: min: (v) => Math.floor(v.min * 0.88)) ou grafico Combo (Barras Entrada/Saida + Curva de Saldo + HUD vivo de crosshair)",
+                })
+
     return findings
 
 
