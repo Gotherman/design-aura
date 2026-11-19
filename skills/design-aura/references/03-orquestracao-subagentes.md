@@ -69,14 +69,15 @@ Nenhum slice de subagente é considerado "pronto" apenas porque o subagente diss
    node <skill_dir>/scripts/capture_and_audit.mjs <arquivos-do-slice> --out <dir_audit>/slices/<slice_id> --viewports <desktop|mobile> --themes dark,light --strict
    ```
 2. **Inspeção Visual Comparativa contra a Tela-Mãe (~15s):**
-   Abra os screenshots gerados do slice e cheque 5 perguntas objetivas:
-   - **Paridade visual:** parece feito pela mesma diretoria de design da Tela-Mãe aprovada?
+   Abra os screenshots gerados do slice e cheque 6 perguntas objetivas:
+   - **Paridade visual (sem clonagem estrutural):** parece feito pela mesma diretoria de design da Tela-Mãe (mesmos tokens, componentes e acabamento), **mas com layout interno e fluxo próprios da tarefa daquela tela** (não forçou o miolo da Tela-Mãe numa tela de natureza diferente, como Configurações, Funil ou Perfil)?
    - **Zero vazio morto (`DA-DEAD-SPACE`):** a viewport desktop está equilibrada (sem buracos vazios de 60–75% nem inspector de 1 linha)?
    - **Substância real (`DA-STUB-SCREEN`):** há `>= 5` registros realistas, widgets/gráficos combinados, badges semânticos e ícones coerentes?
    - **Zero regressões proibidas:** sem links `<a>` azuis sublinhados crus, sem serifa editorial em `Operate`, sem texto cortado sob barra fixa mobile, sem `404` em scripts/CSS?
    - **Interatividade real:** filtros, abas, seleção de linha que atualiza o inspector, modal/sheet e toast funcionam de verdade?
+   - **Aderência ao arquétipo do módulo:** a organização da tela segue a lógica real do trabalho (ex.: Kanban em funil, Master-Detail em catálogo, Formulário agrupado em configurações, Cockpit 3 zonas em triagem)?
 3. **Decisão imediata:**
-   - **Passou nos 5 pontos + 0 BLOCK/HIGH:** slice aceito e integrado.
+   - **Passou nos 6 pontos + 0 BLOCK/HIGH:** slice aceito e integrado.
    - **Ajuste pequeno (1–2 CSS/copy):** o próprio Orquestrador corrige na hora e revalida.
    - **Slice raso, feio ou fora do padrão:** o Orquestrador **reprova e redespacha** com lista cirúrgica do que faltou (citando a Tela-Mãe e os achados exatos) antes de seguir para a vitrine!
 
@@ -85,8 +86,8 @@ Nenhum slice de subagente é considerado "pronto" apenas porque o subagente diss
 ## Isolamento de Contexto & Briefing Rico
 
 ### O que SEMPRE passar para cada subagente construtor:
-1. **Caminho exato das Telas-Mãe aprovadas** (ex.: `design/telas/desktop-pagar.html` e `design/telas/mobile-hoje.html`) para o subagente ler e espelhar o nível de riqueza, espaçamento, componentes `Z2` e acabamento.
-2. **Caminho exato de saída** das `1–3` telas do slice + recorte do `screen-manifest.json` (ID, título, plataforma, viewport, links de entrada e links de saída reais).
+1. **Caminho exato das Telas-Mãe aprovadas** (ex.: `design/telas/desktop-pagar.html` e `design/telas/mobile-hoje.html`) deixando explícita a fronteira: **herdar 100% da linguagem visual, shell, componentes `Z2` e padrão de acabamento — mas NUNCA copiar o layout interno ou fluxo de trabalho da Tela-Mãe** quando o módulo tem outra natureza (ex.: Funil Kanban, Configurações/Perfil em seções de formulário, Editais Master-Detail, Atendimento Inbox).
+2. **Caminho exato de saída** das `1–3` telas do slice + recorte do `screen-manifest.json` (ID, título, plataforma, viewport, **arquétipo estrutural próprio de cada tela**, links de entrada e links de saída reais).
 3. **Referência direta aos artefatos travados:** `DESIGN-BIBLE.md`, `tokens.css`, `shell.css`, `shell.js` e os caminhos exatos das bibliotecas OSS da seção 8 (ex.: `vendor/echarts.min.js`, `vendor/sortable.min.js`).
 4. **Anatomia funcional e widgets obrigatórios de cada tela do slice:** o que vai em cada zona (fila, documento, gráfico/telemetria, inspector, bottom sheet), massa mínima realista (`>= 5` registros) e interações que precisam responder ao clique.
 5. **Dados Fictícios Compartilhados:** mesmos números, nomes, datas e alertas usados nas demais telas.
@@ -108,12 +109,14 @@ Nenhum slice de subagente é considerado "pronto" apenas porque o subagente diss
 Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve igualar ou superar o acabamento visual e funcional das **Telas-Mãe aprovadas**, seguindo 100% a Bíblia de Design e os 10 Blocos de Leis Inegociáveis.
 
 1. **Fundação & Régua Visual (LEITURA OBRIGATÓRIA antes de codar):**
-   - Tela(s)-Mãe aprovada(s) (espelhe este nível de acabamento): `<caminho/tela-mae-desktop.html>` / `<caminho/tela-mae-mobile.html>`
+   - Tela(s)-Mãe aprovada(s): `<caminho/tela-mae-desktop.html>` / `<caminho/tela-mae-mobile.html>`
+     - **O QUE HERDAR DA TELA-MÃE:** tokens (`Z0–Z4`, paleta, contraste, Dark/Light), tipografia, espaçamento `4/8px`, shell externo, gramática de botões/badges/cards/inputs/toasts e **nível de acabamento**.
+     - **O QUE NÃO COPIAR DA TELA-MÃE:** o layout interno, o número de colunas/zonas ou o fluxo de trabalho! Construa a organização interna que faz sentido natural para a tarefa deste módulo (ex.: Kanban para funil, Master-Detail para lista/catálogo, Formulário em seções agrupadas para configurações/perfil, Inbox+Chat para atendimento, Cockpit 3 zonas para triagem).
    - `DESIGN-BIBLE.md` (Contrato de plataforma, planos Z0–Z4, tipografia, seção 8 de libs OSS e seção 8.1)
    - `tokens.css`, `shell.css` e `shell.js` (não edite estes arquivos compartilhados; crie estilos específicos da sua tela em `<style>` local usando exclusivamente `var(--token)`).
 
-2. **Telas do Seu Slice (1–3 telas, TODAS ricas e completas):**
-   - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Zonas: `<ex: 3 zonas — fila 320px + documento + telemetria com gráfico>` | Links de saída: `<arquivos-destino>`)
+2. **Telas do Seu Slice (1–3 telas, TODAS ricas e com arquitetura própria):**
+   - `[id-1]` -> `<caminho/arquivo-1>` (Viewport: `1440x900` | Arquétipo próprio desta tela: `<ex: Kanban 5 colunas + drawer lateral OU Configurações em 2 colunas de seções agrupadas>` | Links de saída: `<arquivos-destino>`)
    - `[id-2]` -> `<caminho/arquivo-2>` (...)
 
 3. **Widgets OSS & Interatividade Obrigatória:**

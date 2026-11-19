@@ -47,7 +47,7 @@ Abre Chromium headless real via CDP, audita automaticamente as telas **e a vitri
 
 ### Passo 4 — Inspeção Visual Comparativa contra a Tela-Mãe (Batch Review)
 Abra e analise os PNGs gerados em `<dir_audit>` (incluindo `fluxo-desktop-dark.png`) — **zero erros automáticos NÃO basta se a tela estiver feia**:
-1. **Paridade com a Tela-Mãe & Zero Telas Casca**: cada tela parece desenhada pela mesma diretoria de design da Tela-Mãe aprovada, com dados completos, gráficos/widgets OSS vivos e sem 60–75% de espaço morto?
+1. **Paridade Visual sem Clonagem Estrutural & Zero Telas Casca**: cada tela usa a mesma linguagem visual e nível de acabamento da Tela-Mãe aprovada, **mas respeitando a organização interna natural do seu módulo** (ex.: Kanban em funil, formulário agrupado em configurações/perfil, inbox em atendimento — nunca cópia cega das zonas da Tela-Mãe), com dados completos, widgets OSS vivos e sem vazio morto?
 2. **Alto Contraste Ótico & Vitalidade Cromática**: os planos `Z0→Z4` separam com nitidez sem clarão branco no Light nem borrão escuro no Dark? A cor da marca continua viva (sem virar marrom/bege apagado)?
 3. **Alinhamento, Badges & Densidade**: números à direita, ícones consistentes, sem links azuis crus, sem badges brigando e sem texto cortado sob a barra mobile?
 4. **Vitrine Estilo Figma**: `fluxo.html` está panorâmico (Hub-and-Spoke), legível (sem torre vertical a 25% de zoom e sem macarronada de setas) e com zero erro JS?

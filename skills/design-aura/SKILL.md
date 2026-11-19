@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.0.0"
+  version: "2.0.1"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -119,7 +119,10 @@ Imediatamente após a aprovação da Bíblia, **ANTES** de disparar os subagente
    ```
    Abre e inspeciona visualmente os PNGs gerados (Dark & Light) até ficarem impecáveis — nível de estúdio, **zero** vazio morto, **zero** links azuis crus, **zero** erro JS ou 404.
 3. **Portão 2 — Validação rápida do padrão visual:**
-   Mostre os PNGs (ou link preview) das 2 Telas-Mãe ao usuário para confirmar que o visual real bate 100% com a expectativa (pule esta pausa apenas se o usuário já pediu explicitamente *"aprovado, construa tudo direto sem parar nas telas-mãe"*). A partir daqui, **todas as telas dos subagentes devem igualar ou superar o acabamento das Telas-Mãe**.
+   Mostre os PNGs (ou link preview) das 2 Telas-Mãe ao usuário para confirmar que o visual real bate 100% com a expectativa (pule esta pausa apenas se o usuário já pediu explicitamente *"aprovado, construa tudo direto sem parar nas telas-mãe"*).
+   - **Fronteira rígida — o que a Tela-Mãe trava vs o que NUNCA se copia:**
+     - **HERDA 100% (DNA Visual & Sistema):** tokens (`Z0–Z4`, paleta, bordas, sombras, Dark/Light), tipografia, escala `4/8px`, raios concêntricos, shell externo (barra superior, sidebar/rail, dock mobile, `⌘K`, ícones), gramática de componentes (botões, badges, inputs, cards `Z2`, drawers/sheets, toasts) e **régua de acabamento**.
+     - **NUNCA COPIA (Arquitetura Interna & Lógica da Tela):** o layout interno, o número de zonas e o fluxo de trabalho pertencem **exclusivamente à tarefa daquela tela**. Exemplo: se a Tela-Mãe é um cockpit de 3 zonas (Financeiro), o Funil continua Kanban de colunas arrastáveis, Editais continua tabela + inspector, Atendimento continua Inbox + chat + ficha, Configurações/Perfil usa seções de formulário focadas, e Login usa split-screen limpo. **Clonar a estrutura interna da Tela-Mãe para telas de outra natureza reprova no Fast-Audit.**
 
 ---
 
