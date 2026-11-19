@@ -1,0 +1,33 @@
+{
+  "name": "design-aura",
+  "id": "design-aura",
+  "owner": {
+    "name": "Lucas (Gotherman)"
+  },
+  "metadata": {
+    "description": "Design Aura skill for Desktop, Mobile (iOS HIG / Android M3), and Complex Systems UI/UX direction, Design Bible, 10 Non-Negotiable Laws, multi-agent orchestration (up to 8 subagents), and interactive Figma-style canvas showcase.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "design-aura",
+      "source": "./",
+      "description": "Design Aura — End-to-end UI/UX direction, Design Bible, 10 Non-Negotiable anti-slop & craft laws, WCAG/APCA contrast & DOM auditing, and interactive Figma-style screen flow showcase.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Lucas (Gotherman)"
+      },
+      "keywords": [
+        "design-system",
+        "ui-ux",
+        "desktop",
+        "mobile",
+        "anti-ai-slop",
+        "figma-canvas",
+        "accessibility"
+      ],
+      "category": "design",
+      "strict": false
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "project": {
+    "name": "Meridiano Frota & Operações",
+    "subtitle": "Cockpit Logístico & App Motorista",
+    "version": "1.0",
+    "startScreenId": "portal",
+    "bibleLink": "",
+    "defaultTheme": "dark",
+    "worldWidth": 1920,
+    "worldHeight": 1200
+  },
+  "theme": {
+    "brandAccent": "#EA580C",
+    "brandAccentDeep": "#C2410C",
+    "brandNavy": "#0F1A26",
+    "canvasBgDark": "#0F1A26",
+    "surfaceCardDark": "#162536",
+    "canvasBgLight": "#E6E3DC",
+    "surfaceCardLight": "#FFFFFF"
+  },
+  "sections": [
+    {
+      "id": "sec-comando",
+      "flow": "operacao",
+      "label": "COMANDO CENTRAL (DESKTOP)",
+      "x": 40,
+      "y": 40,
+      "w": 1240,
+      "h": 460,
+      "accent": "#EA580C",
+      "isStart": true,
+      "isMobileSection": false
+    },
+    {
+      "id": "sec-mobile",
+      "flow": "motorista",
+      "label": "APP MOTORISTA (IOS & ANDROID)",
+      "x": 40,
+      "y": 540,
+      "w": 900,
+      "h": 490,
+      "accent": "#34D399",
+      "isStart": false,
+      "isMobileSection": true
+    }
+  ],
+  "screens": [
+    {
+      "id": "portal",
+      "flow": "operacao",
+      "sectionId": "sec-comando",
+      "group": "Comando",
+      "title": "Portal de Despacho",
+      "file": "desktop-portal.html",
+      "platform": "desktop",
+      "x": 70,
+      "y": 100,
+      "w": 360,
+      "h": 350,
+      "vw": 1440,
+      "vh": 900,
+      "accent": "#EA580C",
+      "metric": "14 rotas ativas · 2 alertas",
+      "badge": "Início",
+      "isStart": true,
+      "desc": "Visão de comando matinal com triagem em 3 horizontes (Agora, Em Rota, Radar) e atalho Cmd+K."
+    },
+    {
+      "id": "ocorrencias",
+      "flow": "operacao",
+      "sectionId": "sec-comando",
+      "group": "Operação",
+      "title": "Cockpit de Ocorrências",
+      "file": "desktop-ocorrencias.html",
+      "platform": "desktop",
+      "x": 500,
+      "y": 100,
+      "w": 360,
+      "h": 350,
+      "vw": 1440,
+      "vh": 900,
+      "accent": "#F87171",
+      "metric": "2 bloqueios · SLA 12m",
+      "badge": "3 Zonas",
+      "isStart": false,
+      "desc": "Fila de atrasos e sinistros à esquerda, dossiê da carga no centro e telemetria de veículo à direita."
+    },
+    {
+      "id": "faturamento",
+      "flow": "operacao",
+      "sectionId": "sec-comando",
+      "group": "Financeiro",
+      "title": "Fretes & Repasses",
+      "file": "desktop-fretes.html",
+      "platform": "desktop",
+      "x": 930,
+      "y": 100,
+      "w": 320,
+      "h": 350,
+      "vw": 1440,
+      "vh": 900,
+      "accent": "#5DA0DF",
+      "metric": "R$ 184.920,00 · 98% em dia",
+      "badge": "Tabular",
+      "isStart": false,
+      "desc": "Tabela densa de fretes com valores à direita em tabular-nums e aprovação de repasse em 1 clique."
+    },
+    {
+      "id": "mobile-rota",
+      "flow": "motorista",
+      "sectionId": "sec-mobile",
+      "group": "App Motorista",
+      "title": "Viagem Atual",
+      "file": "mobile-viagem.html",
+      "platform": "mobile",
+      "x": 80,
+      "y": 605,
+      "w": 250,
+      "h": 370,
+      "vw": 390,
+      "vh": 844,
+      "accent": "#34D399",
+      "metric": "Parada 3/5 · ETA 14:20",
+      "badge": "Mobile",
+      "isStart": false,
+      "desc": "Tela principal do motorista na zona do polegar com confirmação de entrega e sincronização offline."
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-portal-oco",
+      "from": "portal",
+      "fromSide": "r",
+      "to": "ocorrencias",
+      "toSide": "l",
+      "label": "Resolver 2 alertas",
+      "color": "#F87171",
+      "flow": "operacao",
+      "dashed": false,
+      "curve": 0.35
+    },
+    {
+      "id": "e-oco-fre",
+      "from": "ocorrencias",
+      "fromSide": "r",
+      "to": "faturamento",
+      "toSide": "l",
+      "label": "Liberar frete",
+      "color": "#5DA0DF",
+      "flow": "operacao",
+      "dashed": false,
+      "curve": 0.35
+    },
+    {
+      "id": "e-portal-mob",
+      "from": "portal",
+      "fromSide": "b",
+      "to": "mobile-rota",
+      "toSide": "t",
+      "label": "App Motorista",
+      "color": "#34D399",
+      "flow": "motorista",
+      "dashed": true,
+      "curve": 0.35
+    }
+  ],
+  "journeys": [
+    {
+      "id": "despacho",
+      "name": "Jornada · Despacho Matinal",
+      "color": "#EA580C",
+      "steps": [
+        {
+          "screenId": "portal",
+          "short": "Portal",
+          "title": "Triagem matinal das rotas ativas",
+          "tip": "Confira os 2 alertas no bloco Agora e avance para o Cockpit de Ocorrências."
+        },
+        {
+          "screenId": "ocorrencias",
+          "short": "Ocorrências",
+          "title": "Análise em 3 zonas do atraso na Carga #4812",
+          "tip": "Avalie o histórico à direita e libere a reprogramação."
+        },
+        {
+          "screenId": "faturamento",
+          "short": "Fretes",
+          "title": "Conferência de repasses em tabela tabular",
+          "tip": "Verifique os valores alinhados à direita e aprove o lote."
+        }
+      ]
+    },
+    {
+      "id": "campo",
+      "name": "Jornada · Motorista em Campo",
+      "color": "#34D399",
+      "steps": [
+        {
+          "screenId": "mobile-rota",
+          "short": "Viagem",
+          "title": "Confirmação de entrega na zona do polegar",
+          "tip": "Toque no botão principal inferior para registrar a entrega."
+        }
+      ]
+    }
+  ]
+}
