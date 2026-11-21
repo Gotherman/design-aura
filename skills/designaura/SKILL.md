@@ -11,7 +11,7 @@ disable-model-invocation: true
 
 O usuario acabou de pedir para comecar a Design Aura neste chat. Nao pergunte se deve comecar. Comece.
 
-1. Leia e siga a skill **design-aura** inteira (o `SKILL.md` instalado ao lado deste, em `design-aura`). Ela e o processo completo (`v2.2.1`). Este comando dispara o fluxo.
+1. Leia e siga a skill **design-aura** inteira (o `SKILL.md` instalado ao lado deste, em `design-aura`). Ela e o processo completo (`v2.3.0`). Este comando dispara o fluxo.
 2. Inspecione o projeto aberto antes de perguntar qualquer coisa: repositorio, planejamento (`CONCEPCAO.md`, PRD, proposta), rotas, telas existentes, tokens, marca e componentes.
 3. Se ja houver telas ou um visual feito, o trabalho e **remodelar com autopsia seletiva**. Diga isso numa frase. Identifique objetivamente o que falha nas telas atuais e o que funciona no fluxo do produto. **Nunca** use "remodelar" como pretexto para proibir cards/superficies `Z2`, graficos interativos OSS, icones vetoriais Duotone, cores vivas da marca ou densidade operacional real.
 4. Se nao houver tela nenhuma, o trabalho e criar do zero a partir do planejamento ou da ideia.

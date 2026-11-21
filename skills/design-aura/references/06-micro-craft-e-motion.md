@@ -64,9 +64,17 @@ html[data-theme="light"] .panel-z2 {
 }
 html[data-theme="light"] .sidebar,
 html[data-theme="light"] .auth-brand-pane,
-html[data-theme="light"] .card-brand-hero {
-  background: linear-gradient(155deg, var(--surface-brand-dark, #0E294B) 0%, var(--surface-brand-dark-2, #163E70) 100%);
+html[data-theme="light"] .card-brand-hero,
+.on-brand-dark {
+  background-color: var(--surface-brand-dark, #0E294B);
+  background-image: linear-gradient(155deg, var(--surface-brand-dark, #0E294B) 0%, var(--surface-brand-dark-2, #163E70) 100%);
   color: var(--on-brand-dark, #F8FAFC);
+  /* Escopo local obrigatorio (DA-BRAND-DARK-SCOPE): impede --text-muted escuro do Light Mode vazar sobre fundo marinho */
+  --text-strong: #F8FAFC;
+  --text-body: #DCE7F5;
+  --text-muted: var(--on-brand-dark-muted, #B8CCE5);
+  --border-subtle: rgba(184, 204, 229, 0.24);
+  --border-strong: rgba(184, 204, 229, 0.40);
 }
 html[data-theme="light"] .panel-head,
 html[data-theme="light"] .data-table th {
@@ -79,12 +87,16 @@ html[data-theme="light"] .data-table th {
 ### 3.2 Anatomia em 2 Planos dentro de Painéis Compostos + Poços `Z0` + Card-Rei da Marca (`.card-brand-hero`)
 - **Painéis compostos** (tabelas, gráficos, formulários): separe o cabeçalho e o rodapé de resumo em uma faixa sutil (`background: color-mix(in srgb, var(--surface-z3) 55%, var(--surface-z2))` + hairline `1px`), evitando caixotes lisos do topo à base.
 - **Poços `.well-z0`** (trilhos `.subtabs`, `.seg`, inputs, colunas Kanban): recesso físico com `box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.30), 0 1px 0 rgba(255, 255, 255, 0.05)`.
-- **Card-Rei Institucional (`.card-brand-hero`):** destaque o painel focal de cada tela com a cor da marca dizendo *"Estou aqui!"*:
+- **Card-Rei Institucional (`.card-brand-hero` — Dark & Light com presença clara da marca):** destaque o painel focal de cada tela com a cor profunda da marca dizendo *"Estou aqui!"* — inclusive no Dark Mode, usando gradiente azul-marinho institucional (`--surface-brand-dark → --surface-brand-dark-2`) com fio especular superior em vez de sumir no carvão:
   ```css
   .card-brand-hero {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 20%, var(--surface-z2)) 0%, var(--surface-z2) 62%);
-    border: 1px solid color-mix(in srgb, var(--primary) 36%, var(--border-subtle));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+    background-color: var(--surface-brand-dark, #0D2442);
+    background-image: linear-gradient(140deg, var(--surface-brand-dark-2, #163966) 0%, var(--surface-brand-dark, #0D2442) 68%);
+    border: 1px solid color-mix(in srgb, var(--primary) 42%, var(--border-subtle));
+    box-shadow: inset 0 1px 0 rgba(110, 181, 255, 0.24), 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+    --text-strong: #F8FAFC;
+    --text-body: #DCE7F5;
+    --text-muted: var(--on-brand-dark-muted, #B8CCE5);
   }
   ```
 - **Elevação Interativa em Linhas Clicáveis (`tbody tr:hover`):** fundo `--surface-z3`, filete indicador esquerdo `box-shadow: inset 3px 0 0 var(--primary)` e transformação do link `"Abrir →"` em pílula preenchida.
@@ -113,15 +125,19 @@ Elimine ícones genéricos borrados em quadrados marrons chapados e pílulas de 
      width: 38px; height: 38px; border-radius: 10px;
      display: inline-flex; align-items: center; justify-content: center; flex: none;
      background: radial-gradient(120% 120% at 25% 18%,
-       color-mix(in srgb, var(--tone, var(--primary)) 32%, transparent) 0%,
-       color-mix(in srgb, var(--tone, var(--primary)) 7%, var(--surface-z3)) 75%,
+       color-mix(in srgb, var(--tone, var(--primary)) 36%, transparent) 0%,
+       color-mix(in srgb, var(--tone, var(--primary)) 11%, var(--surface-z3)) 75%,
        var(--surface-z2) 100%);
-     border: 1px solid color-mix(in srgb, var(--tone, var(--primary)) 40%, var(--border-subtle));
+     border: 1px solid color-mix(in srgb, var(--tone, var(--primary)) 48%, var(--border-subtle));
      color: var(--tone, var(--primary));
      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 4px 10px -2px rgba(0, 0, 0, 0.30);
    }
-   .icon-emblem svg { width: 18px; height: 18px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.32)); }
+   .icon-emblem--danger { --tone: var(--danger); }
+   .icon-emblem--warning { --tone: var(--warning); }
+   .icon-emblem--success { --tone: var(--success); }
+   .icon-emblem svg, .icon-emblem i { width: 18px; height: 18px; font-size: 18px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.28)); }
    ```
+   - **Piso de nitidez em emblemas de alerta (`.icon-emblem--danger` / `--warning`):** nunca use ícones desbotados (`opacity < 0.85` ou rosa/vermelho fraco sobre fundo escuro/claro) que percam contraste ao lado de monogramas coloridos — mantenha o ícone com contraste `>= 4.5:1` contra o berço e `stroke-width >= 1.75`.
 
 3. **Pílula de SLA / Janela 24h com Anel SVG Circular (`.chip-sla` — substitui `[ 41 min ]` e `[ Janela aberta: 22h 18m ]` chapados):**
    - Usa **`border-radius: 8px`** (squircle técnico, não oval `999px` em tudo), chanfro `inset 0 1px 0 rgba(255,255,255,0.14)`, um **anel `<svg width="14" height="14" viewBox="0 0 16 16">` com `stroke-dasharray`** mostrando a fração real do prazo consumido, rótulo de contexto (`SLA` / `Janela 24h`) e valor tabular em negrito (`41m` / `22h 18m`).

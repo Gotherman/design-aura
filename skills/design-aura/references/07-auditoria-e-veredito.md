@@ -30,20 +30,25 @@ python3 <skill_dir>/scripts/lint_design_aura.py <caminho-do-projeto> --strict
 ```
 Varre todos os arquivos HTML/CSS/JS/TS/TSX/Vue/Svelte/Swift/Kotlin/Dart contra as regras determinísticas dos Blocos 1 a 10 (AI tells, copy clichê, `transition-all`, magic numbers, inputs sem label, falta de `tabular-nums`, foco removido, etc.).
 
-### Passo 3 — Renderização Real + Auditoria DOM & Craft (`capture_and_audit.mjs` v2.0)
+### Passo 3 — Renderização Real + Auditoria DOM & Craft (`capture_and_audit.mjs` v2.3.0 · Paralelo)
 ```bash
-node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
+node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --concurrency 4 --strict
 ```
-Abre Chromium headless real via CDP, audita automaticamente as telas **e a vitrine (`fluxo.html`, `preview.html`, `index.html`)**, captura PNGs de cada viewport × tema e inspeciona em runtime:
-- Overflow horizontal (`DA-DOM-OVERFLOW`), imagens quebradas/sem `alt`, alvos mobile `< 44×44px`, corpo `< 12px`, inputs sem label (`DA-B9-01`), contraste real WCAG AA (`DA-B3-01`), raios beliscados (`DA-B7-01`), scroll aninhado e números desalinhados (`DA-B8-03`)
+Abre Chromium headless real via CDP com **pool paralelo de 4 abas em contextos isolados** (`Target.createBrowserContext`, ~25–35s para 46 capturas + progresso ao vivo `[04/46] ... PASS (0.8s)` em `stderr`), pré-injeta o tema antes do carregamento, audita automaticamente as telas **e a vitrine (`fluxo.html`, `preview.html`, `index.html`)**, captura PNGs de cada viewport × tema e inspeciona em runtime:
+- Overflow horizontal (`DA-DOM-OVERFLOW`), imagens quebradas/sem `alt`, alvos mobile `< 44×44px`, corpo `< 12px`, inputs sem label (`DA-B9-01`), contraste real WCAG AA com amostra do elemento (`DA-B3-01`), raios beliscados (`DA-B7-01`), scroll aninhado e números desalinhados (`DA-B8-03`)
 - Erros de console/exceções JS com stack completo (`DA-JS-ERROR`) e assets/scripts locais com HTTP 404 (`DA-ASSET-404`)
-- **Piso de Craft & Composição (`v2.0`):**
-  - `DA-DEAD-SPACE`: detecta vazio morto em desktop (`1440×900`) e inspectors/painéis laterais quase vazios (ex.: apenas 1 linha de dado)
+- **Piso de Craft, Composição & Integridade (`v2.3.0`):**
+  - `DA-DEAD-SPACE`: detecta vazio morto em desktop (`1440×900`) e inspectors/painéis laterais quase vazios
+  - `DA-CARD-INTERNAL-VOID`: detecta buracos verticais `> 95px` dentro de cards `Z2` esticados em Bento Grid
   - `DA-STUB-SCREEN`: bloqueia/alerta tabelas operacionais rasas (`1–2` linhas) e telas casca com `< 4` elementos úteis
   - `DA-RAW-LINK-LIST`: detecta links `<a>` azuis sublinhados crus em listas/tabelas/menus de app
   - `DA-FIXED-OVERLAP`: bloqueia conteúdo cortado ou escondido sob barra fixa inferior/superior mesmo no fim da rolagem
+  - `DA-CLIPPED-CONTENT` & `DA-MOBILE-FLEX-CLIP`: bloqueiam cards cortando o próprio texto com `overflow:hidden` ou containers mobile `flex-column` sem `flex-shrink: 0`
+  - `DA-NAV-TRUNCATION` & `DA-HEADER-HSCROLL`: detectam nome de marca/nav truncado horizontalmente na Sidebar (ex.: nome cortado pelo botão `«`) e barras superiores com overflow/scrollbar horizontal em desktop (`1440px`)
   - `DA-SERIF-OPERATE`: detecta tipografia serifada editorial indevida em telas operacionais `Operate`
   - `DA-SURFACE-FLAT`: detecta falta de separação visual entre canvas `Z1` e painéis/cards `Z2`
+- **Miniaturas na Galeria (`index.html`):** após a auditoria global gerar os PNGs em `<dir_audit>`, re-execute `build_figma_canvas.py screen-manifest.json --tokens tokens.css --thumbs <dir_audit> --out <dir_telas> --verify-files` para embutir miniaturas reais (com troca automática Dark/Light) nos cards de `index.html`.
+- **Nunca abandone a auditoria em background:** aguarde a conclusão (leva ~30s com `--concurrency 4`) antes de responder ao usuário.
 
 ### Passo 4 — Inspeção Visual Comparativa contra a Tela-Mãe (Batch Review)
 Abra e analise os PNGs gerados em `<dir_audit>` (incluindo `fluxo-desktop-dark.png`) — **zero erros automáticos NÃO basta se a tela estiver feia**:

@@ -143,10 +143,26 @@ Você é um Engenheiro de UI Sênior da Design Aura (`v2.2.0`). Sua entrega deve
 
 ---
 
+## Modo 3 Oficial — Polimento Cirúrgico sobre Telas Aprovadas (`v2.3.0`)
+
+Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes e pede apenas **polimento visual** (cores Dark/Light, profundidade de cards, ícones/emblemas, correções mobile ou vitrine):
+1. **NÃO** refaça a Bíblia nem reescreva as telas do zero — preserve 100% do layout, rotas e textos aprovados.
+2. **Etapa Piloto (Orquestrador):** atualize primeiro `tokens.json` → `tokens.css` → `shell.css` (incluindo escopo `.on-brand-dark` e `.mob-scroll > * { flex-shrink: 0; }`) + sincronize `DESIGN-BIBLE.md/.pdf` + aplique os novos padrões em **1 Tela-Piloto Desktop + 1 Tela-Piloto Mobile**, audite com `capture_and_audit.mjs --concurrency 4` e **pare para o OK rápido do usuário** nos PNGs piloto.
+3. **Propagação Rápida sem Travamento:** como polimento cirúrgico mexe em classes/ícones pontuais (não constrói 800 linhas por tela do zero), prefira **lotes curtos controlados (`2–3` subagentes por vez ou edição em lotes diretos)** em vez de explodir 6 subagentes simultâneos que podem travar aguardando entrada.
+
+## Protocolo Anti-Travamento de Subagentes & Transparência (`v2.3.0`)
+
+- **Verificação de Arranque:** ao disparar subagentes paralelos, prefira ondas de **3 a 4 simultâneos** (em vez de 6–8 cegos de uma vez). Se o harness mostrar subagentes presos em `waiting_for_input` ou sem atividade no disco, encerre os presos e assuma em lotes controlados sem deixar o usuário esperando no escuro.
+- **Auditoria Global Sempre Concluída no Turno:** `capture_and_audit.mjs` roda em **paralelo (`--concurrency 4`) com contextos isolados e log de progresso ao vivo** (~25–35s para 46 capturas). **NUNCA** largue a auditoria final em background devolvendo um turno "aguardando auditoria" sem `t3_background_wait` nem conclusão real — aguarde terminar, inspecione os PNGs e entregue o veredito completo com provas visuais.
+
+---
+
 ## Reconciliação Final (Onda 2)
 
 Após todos os slices passarem no Fast-Audit individual:
 1. Confirme **100% de cobertura** no disco contra `screen-manifest.json` e zero links quebrados.
-2. Gere a vitrine com `build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <dir_telas> --verify-files`.
-3. Execute os 3 portões globais (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs --manifest` que agora audita também `fluxo.html`, `preview.html` e `index.html`).
+2. Execute os 3 portões globais em paralelo (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs --manifest --concurrency 4 --strict`).
+3. Gere/atualize a vitrine com miniaturas visuais reais da auditoria:
+   `build_figma_canvas.py screen-manifest.json --tokens tokens.css --thumbs <dir_audit> --out <dir_telas> --verify-files`
+   e valide também a vitrine (`fluxo.html`, `preview.html`, `index.html`) com **0 BLOCK · 0 HIGH** (Dark & Light).
 4. Inspecione visualmente os PNGs finais e entregue links acessíveis validados (`HTTP 200`).

@@ -62,7 +62,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 |---|---|---|
 | `DA-B5-01` | Proibido usar `"Lorem ipsum"`, `"John Doe"`, `"Jane Doe"`, `"Acme Corp"` ou placeholders genéricos em telas entregues. | `lint_design_aura.py` |
 | `DA-B5-02` | Proibido microcopy clichê de IA (`"Transforme seu negócio"`, `"Eleve sua experiência"`, `"Solução definitiva"`, `"Potencializado por IA"`, `"Revolucione sua rotina"`, `"Unlock your potential"`). O texto deve usar verbos concretos e vocabulário do domínio real. | `lint_design_aura.py` |
-| `DA-B5-03` | Proibido subtítulos-eco que apenas repetem o título (*"Contas a pagar — Gerencie suas contas"*), *botsplaining* (`"Clique no botão abaixo para..."`) e notas de dev vazadas. *(Subtítulos com dados reais e contagem como `"140 editais abertos · 17 encerram em 7 dias"` são ótimos.)* | `lint_design_aura.py` + revisão textual |
+| `DA-B5-03` | Proibido subtítulos-eco que apenas repetem o título (*"Contas a pagar — Gerencie suas contas"*), *botsplaining* (`"Clique no botão abaixo para..."`), notas de dev vazadas e **copy de referência externa vazada para a UI** (`DA-REF-COPY-LEAK`, ex.: `"estilo Linear"`, `"estilo TOTVS"`). *(Subtítulos com dados reais e contagem como `"140 editais abertos · 17 encerram em 7 dias"` são ótimos.)* | `lint_design_aura.py` + revisão textual |
 
 ---
 
@@ -118,6 +118,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 | `DA-B10-03` | Proibido exibir imagens/avatares sem preservação de proporção (`object-fit: cover` / `object-cover`), sem `alt` adequado ou sem estado de fallback (iniciais/ícone) em caso de falha. | `lint_design_aura.py` + `capture_and_audit.mjs` |
 | `DA-B10-05` | Proibido espremer o shell desktop no mobile ou esticar o shell mobile no desktop. Web: sidebar a partir de `1024px`, rail ou drawer entre `768` e `1023px`, drawer ou bottom nav abaixo de `768px`. Tabela densa vira lista no mobile. Tokens continuam os mesmos. | Revisão contra `04` e `05` |
 | `DA-B10-06` | **Zero Recorte por Barras Fixas, Zero Corte Interno de Cards & Encaixe Limpo de Mockup (`DA-FIXED-OVERLAP` / `DA-CLIPPED-CONTENT` / `DA-MOBILE-FLEX-CLIP`):** conteúdo rolável em mobile ou desktop nunca pode ficar cortado sob barra inferior fixa (`padding-bottom` seguro), **PROIBIDO** cards `overflow: hidden` sendo esmagados dentro de containers flex-column sem `flex-shrink: 0` (ou `display: grid; grid-auto-rows: max-content`), e molduras/mockups mobile devem usar `overflow: hidden; clip-path: inset(0 round 32px); isolation: isolate` para impedir cantos quadrados vazando fora do bezel. | `capture_and_audit.mjs` + `lint_design_aura.py` |
+| `DA-B10-07` | **Zero Marca/Nav Truncada, Zero Header com Scrollbar & Escopo `.on-brand-dark` (`DA-NAV-TRUNCATION` / `DA-HEADER-HSCROLL` / `DA-BRAND-DARK-SCOPE`):** nome de marca na Sidebar e itens de navegação não podem ser cortados horizontalmente, topbars/seletores em desktop (`1440px`) não podem vazar com scrollbar horizontal, e superfícies escuras da marca no Modo Claro (`.sidebar`, `.auth-brand-pane`, `.card-brand-hero`) devem redeclarar localmente `--text-strong`/`--text-muted` claros. | `capture_and_audit.mjs` + `lint_design_aura.py` |
 
 ---
 

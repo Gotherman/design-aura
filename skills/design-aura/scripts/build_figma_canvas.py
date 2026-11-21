@@ -9,6 +9,7 @@ Le screen-manifest.json (+ opcional --tokens tokens.css) e gera:
 import argparse
 import html
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -17,24 +18,26 @@ BASE_STYLES = """
 :root {
   --da-bg-dark: __BG_DARK__;
   --da-card-dark: __CARD_DARK__;
-  --da-well-dark: #081018;
-  --da-border-dark: #293D54;
-  --da-border-strong-dark: #456384;
-  --da-text-strong-dark: #F3F6FA;
-  --da-text-body-dark: #D3DEEC;
-  --da-text-muted-dark: #9EB0C4;
+  --da-well-dark: __WELL_DARK__;
+  --da-border-dark: __BORDER_DARK__;
+  --da-border-strong-dark: __BORDER_STRONG_DARK__;
+  --da-text-strong-dark: __TEXT_STRONG_DARK__;
+  --da-text-body-dark: __TEXT_BODY_DARK__;
+  --da-text-muted-dark: __TEXT_MUTED_DARK__;
 
   --da-bg-light: __BG_LIGHT__;
   --da-card-light: __CARD_LIGHT__;
-  --da-well-light: #D9D6CE;
-  --da-border-light: #AEB8C4;
-  --da-border-strong-light: #768496;
-  --da-text-strong-light: #101822;
-  --da-text-body-light: #243040;
-  --da-text-muted-light: #435163;
+  --da-well-light: __WELL_LIGHT__;
+  --da-border-light: __BORDER_LIGHT__;
+  --da-border-strong-light: __BORDER_STRONG_LIGHT__;
+  --da-text-strong-light: __TEXT_STRONG_LIGHT__;
+  --da-text-body-light: __TEXT_BODY_LIGHT__;
+  --da-text-muted-light: __TEXT_MUTED_LIGHT__;
 
   --da-navy: __BRAND_NAVY__;
-  --da-accent: __BRAND_ACCENT__;
+  --da-accent-dark: __BRAND_ACCENT_DARK__;
+  --da-accent-light: __BRAND_ACCENT_LIGHT__;
+  --da-accent: __BRAND_ACCENT_DARK__;
   --da-accent-deep: __BRAND_ACCENT_DEEP__;
   --da-on-accent: #FFFFFF;
 
@@ -48,12 +51,16 @@ html[data-theme="dark"] {
   --surface-z0: var(--da-well-dark);
   --surface-z1: var(--da-bg-dark);
   --surface-z2: var(--da-card-dark);
-  --surface-glass: rgba(15, 26, 38, 0.88);
+  --surface-glass: rgba(14, 19, 29, 0.92);
   --border-card: var(--da-border-dark);
   --border-strong: var(--da-border-strong-dark);
   --text-strong: var(--da-text-strong-dark);
   --text-body: var(--da-text-body-dark);
   --text-muted: var(--da-text-muted-dark);
+  --da-accent: var(--da-accent-dark);
+  --da-accent-text: var(--da-accent-dark);
+  --da-mini-vp-border: #6EB5FF;
+  --da-mini-vp-bg: rgba(110, 181, 255, 0.16);
   --shadow-z1: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 12px rgba(0, 0, 0, 0.25);
   --shadow-z2: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 24px rgba(0, 0, 0, 0.35);
 }
@@ -63,14 +70,18 @@ html[data-theme="light"] {
   --surface-z0: var(--da-well-light);
   --surface-z1: var(--da-bg-light);
   --surface-z2: var(--da-card-light);
-  --surface-glass: rgba(250, 248, 245, 0.90);
+  --surface-glass: rgba(248, 251, 255, 0.95);
   --border-card: var(--da-border-light);
   --border-strong: var(--da-border-strong-light);
   --text-strong: var(--da-text-strong-light);
   --text-body: var(--da-text-body-light);
   --text-muted: var(--da-text-muted-light);
-  --shadow-z1: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.06);
-  --shadow-z2: 0 0 0 1px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.10), 0 12px 24px -6px rgba(15, 23, 42, 0.08);
+  --da-accent: var(--da-accent-light);
+  --da-accent-text: var(--da-accent-light);
+  --da-mini-vp-border: var(--da-navy);
+  --da-mini-vp-bg: rgba(20, 66, 122, 0.14);
+  --shadow-z1: 0 0 0 1px rgba(14, 41, 75, 0.08), 0 1px 2px -1px rgba(14, 41, 75, 0.08), 0 4px 10px -2px rgba(14, 41, 75, 0.07);
+  --shadow-z2: 0 0 0 1px rgba(14, 41, 75, 0.12), 0 4px 12px -2px rgba(14, 41, 75, 0.11), 0 12px 24px -6px rgba(14, 41, 75, 0.09);
 }
 
 * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--border-strong) var(--surface-z0); }
@@ -216,11 +227,64 @@ def _box(screen: dict) -> tuple[float, float, float, float]:
     )
 
 
+_ENTRY_WORD_RE = re.compile(
+    r"(?:^|[^a-z0-9])(?:login|signin|signup|entrada|acesso|auth|2fa|onboarding|perfil|preferencias|configuracoes|minha-conta|settings)(?:$|[^a-z0-9])",
+    re.I,
+)
+_MODULE_FLOWS = {
+    "financeiro", "licitacoes", "atendimento", "certidoes", "vendas", "estoque",
+    "rh", "clinica", "operacao", "operacoes", "logistica", "projetos", "comercial",
+    "compras", "fiscal", "juridico", "relatorios", "analytics", "crm", "suporte",
+}
+
+_FLOW_LABELS_PT = {
+    "nucleo": "Núcleo",
+    "inicio": "Início",
+    "acesso": "Acesso",
+    "conta": "Conta",
+    "financeiro": "Financeiro",
+    "licitacoes": "Licitações",
+    "certidoes": "Certidões",
+    "atendimento": "Atendimento",
+    "socios-mobile": "App Sócios",
+    "mobile": "Mobile",
+    "configuracoes": "Configurações",
+    "preferencias": "Preferências",
+    "operacoes": "Operações",
+    "operacao": "Operação",
+    "relatorios": "Relatórios",
+    "cobranca": "Cobrança",
+    "saude": "Saúde",
+    "juridico": "Jurídico",
+    "logistica": "Logística",
+    "integracoes": "Integrações",
+    "usuarios": "Usuários",
+    "producao": "Produção",
+    "gestao": "Gestão",
+    "comercio": "Comércio",
+    "educacao": "Educação",
+    "notificacoes": "Notificações",
+}
+
+
+def _format_flow_label(flow: str, manifest: dict) -> str:
+    custom = (manifest.get("flowLabels") or {}).get(flow)
+    if custom:
+        return str(custom)
+    key = str(flow or "geral").strip().lower()
+    if key in _FLOW_LABELS_PT:
+        return _FLOW_LABELS_PT[key]
+    words = [w for w in re.split(r"[-_\s]+", key) if w]
+    return " ".join(_FLOW_LABELS_PT.get(w, w.capitalize()) for w in words) or "Geral"
+
+
 def _is_entry_like(screen: dict) -> bool:
+    fl = str(screen.get("flow") or "").strip().lower()
+    if fl in _MODULE_FLOWS:
+        return False
     sid = str(screen.get("id") or "").lower()
-    fl = str(screen.get("flow") or "").lower()
     title = str(screen.get("title") or "").lower()
-    return any(k in sid or k in fl or k in title for k in ("login", "entrada", "acesso", "auth", "2fa", "perfil", "conta", "ajust", "config"))
+    return bool(_ENTRY_WORD_RE.search(sid) or _ENTRY_WORD_RE.search(title) or fl in ("acesso", "auth", "conta"))
 
 
 def _pick_hub_id(screens: list[dict], edges: list[dict], start_id: str) -> str:
@@ -713,21 +777,105 @@ def validate_manifest(manifest: dict) -> None:
                 raise ValueError(f"Jornada '{j.get('id')}' referencia tela inexistente: {st['screenId']}")
 
 
-def build_base_css(manifest: dict, tokens_link: str) -> str:
+def _is_dark_hex(hx: str) -> bool:
+    h = hx.lstrip("#")
+    if len(h) == 3:
+        h = "".join(c * 2 for c in h)
+    if len(h) < 6:
+        return False
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return (0.2126 * r + 0.7152 * g + 0.0722 * b) < 128
+
+
+def extract_tokens_from_css(tokens_path: Path | None) -> dict[str, dict[str, str]]:
+    """Extrai variaveis hex Light/Dark de tokens.css para harmonizar a vitrine com o projeto."""
+    result: dict[str, dict[str, str]] = {"light": {}, "dark": {}}
+    if not tokens_path or not tokens_path.exists():
+        return result
+    try:
+        text = tokens_path.read_text(encoding="utf-8")
+    except OSError:
+        return result
+    text = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+    block_re = re.compile(r"([^{}]+)\{([^{}]+)\}", re.S)
+    var_re = re.compile(r"(--[a-z0-9-]+)\s*:\s*(#[0-9a-fA-F]{3,8})\b")
+    for m in block_re.finditer(text):
+        sel = m.group(1).strip().lower()
+        body = m.group(2)
+        pairs = {vm.group(1): vm.group(2) for vm in var_re.finditer(body)}
+        if not pairs:
+            continue
+        if 'data-theme="dark"' in sel or "data-theme='dark'" in sel or ".dark" in sel:
+            bucket = result["dark"]
+        elif 'data-theme="light"' in sel or "data-theme='light'" in sel:
+            bucket = result["light"]
+        elif ":root" in sel:
+            z1 = pairs.get("--surface-z1") or pairs.get("--surface-z0") or ""
+            bucket = result["dark"] if (z1 and _is_dark_hex(z1)) else result["light"]
+        else:
+            continue
+        bucket.update(pairs)
+    return result
+
+
+def build_base_css(manifest: dict, tokens_link: str, parsed_tokens: dict[str, dict[str, str]] | None = None) -> str:
     th = manifest.get("theme", {})
+    pt = parsed_tokens or {"light": {}, "dark": {}}
+    tl, td = pt.get("light", {}), pt.get("dark", {})
+
+    bg_dark = td.get("--surface-z1") or th.get("canvasBgDark", "#0E131D")
+    card_dark = td.get("--surface-z2") or th.get("surfaceCardDark", "#141C29")
+    well_dark = td.get("--surface-z0") or "#080C12"
+    border_dark = td.get("--border-subtle") or "#263347"
+    border_strong_dark = td.get("--border-strong") or "#3E5270"
+    text_strong_dark = td.get("--text-strong") or "#F3F6FB"
+    text_body_dark = td.get("--text-body") or "#D5DFED"
+    text_muted_dark = td.get("--text-muted") or "#A8B7CC"
+
+    bg_light = tl.get("--surface-z1") or th.get("canvasBgLight", "#E1EAF4")
+    card_light = tl.get("--surface-z2") or th.get("surfaceCardLight", "#FFFFFF")
+    well_light = tl.get("--surface-z0") or "#CFDCEB"
+    border_light = tl.get("--border-subtle") or "#B0C2D9"
+    border_strong_light = tl.get("--border-strong") or "#728AA8"
+    text_strong_light = tl.get("--text-strong") or "#101822"
+    text_body_light = tl.get("--text-body") or "#1E2D40"
+    text_muted_light = tl.get("--text-muted") or "#435163"
+
+    brand_navy = tl.get("--surface-brand-dark") or td.get("--surface-brand-dark") or th.get("brandNavy", "#0E294B")
+    accent_dark = td.get("--accent") or th.get("brandAccent", "#FF945E")
+    accent_light = tl.get("--accent") or th.get("brandAccentDeep", "#C2410C")
+    accent_deep = tl.get("--accent") or th.get("brandAccentDeep", "#C2410C")
+
     css = BASE_STYLES
-    css = css.replace("__BG_DARK__", th.get("canvasBgDark", "#0F1A26"))
-    css = css.replace("__CARD_DARK__", th.get("surfaceCardDark", "#162536"))
-    css = css.replace("__BG_LIGHT__", th.get("canvasBgLight", "#E6E3DC"))
-    css = css.replace("__CARD_LIGHT__", th.get("surfaceCardLight", "#FFFFFF"))
-    css = css.replace("__BRAND_NAVY__", th.get("brandNavy", "#0F2942"))
-    css = css.replace("__BRAND_ACCENT__", th.get("brandAccent", "#EA580C"))
-    css = css.replace("__BRAND_ACCENT_DEEP__", th.get("brandAccentDeep", "#C2410C"))
+    replacements = {
+        "__BG_DARK__": bg_dark,
+        "__CARD_DARK__": card_dark,
+        "__WELL_DARK__": well_dark,
+        "__BORDER_DARK__": border_dark,
+        "__BORDER_STRONG_DARK__": border_strong_dark,
+        "__TEXT_STRONG_DARK__": text_strong_dark,
+        "__TEXT_BODY_DARK__": text_body_dark,
+        "__TEXT_MUTED_DARK__": text_muted_dark,
+        "__BG_LIGHT__": bg_light,
+        "__CARD_LIGHT__": card_light,
+        "__WELL_LIGHT__": well_light,
+        "__BORDER_LIGHT__": border_light,
+        "__BORDER_STRONG_LIGHT__": border_strong_light,
+        "__TEXT_STRONG_LIGHT__": text_strong_light,
+        "__TEXT_BODY_LIGHT__": text_body_light,
+        "__TEXT_MUTED_LIGHT__": text_muted_light,
+        "__BRAND_NAVY__": brand_navy,
+        "__BRAND_ACCENT_DARK__": accent_dark,
+        "__BRAND_ACCENT_LIGHT__": accent_light,
+        "__BRAND_ACCENT_DEEP__": accent_deep,
+    }
+    for k, v in replacements.items():
+        css = css.replace(k, v)
     link_tag = f'<link rel="stylesheet" href="{html.escape(tokens_link)}">\n' if tokens_link else ""
     return f"{link_tag}<style>\n{css}\n</style>"
 
 
-def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
+def render_fluxo_html(manifest: dict, tokens_link: str, parsed_tokens: dict[str, dict[str, str]] | None = None) -> str:
     proj = manifest.get("project", {})
     name = html.escape(proj.get("name", "Projeto Design Aura"))
     subtitle = html.escape(proj.get("subtitle", "Mapa de Fluxo Estilo Figma"))
@@ -737,7 +885,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     world_h = int(proj.get("worldHeight", 1600))
     start_id = proj.get("hubScreenId") or proj.get("startScreenId") or manifest["screens"][0]["id"]
     has_mobile = any(s.get("platform") == "mobile" for s in manifest["screens"])
-    head_css = build_base_css(manifest, tokens_link)
+    head_css = build_base_css(manifest, tokens_link, parsed_tokens)
     manifest_json = json.dumps(manifest, ensure_ascii=False)
 
     flows = []
@@ -757,9 +905,10 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     for fl in flows:
         col = flow_colors[fl]
         cnt = flow_counts[fl]
+        lbl = _format_flow_label(fl, manifest)
         flow_buttons.append(
             f'<button type="button" class="fx-flow-btn" data-flow="{html.escape(fl)}">'
-            f'<span class="fx-dot" style="background:{html.escape(col)}"></span>{html.escape(fl.capitalize())} '
+            f'<span class="fx-dot" style="background:{html.escape(col)}"></span>{html.escape(lbl)} '
             f'<span class="fx-count tabular-nums">{cnt}</span></button>'
         )
 
@@ -833,7 +982,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     font-family: var(--da-font-mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.02em;
     border: 1.25px solid var(--sec-accent, var(--border-strong));
   }}
-  .fx-section.is-start .fx-sec-label {{ background: #EA580C; border-color: #FF8A5B; }}
+  .fx-section.is-start .fx-sec-label {{ background: var(--da-accent-deep); border-color: var(--da-accent); color: #FFFFFF; }}
 
   .fx-edges {{ position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 15; }}
   .fx-edge-path {{ fill: none; stroke-width: 2.25; opacity: 0.78; transition-property: opacity, stroke-width; transition-duration: 150ms; }}
@@ -889,7 +1038,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
   .fx-insp-body {{ display: flex; flex-direction: column; gap: 10px; }}
   .fx-inspector.is-collapsed .fx-insp-body {{ display: none; }}
   .fx-insp-top {{ display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }}
-  .fx-insp-meta {{ font-family: var(--da-font-mono); font-size: 11.5px; color: var(--da-accent); font-weight: 600; }}
+  .fx-insp-meta {{ font-family: var(--da-font-mono); font-size: 11.5px; color: var(--da-accent-text); font-weight: 600; }}
   .fx-insp-desc {{ margin: 0; font-size: 12.5px; color: var(--text-body); }}
   .fx-hop-list {{ display: flex; flex-direction: column; gap: 5px; }}
   .fx-hop {{
@@ -907,7 +1056,7 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
     border: 1.5px solid var(--border-strong); box-shadow: var(--shadow-z2); overflow: hidden; cursor: crosshair;
   }}
   .fx-mini-node {{ position: absolute; border-radius: 2px; }}
-  .fx-mini-vp {{ position: absolute; border: 2px solid var(--da-accent); background: rgba(234, 88, 12, 0.18); border-radius: 3px; pointer-events: none; }}
+  .fx-mini-vp {{ position: absolute; border: 2px solid var(--da-mini-vp-border); background: var(--da-mini-vp-bg); border-radius: 3px; pointer-events: none; }}
   .fx-zoombar {{
     display: inline-flex; align-items: center; gap: 4px; padding: 4px; border-radius: 10px;
     background: var(--surface-glass); border: 1.5px solid var(--border-strong); box-shadow: var(--shadow-z2);
@@ -1476,21 +1625,35 @@ def render_fluxo_html(manifest: dict, tokens_link: str) -> str:
 """
 
 
-def render_preview_html(manifest: dict, tokens_link: str) -> str:
+def render_preview_html(manifest: dict, tokens_link: str, parsed_tokens: dict[str, dict[str, str]] | None = None) -> str:
     proj = manifest.get("project", {})
     name = html.escape(proj.get("name", "Projeto Design Aura"))
     default_theme = html.escape(proj.get("defaultTheme", "dark"))
     start_id = proj.get("startScreenId") or manifest["screens"][0]["id"]
-    head_css = build_base_css(manifest, tokens_link)
+    head_css = build_base_css(manifest, tokens_link, parsed_tokens)
     manifest_json = json.dumps(manifest, ensure_ascii=False)
 
     journeys = manifest.get("journeys") or [
         {"id": "padrao", "name": "Fluxo Geral", "steps": [{"screenId": s["id"], "short": s["title"], "title": s["title"], "tip": s.get("desc", "")} for s in manifest["screens"][:5]]}
     ]
-    j_buttons = []
-    for idx, j in enumerate(journeys):
-        cls = "pv-jbtn is-active" if idx == 0 else "pv-jbtn"
-        j_buttons.append(f'<button type="button" class="{cls}" data-journey="{html.escape(j["id"])}">{html.escape(j["name"])}</button>')
+    use_select = len(journeys) >= 4 or sum(len(str(j.get("name", ""))) for j in journeys) > 54
+    if use_select:
+        opts = []
+        for idx, j in enumerate(journeys):
+            sel = " selected" if idx == 0 else ""
+            opts.append(f'<option value="{idx}" data-journey="{html.escape(j["id"])}"{sel}>{html.escape(j["name"])}</option>')
+        journeys_control = (
+            '<div class="pv-journey-picker">'
+            '  <label class="pv-jlabel" for="journeySelect">Jornada</label>'
+            f'  <select class="pv-jselect" id="journeySelect" aria-label="Selecionar jornada">{"".join(opts)}</select>'
+            '</div>'
+        )
+    else:
+        j_buttons = []
+        for idx, j in enumerate(journeys):
+            cls = "pv-jbtn is-active" if idx == 0 else "pv-jbtn"
+            j_buttons.append(f'<button type="button" class="{cls}" data-journey="{html.escape(j["id"])}">{html.escape(j["name"])}</button>')
+        journeys_control = f'<div class="pv-journeys" role="group" aria-label="Jornadas">{"".join(j_buttons)}</div>'
 
     return f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="{default_theme}">
@@ -1505,23 +1668,38 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   html, body {{ height: 100%; overflow: hidden; }}
   .pv-app {{ display: flex; flex-direction: column; height: 100dvh; width: 100vw; overflow: hidden; background: var(--surface-z0); }}
   .pv-top {{
-    display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 56px; padding: 6px 14px;
     background: var(--surface-glass); border-bottom: 1.25px solid var(--border-card);
   }}
   .pv-left, .pv-right {{ display: flex; align-items: center; gap: 6px; flex: none; }}
   .pv-crumb {{
-    display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; border-radius: 10px;
+    display: inline-flex; align-items: center; gap: 6px; height: 36px; max-width: 260px; padding: 0 12px; border-radius: 9px;
     background: var(--surface-z0); border: 1px solid var(--border-card); font-family: var(--da-font-mono); font-size: 12px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }}
+  .pv-crumb strong {{ color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; }}
   .pv-journeys {{
-    display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px;
-    background: var(--surface-z0); border: 1px solid var(--border-card); flex: 1 1 auto; overflow-x: auto; justify-content: center;
+    display: flex; align-items: center; gap: 4px; padding: 3px; border-radius: 10px;
+    background: var(--surface-z0); border: 1px solid var(--border-card); flex: 0 1 auto; min-width: 0;
+    overflow-x: auto; scrollbar-width: none; justify-content: flex-start;
   }}
+  .pv-journeys::-webkit-scrollbar {{ display: none; }}
   .pv-jbtn {{
-    min-height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid transparent; background: transparent;
-    color: var(--text-body); font-family: var(--da-font-ui); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    min-height: 34px; padding: 0 11px; border-radius: 7px; border: 1px solid transparent; background: transparent;
+    color: var(--text-body); font-family: var(--da-font-ui); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; flex: none;
   }}
-  .pv-jbtn.is-active {{ background: var(--surface-z2); color: var(--text-strong); border-color: var(--border-strong); }}
+  .pv-jbtn.is-active {{ background: var(--surface-z2); color: var(--text-strong); border-color: var(--border-strong); box-shadow: var(--shadow-z1); }}
+  .pv-journey-picker {{
+    display: inline-flex; align-items: center; gap: 8px; flex: 0 1 420px; min-width: 0;
+    padding: 3px 4px 3px 12px; border-radius: 10px; background: var(--surface-z0); border: 1px solid var(--border-card);
+  }}
+  .pv-jlabel {{ font-family: var(--da-font-mono); font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; flex: none; }}
+  .pv-jselect {{
+    flex: 1 1 auto; min-width: 0; height: 34px; padding: 0 28px 0 10px; border-radius: 7px;
+    border: 1px solid var(--border-strong); background: var(--surface-z2); color: var(--text-strong);
+    font-family: var(--da-font-ui); font-size: 12.5px; font-weight: 600; cursor: pointer;
+    box-shadow: var(--shadow-z1); text-overflow: ellipsis;
+  }}
   .pv-stage {{ flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0; background: var(--surface-z0); overflow: hidden; }}
   .pv-frame-wrap {{ width: 100%; height: 100%; overflow: hidden; background: var(--surface-z1); isolation: isolate; }}
   .pv-frame-wrap.is-mobile {{
@@ -1535,9 +1713,10 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
     background: var(--surface-glass); border-top: 1.25px solid var(--border-strong);
   }}
   .pv-guide.is-min .pv-guide-main {{ display: none; }}
-  .pv-steps-row {{ display: flex; align-items: center; gap: 6px; overflow-x: auto; }}
+  .pv-steps-row {{ display: flex; align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: none; }}
+  .pv-steps-row::-webkit-scrollbar {{ display: none; }}
   .pv-step-pill {{
-    display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 13px; border-radius: 999px;
     border: 1px solid var(--border-card); background: var(--surface-z2); color: var(--text-body); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
   }}
   .pv-step-pill.is-now {{ background: var(--da-accent-deep); border-color: var(--da-accent-deep); color: #FFFFFF; }}
@@ -1545,7 +1724,8 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   @media (max-width: 768px) {{
     .pv-top {{ flex-wrap: wrap; gap: 6px; padding: 8px 10px; }}
     .pv-crumb {{ display: none; }}
-    .pv-journeys {{ order: 3; flex: 1 0 100%; justify-content: flex-start; }}
+    .pv-journeys, .pv-journey-picker {{ order: 3; flex: 1 0 100%; }}
+    .pv-jbtn, .pv-jselect, .pv-step-pill {{ min-height: 44px; }}
     .pv-right {{ margin-left: auto; }}
   }}
 </style>
@@ -1555,10 +1735,10 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   <header class="pv-top">
     <div class="pv-left">
       <button type="button" class="da-btn da-btn--icon" id="btnBack" aria-label="Voltar" disabled></button>
-      <button type="button" class="da-btn da-btn--icon" id="btnHome" aria-label="Inicio"></button>
+      <button type="button" class="da-btn da-btn--icon" id="btnHome" aria-label="Início"></button>
       <span class="pv-crumb" id="breadcrumb"></span>
     </div>
-    <div class="pv-journeys" role="group" aria-label="Jornadas">{"".join(j_buttons)}</div>
+    {journeys_control}
     <div class="pv-right">
       <a class="da-btn" id="btnPure" href="#">Abrir Pura</a>
       <a class="da-btn" href="fluxo.html">Mapa Figma</a>
@@ -1582,7 +1762,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <button type="button" class="da-btn" id="btnPrev">Anterior</button>
-        <button type="button" class="da-btn da-btn--primary" id="btnNext">Proximo</button>
+        <button type="button" class="da-btn da-btn--primary" id="btnNext">Próximo</button>
       </div>
     </div>
   </footer>
@@ -1605,6 +1785,7 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
   var state = {{ journeyIdx: 0, stepIdx: 0, history: ['{html.escape(start_id)}'], currentId: '{html.escape(start_id)}', minimized: false }};
   var frameWrap = document.getElementById('stageWrap');
   var frame = document.getElementById('stageFrame');
+  var journeySelect = document.getElementById('journeySelect');
 
   function esc(str) {{
     return String(str == null ? '' : str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -1633,8 +1814,9 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
     document.getElementById('narTitle').textContent = 'Passo ' + (state.stepIdx + 1) + '/' + steps.length + ' · ' + cur.title;
     document.getElementById('narDesc').textContent = cur.tip || '';
     document.getElementById('btnPrev').disabled = state.stepIdx <= 0;
-    document.getElementById('btnNext').textContent = state.stepIdx >= steps.length - 1 ? 'Voltar ao Inicio' : 'Proximo: ' + steps[state.stepIdx + 1].short;
+    document.getElementById('btnNext').textContent = state.stepIdx >= steps.length - 1 ? 'Voltar ao Início' : 'Próximo: ' + steps[state.stepIdx + 1].short;
     document.querySelectorAll('.pv-jbtn').forEach(function(b, i) {{ b.classList.toggle('is-active', i === state.journeyIdx); }});
+    if (journeySelect) journeySelect.value = String(state.journeyIdx);
   }}
 
   frame.addEventListener('load', function() {{
@@ -1664,6 +1846,13 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
       loadScreen(JOURNEYS[idx].steps[0].screenId, true);
     }});
   }});
+  if (journeySelect) {{
+    journeySelect.addEventListener('change', function() {{
+      var idx = Number(this.value) || 0;
+      state.journeyIdx = idx; state.stepIdx = 0;
+      loadScreen(JOURNEYS[idx].steps[0].screenId, true);
+    }});
+  }}
 
   document.getElementById('stepsRow').addEventListener('click', function(e) {{
     if (e.target.closest('#btnMin')) {{
@@ -1709,17 +1898,51 @@ def render_preview_html(manifest: dict, tokens_link: str) -> str:
 """
 
 
-def render_index_html(manifest: dict, tokens_link: str) -> str:
+def _resolve_thumbnails(screens: list[dict], thumbs_dir: Path | None, out_dir: Path) -> dict[str, dict[str, str]]:
+    """Localiza miniaturas PNG (dark/light) opcionais para cada tela na Galeria."""
+    thumbs: dict[str, dict[str, str]] = {}
+    for s in screens:
+        sid = s["id"]
+        if s.get("thumbnail"):
+            thumbs[sid] = {"dark": str(s["thumbnail"]), "light": str(s.get("thumbnailLight") or s["thumbnail"])}
+            continue
+        if not thumbs_dir or not thumbs_dir.exists():
+            continue
+        stem = Path(s.get("file", "")).stem
+        vp = "mobile" if s.get("platform") == "mobile" else "desktop"
+        dark_cand = thumbs_dir / f"{stem}-{vp}-dark.png"
+        light_cand = thumbs_dir / f"{stem}-{vp}-light.png"
+        any_cand = thumbs_dir / f"{stem}.png"
+        found_dark = dark_cand if dark_cand.exists() else (light_cand if light_cand.exists() else (any_cand if any_cand.exists() else None))
+        found_light = light_cand if light_cand.exists() else found_dark
+        if found_dark:
+            try:
+                d_rel = str(Path(os.path.relpath(found_dark, out_dir)).as_posix())
+                l_rel = str(Path(os.path.relpath(found_light, out_dir)).as_posix())
+            except ValueError:
+                d_rel, l_rel = str(found_dark), str(found_light)
+            thumbs[sid] = {"dark": d_rel, "light": l_rel}
+    return thumbs
+
+
+def render_index_html(
+    manifest: dict,
+    tokens_link: str,
+    parsed_tokens: dict[str, dict[str, str]] | None = None,
+    thumbs_map: dict[str, dict[str, str]] | None = None,
+) -> str:
     proj = manifest.get("project", {})
     name = html.escape(proj.get("name", "Projeto Design Aura"))
-    subtitle = html.escape(proj.get("subtitle", "Galeria de Telas e Navegacao"))
-    version = html.escape(proj.get("version", "1.0"))
+    subtitle = html.escape(proj.get("subtitle", "Galeria de Telas e Navegação"))
+    raw_version = str(proj.get("version") or "").strip()
+    version_suffix = f" · v{html.escape(raw_version)}" if raw_version else ""
     default_theme = html.escape(proj.get("defaultTheme", "dark"))
     screens = manifest.get("screens", [])
     start_id = proj.get("startScreenId") or screens[0]["id"]
     start_screen = next((s for s in screens if s["id"] == start_id), screens[0])
     bible_link = proj.get("bibleLink", "")
-    head_css = build_base_css(manifest, tokens_link)
+    head_css = build_base_css(manifest, tokens_link, parsed_tokens)
+    thumbs = thumbs_map or {}
 
     desktop_count = sum(1 for s in screens if s.get("platform") != "mobile")
     mobile_count = sum(1 for s in screens if s.get("platform") == "mobile")
@@ -1734,24 +1957,40 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
     filter_chips = [f'<button type="button" class="da-chip is-active" data-filter="all">Todas <span class="tabular-nums">{len(screens)}</span></button>']
     for g in groups:
         cnt = sum(1 for s in screens if s.get("flow") == g)
-        filter_chips.append(f'<button type="button" class="da-chip" data-filter="{html.escape(g)}">{html.escape(g.capitalize())} <span class="tabular-nums">{cnt}</span></button>')
+        lbl = _format_flow_label(g, manifest)
+        filter_chips.append(f'<button type="button" class="da-chip" data-filter="{html.escape(g)}">{html.escape(lbl)} <span class="tabular-nums">{cnt}</span></button>')
 
     cards_html = []
     for s in screens:
         plat = "Mobile" if s.get("platform") == "mobile" else "Desktop"
+        accent_bar = html.escape(s.get("accent") or "#38BDF8")
+        tb = thumbs.get(s["id"])
+        thumb_html = ""
+        if tb:
+            init_src = tb["light"] if default_theme == "light" else tb["dark"]
+            mob_cls = " is-mobile-thumb" if s.get("platform") == "mobile" else ""
+            thumb_html = (
+                f'  <a class="g-card-thumb{mob_cls}" href="{html.escape(s["file"])}" tabindex="-1">'
+                f'    <img src="{html.escape(init_src)}" data-thumb-dark="{html.escape(tb["dark"])}" data-thumb-light="{html.escape(tb["light"])}" '
+                f'alt="Prévia de {html.escape(s["title"])}" loading="lazy">'
+                f'  </a>'
+            )
         cards_html.append(
-            f'<article class="g-card" id="screen-{html.escape(s["id"])}" data-flow="{html.escape(s.get("flow", "geral"))}" data-title="{html.escape(s["title"].lower())}">'
-            f'  <div class="g-card-top"><span class="g-card-group">{html.escape(s.get("group", ""))}</span><span class="g-badge">{html.escape(plat)}</span></div>'
-            f'  <h3 class="g-card-title">{html.escape(s["title"])}</h3>'
-            f'  <p class="g-card-desc">{html.escape(s.get("desc", ""))}</p>'
-            f'  <div class="g-card-foot">'
-            f'    <span class="g-metric tabular-nums">{html.escape(s.get("metric", ""))}</span>'
-            f'    <a class="da-btn da-btn--sm" href="{html.escape(s["file"])}">Abrir tela</a>'
+            f'<article class="g-card" id="screen-{html.escape(s["id"])}" data-flow="{html.escape(s.get("flow", "geral"))}" data-title="{html.escape(s["title"].lower())}" style="--card-accent:{accent_bar}">'
+            f'{thumb_html}'
+            f'  <div class="g-card-body">'
+            f'    <div class="g-card-top"><span class="g-card-group">{html.escape(s.get("group", ""))}</span><span class="g-badge">{html.escape(plat)}</span></div>'
+            f'    <h3 class="g-card-title">{html.escape(s["title"])}</h3>'
+            f'    <p class="g-card-desc">{html.escape(s.get("desc", ""))}</p>'
+            f'    <div class="g-card-foot">'
+            f'      <span class="g-metric tabular-nums">{html.escape(s.get("metric", ""))}</span>'
+            f'      <a class="da-btn da-btn--sm" href="{html.escape(s["file"])}">Abrir tela</a>'
+            f'    </div>'
             f'  </div>'
             f'</article>'
         )
 
-    bible_btn = f'<a class="da-btn" href="{html.escape(bible_link)}">Biblia de Design</a>' if bible_link else ""
+    bible_btn = f'<a class="da-btn" href="{html.escape(bible_link)}">Bíblia de Design</a>' if bible_link else ""
 
     return f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="{default_theme}">
@@ -1775,7 +2014,8 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
   .g-top-actions {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
   .g-main {{ max-width: 1320px; width: 100%; margin: 0 auto; padding: 24px 20px 48px; display: flex; flex-direction: column; gap: 24px; }}
   .g-hero {{
-    border-radius: 20px; padding: 24px; background: var(--da-navy); color: #F3F6FA;
+    border-radius: 20px; padding: 24px; background-color: var(--da-navy);
+    background-image: linear-gradient(150deg, var(--da-navy) 0%, #163E70 100%); color: #F3F6FA;
     border: 1.5px solid var(--border-strong); box-shadow: var(--shadow-z2);
     display: flex; flex-direction: column; gap: 16px;
   }}
@@ -1784,7 +2024,7 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
   .g-hero-actions {{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }}
   .g-hero-stats {{ display: flex; flex-wrap: wrap; gap: 20px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.16); }}
   .g-stat b {{ display: block; font-size: 20px; font-family: var(--da-font-mono); color: #FFFFFF; }}
-  .g-stat span {{ font-size: 12px; color: #B4C5D8; }}
+  .g-stat span {{ font-size: 12px; color: #C2D4EA; }}
 
   .g-filters {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
   .da-chip {{
@@ -1797,10 +2037,19 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
 
   .g-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }}
   .g-card {{
-    display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 16px;
-    background: var(--surface-z2); border: 1.25px solid var(--border-card); box-shadow: var(--shadow-z1);
+    display: flex; flex-direction: column; border-radius: 16px; overflow: hidden;
+    background: var(--surface-z2); border: 1.25px solid var(--border-card);
+    border-top: 3px solid var(--card-accent, var(--da-navy)); box-shadow: var(--shadow-z1);
   }}
   .g-card[hidden] {{ display: none; }}
+  .g-card-thumb {{
+    display: block; aspect-ratio: 16 / 10; background: var(--surface-z0); border-bottom: 1px solid var(--border-card);
+    overflow: hidden; position: relative;
+  }}
+  .g-card-thumb img {{ width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }}
+  .g-card-thumb.is-mobile-thumb {{ display: flex; align-items: center; justify-content: center; padding: 10px; }}
+  .g-card-thumb.is-mobile-thumb img {{ width: auto; max-width: 100%; height: 100%; object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-z1); }}
+  .g-card-body {{ display: flex; flex-direction: column; gap: 12px; padding: 16px; flex: 1 1 auto; }}
   .g-card-top {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; }}
   .g-card-group {{ font-family: var(--da-font-mono); font-size: 12px; color: var(--text-muted); }}
   .g-badge {{ padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--surface-z0); border: 1px solid var(--border-card); color: var(--text-strong); }}
@@ -1836,7 +2085,7 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
     <a class="g-brand" href="index.html">
       <div class="g-brand-text">
         <strong>{name}</strong>
-        <span>{subtitle} · v{version}</span>
+        <span>{subtitle}{version_suffix}</span>
       </div>
     </a>
     <div class="g-top-actions">
@@ -1860,7 +2109,7 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
         <div class="g-stat"><b>{len(screens)}</b><span>Telas totais</span></div>
         <div class="g-stat"><b>{desktop_count}</b><span>Desktop / Sistema</span></div>
         <div class="g-stat"><b>{mobile_count}</b><span>Mobile</span></div>
-        <div class="g-stat"><b>{len(manifest.get("edges", []))}</b><span>Conexoes de fluxo</span></div>
+        <div class="g-stat"><b>{len(manifest.get("edges", []))}</b><span>Conexões de fluxo</span></div>
       </div>
     </section>
 
@@ -1875,10 +2124,10 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
 </div>
 
 <div class="cmdk-backdrop" id="cmdkModal" hidden>
-  <div class="cmdk-box" role="dialog" aria-label="Busca rapida de telas">
+  <div class="cmdk-box" role="dialog" aria-label="Busca rápida de telas">
     <div class="cmdk-input-wrap">
       <label for="cmdkInput" style="font-size:12px;font-weight:600;color:var(--text-muted)">Ir para</label>
-      <input class="cmdk-input" id="cmdkInput" type="search" placeholder="Digite o nome da tela ou modulo...">
+      <input class="cmdk-input" id="cmdkInput" type="search" placeholder="Digite o nome da tela ou módulo...">
       <button type="button" class="da-btn da-btn--sm" id="btnCmdkClose">Esc</button>
     </div>
     <div class="cmdk-list" id="cmdkList"></div>
@@ -1891,6 +2140,17 @@ def render_index_html(manifest: dict, tokens_link: str) -> str:
 (function() {{
   var SCREENS = {json.dumps(screens, ensure_ascii=False)};
   document.getElementById('btnThemeToggle').innerHTML = daGetTheme() === 'dark' ? DA_ICONS.sun : DA_ICONS.moon;
+
+  function syncThumbs(th) {{
+    document.querySelectorAll('.g-card-thumb img[data-thumb-dark]').forEach(function(img) {{
+      var next = th === 'light' ? img.dataset.thumbLight : img.dataset.thumbDark;
+      if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
+    }});
+  }}
+  syncThumbs(daGetTheme());
+  document.addEventListener('designaura:themechange', function(e) {{
+    syncThumbs(e.detail && e.detail.theme ? e.detail.theme : daGetTheme());
+  }});
 
   document.querySelectorAll('.da-chip').forEach(function(chip) {{
     chip.addEventListener('click', function() {{
@@ -1968,6 +2228,7 @@ def main():
     parser.add_argument("manifest", help="Caminho para screen-manifest.json")
     parser.add_argument("--tokens", default="", help="Caminho opcional para tokens.css relativo ao --out ou absoluto")
     parser.add_argument("--out", default=".", help="Diretorio de saida")
+    parser.add_argument("--thumbs", default="", help="Diretorio opcional com PNGs de auditoria para miniaturas na Galeria (index.html)")
     parser.add_argument("--verify-files", action="store_true", help="Falha se alguma tela do manifesto ou href local nao existir")
     parser.add_argument("--relayout", action="store_true", help="Forca reorganizacao panoramica Hub-and-Spoke ignorando x/y antigos")
     args = parser.parse_args()
@@ -1996,18 +2257,23 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     tokens_link = ""
+    parsed_tokens: dict[str, dict[str, str]] = {"light": {}, "dark": {}}
     if args.tokens:
         tpath = Path(args.tokens).resolve()
         if tpath.exists():
+            parsed_tokens = extract_tokens_from_css(tpath)
             try:
                 tokens_link = str(tpath.relative_to(out_dir))
             except ValueError:
                 tokens_link = tpath.name
                 (out_dir / tpath.name).write_text(tpath.read_text(encoding="utf-8"), encoding="utf-8")
 
-    (out_dir / "fluxo.html").write_text(render_fluxo_html(manifest, tokens_link), encoding="utf-8")
-    (out_dir / "preview.html").write_text(render_preview_html(manifest, tokens_link), encoding="utf-8")
-    (out_dir / "index.html").write_text(render_index_html(manifest, tokens_link), encoding="utf-8")
+    thumbs_dir = Path(args.thumbs).resolve() if args.thumbs else None
+    thumbs_map = _resolve_thumbnails(manifest.get("screens", []), thumbs_dir, out_dir)
+
+    (out_dir / "fluxo.html").write_text(render_fluxo_html(manifest, tokens_link, parsed_tokens), encoding="utf-8")
+    (out_dir / "preview.html").write_text(render_preview_html(manifest, tokens_link, parsed_tokens), encoding="utf-8")
+    (out_dir / "index.html").write_text(render_index_html(manifest, tokens_link, parsed_tokens, thumbs_map), encoding="utf-8")
 
     print(f"Vitrine estilo Figma gerada em: {out_dir}")
     print(f"  - {out_dir / 'fluxo.html'}")

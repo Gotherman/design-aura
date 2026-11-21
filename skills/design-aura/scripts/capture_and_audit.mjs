@@ -3,15 +3,18 @@
  * Captura screenshots multi-viewport (Dark & Light) e audita o DOM real
  * via Chrome DevTools Protocol (Chromium headless, zero dependencias npm).
  *
- * Design Aura v2.0:
+ * Design Aura v2.3.0:
+ *  - Pool paralelo de abas CDP (--concurrency 4 padrao) com progresso ao vivo em stderr
+ *  - Pre-injecao limpa de data-theme antes do load (elimina flash dark->light e falsos positivos de transicao)
  *  - Audita automaticamente fluxo.html, preview.html e index.html com --manifest
  *  - Reporta stack completo de erros JS (DA-JS-ERROR) e assets 404 (DA-ASSET-404)
  *  - Checagens positivas de craft e composicao: DA-DEAD-SPACE, DA-STUB-SCREEN,
- *    DA-RAW-LINK-LIST, DA-FIXED-OVERLAP, DA-SERIF-OPERATE e DA-SURFACE-FLAT
+ *    DA-RAW-LINK-LIST, DA-FIXED-OVERLAP, DA-SERIF-OPERATE, DA-SURFACE-FLAT,
+ *    DA-CLIPPED-CONTENT, DA-MOBILE-FLEX-CLIP, DA-NAV-TRUNCATION e DA-HEADER-HSCROLL
  *
  * Uso:
  *   node capture_and_audit.mjs <arquivo-ou-url> [...] --out <dir> [--manifest screen-manifest.json]
- *        [--viewports desktop,mobile] [--themes dark,light] [--all-viewports] [--no-vitrine] [--strict]
+ *        [--viewports desktop,mobile] [--themes dark,light] [--concurrency 4] [--all-viewports] [--no-vitrine] [--quiet] [--strict]
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -94,6 +97,8 @@ function parseArgs(argv) {
     manifestDir: '',
     includeVitrine: true,
     allViewports: false,
+    concurrency: 4,
+    quiet: false,
   };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
@@ -101,11 +106,13 @@ function parseArgs(argv) {
     else if (a === '--viewports' && argv[i + 1]) args.viewports = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--themes' && argv[i + 1]) args.themes = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--manifest' && argv[i + 1]) args.manifest = argv[++i];
+    else if (a === '--concurrency' && argv[i + 1]) args.concurrency = Math.max(1, Math.min(8, parseInt(argv[++i], 10) || 4));
     else if (a === '--no-vitrine') args.includeVitrine = false;
     else if (a === '--all-viewports') args.allViewports = true;
+    else if (a === '--quiet') args.quiet = true;
     else if (a === '--strict') args.strict = true;
     else if (a === '--help' || a === '-h') {
-      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--viewports desktop,tablet,mobile] [--themes dark,light] [--all-viewports] [--no-vitrine] [--strict]');
+      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--viewports desktop,tablet,mobile] [--themes dark,light] [--concurrency 4] [--all-viewports] [--no-vitrine] [--quiet] [--strict]');
       process.exit(0);
     } else {
       args.entries.push({ target: a, platform: 'responsive', isVitrine: false });
@@ -201,7 +208,7 @@ function launchBrowser(browserPath) {
       if (m) {
         clearTimeout(timer);
         const wsUrl = new URL(m[1]);
-        resolve({ proc, port: Number(wsUrl.port), userDataDir });
+        resolve({ proc, port: Number(wsUrl.port), browserWsUrl: m[1], userDataDir });
       }
     });
     proc.on('exit', (code) => {
@@ -359,6 +366,7 @@ const DOM_AUDIT_FN = `(() => {
 
   // 6. Amostra de contraste real computado
   let contrastFails = 0;
+  const contrastSamples = [];
   const textEls = Array.from(document.querySelectorAll('h1,h2,h3,p,a,button,td,th')).slice(0, 60);
   for (const el of textEls) {
     const r = el.getBoundingClientRect();
@@ -373,10 +381,16 @@ const DOM_AUDIT_FN = `(() => {
     const fs = parseFloat(st.fontSize || '14');
     const fw = parseInt(st.fontWeight || '400', 10);
     const minReq = (fs >= 24 || (fs >= 18.66 && fw >= 700)) ? 3.0 : 4.5;
-    if (ratio < minReq) contrastFails++;
+    if (ratio < minReq) {
+      contrastFails++;
+      if (contrastSamples.length < 2) {
+        const cls = (typeof el.className === 'string' && el.className.trim()) ? '.' + el.className.trim().split(/\\s+/)[0] : el.tagName.toLowerCase();
+        contrastSamples.push(cls + ' "' + (el.textContent || '').trim().slice(0, 20) + '" (' + ratio.toFixed(2) + ':1)');
+      }
+    }
   }
   if (contrastFails > 0) {
-    issues.push({ severity: 'HIGH', rule: 'DA-B3-01', detail: contrastFails + ' elementos amostrados com contraste abaixo do minimo WCAG AA' });
+    issues.push({ severity: 'HIGH', rule: 'DA-B3-01', detail: contrastFails + ' elementos amostrados com contraste abaixo do minimo WCAG AA: ' + contrastSamples.join(', ') });
   }
 
   // 7. Raios iguais aninhados com padding curto (concentricidade)
@@ -703,6 +717,66 @@ const DOM_AUDIT_FN = `(() => {
     }
   }
 
+  // 18. DA-NAV-TRUNCATION & DA-HEADER-HSCROLL (v2.3.0): detecta marca/nav cortados horizontalmente e barra superior com overflow/scrollbar
+  if (isDesktop) {
+    let navTrunc = 0;
+    const truncSamples = [];
+    const navLabels = document.querySelectorAll('aside [class*="brand"] strong, [class*="sidebar"] [class*="brand"] strong, [class*="brand-name"], aside nav a, [class*="sidebar"] nav a, header nav a, .pv-jbtn, .fx-flow-btn');
+    for (const el of navLabels) {
+      if (el.closest('.fx-world, [data-canvas-world], .is-collapsed, [data-collapsed="true"]')) continue;
+      const st = getComputedStyle(el);
+      if (st.display === 'none' || st.visibility === 'hidden') continue;
+      const r = el.getBoundingClientRect();
+      if (r.width < 18 || r.height < 12) continue;
+      const txt = (el.textContent || '').replace(/\\s+/g, ' ').trim();
+      if (txt.length < 3 || txt.length > 42) continue;
+      const selfClip = el.scrollWidth > el.clientWidth + 2;
+      let parentClip = false;
+      let p = el.parentElement;
+      for (let lvl = 0; lvl < 3 && p; lvl++, p = p.parentElement) {
+        const ps = getComputedStyle(p);
+        const pr = p.getBoundingClientRect();
+        if ((ps.overflowX === 'hidden' || ps.overflowX === 'clip' || ps.overflow === 'hidden') && (r.right > pr.right + 2 || r.left < pr.left - 2)) {
+          parentClip = true;
+          break;
+        }
+      }
+      if (selfClip || parentClip) {
+        navTrunc++;
+        if (truncSamples.length < 3) truncSamples.push('"' + txt.slice(0, 26) + '"');
+      }
+    }
+    if (navTrunc > 0) {
+      issues.push({ severity: 'HIGH', rule: 'DA-NAV-TRUNCATION', detail: navTrunc + ' rotulo(s) de marca/navegacao truncado(s) horizontalmente: ' + truncSamples.join(', ') });
+    }
+
+    let hScrollHeaders = 0;
+    const hScrollSamples = [];
+    for (const bar of document.querySelectorAll('header, [class*="topbar"], .pv-journeys, .fx-flows')) {
+      const st = getComputedStyle(bar);
+      if (st.display === 'none' || st.visibility === 'hidden') continue;
+      const r = bar.getBoundingClientRect();
+      if (r.top > 110 || r.height < 24 || r.height > 104 || r.width < 120) continue;
+      if (bar.scrollWidth > bar.clientWidth + 6 && (st.overflowX === 'auto' || st.overflowX === 'scroll' || st.overflowX === 'hidden' || st.overflowX === 'clip')) {
+        const kids = Array.from(bar.querySelectorAll('a, button')).filter((k) => {
+          const kr = k.getBoundingClientRect();
+          return kr.width > 0 && kr.height > 0;
+        });
+        const clippedKid = kids.some((k) => {
+          const kr = k.getBoundingClientRect();
+          return kr.left < r.left - 4 || kr.right > r.right + 4;
+        });
+        if (clippedKid) {
+          hScrollHeaders++;
+          if (hScrollSamples.length < 2) hScrollSamples.push((bar.className || bar.tagName).toString().trim().slice(0, 28) + ' (' + Math.round(bar.scrollWidth) + 'px > ' + Math.round(bar.clientWidth) + 'px)');
+        }
+      }
+    }
+    if (hScrollHeaders > 0) {
+      issues.push({ severity: 'HIGH', rule: 'DA-HEADER-HSCROLL', detail: hScrollHeaders + ' barra(s) superior(es) com overflow/corte horizontal em desktop: ' + hScrollSamples.join(', ') });
+    }
+  }
+
   return {
     title: document.title,
     scrollWidth: docEl.scrollWidth,
@@ -784,138 +858,224 @@ async function main() {
     };
   });
 
+  const jobs = [];
+  for (const target of resolvedTargets) {
+    const vps = pickViewportsForEntry(target, args, hasMultiPlatform);
+    for (const vpName of vps) {
+      const vp = VIEWPORTS[vpName];
+      if (!vp) continue;
+      for (const theme of args.themes) {
+        jobs.push({ idx: jobs.length, target, vpName, vp, theme });
+      }
+    }
+  }
+
+  const startedAt = Date.now();
   let browser = null;
-  const report = [];
-  try {
-    browser = await launchBrowser(browserPath);
-    const pagesRes = await fetch(`http://127.0.0.1:${browser.port}/json/list`);
-    const pages = await pagesRes.json();
-    const pageTarget = pages.find((p) => p.type === 'page') || pages[0];
-    if (!pageTarget?.webSocketDebuggerUrl) throw new Error('Target de pagina CDP nao disponivel.');
+  let browserCdp = null;
+  const report = new Array(jobs.length);
+  let completed = 0;
 
-    const cdp = new CDPClient(pageTarget.webSocketDebuggerUrl);
-    await cdp.connect();
-    await cdp.send('Page.enable');
-    await cdp.send('Runtime.enable');
-    await cdp.send('Network.enable');
-
+  async function runJobOnTab(cdp, job, prevPreloadId) {
+    const t0 = Date.now();
+    const { target, vpName, vp, theme } = job;
     const consoleErrors = [];
     const failedAssets = [];
-    cdp.on('Runtime.exceptionThrown', (p) => {
+
+    const onEx = (p) => {
       const ex = p.exceptionDetails || {};
       const desc = ex.exception?.description || ex.text || 'Excecao JS nao tratada';
       const firstLine = String(desc).split('\n')[0];
       const loc = ex.url ? ` (${path.basename(ex.url)}:${(ex.lineNumber || 0) + 1})` : '';
       consoleErrors.push(`${firstLine}${loc}`);
-    });
-    cdp.on('Runtime.consoleAPICalled', (p) => {
+    };
+    const onConsole = (p) => {
       if (p.type === 'error') {
         const msg = (p.args || []).map((a) => a.value || a.description || '').join(' ');
         if (msg && !/favicon\.ico/i.test(msg)) consoleErrors.push(msg.slice(0, 220));
       }
-    });
-    cdp.on('Network.responseReceived', (p) => {
+    };
+    const onNet = (p) => {
       const res = p.response || {};
       const url = res.url || '';
       if (res.status >= 400 && url.startsWith('http://127.0.0.1:') && !url.endsWith('/favicon.ico')) {
         failedAssets.push(`HTTP ${res.status}: ${new URL(url).pathname}`);
       }
-    });
+    };
 
-    for (const target of resolvedTargets) {
-      const vps = pickViewportsForEntry(target, args, hasMultiPlatform);
-      for (const vpName of vps) {
-        const vp = VIEWPORTS[vpName];
-        if (!vp) continue;
-        for (const theme of args.themes) {
-          consoleErrors.length = 0;
-          failedAssets.length = 0;
-          await cdp.send('Emulation.setDeviceMetricsOverride', {
-            width: vp.width,
-            height: vp.height,
-            deviceScaleFactor: vp.dpr,
-            mobile: vp.mobile,
-          });
-          await cdp.send('Emulation.setEmulatedMedia', {
-            features: [{ name: 'prefers-color-scheme', value: theme }],
-          });
+    cdp.on('Runtime.exceptionThrown', onEx);
+    cdp.on('Runtime.consoleAPICalled', onConsole);
+    cdp.on('Network.responseReceived', onNet);
 
-          const loadPromise = new Promise((res) => {
-            let done = false;
-            const finish = () => {
-              if (!done) {
-                done = true;
-                clearTimeout(t);
-                res();
-              }
-            };
-            const handler = cdp.once('Page.loadEventFired', finish);
-            const t = setTimeout(() => {
-              cdp.off('Page.loadEventFired', handler);
-              finish();
-            }, 6000);
-          });
-          await cdp.send('Page.navigate', { url: target.url });
-          await loadPromise;
-          if (target.isVitrine) {
-            await cdp.send('Runtime.evaluate', {
-              expression: `new Promise((resolve) => {
-                const start = Date.now();
-                function check() {
-                  const frames = Array.from(document.querySelectorAll('iframe.fx-preview-frame'));
-                  const allLoaded = frames.length === 0 || frames.every((f) => f.classList.contains('is-loaded'));
-                  if (allLoaded || Date.now() - start > 1900) return resolve(true);
-                  setTimeout(check, 120);
-                }
-                setTimeout(check, 450);
-              })`,
-              awaitPromise: true,
-              returnByValue: true,
-            });
-          } else {
-            await new Promise((r) => setTimeout(r, 400));
-          }
-
-          await cdp.send('Runtime.evaluate', {
-            expression: `(() => {
-              document.documentElement.setAttribute('data-theme', '${theme}');
-              document.dispatchEvent(new CustomEvent('designaura:themechange', { detail: { theme: '${theme}' } }));
-              return true;
-            })()`,
-            returnByValue: true,
-          });
-          await new Promise((r) => setTimeout(r, 250));
-
-          const evalRes = await cdp.send('Runtime.evaluate', {
-            expression: DOM_AUDIT_FN,
-            returnByValue: true,
-          });
-          const domData = evalRes?.result?.value || { issues: [] };
-          const issues = [...(domData.issues || [])];
-          for (const ce of [...new Set(consoleErrors)]) {
-            issues.push({ severity: 'BLOCK', rule: 'DA-JS-ERROR', detail: ce });
-          }
-          for (const fa of [...new Set(failedAssets)]) {
-            issues.push({ severity: 'BLOCK', rule: 'DA-ASSET-404', detail: fa });
-          }
-
-          const shotName = `${target.label}-${vpName}-${theme}.png`;
-          const shotPath = path.join(outDir, shotName);
-          const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
-          fs.writeFileSync(shotPath, Buffer.from(shot.data, 'base64'));
-
-          report.push({
-            target: target.label,
-            url: target.url,
-            viewport: `${vpName} (${vp.width}x${vp.height})`,
-            theme,
-            screenshot: shotPath,
-            issues,
-          });
-        }
+    let nextPreloadId = prevPreloadId;
+    try {
+      if (prevPreloadId) {
+        try { await cdp.send('Page.removeScriptToEvaluateOnNewDocument', { identifier: prevPreloadId }); } catch {}
+        nextPreloadId = null;
       }
+      const preload = await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+        source: `try { localStorage.setItem('design-aura:theme', '${theme}'); } catch (e) {}
+                 document.addEventListener('DOMContentLoaded', () => {
+                   document.documentElement.setAttribute('data-theme', '${theme}');
+                 }, { once: true });`,
+      });
+      nextPreloadId = preload?.identifier || null;
+
+      await cdp.send('Emulation.setDeviceMetricsOverride', {
+        width: vp.width,
+        height: vp.height,
+        deviceScaleFactor: vp.dpr,
+        mobile: vp.mobile,
+      });
+      await cdp.send('Emulation.setEmulatedMedia', {
+        features: [{ name: 'prefers-color-scheme', value: theme }],
+      });
+
+      const loadPromise = new Promise((res) => {
+        let done = false;
+        const finish = () => {
+          if (!done) {
+            done = true;
+            clearTimeout(t);
+            res();
+          }
+        };
+        const handler = cdp.once('Page.loadEventFired', finish);
+        const t = setTimeout(() => {
+          cdp.off('Page.loadEventFired', handler);
+          finish();
+        }, 6000);
+      });
+      await cdp.send('Page.navigate', { url: target.url });
+      await loadPromise;
+
+      if (target.isVitrine) {
+        await cdp.send('Runtime.evaluate', {
+          expression: `new Promise((resolve) => {
+            const start = Date.now();
+            function check() {
+              const frames = Array.from(document.querySelectorAll('iframe.fx-preview-frame'));
+              const allLoaded = frames.length === 0 || frames.every((f) => f.classList.contains('is-loaded'));
+              if (allLoaded || Date.now() - start > 1900) return resolve(true);
+              setTimeout(check, 120);
+            }
+            setTimeout(check, 450);
+          })`,
+          awaitPromise: true,
+          returnByValue: true,
+        });
+      } else {
+        await new Promise((r) => setTimeout(r, 320));
+      }
+
+      await cdp.send('Runtime.evaluate', {
+        expression: `(() => {
+          document.documentElement.setAttribute('data-theme', '${theme}');
+          document.dispatchEvent(new CustomEvent('designaura:themechange', { detail: { theme: '${theme}' } }));
+          return true;
+        })()`,
+        returnByValue: true,
+      });
+      await new Promise((r) => setTimeout(r, 220));
+
+      const evalRes = await cdp.send('Runtime.evaluate', {
+        expression: DOM_AUDIT_FN,
+        returnByValue: true,
+      });
+      const domData = evalRes?.result?.value || { issues: [] };
+      const issues = [...(domData.issues || [])];
+      for (const ce of [...new Set(consoleErrors)]) {
+        issues.push({ severity: 'BLOCK', rule: 'DA-JS-ERROR', detail: ce });
+      }
+      for (const fa of [...new Set(failedAssets)]) {
+        issues.push({ severity: 'BLOCK', rule: 'DA-ASSET-404', detail: fa });
+      }
+
+      const shotName = `${target.label}-${vpName}-${theme}.png`;
+      const shotPath = path.join(outDir, shotName);
+      const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+      fs.writeFileSync(shotPath, Buffer.from(shot.data, 'base64'));
+
+      const entry = {
+        target: target.label,
+        url: target.url,
+        viewport: `${vpName} (${vp.width}x${vp.height})`,
+        theme,
+        screenshot: shotPath,
+        issues,
+      };
+      report[job.idx] = entry;
+      completed++;
+      if (!args.quiet) {
+        const blocks = issues.filter((i) => i.severity === 'BLOCK').length;
+        const highs = issues.filter((i) => i.severity === 'HIGH').length;
+        const stLabel = blocks > 0 ? 'BLOCK' : highs > 0 ? 'HIGH' : 'PASS';
+        const sec = ((Date.now() - t0) / 1000).toFixed(1);
+        const pad = String(completed).padStart(String(jobs.length).length, '0');
+        process.stderr.write(`[${pad}/${jobs.length}] ${target.label} (${vpName} · ${theme}) -> ${stLabel} (${sec}s)\n`);
+      }
+      return nextPreloadId;
+    } finally {
+      cdp.off('Runtime.exceptionThrown', onEx);
+      cdp.off('Runtime.consoleAPICalled', onConsole);
+      cdp.off('Network.responseReceived', onNet);
     }
-    cdp.close();
+  }
+
+  try {
+    browser = await launchBrowser(browserPath);
+    const workerCount = Math.max(1, Math.min(args.concurrency, jobs.length));
+    let cursor = 0;
+
+    if (workerCount === 1 || !browser.browserWsUrl) {
+      const pagesRes = await fetch(`http://127.0.0.1:${browser.port}/json/list`);
+      const pages = await pagesRes.json();
+      const pageTarget = pages.find((p) => p.type === 'page') || pages[0];
+      if (!pageTarget?.webSocketDebuggerUrl) throw new Error('Target de pagina CDP nao disponivel.');
+      const cdp = new CDPClient(pageTarget.webSocketDebuggerUrl);
+      await cdp.connect();
+      await cdp.send('Page.enable');
+      await cdp.send('Runtime.enable');
+      await cdp.send('Network.enable');
+      let preloadId = null;
+      for (const job of jobs) {
+        preloadId = await runJobOnTab(cdp, job, preloadId);
+      }
+      cdp.close();
+    } else {
+      browserCdp = new CDPClient(browser.browserWsUrl);
+      await browserCdp.connect();
+      const workers = Array.from({ length: workerCount }, async () => {
+        let browserContextId = null;
+        try {
+          const ctx = await browserCdp.send('Target.createBrowserContext');
+          browserContextId = ctx?.browserContextId || null;
+        } catch {}
+        const createParams = browserContextId ? { url: 'about:blank', browserContextId } : { url: 'about:blank' };
+        const created = await browserCdp.send('Target.createTarget', createParams);
+        const targetId = created.targetId;
+        const cdp = new CDPClient(`ws://127.0.0.1:${browser.port}/devtools/page/${targetId}`);
+        await cdp.connect();
+        await cdp.send('Page.enable');
+        await cdp.send('Runtime.enable');
+        await cdp.send('Network.enable');
+        let preloadId = null;
+        try {
+          while (cursor < jobs.length) {
+            const job = jobs[cursor++];
+            preloadId = await runJobOnTab(cdp, job, preloadId);
+          }
+        } finally {
+          cdp.close();
+          try { await browserCdp.send('Target.closeTarget', { targetId }); } catch {}
+          if (browserContextId) {
+            try { await browserCdp.send('Target.disposeBrowserContext', { browserContextId }); } catch {}
+          }
+        }
+      });
+      await Promise.all(workers);
+      browserCdp.close();
+    }
   } finally {
     if (browser) {
       try { browser.proc.kill('SIGTERM'); } catch {}
@@ -926,16 +1086,18 @@ async function main() {
     }
   }
 
+  const finalReport = report.filter(Boolean);
   const reportPath = path.join(outDir, 'audit-report.json');
-  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), 'utf-8');
+  fs.writeFileSync(reportPath, JSON.stringify(finalReport, null, 2), 'utf-8');
 
+  const elapsedSec = ((Date.now() - startedAt) / 1000).toFixed(1);
   let totalBlock = 0;
   let totalHigh = 0;
-  console.log('# Auditoria Visual & DOM Real (Design Aura v2.0)');
-  console.log(`- **Capturas geradas:** ${report.length} · **Relatorio JSON:** ${reportPath}\n`);
+  console.log('# Auditoria Visual & DOM Real (Design Aura v2.3.0)');
+  console.log(`- **Capturas geradas:** ${finalReport.length} · **Tempo:** ${elapsedSec}s (concurrency=${Math.min(args.concurrency, Math.max(1, jobs.length))}) · **Relatorio JSON:** ${reportPath}\n`);
   console.log('| Tela | Viewport | Tema | Screenshot | Status | Achados |');
   console.log('|---|---|---|---|---|---|');
-  for (const r of report) {
+  for (const r of finalReport) {
     const blocks = r.issues.filter((i) => i.severity === 'BLOCK').length;
     const highs = r.issues.filter((i) => i.severity === 'HIGH').length;
     totalBlock += blocks;

@@ -76,30 +76,32 @@ Se o projeto compila para janela desktop nativa (Electron, Tauri, SwiftUI macOS,
   1. **Âncora Forte da Marca (`--surface-brand-dark`, ex.: Marinho `#0E294B → #163E70` com texto `#F8FAFC`):** aplique na **Sidebar Desktop no Light Mode** (ou no **Painel Institucional do Login Split-Screen**) e no **Card-Rei `.card-brand-hero`** de cada tela (ex.: Saldo Consolidado / Cabeçalho Mobile) — criando divisão arquitetônica imediata entre a Navegação/Hero ricos em cor e a Área de Trabalho clara!
   2. **Variações de Azul/Cor Clara Estrutural (`--surface-tint-soft: #E6F0FD`, `--border-tint: #B5CEF0`):** aplique nos **cabeçalhos internos de cards compostos (`.panel-head`)**, nos **`<thead>` das tabelas**, nos **berços de ícone (`.icon-emblem`)** e nos **controles ativos** — substituindo cinza-morto por tintagem harmônica da marca.
   3. **Canvas, Poços e Sombras Tintadas pela Marca:** `Z0 #CFDCEB` · `Z1 #E1EAF4` · `Z2 #FFFFFF` com borda nítida `#B0C2D9` (`>= 1.22:1` contra `Z2`), chanfro branco `inset 0 1px 0 #FFFFFF` e sombra física tintada com a cor profunda da marca (`rgba(14, 41, 75, 0.11)`).
-- **Dark Mode com Subtom Arquitetônico & Presença da Marca (`DA-DARK-MONOCHROME`):** evite tanto a **massa azul 50%-saturada** quanto o **carvão morto sem marca**. Use base `Z0–Z3` em Obsidiana com subtom sutil da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`) e expresse a cor oficial da empresa com clareza em **3 Zonas Fixas**:
-  1. Bloco de identidade na Sidebar/Header (`.sidebar-brand-card`) + item ativo (`18% --primary` + filete `3px --accent`);
-  2. **Card-Rei (`.card-brand-hero`)** no topo de cada tela com gradiente direcional `135deg` (`20% --primary`) + borda luminosa;
+- **Dark Mode com Subtom Arquitetônico & Âncora de Marca Viva (`DA-DARK-MONOCHROME`):** evite tanto a **massa azul 50%-saturada** quanto o **carvão morto sem marca**. Use base `Z0–Z3` em Obsidiana com subtom sutil da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`) e expresse a cor oficial da empresa com clareza em **3 Zonas Fixas**:
+  1. Bloco de identidade na Sidebar/Header (`.sidebar-brand-card` em `--surface-brand-dark: #0D2442 → #163966` com fio especular superior `rgba(110,181,255,0.22)`) + item ativo (`18% --primary` + filete `3px --accent`);
+  2. **Card-Rei (`.card-brand-hero`)** no topo de cada tela com gradiente azul-marinho institucional (`--surface-brand-dark-2 → --surface-brand-dark`) + borda luminosa (mantendo personalidade da marca tanto no Dark quanto no Light!);
   3. Controles selecionados (`.subtab.is-active`, `.seg-btn.is-active`) + paleta categórica harmônica de 6 cores (`--chart-1..6`).
+- **Escopo Automático `.on-brand-dark` (`DA-BRAND-DARK-SCOPE`):** toda superfície escura da marca (`.sidebar`, `.auth-brand-pane`, `.card-brand-hero`) DEVE redeclarar localmente `--text-strong`, `--text-body`, `--text-muted` e `--border-subtle` para tons claros de alto contraste — impedindo que texto escuro do Light Mode vaze sobre fundo marinho.
 
 ---
 
-## 6. Shell Web que Muda de Forma (Sidebar Minimizável + Zero Navegação Duplicada)
+## 6. Shell Web que Muda de Forma (Sidebar Minimizável + Zero Truncamento de Marca)
 
 O mesmo produto web não tem um layout só. Tem um shell por largura, com os mesmos tokens:
 
 | Largura | Shell | O que cabe |
 |---|---|---|
-| Desktop, `>= 1024px` | **Sidebar esquerda minimizável (`232px ↔ 68px` rail)** com botão `«`/`»` + atalho `[` persistido em `localStorage` + Topbar enxuta (`56px`) | Breadcrumb + **Sub-abas internas do módulo atual** + `⌘K` + Tema + Conta |
+| Desktop, `>= 1024px` | **Sidebar esquerda minimizável (`248px ↔ 68px` rail)** com botão `«`/`»` + atalho `[` persistido em `localStorage` + Topbar enxuta (`56px`) | Breadcrumb + **Sub-abas internas do módulo atual** + `⌘K` + Tema + Conta |
 | Tablet, `768–1023px` | Sidebar recolhe automaticamente para rail `68px` com tooltips | Lista + detalhe ou painel focado |
 | Mobile web, `< 768px` | Drawer ou Tab Bar inferior fixa de `4–5` destinos (`height: 68px`, `padding-bottom >= 96px`) | Uma tarefa. Tabela densa vira lista com `.icon-emblem` |
 
+- **Regra Anti-Truncamento de Marca e Navegação (`DA-NAV-TRUNCATION` & `DA-HEADER-HSCROLL`):** a largura expandida da Sidebar (`>= 244px–256px`) e o cabeçalho `.sidebar-brand` devem acomodar o nome da empresa **inteiro sem cortar letras** ao lado do botão `«` (prefira nome curto em `.brand-name` + contexto em `.brand-sub`). Topbars e seletores horizontais em desktop (`1440px`) nunca podem exibir scrollbar horizontal ou cortar o primeiro/último botão.
 - **Regra Anti-Duplicação na Topbar:** NUNCA repita os mesmos módulos globais da Sidebar esquerda dentro da Topbar da tela inicial/Portal! Na tela de módulo, a Topbar mostra as **sub-abas internas** daquele módulo; no Portal, mostra seletor de período/visão ou atalhos rápidos.
 - Altura de tela: `100dvh` ou `svh`, com `env(safe-area-inset-*)`.
 - Landmarks reais: `header`, `nav`, `main`, `aside`. Um `h1` por tela, headings sem pular nível e operação 100% por teclado.
 
 ---
 
-## 7. Gráficos de Estúdio & Micro-Componentes Analíticos OSS (`v2.2.0`)
+## 7. Gráficos de Estúdio & Micro-Componentes Analíticos OSS (`v2.3.0`)
 
 Nunca entregue gráficos "tutorial" (1 linha quase reta no topo com paredão monocromático até o zero):
 1. **Fluxo de Caixa / Séries Financeiras (`TradingView Lightweight Charts` / `Apache ECharts` / `ApexCharts`):**
@@ -108,6 +110,7 @@ Nunca entregue gráficos "tutorial" (1 linha quase reta no topo com paredão mon
    - **Anotações Reais:** pinos `markPoint` nos dias críticos (maior saída / maior entrada) + `markLine`/`markArea` para o piso/meta.
 2. **Cascata Financeira (`Waterfall DRE`):**
    - Use **paleta categórica multi-cor (`--chart-1` a `--chart-6`)** por função (Receita, Custos/Repasses, Estrutura, Tributos, Resultado Líquido) — nunca 4 barras do mesmo azul — com **linhas conectoras tracejadas** entre degraus e badge de `% da receita` no topo de cada barra.
+   - **Higiene de Sinais:** apenas barras de dedução/saída levam prefixo `–` (ex.: `– R$ 283,0k`); barras de **Receita inicial** e **Subtotal / Resultado Líquido positivo** NUNCA levam sinal negativo!
 3. **Micro-Componentes Analíticos Estilo Tremor Raw (para acabar com cards "só texto"):**
    - **`BarList`:** listas de ranking/setor com barra horizontal translúcida proporcional ao valor por trás do rótulo;
    - **`Tracker` (24–45 blocos):** faixa de blocos semânticos para SLA, saúde de integrações ou validade de certidões com tooltip por bloco;

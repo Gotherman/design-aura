@@ -503,6 +503,49 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                 "fix": "Adicione '.mob-scroll > * { flex-shrink: 0; }' ou troque .mob-scroll para 'display: grid; grid-auto-rows: max-content; align-content: start;'",
             })
 
+    # DA-BRAND-DARK-SCOPE (v2.3.0): superficie escura da marca no Modo Claro sem redeclarar escopo de --text-muted/--text-strong
+    if not is_vitrine and ext in CSS_EXTS:
+        m_brand_light = re.search(
+            r'\[data-theme=["\']light["\']\][^{]{0,140}(?:\.card-brand-hero|\.auth-brand-pane|\.sidebar)[^{]{0,140}\{([^}]*--surface-brand-dark[^}]*)\}',
+            clean_text,
+            re.I | re.S,
+        )
+        if m_brand_light:
+            block_body = m_brand_light.group(1)
+            has_scope = ("--text-muted" in block_body and "--text-strong" in block_body) or bool(
+                re.search(r"\.(?:on-brand-dark|card-brand-hero|auth-brand-pane)[^{]*\{[^}]*--text-muted\s*:", clean_text, re.I | re.S)
+            )
+            if not has_scope:
+                findings.append({
+                    "rule": "DA-BRAND-DARK-SCOPE",
+                    "severity": "MEDIUM",
+                    "location": f"{rel_path}:{pos_to_line(starts, m_brand_light.start())}",
+                    "evidence": snippet_at(raw_text, m_brand_light.start()),
+                    "message": "Superficie escura da marca (--surface-brand-dark) no Modo Claro sem escopo local de --text-strong/--text-muted (risco de texto escuro vazar sobre fundo marinho)",
+                    "fix": "Redeclarar localmente --text-strong, --text-body e --text-muted claros dentro de .card-brand-hero/.auth-brand-pane/.sidebar (ou usar a classe .on-brand-dark)",
+                })
+
+    # DA-REF-COPY-LEAK (v2.3.0): copy de referencia de produto vazada para interface visivel do cliente
+    if not is_vitrine and ext in {".html", ".htm", ".jsx", ".tsx", ".vue", ".svelte"}:
+        visible_html = re.sub(r"<(?:script|style)\b[^>]*>.*?</(?:script|style)>", " ", clean_text, flags=re.I | re.S)
+        m_ref_leak = re.search(
+            r"\b(?:estilo|inspirado\s+n[oa]|como\s+n[oa]|janelas)\s+(?:TOTVS|Linear|Stripe|Notion|Vercel|Raycast|Polaris|SAP|Salesforce)\b",
+            visible_html,
+            re.I,
+        )
+        if m_ref_leak:
+            # Localiza no raw_text para linha exata
+            m_raw = re.search(re.escape(m_ref_leak.group(0)), raw_text, re.I)
+            pos = m_raw.start() if m_raw else 0
+            findings.append({
+                "rule": "DA-REF-COPY-LEAK",
+                "severity": "MEDIUM",
+                "location": f"{rel_path}:{pos_to_line(starts, pos)}",
+                "evidence": snippet_at(raw_text, pos),
+                "message": "Nome de sistema de referencia externa vazou para o texto visivel da interface (Bloco 5)",
+                "fix": "Use o vocabulario proprio do negocio do cliente (ex.: 'Janelas & Preferencias' em vez de citar sistemas terceiros de inspiracao)",
+            })
+
     return findings
 
 

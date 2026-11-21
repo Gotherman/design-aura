@@ -480,8 +480,88 @@ class V22UpgradeTests(unittest.TestCase):
         tok = json.loads((ROOT / "assets" / "tokens.example.json").read_text(encoding="utf-8"))
         self.assertIn("surface-brand-dark", tok["semantic"]["light"])
         self.assertIn("surface-tint-soft", tok["semantic"]["light"])
+        self.assertIn("surface-brand-dark", tok["semantic"]["dark"])
         rows = audit_file(ROOT / "assets" / "tokens.example.json")
         self.assertFalse(any(r["severity"] in ("BLOCK", "HIGH", "MEDIUM") for r in rows), [r for r in rows if r["severity"] != "PASS"])
+
+    def test_v23_vitrine_hub_grouping_accented_labels_preview_picker_and_lint_rules(self):
+        # 1. Hub-and-Spoke nao rouba Contas a Pagar nem Bot/Ajustes para coluna Acesso & Conta
+        manifest = {
+            "project": {"name": "Sistema Demo", "startScreenId": "entrada"},
+            "screens": [
+                {"id": "entrada", "title": "Entrada & 2FA", "file": "entrada.html", "platform": "desktop", "flow": "nucleo", "group": "Acesso"},
+                {"id": "portal", "title": "Portal Central", "file": "portal.html", "platform": "desktop", "flow": "nucleo", "group": "Hub"},
+                {"id": "pref", "title": "Preferencias", "file": "pref.html", "platform": "desktop", "flow": "nucleo", "group": "Conta"},
+                {"id": "pagar", "title": "Contas a Pagar", "file": "pagar.html", "platform": "desktop", "flow": "financeiro", "sectionId": "sec-fin", "group": "Financeiro"},
+                {"id": "receber", "title": "Contas a Receber", "file": "receber.html", "platform": "desktop", "flow": "financeiro", "sectionId": "sec-fin", "group": "Financeiro"},
+                {"id": "bot", "title": "Bot · Simulador e Ajustes", "file": "bot.html", "platform": "desktop", "flow": "atendimento", "sectionId": "sec-atend", "group": "Atendimento"},
+                {"id": "editais", "title": "Radar de Editais", "file": "editais.html", "platform": "desktop", "flow": "licitacoes", "sectionId": "sec-lic", "group": "Licitacoes"},
+                {"id": "mob1", "title": "Pulso Mobile", "file": "mob1.html", "platform": "mobile", "flow": "socios-mobile", "sectionId": "sec-mob", "group": "Mobile"},
+            ],
+            "edges": [
+                {"id": "e1", "from": "entrada", "to": "portal", "label": "Entrar", "flow": "nucleo"},
+                {"id": "e2", "from": "portal", "to": "pagar", "label": "Pagar", "flow": "financeiro"},
+                {"id": "e3", "from": "portal", "to": "editais", "label": "Editais", "flow": "licitacoes"},
+                {"id": "e4", "from": "portal", "to": "bot", "label": "Atendimento", "flow": "atendimento"},
+            ],
+            "journeys": [
+                {"id": "j1", "name": "Diretoria · Rotina Financeira Completa", "steps": [{"screenId": "entrada", "short": "Acesso", "title": "Acesso", "tip": "Entrar"}]},
+                {"id": "j2", "name": "Analista · Licitações e Certidões", "steps": [{"screenId": "editais", "short": "Editais", "title": "Editais", "tip": "Filtrar"}]},
+                {"id": "j3", "name": "Operação · Atendimento Omnichannel", "steps": [{"screenId": "bot", "short": "Bot", "title": "Bot", "tip": "Testar"}]},
+                {"id": "j4", "name": "Sócios · App Executivo Mobile", "steps": [{"screenId": "mob1", "short": "Pulso", "title": "Pulso", "tip": "Conferir"}]},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            thumbs = folder / "shots"
+            thumbs.mkdir()
+            for s in manifest["screens"]:
+                (folder / s["file"]).write_text("<!doctype html><title>T</title>", encoding="utf-8")
+            # Mini PNG placeholder para testar --thumbs em index.html
+            (thumbs / "portal-desktop-dark.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+            (thumbs / "portal-desktop-light.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+            (folder / "tokens.css").write_text(
+                ':root { --surface-z0: #CFDCEB; --surface-z1: #E1EAF4; --surface-z2: #FFFFFF; --surface-brand-dark: #0E294B; --accent: #C2410C; }\n'
+                'html[data-theme="dark"] { --surface-z0: #080C12; --surface-z1: #0E131D; --surface-z2: #141C29; --accent: #FF945E; }\n',
+                encoding="utf-8",
+            )
+            mpath = folder / "screen-manifest.json"
+            mpath.write_text(json.dumps(manifest), encoding="utf-8")
+            proc = run_py("build_figma_canvas.py", [str(mpath), "--tokens", str(folder / "tokens.css"), "--thumbs", str(thumbs), "--out", str(folder), "--verify-files"])
+            self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+
+            fluxo = (folder / "fluxo.html").read_text(encoding="utf-8")
+            preview = (folder / "preview.html").read_text(encoding="utf-8")
+            index = (folder / "index.html").read_text(encoding="utf-8")
+
+            # Sem fundo bege #D9D6CE; filtros acentuados; Contas a Pagar / Bot ficaram nas suas raias
+            self.assertNotIn("#D9D6CE", fluxo)
+            self.assertIn("Núcleo", fluxo)
+            self.assertIn("Licitações", fluxo)
+            self.assertIn("App Sócios", fluxo)
+            self.assertIn("ACESSO & CONTA (2)", fluxo)  # somente entrada + pref, nunca pagar/receber/bot!
+            # preview.html usa select limpo para 4 jornadas sem overflow horizontal
+            self.assertIn('id="journeySelect"', preview)
+            # index.html embutiu miniatura dark/light via --thumbs
+            self.assertIn("portal-desktop-dark.png", index)
+            self.assertIn("portal-desktop-light.png", index)
+
+        # 2. Linter v2.3.0: DA-BRAND-DARK-SCOPE e DA-REF-COPY-LEAK
+        with tempfile.TemporaryDirectory() as tmp:
+            bad_css = Path(tmp) / "shell-bad.css"
+            bad_css.write_text('html[data-theme="light"] .card-brand-hero { background: var(--surface-brand-dark); color: #fff; }', encoding="utf-8")
+            self.assertIn("DA-BRAND-DARK-SCOPE", {f["rule"] for f in scan_file(bad_css, Path(tmp))})
+
+            ok_css = Path(tmp) / "shell-ok.css"
+            ok_css.write_text(
+                'html[data-theme="light"] .card-brand-hero { background: var(--surface-brand-dark); --text-strong: #fff; --text-muted: #B8CCE5; }',
+                encoding="utf-8",
+            )
+            self.assertNotIn("DA-BRAND-DARK-SCOPE", {f["rule"] for f in scan_file(ok_css, Path(tmp))})
+
+            leak_html = Path(tmp) / "desktop-home.html"
+            leak_html.write_text("<main><p>Painel estilo Linear com janelas TOTVS.</p></main>", encoding="utf-8")
+            self.assertIn("DA-REF-COPY-LEAK", {f["rule"] for f in scan_file(leak_html, Path(tmp))})
 
 
 if __name__ == "__main__":

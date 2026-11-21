@@ -6,12 +6,12 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.2.1"
+  version: "2.3.0"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.2.1`)
+# Design Aura (`v2.3.0`)
 
 Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual e orquestração multi-agente para produzir **sistemas web operacionais, apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero telas casca vazias, contraste irretocável, ergonomia nativa e verificação visual real em cada etapa.
 
@@ -19,8 +19,9 @@ Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual 
 
 Leia o repositório e o planejamento por completo antes de desenhar: concepção, PRD, proposta, rotas, telas, tokens, componentes, logo e o vocabulário real do negócio. Cada projeto ganha um design saído desse material.
 
-1. **Repositório que já tem design e telas.** Dois caminhos claros:
+1. **Repositório que já tem design e telas.** Três caminhos claros:
    - **Remodelar o visual (Autópsia Seletiva):** identifique objetivamente o que incomoda/falha nas telas atuais (ex.: contraste fraco, desorganização, visual genérico) e o que precisa sobreviver (rotas, tarefas, dados reais, riqueza funcional). **Regra anti-sabotagem:** remodelar significa *superar em beleza, clareza e densidade útil* o que já existia — **NUNCA** use "remodelar" para proibir cards/superfícies `Z2`, recusar bibliotecas OSS úteis (como ECharts/gráficos/ícones), apagar as cores vivas da marca em bege/marrom morto ou empobrecer telas em tabelas peladas!
+   - **Modo 3 — Polimento Cirúrgico sobre Telas Aprovadas (`v2.3.0`):** quando o usuário já aprovou a arquitetura, fluxos e dados das telas e quer atualizar apenas cores Dark/Light, profundidade, ícones/emblemas, gráficos ou correções mobile/vitrine — atualize primeiro `tokens.json`/`tokens.css`/`shell.css` (com escopo `.on-brand-dark`) + **2 telas-piloto** (1 Desktop + 1 Mobile), valide com o usuário e propague em lotes enxutos controlados sem refazer telas do zero.
    - **Ajuste pontual:** altere só o que foi pedido e preserve o que já funciona.
 2. **Planejamento sem telas** (`CONCEPCAO.md`, PRD, requisitos, proposta): extraia domínio, perfis, módulos, fluxos e restrições já decididas.
 3. **Ideia do zero:** conduza a especificação enxuta antes de gerar código ou telas.
@@ -161,17 +162,18 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
    python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <dir_telas> --verify-files
    ```
    Entrega automaticamente:
-   - `fluxo.html`: canvas estúdio Figma **Dark-first** com layout panorâmico **Hub-and-Spoke** (Acesso → `★ Tela Inicial` em destaque → raias horizontais Desktop à direita → faixa dedicada Mobile embaixo), higiene automática de arestas (`Setas: Principais` vs `Todas (E)`), botões rápidos `★ Início` e `Mobile`, filtros com contagem, previews ao vivo em iframe, inspetor e minimapa.
-   - `preview.html`: player guiado de uso real por jornada/persona com enquadramento automático mobile/desktop.
-   - `index.html`: galeria filtrável por módulo com busca instantânea `⌘K` / `Ctrl+K`.
+   - `fluxo.html`: canvas estúdio Figma **Dark-first** sincronizado com `tokens.css` em Dark e Light (zero fundo bege), layout panorâmico **Hub-and-Spoke** fiel às seções, filtros com acentuação legível, higiene automática de arestas (`Setas: Principais` vs `Todas (E)`), botões rápidos `★ Início` e `Mobile`, previews ao vivo em iframe, inspetor e minimapa.
+   - `preview.html`: player guiado de uso real por jornada/persona (com seletor limpo `<select>` para 4+ jornadas, zero scrollbar horizontal no topo e enquadramento mobile `clip-path`).
+   - `index.html`: galeria filtrável por módulo com busca instantânea `⌘K` / `Ctrl+K` e suporte a miniaturas visuais Dark/Light (`--thumbs <dir_audit>`).
 
-2. **Executar os 3 portões globais de auditoria** ([07-auditoria-e-veredito.md](references/07-auditoria-e-veredito.md)):
+2. **Executar os 3 portões globais de auditoria (Paralelo `--concurrency 4`, nunca abandonado em background!)** ([07-auditoria-e-veredito.md](references/07-auditoria-e-veredito.md)):
    ```bash
    python3 <skill_dir>/scripts/audit_contrast.py tokens.css --strict
    python3 <skill_dir>/scripts/lint_design_aura.py <dir_projeto> --strict
-   node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --strict
+   node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --concurrency 4 --strict
+   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --thumbs <dir_audit> --out <dir_telas> --verify-files
    ```
-   *(Em `v2.2.1`, `--manifest` audita automaticamente também `fluxo.html` aguardando todos os iframes `.is-loaded`, `preview.html` com bezel mobile `clip-path` anti-vazamento e `index.html`, além de checar `DA-JS-ERROR`, `DA-ASSET-404`, `DA-CLIPPED-CONTENT`, `DA-MOBILE-FLEX-CLIP`, `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE` e `DA-SURFACE-FLAT`; e `audit_contrast.py` + `lint_design_aura.py` checam também `DA-DARK-MONOCHROME`, `DA-LIGHT-WASHED-OUT`, `DA-ICON-GENERIC-REPEAT`, `DA-FLAT-CHART-AXIS` e `DA-MOBILE-FLEX-CLIP`.)*
+   *(Em `v2.3.0`, `capture_and_audit.mjs` roda em **4 abas CDP paralelas com contextos isolados** e progresso ao vivo em `stderr` (~30s para 46 capturas), pré-injeta o tema antes do carregamento e audita também `DA-NAV-TRUNCATION`, `DA-HEADER-HSCROLL`, `DA-CLIPPED-CONTENT`, `DA-MOBILE-FLEX-CLIP`, `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT`, `DA-JS-ERROR` e `DA-ASSET-404`; e `lint_design_aura.py` checa ainda `DA-BRAND-DARK-SCOPE`, `DA-REF-COPY-LEAK`, `DA-ICON-GENERIC-REPEAT`, `DA-FLAT-CHART-AXIS` e `DA-MOBILE-FLEX-CLIP`. **Regra de transparência:** aguarde a conclusão da auditoria no próprio turno antes de responder ao usuário.)*
 
 3. **Inspeção visual final & Entrega real em ambiente local ou remoto**:
    - Inspecione os PNGs finais (inclusive `fluxo.html`, `preview.html`, `index.html`). Só encerre com veredito **`Approve`** (`0 BLOCK`, `0 HIGH` e qualidade estética validada).
