@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedidos do dia</title>
+<style>
+:root{--z0:#e9edf2;--z1:#f1f4f8;--z2:#ffffff;--line:#c9d2de;--ink:#121a24;--muted:#4a5666;--primary:#7a3e12;--ok:#166534;--warn:#92400e}
+[data-theme="dark"]{--z0:#0b0f14;--z1:#10151c;--z2:#18202a;--line:#2c3746;--ink:#eef2f6;--muted:#a3afbf;--primary:#f0a66e;--ok:#4ade80;--warn:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:var(--z1);color:var(--ink);font:14px/1.45 system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100dvh}
+aside{background:var(--z2);border-right:1px solid var(--line);padding:20px 12px}
+aside a{display:block;padding:8px 12px;border-radius:6px;color:var(--muted);text-decoration:none}aside a[aria-current]{color:var(--ink);background:var(--z0)}
+main{padding:24px 32px}h1{font-size:22px;margin:0 0 16px}
+.card{background:var(--z2);border:1px solid var(--line);border-radius:10px;overflow:auto}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 16px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-weight:600;background:var(--z0)}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.st{font-weight:600}.ok{color:var(--ok)}.warn{color:var(--warn)}
+</style></head>
+<body><div class="shell">
+<aside><strong>Padaria Trigo</strong><nav aria-label="Módulos"><a href="#" aria-current="page">Pedidos</a><a href="#">Estoque</a><a href="#">Clientes</a></nav></aside>
+<main><h1>Pedidos de hoje</h1><div class="card"><table>
+<thead><tr><th>Cliente</th><th>Entrega</th><th>Situação</th><th class="num">Itens</th><th class="num">Valor</th></tr></thead>
+<tbody>
+<tr><td>Café Ponto Alto</td><td>08:30</td><td class="st ok">Entregue</td><td class="num">14</td><td class="num">R$ 386,40</td></tr>
+<tr><td>Mercado Vila Rica</td><td>09:15</td><td class="st warn">Em preparo</td><td class="num">32</td><td class="num">R$ 1.214,90</td></tr>
+<tr><td>Hotel Beira-Mar</td><td>10:00</td><td class="st">Agendado</td><td class="num">48</td><td class="num">R$ 2.087,15</td></tr>
+<tr><td>Escritório Lumen</td><td>11:20</td><td class="st">Agendado</td><td class="num">9</td><td class="num">R$ 173,60</td></tr>
+<tr><td>Clínica Sorriso</td><td>12:05</td><td class="st">Agendado</td><td class="num">6</td><td class="num">R$ 98,30</td></tr>
+<tr><td>Restaurante Maresia</td><td>15:40</td><td class="st">Agendado</td><td class="num">27</td><td class="num">R$ 942,75</td></tr>
+</tbody></table></div></main>
+</div></body></html>

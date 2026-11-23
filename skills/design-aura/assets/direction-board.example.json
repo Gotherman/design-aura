@@ -1,0 +1,50 @@
+{
+  "project": "Clínica Veterinária Aurora",
+  "fragment": {
+    "product": "Aurora Vet",
+    "nav": ["Agenda", "Pacientes", "Estoque", "Financeiro"],
+    "title": "Agenda de hoje",
+    "subtitle": "Terça, 25 de novembro · 14 consultas",
+    "primary": "Nova consulta",
+    "secondary": "Imprimir",
+    "kpi": {"label": "Ocupação da agenda", "value": "82%", "delta": "+6 pp na semana"},
+    "bars": [48, 62, 70, 58, 82, 76],
+    "rows": [
+      {"name": "Thor · Labrador, 6 anos", "meta": "08:30 · Dra. Camila Reis · Vacina V10", "status": "Confirmada", "tone": "ok", "value": "R$ 180,00"},
+      {"name": "Mel · SRD, 2 anos", "meta": "09:00 · Dr. Paulo Nunes · Retorno", "status": "Aguardando", "tone": "atencao", "value": "R$ 0,00"},
+      {"name": "Fred · Persa, 11 anos", "meta": "09:40 · Dra. Camila Reis · Exame de sangue", "status": "Atrasado", "tone": "falha", "value": "R$ 245,50"},
+      {"name": "Luna · Shih-tzu, 4 anos", "meta": "10:20 · Dr. Paulo Nunes · Banho e tosa", "status": "Check-in", "tone": "info", "value": "R$ 95,00"}
+    ],
+    "field_label": "Buscar tutor ou paciente",
+    "field_value": "Thor"
+  },
+  "directions": [
+    {
+      "name": "Consultório sereno",
+      "adjectives": ["calmo", "preciso", "acolhedor"],
+      "concept": "Neutros quentes e um verde-sálvia de marca; a cor viva fica nos estados e na ação.",
+      "seed": "#3F6B5C", "accent": "#C27C4C", "harmony": "complementar",
+      "depth_style": "hairline", "shape": "soft", "density": "regular",
+      "fonts": {"name": "Figtree", "ui": "'Figtree', system-ui, sans-serif", "display": "'Figtree', system-ui, sans-serif", "url": "https://fonts.googleapis.com/css2?family=Figtree:wght@400..700&display=swap"},
+      "refuses": ["Azul-hospital frio", "Cartões elevados em toda a tela"]
+    },
+    {
+      "name": "Prontuário tátil",
+      "adjectives": ["firme", "organizado", "confiável"],
+      "concept": "Azul-petróleo com planos bem marcados e cantos menores; boa para recepção com muitas filas.",
+      "seed": "#134E4A", "accent": "#E0613A", "harmony": "complementar",
+      "depth_style": "tactile", "shape": "sharp", "density": "compact",
+      "fonts": {"name": "IBM Plex Sans", "ui": "'IBM Plex Sans', system-ui, sans-serif", "display": "'IBM Plex Sans', system-ui, sans-serif", "url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400..700&display=swap"},
+      "refuses": ["Gradientes decorativos", "Ícone em quadrado colorido em toda linha"]
+    },
+    {
+      "name": "Cuidado próximo",
+      "adjectives": ["amigável", "leve", "humano"],
+      "concept": "Ameixa suave com acento verde-água, cantos arredondados e profundidade tonal sem bordas.",
+      "seed": "#5B3A6E", "accent": "#2FB6A3", "harmony": "dividida",
+      "depth_style": "tonal", "shape": "round", "density": "airy",
+      "fonts": {"name": "Onest", "ui": "'Onest', system-ui, sans-serif", "display": "'Onest', system-ui, sans-serif", "url": "https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap"},
+      "refuses": ["Visual infantil", "Neon e brilho"]
+    }
+  ]
+}

@@ -1,0 +1,622 @@
+[
+ {
+  "id": "ag-grid-community",
+  "name": "AG Grid Community (MIT Core)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.ag-grid.com",
+  "repo": "https://github.com/ag-grid/ag-grid",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-grid",
+   "data-table"
+  ],
+  "keywords": [
+   "data table",
+   "tabela",
+   "grid",
+   "spreadsheet",
+   "erp",
+   "financeiro",
+   "colunas fixas"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install ag-grid-community",
+  "summary": "Data grid financeiro de alta densidade com ordenacao multi-coluna, filtro instantaneo, navegacao por setas de planilha e virtualizacao",
+  "a11y": "Suporte ARIA Grid completo; aplique tema customizado com as variaveis de tokens.css",
+  "notes": "Recursos Enterprise sao pagos; fique no pacote Community.",
+  "license_ok": true
+ },
+ {
+  "id": "glide-data-grid",
+  "name": "Glide Data Grid",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://grid.glideapps.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-grid",
+   "virtual-list"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Grade em canvas para milhoes de linhas com edicao.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tanstack-table",
+  "name": "TanStack Table",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tanstack.com/table",
+  "repo": "https://github.com/TanStack/table",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "solid"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-table",
+   "data-grid"
+  ],
+  "keywords": [
+   "data table",
+   "inline edit",
+   "sort",
+   "filter",
+   "column pin"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @tanstack/react-table",
+  "summary": "Tabela densa com ordenacao, filtro e colunas fixas",
+  "a11y": "Mantenha <table> real e numeros alinhados a direita",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tanstack-virtual",
+  "name": "TanStack Virtual",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tanstack.com/virtual",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "virtual-list"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Virtualizacao de 10.000+ linhas de logs, extratos e catalogos sem travar scroll",
+  "a11y": "Preserva indices aria-rowindex e foco em listas extensas",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "dice-ui",
+  "name": "Dice UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.diceui.com",
+  "repo": "https://github.com/sadmann7/diceui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "data-tables",
+   "forms"
+  ],
+  "needs": [
+   "data-table",
+   "select-combobox",
+   "sortable",
+   "kanban",
+   "file-upload"
+  ],
+  "keywords": [
+   "data table",
+   "combobox",
+   "sortable",
+   "kanban",
+   "file upload"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npx shadcn@latest add @diceui/data-table",
+  "summary": "Tabelas, combobox e padroes de produto com acessibilidade explicita",
+  "a11y": "Documenta teclado nos componentes de tabela e menu",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "headless-tree",
+  "name": "Headless Tree",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://headless-tree.lukasbach.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "tree-view"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Arvore headless acessivel.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "mantine-datatable",
+  "name": "Mantine DataTable",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://icflorescu.github.io/mantine-datatable",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-table"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Tabela pronta para Mantine com selecao e paginacao.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "material-react-table",
+  "name": "Material React Table",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.material-react-table.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-table",
+   "data-grid"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "TanStack Table com UI Material completa.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-data-grid",
+  "name": "React Data Grid",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/adazzle/react-data-grid",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-grid"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Grade editavel virtualizada.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-arborist",
+  "name": "react-arborist",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/brimdata/react-arborist",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "tree-view"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Arvore com arrastar, renomear e virtualizacao.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "revogrid",
+  "name": "RevoGrid",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://rv-grid.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "angular",
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-grid"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Grade estilo planilha como Web Component.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tabulator-tables",
+  "name": "Tabulator",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tabulator.info",
+  "repo": "olifolkerd/tabulator",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-table",
+   "data-grid"
+  ],
+  "keywords": [
+   "table",
+   "tabela",
+   "grid",
+   "filtro",
+   "ordenacao",
+   "paginacao",
+   "edicao inline",
+   "financeiro",
+   "dados"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install tabulator-tables",
+  "summary": "Tabelas interativas densas em JavaScript/HTML puro com ordenacao, filtros por coluna, congelamento de colunas e virtualizacao",
+  "a11y": "Re-tematize as bordas, alinhamento numerico a direita e tabular-nums pelos tokens da Biblia",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "virtua",
+  "name": "Virtua",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/inokawa/virtua",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "svelte",
+   "solid"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "virtual-list"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Virtualizacao leve de listas e grades.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "grid-js",
+  "name": "Grid.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://gridjs.io",
+  "repo": "https://github.com/grid-js/gridjs",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "data-tables"
+  ],
+  "needs": [
+   "data-table"
+  ],
+  "keywords": [
+   "table",
+   "tabela",
+   "busca",
+   "ordenacao",
+   "paginacao",
+   "html"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install gridjs",
+  "summary": "Tabela leve em HTML/JS ou React com busca instantanea, ordenacao e celulas customizadas",
+  "a11y": "Renderiza <table> semantica real",
+  "notes": "",
+  "license_ok": true
+ }
+]

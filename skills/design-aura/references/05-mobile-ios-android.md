@@ -22,7 +22,7 @@ Um aplicativo mobile falha imediatamente quando parece **um site espremido em te
 ## 2. iOS (SwiftUI · UIKit · React Native iOS · Flutter Cupertino)
 
 ### Teste de Qualidade iOS
-Um usuário fluente de iPhone confiaria neste app na primeira abertura? Os erros clássicos de IA no iOS são barras de navegação web customizadas, botão "Voltar" que quebra o gesto de deslizar na borda esquerda, e cards genéricos empilhados no lugar de listas nativas agrupadas.
+Um usuário fluente de iPhone confiaria neste app na primeira abertura? Os erros comuns de interface gerada no iOS são barras de navegação web customizadas, botão "Voltar" que quebra o gesto de deslizar na borda esquerda, e cards genéricos empilhados no lugar de listas nativas agrupadas.
 
 ### Regras iOS HIG
 - **Navegação**:
@@ -48,7 +48,7 @@ Um usuário fluente de iPhone confiaria neste app na primeira abertura? Os erros
 ## 3. Android (Jetpack Compose · Views · React Native Android · Flutter M3)
 
 ### Teste de Qualidade Android
-O erro clássico de IA no Android é copiar um iPhone (switches estilo Cupertino, setas centradas sem gesto de volta preditivo, bottom bar idêntica em tablet).
+O erro comum de interface gerada no Android é copiar um iPhone (switches estilo Cupertino, setas centradas sem gesto de volta preditivo, bottom bar idêntica em tablet).
 
 ### Regras Material Design 3
 - **Navegação Adaptativa por Tamanho**:
@@ -74,54 +74,28 @@ O erro clássico de IA no Android é copiar um iPhone (switches estilo Cupertino
 
 | Stack | Como manter fidelidade nativa sem duplicar trabalho |
 |---|---|
-| **React Native / Expo** | Use menus nativos (`Zeego`), sheets com gestos físicos (`@gorhom/bottom-sheet`), listas virtualizadas (`FlashList`), animações na UI thread (`react-native-reanimated`) e `react-native-safe-area-context`. Adapte `Header` e ícones por `Platform.OS` (`SF Symbols` / `Material Symbols`). |
+| **React Native / Expo** | Para controles com cara de sistema, prefira **Expo UI** (SwiftUI no iOS e Jetpack Compose no Android, estável no SDK 56) e mantenha os tokens do projeto na casca. Complete com menus nativos (`Zeego`), sheets com gesto (`@gorhom/bottom-sheet`), listas virtualizadas (`FlashList` ou `Legend List`), animação na UI thread (`react-native-reanimated`) e `react-native-safe-area-context`. Ícones por plataforma (`SF Symbols` / `Material Symbols`). |
 | **Flutter** | Use `ThemeData(useMaterial3: true)` com `ColorScheme` em roles reais; adote widgets `.adaptive` (`Switch.adaptive`, diálogos adaptativos) e respeite `MediaQuery.padding` / `SafeArea` + `NavigationBar` vs `NavigationRail` via `LayoutBuilder`. |
 | **Mobile Web / PWA / Showcase iPhone** | Aplique `env(safe-area-inset-top/bottom)`, `100dvh`, `touch-action: manipulation` (remove delay de 300ms), `overscroll-behavior: contain` em sheets, `-webkit-tap-highlight-color: transparent` com feedback próprio `active:scale-[0.97]` e simulação limpa de Bottom Sheet (ex.: `Vaul`) com fechar por arrasto e `Esc`. |
 
 ---
 
-## 5. Orçamento de Topo Mobile & Primeira Dobra (`DA-MOBILE-HERO-BLOAT` · `v2.4.0`)
+## 5. Topo e primeira dobra
 
-Em apps operacionais mobile (`390×844`), a pessoa abriu o celular para **agir na lista de trabalho** (escolas, entregas, pendências), não para ler dois banners gigantes antes de rolar:
-- **Teto rígido de topo (`<= 38%` / `<= 320px`):** o conjunto **Header + Hero/Resumo + Aviso da Mesa** nunca pode consumir mais de `38%` da altura útil da viewport.
-- **Lista acionável acima da dobra:** o primeiro item real da lista principal precisa aparecer claramente visível sem obrigar rolagem (`y < 480px`), com alertas secundários condensados em 1 linha expansível ou dispensável (`Entendi`).
-- **Zero selo-eco em listas estreitas (`DA-BADGE-ECHO`):** nunca repita o mesmo selo genérico (ex.: `8× PWA Mobile`) roubando largura e truncando nomes de pessoas ou unidades.
+Num app de trabalho, a pessoa abriu o celular para agir na lista, não para ler banners.
+- Cabeçalho, resumo e avisos juntos respeitam o orçamento do projeto (`mobileTopMaxPct` e `mobileTopMaxPx` na Bíblia e no manifesto; o padrão Operate é cerca de 40% da altura útil).
+- O primeiro item real da lista aparece na dobra. Avisos secundários viram uma linha expansível ou dispensável.
+- Em listas estreitas, não repita o mesmo selo em todo item: ele rouba largura e trunca nomes.
 
----
+## 6. Cartões cortados e moldura de aparelho
 
-## 6. Blindagem contra Corte de Dados e Vazamento de Mockup Mobile (`DA-CLIPPED-CONTENT` & `DA-MOBILE-FLEX-CLIP`)
-
-Dois erros técnicos clássicos destroem protótipos mobile quando abertos no desktop (`preview.html` ou visualização em moldura de aparelho):
-
-1. **PROIBIDO esmagamento de cards por `flex-shrink: 1` (`DA-MOBILE-FLEX-CLIP`):**
-   - Em containers roláveis verticais (`.mob-scroll`, `.sheet-panel`, `main` mobile), se você usar `display: flex; flex-direction: column; overflow-y: auto;` e colocar cards filhos com `overflow: hidden` (para arredondar bordas), o Flexbox do navegador **encolhe todos os cards verticalmente para caberem sem scroll**, cortando números e textos pela metade!
-   - **Solução obrigatória (escolha uma):**
-     ```css
-     /* Opção A (recomendada): grid auto-rows nunca esmaga filhos */
-     .mob-scroll {
-       flex: 1;
-       overflow-y: auto;
-       display: grid;
-       grid-auto-rows: max-content;
-       align-content: start;
-       gap: var(--space-4);
-     }
-
-     /* Opção B: se usar flex-column, trave flex-shrink: 0 em TODOS os filhos diretos */
-     .mob-scroll > * {
-       flex-shrink: 0;
-     }
-     ```
-2. **PROIBIDO canto quadrado vazando fora do bezel arredondado do mockup:**
-   - No Chromium, um cabeçalho `position: sticky` com `backdrop-filter: blur(...)` dentro de um container arredondado (`border-radius: 40px`) ou de um `<iframe>` pelado vaza cantos de 90° por cima da borda curva!
-   - **Solução obrigatória:** aplique no container `.mob-device` (desktop showcase) e no wrapper `.pv-frame-wrap.is-mobile` do iframe:
-     ```css
-     .mob-device, .pv-frame-wrap.is-mobile {
-       overflow: hidden;
-       border-radius: 40px;
-       clip-path: inset(0 round 32px);
-       isolation: isolate;
-       transform: translateZ(0);
-     }
-     ```
-   - E valide sempre no Chromium com `capture_and_audit.mjs` (que bloqueia automaticamente via `DA-CLIPPED-CONTENT` e `DA-MOBILE-FLEX-CLIP`).
+1. **Coluna flex rolável esmaga filhos.** Num contêiner `display: flex; flex-direction: column; overflow-y: auto`, cartões com `overflow: hidden` encolhem até cortar o texto. Use grid:
+   ```css
+   .mob-scroll { flex: 1; overflow-y: auto; display: grid; grid-auto-rows: max-content; align-content: start; gap: var(--space-4); }
+   ```
+   ou `flex-shrink: 0` em todos os filhos diretos.
+2. **Cantos vazando da moldura.** Cabeçalho `sticky` com `backdrop-filter` dentro de moldura arredondada vaza cantos retos no Chromium. Na moldura do preview:
+   ```css
+   .mob-device, .pv-frame-wrap.is-mobile { overflow: hidden; border-radius: 40px; clip-path: inset(0 round 32px); isolation: isolate; transform: translateZ(0); }
+   ```
+O auditor bloqueia os dois casos (`DA-MOBILE-FLEX-CLIP`, `DA-CLIPPED-CONTENT`).

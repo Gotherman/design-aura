@@ -1,0 +1,452 @@
+[
+ {
+  "id": "paper-shaders",
+  "name": "Paper Shaders",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://shaders.paper.design",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "shader-gradient"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 3,
+  "install": "",
+  "summary": "Shaders de fundo leves e refinados.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "r3f",
+  "name": "React Three Fiber + drei",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://r3f.docs.pmnd.rs",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "particles-3d"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "three.js declarativo em React.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "threejs",
+  "name": "three.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://threejs.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "particles-3d"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "3D na web.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "aceternity",
+  "name": "Aceternity UI",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://ui.aceternity.com",
+  "repo": "",
+  "license": "Aceternity License",
+  "license_status": "trap",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects",
+   "marketing"
+  ],
+  "needs": [
+   "decorative-effects",
+   "hero"
+  ],
+  "keywords": [
+   "hero",
+   "spotlight",
+   "3d card",
+   "landing"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "",
+  "summary": "Visual famoso e licenca propria. Nao e MIT: da para usar em produto final sob a licenca deles, e proibido redistribuir o fonte",
+  "a11y": "Nao copiar para a skill, para um template ou para outro registry",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "magic-ui",
+  "name": "Magic UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://magicui.design",
+  "repo": "https://github.com/magicuidesign/magicui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects",
+   "marketing"
+  ],
+  "needs": [
+   "decorative-effects",
+   "hero",
+   "text-motion",
+   "social-proof"
+  ],
+  "keywords": [
+   "marquee",
+   "border beam",
+   "hero",
+   "landing motion"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "npx shadcn@latest add @magicui/marquee",
+  "summary": "Pecas de impacto para landing. O catalogo Pro e pago e fica de fora",
+  "a11y": "Vetado em modo Operate. Reduza a um signature move",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "ogl",
+  "name": "OGL",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/oframe/ogl",
+  "repo": "",
+  "license": "Unlicense",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "shader-gradient",
+   "particles-3d"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "WebGL minimo para shaders leves.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "react-bits",
+  "name": "React Bits",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://reactbits.dev",
+  "repo": "https://github.com/DavidHDev/react-bits",
+  "license": "MIT + Commons Clause",
+  "license_status": "trap",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects",
+   "motion"
+  ],
+  "needs": [
+   "decorative-effects",
+   "text-motion",
+   "shader-gradient"
+  ],
+  "keywords": [
+   "text animation",
+   "background",
+   "landing"
+  ],
+  "style": {
+   "skin": "own",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "",
+  "summary": "Pode entrar num app. Nao pode ser revendido nem republicado como componente. Falha no portao MIT/Apache/BSD/ISC",
+  "a11y": "Commons Clause bloqueia o uso como registry da skill",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "shadergradient",
+  "name": "ShaderGradient",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://shadergradient.co",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "shader-gradient"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "",
+  "summary": "Gradientes animados em shader.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "skiper-ui",
+  "name": "Skiper UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://skiper-ui.com",
+  "repo": "",
+  "license": "conferir (ha partes pagas)",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects",
+   "marketing"
+  ],
+  "needs": [
+   "decorative-effects",
+   "hero"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "",
+  "summary": "Pecas animadas de impacto.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "tsparticles",
+  "name": "tsParticles",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://particles.js.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "particles-3d"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 1,
+  "install": "",
+  "summary": "Particulas configuraveis.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "vanta",
+  "name": "Vanta.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.vantajs.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "effects"
+  ],
+  "needs": [
+   "shader-gradient"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 1,
+  "install": "",
+  "summary": "Fundos 3D animados.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ }
+]

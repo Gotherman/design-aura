@@ -1,0 +1,1393 @@
+[
+ {
+  "id": "gorhom-sheet",
+  "name": "@gorhom/bottom-sheet",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://gorhom.dev/react-native-bottom-sheet",
+  "repo": "https://github.com/gorhom/react-native-bottom-sheet",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "overlays-feedback"
+  ],
+  "needs": [
+   "bottom-sheet",
+   "drawer-sheet"
+  ],
+  "keywords": [
+   "bottom sheet",
+   "detent",
+   "drag"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @gorhom/bottom-sheet",
+  "summary": "Sheet arrastavel com snap points no app nativo",
+  "a11y": "Ofereca fechar por botao, nao so pelo gesto",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "expo-ui",
+  "name": "Expo UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://docs.expo.dev/versions/latest/sdk/ui",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives",
+   "mobile-kit",
+   "bottom-sheet"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "native"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "SwiftUI no iOS e Jetpack Compose no Android a partir do React Native; estavel no SDK 56.",
+  "a11y": "",
+  "notes": "E um conjunto de primitivos, nao um design system: os tokens do projeto continuam mandando.",
+  "license_ok": true
+ },
+ {
+  "id": "flashlist",
+  "name": "FlashList",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://shopify.github.io/flash-list",
+  "repo": "https://github.com/Shopify/flash-list",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-list",
+   "virtual-list"
+  ],
+  "keywords": [
+   "long list",
+   "virtualization",
+   "feed"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @shopify/flash-list",
+  "summary": "Listas longas sem perder o scroll nativo",
+  "a11y": "Nao anime a entrada de cada linha",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "flutter-m3-adaptive",
+  "name": "Flutter Material 3 + Cupertino Adaptive",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://docs.flutter.dev/ui/adaptive-responsive",
+  "repo": "",
+  "license": "BSD-3-Clause",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "flutter"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives",
+   "mobile-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "native",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Widgets adaptativos por plataforma com ColorScheme.fromSeed e SafeArea",
+  "a11y": "Semantics tree completa e suporte a fontScale",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "material3",
+  "name": "Material 3 / Compose Material",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://m3.material.io",
+  "repo": "https://github.com/material-components/material-components-android",
+  "license": "Apache-2.0",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "android"
+  ],
+  "platforms": [
+   "android",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives",
+   "mobile-kit",
+   "bottom-sheet"
+  ],
+  "keywords": [
+   "navigation bar",
+   "fab",
+   "snackbar",
+   "predictive back",
+   "adaptive",
+   "expressive",
+   "foldable",
+   "tablet"
+  ],
+  "style": {
+   "skin": "native",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "androidx.compose.material3:material3",
+  "summary": "Componentes e motion do sistema Android. Prefira isto a um kit web portado",
+  "a11y": "TalkBack, 48dp e predictive back sao do sistema",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "rn-reanimated",
+  "name": "React Native Reanimated + Gesture Handler",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://docs.swmansion.com/react-native-reanimated",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "motion"
+  ],
+  "needs": [
+   "mobile-motion",
+   "animation-lib"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless",
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Animacoes interrompiveis na UI thread e gestos nativos sem travar JS bridge",
+  "a11y": "Suporta useReducedMotion() nativo do sistema",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "rn-reusables",
+  "name": "React Native Reusables",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://reactnativereusables.com",
+  "repo": "https://github.com/founded-labs/react-native-reusables",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit",
+   "bottom-sheet"
+  ],
+  "keywords": [
+   "button",
+   "dialog",
+   "bottom sheet",
+   "nativewind",
+   "form"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx @react-native-reusables/cli@latest add button",
+  "summary": "shadcn para React Native com NativeWind",
+  "a11y": "Alvo de toque 44 no iOS e 48 no Android continua obrigatorio",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "rn-skia",
+  "name": "React Native Skia",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://shopify.github.io/react-native-skia",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "charts"
+  ],
+  "needs": [
+   "mobile-chart",
+   "mobile-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Desenho 2D de alto desempenho (graficos, efeitos).",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "swiftui",
+  "name": "SwiftUI",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://developer.apple.com/documentation/swiftui",
+  "repo": "",
+  "license": "Apple SDK",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "ios"
+  ],
+  "platforms": [
+   "ios",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives",
+   "bottom-sheet",
+   "mobile-list",
+   "mobile-menu"
+  ],
+  "keywords": [
+   "bottom sheet",
+   "detents",
+   "ios",
+   "list",
+   "lista",
+   "menu",
+   "navegacao",
+   "navigation stack",
+   "safe area",
+   "sheet",
+   "tab"
+  ],
+  "style": {
+   "skin": "native",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "framework do SDK",
+  "summary": "Controles e transicoes do iOS/macOS. Nao e um pacote para copiar",
+  "a11y": "Use os componentes do sistema e Reduce Motion",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "zeego",
+  "name": "Zeego",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://zeego.dev",
+  "repo": "https://github.com/nandorojo/zeego",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-menu",
+   "context-menu"
+  ],
+  "keywords": [
+   "context menu",
+   "dropdown",
+   "native menu"
+  ],
+  "style": {
+   "skin": "native",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install zeego",
+  "summary": "Menus nativos de iOS e Android em vez de um popover web",
+  "a11y": "Usa o menu do sistema; nao reestilize o popup nativo",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "burnt-toasts",
+  "name": "Burnt (Native Toasts)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/nandorojo/burnt",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-menu",
+   "toast"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "native",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "HUDs e toasts nativos com haptic feedback em React Native",
+  "a11y": "Anuncios acessiveis respeitando Reduce Motion",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "compose-unstyled",
+  "name": "Compose Unstyled",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/composablehorizons/compose-unstyled",
+  "repo": "https://github.com/composablehorizons/compose-unstyled",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "android"
+  ],
+  "platforms": [
+   "android",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives",
+   "headless-primitives"
+  ],
+  "keywords": [
+   "compose",
+   "headless",
+   "dialog",
+   "dropdown"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "implementation do modulo publicado no README",
+  "summary": "Primitivos Compose sem o visual Material, quando a marca pede outra superficie",
+  "a11y": "Confirme a licenca no commit e mantenha predictive back",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "expo-symbols",
+  "name": "expo-symbols & react-native-safe-area-context",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://docs.expo.dev/versions/latest/sdk/symbols/",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "icons"
+  ],
+  "needs": [
+   "icons-platform",
+   "native-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "native",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "SF Symbols nativos no iOS e insets seguros em iPhone/Android sem corte",
+  "a11y": "Escala automaticamente com Dynamic Type e window insets",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "flutter-animate",
+  "name": "flutter_animate",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://pub.dev/packages/flutter_animate",
+  "repo": "",
+  "license": "BSD-3-Clause",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "flutter"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "motion"
+  ],
+  "needs": [
+   "mobile-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Animacoes encadeadas em Flutter.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "forui",
+  "name": "Forui",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://forui.dev",
+  "repo": "https://github.com/forus-labs/forui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "flutter"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit"
+  ],
+  "keywords": [
+   "flutter",
+   "dialog",
+   "tabs",
+   "sheet"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "flutter pub add forui",
+  "summary": "Kit Flutter no espirito shadcn. Confirme o LICENSE no pubspec",
+  "a11y": "Mapeie tokens para o ThemeData, nao pinte widget por widget",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "framework7",
+  "name": "Framework7",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://framework7.io",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android",
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Apps hibridos e PWA com visual iOS/Material.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "gluestack",
+  "name": "gluestack UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://gluestack.io",
+  "repo": "https://github.com/gluestack/gluestack-ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit"
+  ],
+  "keywords": [
+   "form",
+   "menu",
+   "nativewind",
+   "expo router"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npx gluestack-ui init",
+  "summary": "Componentes copiaveis para Expo com NativeWind",
+  "a11y": "Nao copie o tema padrao; mapeie para a Biblia",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "haze",
+  "name": "Haze",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/chrisbanes/haze",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "android"
+  ],
+  "platforms": [
+   "android",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Desfoque de fundo para Compose.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "heroui-native",
+  "name": "HeroUI Native",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.heroui.com",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit HeroUI para React Native.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "ionic",
+  "name": "Ionic Framework",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ionicframework.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "angular"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android",
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit",
+   "bottom-sheet"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes mobile com estilo iOS e Material para PWA e hibridos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "konsta-ui",
+  "name": "Konsta UI (iOS & Material 3 Mobile UI for Tailwind/HTML/React)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://konstaui.com",
+  "repo": "https://github.com/konstaui/konsta",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit",
+   "bottom-sheet"
+  ],
+  "keywords": [
+   "mobile",
+   "ios",
+   "android",
+   "tab bar",
+   "bottom sheet",
+   "segmented control",
+   "list",
+   "pwa"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install konsta",
+  "summary": "Componentes mobile pixel-perfect (Tab Bar, Segmented Control, Action Sheet, Inset Lists) para PWAs e prototipos executivos",
+  "a11y": "Alvos >= 44px e safe-area-inset integrados",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "legend-list",
+  "name": "Legend List",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/LegendApp/legend-list",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-list"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Lista virtualizada de alto desempenho.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "moti",
+  "name": "Moti",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://moti.fyi",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "motion"
+  ],
+  "needs": [
+   "mobile-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Animacoes declarativas sobre Reanimated.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "nativewind",
+  "name": "NativeWind",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.nativewind.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-styling"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Tailwind no React Native.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "pow-swiftui",
+  "name": "Pow",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/EmergeTools/Pow",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "ios"
+  ],
+  "platforms": [
+   "ios",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native",
+   "motion"
+  ],
+  "needs": [
+   "mobile-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Efeitos e transicoes para SwiftUI.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "rn-paper",
+  "name": "React Native Paper",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://callstack.github.io/react-native-paper",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Material 3 para React Native.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "shadcn-flutter",
+  "name": "shadcn_ui Flutter",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://mariuti.com/shadcn-ui",
+  "repo": "https://pub.dev/packages/shadcn_ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "flutter"
+  ],
+  "platforms": [
+   "mobile",
+   "desktop",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit"
+  ],
+  "keywords": [
+   "flutter",
+   "button",
+   "dialog",
+   "form"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "flutter pub add shadcn_ui",
+  "summary": "Port Flutter de componentes shadcn, licenca MIT no pub.dev",
+  "a11y": "Semantics de Flutter continuam obrigatorios",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tamagui",
+  "name": "Tamagui",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tamagui.dev",
+  "repo": "https://github.com/tamagui/tamagui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "system",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-kit",
+   "mobile-styling"
+  ],
+  "keywords": [
+   "universal",
+   "sheet",
+   "adapt",
+   "token"
+  ],
+  "style": {
+   "skin": "tokens",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install tamagui",
+  "summary": "Estilo compartilhado web e nativo quando o produto e os dois",
+  "a11y": "Sheets nativos ainda pedem o gesto da plataforma",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "unistyles",
+  "name": "Unistyles",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.unistyl.es",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-styling"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Temas e estilos performaticos para RN.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "vortex",
+  "name": "Vortex",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/twostraws/Vortex",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "ios"
+  ],
+  "platforms": [
+   "ios",
+   "mobile"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "mobile-native",
+   "effects"
+  ],
+  "needs": [
+   "mobile-motion",
+   "particles-3d"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "",
+  "summary": "Particulas em SwiftUI (confete, chuva, faiscas).",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "swiftuix",
+  "name": "SwiftUIX",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/SwiftUIX/SwiftUIX",
+  "repo": "https://github.com/SwiftUIX/SwiftUIX",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "ios"
+  ],
+  "platforms": [
+   "ios",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "mobile-native"
+  ],
+  "needs": [
+   "native-primitives"
+  ],
+  "keywords": [
+   "swiftui",
+   "convenience",
+   "search bar"
+  ],
+  "style": {
+   "skin": "native",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "dependencia Swift Package",
+  "summary": "Extensoes SwiftUI quando o SDK nao cobre um controle",
+  "a11y": "Nao substitua NavigationStack por um container caseiro",
+  "notes": "",
+  "license_ok": true
+ }
+]

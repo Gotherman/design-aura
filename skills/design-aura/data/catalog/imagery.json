@@ -1,0 +1,433 @@
+[
+ {
+  "id": "3dicons",
+  "name": "3dicons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://3dicons.co",
+  "repo": "",
+  "license": "CC0-1.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "3d-asset"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Icones 3D livres.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "boring-avatars",
+  "name": "Boring Avatars & DiceBear",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://boringavatars.com",
+  "repo": "https://github.com/boringdesigners/boring-avatars",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "avatar"
+  ],
+  "keywords": [
+   "avatar",
+   "perfil",
+   "usuario",
+   "cliente",
+   "inbox",
+   "contato"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install boring-avatars",
+  "summary": "Avatares SVG geometricos deterministicos sincronizados com a paleta de cores da marca (substitui fotos quebradas)",
+  "a11y": "Sempre mantenha aspect-ratio: 1/1 e iniciais acessiveis",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "dicebear",
+  "name": "DiceBear",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.dicebear.com",
+  "repo": "",
+  "license": "MIT (codigo); estilos com licencas proprias",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "avatar"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Avatares gerados por semente.",
+  "a11y": "",
+  "notes": "Confira a licenca do estilo escolhido.",
+  "license_ok": false
+ },
+ {
+  "id": "haikei",
+  "name": "Haikei",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://haikei.app",
+  "repo": "",
+  "license": "gratuito",
+  "license_status": "free-license",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "imagery",
+   "effects"
+  ],
+  "needs": [
+   "pattern-background",
+   "shader-gradient"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Gerador de fundos SVG (ondas, blobs, grain).",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "humaaans",
+  "name": "Humaaans",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.humaaans.com",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "illustration"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Pessoas combinaveis em estilo plano.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "open-peeps",
+  "name": "Open Peeps",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.openpeeps.com",
+  "repo": "",
+  "license": "CC0-1.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "illustration",
+   "avatar"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Pessoas desenhadas a mao combinaveis.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "pexels",
+  "name": "Pexels",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.pexels.com",
+  "repo": "",
+  "license": "Pexels License (gratuita)",
+  "license_status": "free-license",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "photo"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Fotos e videos gratuitos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "undraw",
+  "name": "unDraw",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://undraw.co",
+  "repo": "",
+  "license": "unDraw License (gratuita)",
+  "license_status": "free-license",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "illustration",
+   "onboarding",
+   "empty-state"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Ilustracoes com cor ajustavel.",
+  "a11y": "",
+  "notes": "Estilo muito reconhecivel; use com parcimonia.",
+  "license_ok": false
+ },
+ {
+  "id": "unsplash",
+  "name": "Unsplash",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://unsplash.com",
+  "repo": "",
+  "license": "Unsplash License (gratuita)",
+  "license_status": "free-license",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "photo"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Fotografia gratuita.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "heropatterns",
+  "name": "Hero Patterns",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://heropatterns.com",
+  "repo": "",
+  "license": "CC-BY-4.0",
+  "license_status": "attribution",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "pattern-background"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Padroes SVG repetiveis.",
+  "a11y": "",
+  "notes": "",
+  "attribution": "Hero Patterns por Steve Schoger (CC BY 4.0)",
+  "license_ok": true
+ },
+ {
+  "id": "storyset",
+  "name": "Storyset",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://storyset.com",
+  "repo": "",
+  "license": "gratuita com atribuicao (Freepik)",
+  "license_status": "attribution",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "imagery"
+  ],
+  "needs": [
+   "illustration"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Ilustracoes animaveis; exige atribuicao.",
+  "a11y": "",
+  "notes": "",
+  "attribution": "Ilustracoes por Storyset/Freepik",
+  "license_ok": true
+ }
+]

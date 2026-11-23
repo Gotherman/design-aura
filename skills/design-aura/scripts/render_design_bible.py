@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera a Biblia Visual de Design em HTML e PDF sem corte (Design Aura v2.0).
+"""Gera a Biblia Visual de Design em HTML e PDF sem corte.
 
 Le DESIGN-BIBLE.md e (opcionalmente ou por autodetecao) tokens.css / tokens.json
 para renderizar pranchas visuais REAIS (paleta Light/Dark Z0-Z4, tipografia,
@@ -473,7 +473,7 @@ def sync_markdown_token_tables(
 ) -> tuple[str, list[str]]:
     """Sincroniza hexes em tabelas Markdown (ex.: Secao 8.1) contra tokens.css atual.
 
-    v2.4.1: detecta a ordem real das colunas (Light|Dark vs Dark|Light) pelo cabecalho
+    Detecta a ordem real das colunas (Light|Dark vs Dark|Light) pelo cabecalho
     da tabela, evitando inversao em tokens escuros como --danger (#B91C1C) ou --primary (#14427A).
     """
     if not tokens_light and not tokens_dark:
@@ -554,17 +554,130 @@ def check_inline_token_values(
     return differences
 
 
+# ------------------------------------------------------------------ completude e diagramas de zona
+
+REQUIRED_SECTIONS = [
+    ("Contrato de plataforma", r"contrato de plataforma"),
+    ("Direção escolhida", r"dire[cç][aã]o"),
+    ("Cor", r"\bcor\b|paleta|crom"),
+    ("Tipografia", r"tipograf"),
+    ("Espaço e forma", r"espa[cç]o|escala espacial|forma"),
+    ("Profundidade", r"profundidade|planos"),
+    ("Orçamentos do projeto", r"or[cç]amento"),
+    ("Componentes", r"componente"),
+    ("Telas", r"telas|mapa de telas"),
+    ("Motion", r"motion|movimento"),
+    ("Conteúdo e dados", r"conte[uú]do|dados fict"),
+    ("Leis do projeto", r"leis do projeto"),
+    ("Verificação", r"port[oõ]es|verifica[cç][aã]o"),
+    ("Histórico", r"hist[oó]rico"),
+]
+PLACEHOLDER = re.compile(r"\{\{[^}]+\}\}|:\*\*\s*\.\.\.\s*$|:\s*\.\.\.\s*$|_a fixar_|_descrever_", re.M)
+
+
+def zone_width(z: dict) -> float:
+    w = z.get("width")
+    if isinstance(w, (int, float)):
+        return float(w)
+    return float(z.get("min", 0) or 0)
+
+
+def check_zones(manifest: dict) -> list[str]:
+    errors = []
+    project_min = int((manifest.get("project") or {}).get("minDesktopWidth", 1024))
+    for scr in manifest.get("screens", []):
+        zones = scr.get("zones") or []
+        if not zones or scr.get("platform") == "mobile":
+            continue
+        min_w = int(scr.get("minWidth", project_min))
+        gap = int(scr.get("zoneGap", 16))
+        total = sum(zone_width(z) for z in zones) + gap * (len(zones) - 1)
+        if total > min_w:
+            parts = " + ".join(f"{z.get('name')} {zone_width(z):.0f}" for z in zones)
+            errors.append(f"Tela {scr.get('id')}: zonas somam {total:.0f}px ({parts} + gaps) e nao cabem na largura minima {min_w}px. Recolha uma zona em drawer ou suba a largura minima.")
+    return errors
+
+
+def zone_diagrams(manifest: dict) -> str:
+    cards = []
+    for scr in manifest.get("screens", []):
+        zones = scr.get("zones") or []
+        if not zones:
+            continue
+        min_w = int(scr.get("minWidth", (manifest.get("project") or {}).get("minDesktopWidth", 1024)))
+        width, height, pad = 560, 150, 6
+        fixed = sum(float(z["width"]) for z in zones if isinstance(z.get("width"), (int, float)))
+        frs = [z for z in zones if not isinstance(z.get("width"), (int, float))]
+        free = max(0.0, min_w - fixed - 16 * (len(zones) - 1))
+        x = pad
+        rects = []
+        scale = (width - 2 * pad) / max(min_w, fixed + sum(zone_width(z) for z in frs))
+        for z in zones:
+            w_px = float(z["width"]) if isinstance(z.get("width"), (int, float)) else max(zone_width(z), free / max(1, len(frs)))
+            w = max(24.0, w_px * scale)
+            label = html.escape(str(z.get("name", "")))
+            size = f"{int(w_px)}px" if isinstance(z.get("width"), (int, float)) else f"{z.get('width', '1fr')} (min {int(zone_width(z))})"
+            rects.append(f'<rect x="{x:.1f}" y="{pad}" width="{w - 4:.1f}" height="{height - 2 * pad}" rx="6" class="zone"/>'
+                         f'<text x="{x + 8:.1f}" y="{pad + 20}" class="zl">{label}</text><text x="{x + 8:.1f}" y="{pad + 36}" class="zs">{html.escape(size)}</text>')
+            x += w
+        over = x - pad > width - 2 * pad + 1
+        action = scr.get("primaryAction") or {}
+        action_txt = action.get("label", "") if isinstance(action, dict) else str(action)
+        cards.append(f'<figure class="zone-card{" over" if over else ""}"><figcaption><strong>{html.escape(str(scr.get("title", scr.get("id"))))}</strong>'
+                     f' · {html.escape(str(scr.get("archetype", "")))} · min {min_w}px{" · ação: " + html.escape(action_txt) if action_txt else ""}</figcaption>'
+                     f'<svg viewBox="0 0 {width} {height}" width="100%" role="img" aria-label="Zonas de {html.escape(str(scr.get("id")))}">{"".join(rects)}</svg></figure>')
+    if not cards:
+        return ""
+    style = ("<style>.zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 24px}.zone-card{margin:0;padding:10px;border:1px solid #d0d5dd;border-radius:8px;break-inside:avoid}"
+             ".zone-card.over{border-color:#b42318}.zone{fill:#eef2f6;stroke:#98a2b3}.zl{font:600 12px system-ui;fill:#101828}.zs{font:11px system-ui;fill:#475467}"
+             ".zone-card figcaption{font:12px system-ui;color:#344054;margin-bottom:6px}</style>")
+    return f'{style}<section class="zones"><h2>Diagramas de zona (gerados do manifesto)</h2><div class="zone-grid">{"".join(cards)}</div></section>'
+
+
+def check_bible(md: str, manifest: dict | None, tokens_light: dict[str, str] | None) -> list[str]:
+    """Aponta decisoes que a Biblia ainda nao tomou. Sem isto ela nao chega ao Portao 1."""
+    errors = []
+    if not re.search(r"\*\*Design Aura:\*\*\s*`v\d+\.\d+\.\d+`", md):
+        errors.append("Selo '**Design Aura:** `vX.Y.Z`' ausente no topo.")
+    headings = "\n".join(line.lower() for line in md.splitlines() if line.startswith("#"))
+    for name, pattern in REQUIRED_SECTIONS:
+        if not re.search(pattern, headings):
+            errors.append(f"Seção ausente: {name}.")
+    for m in PLACEHOLDER.finditer(md):
+        line = md[: m.start()].count("\n") + 1
+        errors.append(f"Linha {line}: decisão em aberto ({m.group(0).strip()[:40]}).")
+        if len(errors) > 40:
+            break
+    tl = tokens_light or {}
+    if tl:
+        for key, why in (("primary-surface", "cor de seleção e item ativo"), ("chart-1", "paleta de gráficos"), ("danger", "estado de erro")):
+            if not any(k.lstrip("-") == key for k in tl):
+                errors.append(f"Token ausente: --{key} ({why}).")
+    if manifest:
+        ids_in_text = set(re.findall(r"`([a-z0-9][a-z0-9-]{1,})`", md))
+        for scr in manifest.get("screens", []):
+            sid = scr.get("id", "?")
+            missing = [f for f in ("archetype", "primaryAction", "states") if not scr.get(f)]
+            if missing:
+                errors.append(f"Tela {sid}: faltam {', '.join(missing)} no manifesto.")
+            if sid not in ids_in_text and sid not in md:
+                errors.append(f"Tela {sid} não aparece na Bíblia.")
+        errors.extend(check_zones(manifest))
+    return errors
+
+
 def build_html(
     md: str,
     title: str,
     tokens_light: dict[str, str] | None = None,
     tokens_dark: dict[str, str] | None = None,
     golden_paths: list[tuple[str, Path]] | None = None,
+    manifest: dict | None = None,
 ) -> str:
     md_synced, _ = sync_markdown_token_tables(md, tokens_light or {}, tokens_dark or {})
     body = markdown_to_body(md_synced)
     specimen = build_specimen_board(tokens_light or {}, tokens_dark or {}, title)
-    golden = build_golden_gallery(golden_paths or [])
+    golden = build_golden_gallery(golden_paths or []) + (zone_diagrams(manifest) if manifest else "")
     # Insere a prancha visual logo apos o primeiro <h1> se existir
     if specimen or golden:
         visual_block = specimen + golden
@@ -643,6 +756,8 @@ def main() -> None:
     parser.add_argument("--check-sync", action="store_true", help="Verifica referências de tokens sem escrever artefatos")
     parser.add_argument("--shell", type=Path, help="Contrato de shell a conferir junto da Bíblia com --check-sync")
     parser.add_argument("--compare-css", type=Path, action="append", default=[], help="Cópia compilada a comparar byte a byte com --tokens")
+    parser.add_argument("--manifest", type=Path, help="screen-manifest.json: gera diagramas de zona e confere as telas")
+    parser.add_argument("--check", action="store_true", help="Confere se a Biblia tomou todas as decisoes (sem escrever artefatos)")
     args = parser.parse_args()
     if (args.shell or args.compare_css) and not args.check_sync:
         parser.error("--shell e --compare-css requerem --check-sync")
@@ -661,6 +776,16 @@ def main() -> None:
             break
 
     tokens_light, tokens_dark = load_tokens_for_bible(source, args.tokens)
+    manifest = json.loads(args.manifest.read_text(encoding="utf-8")) if args.manifest else None
+    if args.check:
+        problems = check_bible(text, manifest, tokens_light)
+        if problems:
+            print(f"Biblia incompleta ({len(problems)} pendencia(s)):", file=sys.stderr)
+            for prob in problems:
+                print(f"- {prob}", file=sys.stderr)
+            sys.exit(1)
+        print("Biblia completa: secoes, decisoes, telas e zonas conferidas.")
+        return
     text_synced, synced_vars = sync_markdown_token_tables(text, tokens_light, tokens_dark)
     if args.check_sync:
         if not tokens_light or not tokens_dark:
@@ -700,7 +825,7 @@ def main() -> None:
     html_path = out_dir / "DESIGN-BIBLE.html"
     pdf_path = out_dir / "DESIGN-BIBLE.pdf"
     html_path.write_text(
-        build_html(text, title, tokens_light=tokens_light, tokens_dark=tokens_dark, golden_paths=golden_paths),
+        build_html(text, title, tokens_light=tokens_light, tokens_dark=tokens_dark, golden_paths=golden_paths, manifest=manifest),
         encoding="utf-8",
     )
     print(f"Papel Visual HTML: {html_path}")

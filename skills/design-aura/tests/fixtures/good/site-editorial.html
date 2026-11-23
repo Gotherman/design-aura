@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier Maré — Arquitetura de interiores</title>
+<style>
+:root{--bg:#f6f3ee;--ink:#1d1a16;--muted:#5b544b;--accent:#a8481f;--on-accent:#ffffff;--line:#d9d1c5}
+[data-theme="dark"]{--bg:#16130f;--ink:#f2ede6;--muted:#b9b0a4;--accent:#e9875a;--on-accent:#1d0d05;--line:#3a332b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 Georgia,serif;-webkit-font-smoothing:antialiased}
+header{display:flex;justify-content:space-between;align-items:center;padding:24px 48px;border-bottom:1px solid var(--line)}
+header nav a{color:var(--ink);margin-left:24px;text-underline-offset:3px}
+main{max-width:1120px;margin:0 auto;padding:96px 48px}
+h1{font-size:64px;line-height:1.05;letter-spacing:-0.02em;max-width:14ch;margin:0 0 24px;text-wrap:balance}
+.lead{font-size:22px;color:var(--muted);max-width:52ch;text-wrap:pretty}
+.cta{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;margin-top:32px;background:var(--accent);color:var(--on-accent);border-radius:2px;text-decoration:none;font:600 16px system-ui}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+section{margin-top:128px;display:grid;grid-template-columns:1fr 1fr;gap:64px}
+section h2{font-size:32px;margin:0 0 16px}section p{color:var(--muted);margin:0}
+footer{padding:48px;border-top:1px solid var(--line);color:var(--muted);font:14px system-ui}
+@media (max-width:760px){header{padding:16px 20px}main{padding:56px 20px}h1{font-size:40px}section{grid-template-columns:1fr;gap:32px;margin-top:72px}}
+</style></head>
+<body data-allow-serif="true">
+<header><strong>Atelier Maré</strong><nav aria-label="Principal"><a href="#projetos">Projetos</a><a href="#contato">Contato</a></nav></header>
+<main>
+<h1>Casas que respiram junto com a luz do dia</h1>
+<p class="lead">Projetamos interiores residenciais em Florianópolis desde 2011, do levantamento à última luminária.</p>
+<a class="cta" href="#contato">Agendar uma visita</a>
+<section id="projetos"><div><h2>Casa Lagoa</h2><p>Reforma de 180 m² com madeira de reflorestamento e ventilação cruzada.</p></div>
+<div><h2>Apartamento Trindade</h2><p>Planta aberta para um casal que trabalha em casa, com marcenaria sob medida.</p></div></section>
+</main>
+<footer id="contato">Rua Lauro Linhares, 589 · (48) 3025-4410</footer>
+</body></html>

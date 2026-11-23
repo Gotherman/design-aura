@@ -264,7 +264,8 @@ class DiscoverTests(unittest.TestCase):
 
         # 4. Zero colisao entre dominios Operate e tipografia serifada editorial
         domains = json.loads((ROOT / "data" / "domains.json").read_text(encoding="utf-8"))
-        serif_ids = {"source-sans-serif", "newsreader-instrument", "fraunces-dm", "lora-plusjakarta"}
+        serif_ids = {"source-sans-serif", "newsreader-instrument", "fraunces-dm", "lora-plusjakarta", "instrument-serif-sans",
+                     "literata-figtree", "young-serif-dm", "gambetta-switzer"}
         for dom in domains:
             if dom.get("surface_mode", "").lower() == "operate":
                 self.assertFalse(set(dom.get("typography_ids", [])) & serif_ids, dom["id"])
@@ -382,39 +383,25 @@ class V22UpgradeTests(unittest.TestCase):
         self.assertTrue(any("DA-LIGHT-WASHED-OUT" in lb for lb in labels), labels)
 
     def test_v22_categorical_project_scanner_and_icon_recipes(self):
-        # Escaneia um mini projeto simulando financeiro + licitacoes + whatsapp bot + mobile
+        # Plano financeiro + licitacoes + atendimento + mobile: o scanner acha as necessidades na base nova
         with tempfile.TemporaryDirectory() as tmp:
             proj = Path(tmp)
             (proj / "CONCEPCAO.md").write_text(
                 "Sistema ERP financeiro com contas a pagar, fluxo de caixa 45 dias, grafico DRE cascata, "
-                "radar de editais PNCP, funil kanban arrastavel, agenda de prazos .ics, inbox WhatsApp SLA 24h com bot e transbordo, "
+                "radar de editais, funil kanban arrastavel, agenda de prazos .ics, inbox WhatsApp SLA 24h com bot, "
                 "importacao PDF/OFX e app mobile executivo para socios.",
                 encoding="utf-8",
             )
             rep = scan_project_categories(scan_path=proj, stack="html", platform="all", mode="operate")
         cat_ids = {c["id"] for c in rep["categories"]}
-        for expected in (
-            "shell-navigation",
-            "icons-emblems-avatars",
-            "badges-chips-timers-status",
-            "charts-telemetry-financial",
-            "data-tables-lists-progressive",
-            "kanban-drag-drop-workflows",
-            "calendar-gantt-timelines",
-            "inbox-chat-omnichannel-ai",
-            "mobile-native-pwa-touch",
-        ):
+        for expected in ("charts", "data-tables", "drag-drop", "calendar-scheduling", "chat-ai", "mobile-native", "editors-documents"):
             self.assertIn(expected, cat_ids)
-
-        # Verifica presenca de bibliotecas sofisticadas e receitas de icones/badges
-        chart_cat = next(c for c in rep["categories"] if c["id"] == "charts-telemetry-financial")
+        chart_cat = next(c for c in rep["categories"] if c["id"] == "charts")
         chart_names = {it["name"] for it in chart_cat["adopt_oss"]}
         self.assertTrue(any("Lightweight Charts" in n or "ECharts" in n for n in chart_names), chart_names)
-
-        badge_cat = next(c for c in rep["categories"] if c["id"] == "badges-chips-timers-status")
-        recipe_ids = {r["id"] for r in badge_cat["studio_recipes"]}
-        self.assertIn("sla-progress-ring-pill", recipe_ids)
-        self.assertIn("halo-status-vector-chip", recipe_ids)
+        recipe_ids = {r["id"] for c in rep["categories"] for r in c["studio_recipes"]}
+        self.assertIn("prazo-consumido", recipe_ids)
+        self.assertIn("serie-temporal-densa", recipe_ids)
 
     def test_v22_lint_generic_icons_flat_chart_and_bible_hex_sync(self):
         # 1. Repeticao de ph-bank >= 5x dispara DA-ICON-GENERIC-REPEAT; yAxis min: 0 sem bar dispara DA-FLAT-CHART-AXIS
@@ -931,6 +918,217 @@ class V24UpgradeTests(unittest.TestCase):
         self.assertIn(f"**Design Aura:** `v{ver}`", bible_tpl)
         self.assertIn(f"v{ver}", cmd_md)
         self.assertIn(f"v{ver}", readme)
+
+
+FIXTURES = ROOT / "tests" / "fixtures"
+LEAK_TERMS = ("brasitur", "grupo interativa", "seduc", "encarregad", "aviso da mesa", "em rota", "fatura aerea", "transbordo")
+
+
+def run_node(script: str, args: list[str]) -> subprocess.CompletedProcess:
+    return subprocess.run(["node", str(SCRIPTS / script), *args], capture_output=True, text=True)
+
+
+class V3CalibrationTests(unittest.TestCase):
+    """Telas boas nao bloqueiam; telas ruins sao pegas. Toda regra nova passa por aqui."""
+
+    def test_lint_good_fixtures_have_no_block_or_high(self):
+        for f in sorted((FIXTURES / "good").glob("*.html")):
+            findings = scan_file(f, f.parent)
+            bad = [x for x in findings if x["severity"] in ("BLOCK", "HIGH")]
+            self.assertFalse(bad, (f.name, bad))
+
+    def test_lint_bad_fixtures_are_caught_with_capped_severity(self):
+        stub = {(x["rule"], x["severity"]) for x in scan_file(FIXTURES / "bad" / "casca-rasa.html", FIXTURES / "bad")}
+        self.assertIn(("DA-B5-01", "BLOCK"), stub)
+        self.assertIn(("DA-B2-08A", "BLOCK"), stub)
+        self.assertIn(("DA-B2-08B", "REVIEW"), stub)
+        slop = scan_file(FIXTURES / "bad" / "slop-ia.html", FIXTURES / "bad")
+        rules = {x["rule"] for x in slop}
+        for rid in ("DA-B1-01", "DA-B1-03", "DA-B1-05", "DA-B1-06A", "DA-B5-02", "DA-B6-02A"):
+            self.assertIn(rid, rules)
+        self.assertFalse(any(x["severity"] == "BLOCK" for x in slop), "sinais de IA generica vao ate HIGH, nao bloqueiam")
+
+    def test_runtime_good_fixtures_pass_strict_and_bad_mobile_blocks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ops = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "app-claro-minimal.html"), str(FIXTURES / "good" / "tabela-operacional.html"),
+                                                     "--out", str(Path(tmp) / "op"), "--viewports", "desktop,mobile", "--all-viewports", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(ops.returncode, 0, ops.stdout + ops.stderr)
+            site = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "site-editorial.html"), "--mode", "persuade", "--out", str(Path(tmp) / "site"),
+                                                      "--viewports", "desktop,mobile", "--all-viewports", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(site.returncode, 0, site.stdout + site.stderr)
+            rows = json.loads((Path(tmp) / "site" / "audit-report.json").read_text(encoding="utf-8"))
+            self.assertFalse([i for r in rows for i in r["issues"]], "site editorial nao deve receber sinais de app")
+            bad = run_node("capture_and_audit.mjs", [str(FIXTURES / "bad" / "mobile-esmagado.html"), "--out", str(Path(tmp) / "bad"), "--viewports", "mobile", "--themes", "light", "--quiet", "--strict"])
+            self.assertEqual(bad.returncode, 1, bad.stdout)
+            issues = json.loads((Path(tmp) / "bad" / "audit-report.json").read_text(encoding="utf-8"))[0]["issues"]
+            self.assertTrue(any(i["rule"] == "DA-MOBILE-FLEX-CLIP" and i["severity"] == "BLOCK" for i in issues), issues)
+
+    def test_keyboard_journey_and_reduced_motion(self):
+        scenario = {"name": "teclado", "viewport": "desktop", "theme": "light", "steps": [
+            {"action": "goto", "url": "/app-claro-minimal.html"},
+            {"action": "tabTo", "selector": "#canal"},
+            {"action": "tabTo", "selector": "button"},
+            {"action": "setReducedMotion", "value": True},
+            {"action": "key", "key": "Enter"}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            sp = Path(tmp) / "s.json"
+            sp.write_text(json.dumps(scenario), encoding="utf-8")
+            res = run_node("run_workflow_probe.mjs", ["--scenario", str(sp), "--root", str(FIXTURES / "good"), "--out", str(Path(tmp) / "q"), "--strict"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            scenario["steps"].append({"action": "tabTo", "selector": "#inexistente", "maxTabs": 5})
+            sp.write_text(json.dumps(scenario), encoding="utf-8")
+            res = run_node("run_workflow_probe.mjs", ["--scenario", str(sp), "--root", str(FIXTURES / "good"), "--out", str(Path(tmp) / "q2"), "--strict"])
+            self.assertEqual(res.returncode, 1, res.stdout)
+            self.assertIn("DA-A11Y-KEYBOARD", res.stdout + res.stderr)
+
+
+class V3ColorAndDirectionTests(unittest.TestCase):
+    def test_seed_engine_passes_contrast_parity_and_cvd_for_many_brands(self):
+        from color_engine import build_tokens, hex_to_oklch, min_distance
+
+        seeds = [("#0F3B57", "#F08A4B", "hairline"), ("#1F4D3A", "#C98A12", "tactile"), ("#5A2A27", "#E8A33D", "soft"),
+                 ("#3F6B5C", "#C27C4C", "tonal"), ("#7C3AED", None, "hairline"), ("#E11D48", "#0EA5E9", "soft"), ("#F5C518", None, "tonal")]
+        with tempfile.TemporaryDirectory() as tmp:
+            for seed, accent, style in seeds:
+                data = build_tokens(seed, accent, "complementar", style)
+                path = Path(tmp) / f"{seed[1:]}.json"
+                path.write_text(json.dumps(data), encoding="utf-8")
+                rows = audit_file(path)
+                self.assertFalse([r for r in rows if r["severity"] != "PASS"], (seed, style, [r for r in rows if r["severity"] != "PASS"]))
+                for theme in ("light", "dark"):
+                    t = data["semantic"][theme]
+                    self.assertTrue(10 <= hex_to_oklch(t["danger"])[2] <= 45, (seed, theme, t["danger"]))
+                    self.assertTrue(125 <= hex_to_oklch(t["success"])[2] <= 175, (seed, theme, t["success"]))
+                    charts = [t[f"chart-{i}"] for i in range(1, 7)]
+                    self.assertGreater(min_distance(charts, "deuteranopia"), 0.04, (seed, theme))
+
+    def test_generate_tokens_seed_cli_writes_json_css_and_dtcg(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("generate_tokens.py", ["--seed", "#134E4A", "--accent", "#E0613A", "--depth-style", "soft", "--shape", "round",
+                                                "--out", tmp + "/", "--format", "all", "--check-contrast"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            css = (Path(tmp) / "tokens.css").read_text(encoding="utf-8")
+            self.assertIn("--da-depth-style: soft;", css)
+            self.assertIn("--radius-card-lg: 24px;", css)
+            dtcg = json.loads((Path(tmp) / "tokens.dtcg.json").read_text(encoding="utf-8"))
+            self.assertEqual(dtcg["light"]["color"]["primary"]["$type"], "color")
+            self.assertTrue((Path(tmp) / "tokens.json").exists())
+
+    def test_direction_board_renders_and_flags_similar_directions(self):
+        from render_direction_board import divergence, render
+
+        spec = json.loads((ROOT / "assets" / "direction-board.example.json").read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as tmp:
+            page = render(spec, Path(tmp))
+            html_text = page.read_text(encoding="utf-8")
+            self.assertEqual(html_text.count('class="direction"'), 3)
+            for i in (1, 2, 3):
+                self.assertTrue((Path(tmp) / f"direcao-{i}.tokens.css").exists())
+        self.assertEqual(divergence(spec), [])
+        twin = json.loads(json.dumps(spec))
+        twin["directions"][1].update({k: twin["directions"][0][k] for k in ("seed", "depth_style", "shape", "density", "fonts")})
+        self.assertTrue(divergence(twin))
+
+
+class V3BibleAndRegistryTests(unittest.TestCase):
+    def test_bible_check_flags_template_and_zone_overflow(self):
+        from render_design_bible import check_bible, check_zones
+
+        template = (ROOT / "assets" / "design-bible-template.md").read_text(encoding="utf-8")
+        self.assertTrue(any("decisão em aberto" in p for p in check_bible(template, None, None)))
+        manifest = {"project": {"minDesktopWidth": 1024}, "screens": [
+            {"id": "inbox", "platform": "desktop", "zones": [{"name": "Nav", "width": 224}, {"name": "Fila", "width": 300},
+                                                              {"name": "Conversa", "width": "1fr", "min": 300}, {"name": "Ficha", "width": 300}]}]}
+        self.assertTrue(check_zones(manifest))
+        manifest["screens"][0]["zones"].pop()
+        self.assertFalse(check_zones(manifest))
+
+    def test_bible_check_passes_complete_bible(self):
+        from render_design_bible import check_bible
+
+        md = ("# Biblia\n> **Design Aura:** `v3.1.0`\n## Contrato de plataforma\nok\n## Direção\nok\n## Cor\nok\n## Tipografia\nok\n"
+              "## Espaço e forma\nok\n## Profundidade\nok\n## Orçamentos\nok\n## Componentes\nok\n## Telas\n`fila`\n## Motion\nok\n"
+              "## Conteúdo e dados fictícios\nok\n## Leis do projeto\nok\n## Portões\nok\n## Histórico\nok\n")
+        manifest = {"screens": [{"id": "fila", "archetype": "lista", "primaryAction": {"label": "Aprovar"}, "states": ["populado"]}]}
+        self.assertEqual(check_bible(md, manifest, {"--primary-surface": "#eee", "--chart-1": "#111", "--danger": "#b00"}), [])
+
+    def test_rules_registry_is_the_single_source(self):
+        import re
+        from rules_registry import cap, load_rules
+
+        reg = load_rules()
+        ids = set(reg["by_id"])
+        used = set()
+        for f in list(SCRIPTS.glob("*.py")) + list(SCRIPTS.glob("*.mjs")):
+            used |= set(re.findall(r"DA-[A-Z0-9]+(?:-[A-Z0-9]+)*", f.read_text(encoding="utf-8")))
+        used = {u for u in used if not u.endswith("-INTERACT") and u not in {"DA-B6-02"}}
+        self.assertFalse(used - ids, sorted(used - ids))
+        doc = (ROOT / "references" / "01-leis-inegociaveis.md").read_text(encoding="utf-8")
+        self.assertFalse([i for i in ids if f"`{i}`" not in doc])
+        self.assertEqual(cap("DA-DEAD-SPACE", "BLOCK")[0], "REVIEW")
+        self.assertEqual(cap("DA-B1-01", "BLOCK")[0], "HIGH")
+        self.assertEqual(cap("DA-B7-02", "HIGH")[0], "MEDIUM")
+        self.assertEqual(cap("DA-B3-01", "BLOCK")[0], "BLOCK")
+
+    def test_aura_check_runs_all_gates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("aura_check.py", ["--tokens", str(ROOT / "assets" / "tokens.example.json"), "--project", str(FIXTURES / "good"), "--out", tmp, "--strict"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            data = json.loads((Path(tmp) / "aura-check.json").read_text(encoding="utf-8"))
+            self.assertEqual({g["gate"] for g in data["gates"]}, {"contraste", "linter"})
+
+
+class V3CatalogTests(unittest.TestCase):
+    def test_catalog_integrity_and_license_traps(self):
+        from discover_oss_components import load_catalog, load_taxonomy
+
+        tax = load_taxonomy()
+        cats = {c["id"] for c in tax["categories"]}
+        needs = {n["id"] for c in tax["categories"] for n in c["needs"]}
+        items = load_catalog()
+        self.assertGreater(len(items), 300)
+        self.assertEqual(len({i["id"] for i in items}), len(items))
+        for it in items:
+            self.assertTrue(set(it["categories"]) <= cats, it["id"])
+            self.assertTrue(set(it["needs"]) <= needs, it["id"])
+        self.assertEqual(needs - {n for it in items for n in it["needs"]}, set())
+        by_id = {i["id"]: i for i in items}
+        self.assertEqual(by_id["apexcharts"]["license_status"], "trap")
+        self.assertEqual(by_id["remix-icon"]["license_status"], "trap")
+        self.assertEqual(by_id["solar-icons-duotone"]["license_status"], "attribution")
+        chart = search_local("grafico de serie temporal financeiro", "html", "system", "operate", 8)
+        self.assertFalse(any(i["id"] == "apexcharts" for i in chart["adopt"]))
+
+    def test_scanner_reads_portuguese_needs_without_leaking_other_projects(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "CONCEPCAO.md").write_text(
+                "Clinica Veterinaria. Sistema web para recepcao agendar consultas, prontuario dos pets, estoque de vacinas, "
+                "financeiro simples e um site institucional com agendamento online. App mobile para tutores.", encoding="utf-8")
+            rep = scan_project_categories(scan_path=Path(tmp), stack="react", platform="all", mode="operate")
+        found = {n["id"] for n in rep["needs"]}
+        for need in ("calendar-view", "data-table", "hero", "mobile-kit", "timeline"):
+            self.assertIn(need, found)
+        hero = next(n for c in rep["categories"] for n in c["needs"] if n["id"] == "hero")
+        self.assertEqual(hero["mode"], "persuade")
+        self.assertTrue(hero["picks"])
+        text = json.dumps(rep, ensure_ascii=False).lower()
+        for term in LEAK_TERMS:
+            self.assertNotIn(term, text)
+
+    def test_skill_text_has_no_project_leaks_or_version_noise(self):
+        import re
+
+        files = [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md")), *sorted((ROOT / "data").rglob("*.json")),
+                 ROOT / "assets" / "design-bible-template.md", ROOT / "assets" / "screen-manifest.example.json"]
+        for f in files:
+            text = f.read_text(encoding="utf-8").lower()
+            for term in LEAK_TERMS:
+                self.assertNotIn(term, text, f"{f.name}: {term}")
+        for f in [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md"))]:
+            body = f.read_text(encoding="utf-8")
+            self.assertFalse(re.findall(r"`?v2\.\d\.\d`?", body), f.name)
+            self.assertLess(len(re.findall(r"\b(?:PROIBIDO|OBRIGATÓRIO|NUNCA|SEMPRE)\b", body)), 3, f.name)
+        self.assertLessEqual(len((ROOT / "SKILL.md").read_text(encoding="utf-8").splitlines()), 200)
 
 
 if __name__ == "__main__":

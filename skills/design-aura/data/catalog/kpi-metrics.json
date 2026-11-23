@@ -1,0 +1,153 @@
+[
+ {
+  "id": "number-flow",
+  "name": "NumberFlow",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://number-flow.barvian.me",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "kpi-metrics"
+  ],
+  "needs": [
+   "number-animation"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Transicao numerica suave em tabular-nums para saldos, metricas e simuladores financeiros",
+  "a11y": "Usa role e aria-label acessivel enquanto anima digitos sem reflow",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tremor-raw",
+  "name": "Tremor (Raw / Blocks)",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://tremor.so",
+  "repo": "https://github.com/tremorlabs/tremor-raw",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "kpi-metrics",
+   "charts"
+  ],
+  "needs": [
+   "kpi-card",
+   "status-tracker",
+   "categorical",
+   "sparkline",
+   "timeseries",
+   "progress-meter"
+  ],
+  "keywords": [
+   "kpi",
+   "barlist",
+   "tracker",
+   "category bar",
+   "chart",
+   "grafico",
+   "dashboard",
+   "ranking",
+   "sla"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "copiar primitivos MIT/Apache-2.0 de https://tremor.so/docs",
+  "summary": "Os melhores micro-componentes analiticos open-source: BarList (ranking com barra proporcional), Tracker (30 blocos de SLA/status), CategoryBar (De cada R$ 100) e ComboChart",
+  "a11y": "Construido sobre Radix/Recharts com excelente contraste e semantica tabular",
+  "notes": "Confirme a licenca e o repositorio atuais (o projeto passou para a Vercel em 2025).",
+  "license_ok": true
+ },
+ {
+  "id": "countup-js",
+  "name": "CountUp.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://inorganik.github.io/countUp.js/",
+  "repo": "https://github.com/inorganik/countUp.js",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "kpi-metrics"
+  ],
+  "needs": [
+   "number-animation"
+  ],
+  "keywords": [
+   "number",
+   "kpi",
+   "contador",
+   "moeda",
+   "tabular",
+   "html"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install countup.js",
+  "summary": "Transicao numerica suave em HTML/JS puro ao trocar filtro de socio, banco ou competencia (com formatacao pt-BR R$)",
+  "a11y": "Use duracao curta (<= 350ms) e desative sob prefers-reduced-motion",
+  "notes": "",
+  "license_ok": true
+ }
+]

@@ -1,0 +1,1963 @@
+[
+ {
+  "id": "ark-ui",
+  "name": "Ark UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ark-ui.com",
+  "repo": "https://github.com/chakra-ui/ark",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "solid"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "date-picker",
+   "tree-view",
+   "dialog"
+  ],
+  "keywords": [
+   "date picker",
+   "dialog",
+   "tree view",
+   "carousel",
+   "headless"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @ark-ui/react",
+  "summary": "Headless multi-framework quando o projeto nao e so React",
+  "a11y": "Maquina de estado Zag.js; confira a porta da stack",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "base-ui",
+  "name": "Base UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://base-ui.com",
+  "repo": "https://github.com/mui/base-ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "overlays-feedback"
+  ],
+  "needs": [
+   "headless-primitives",
+   "dialog",
+   "popover-tooltip",
+   "select-combobox",
+   "tabs-segmented",
+   "progress-meter"
+  ],
+  "keywords": [
+   "dialog",
+   "popover",
+   "menu",
+   "select",
+   "tabs",
+   "headless"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @base-ui/react",
+  "summary": "Primitivos sem estilo para um design system proprio",
+  "a11y": "Foco, typeahead e dismiss sao responsabilidade da lib",
+  "notes": "1.0 estavel desde dez/2025 (pacote @base-ui/react).",
+  "license_ok": true
+ },
+ {
+  "id": "bits-ui",
+  "name": "Bits UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://bits-ui.com",
+  "repo": "https://github.com/huntabyte/bits-ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "dialog",
+   "popover-tooltip"
+  ],
+  "keywords": [
+   "dialog",
+   "menu",
+   "svelte",
+   "headless"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install bits-ui",
+  "summary": "Headless Svelte para um visual proprio",
+  "a11y": "Foco e dismiss vem da lib",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "mantine",
+  "name": "Mantine",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://mantine.dev",
+  "repo": "https://github.com/mantinedev/mantine",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations",
+   "forms"
+  ],
+  "needs": [
+   "styled-kit",
+   "form-state",
+   "date-picker",
+   "toast",
+   "app-shell",
+   "timeline"
+  ],
+  "keywords": [
+   "form",
+   "date picker",
+   "app shell",
+   "notifications"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @mantine/core @mantine/hooks",
+  "summary": "Kit de aplicacao completo quando o time nao quer montar primitivos",
+  "a11y": "Dates e modais sao fortes; ainda assim re-tema cores e raios",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "nuxt-ui",
+  "name": "Nuxt UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ui.nuxt.com",
+  "repo": "https://github.com/nuxt/ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit",
+   "app-shell",
+   "data-table",
+   "form-state"
+  ],
+  "keywords": [
+   "dashboard",
+   "form",
+   "nuxt",
+   "table"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @nuxt/ui",
+  "summary": "Kit de aplicacao Nuxt quando o projeto ja e Nuxt",
+  "a11y": "Re-tema antes de misturar blocos de marketing",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "radix-themes",
+  "name": "Radix Themes",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.radix-ui.com/themes",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Kit pronto sobre Radix com escalas de cor de 12 degraus.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "radix-primitives",
+  "name": "Radix UI Primitives / shadcn/ui",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ui.shadcn.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "dialog",
+   "popover-tooltip",
+   "tabs-segmented"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Componentes copiaveis sob tokens semanticos proprios em React + Tailwind",
+  "a11y": "Atalhos de teclado e focus trap validados em producao",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-aria",
+  "name": "React Aria Components",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://react-spectrum.adobe.com/react-aria",
+  "repo": "https://github.com/adobe/react-spectrum",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations",
+   "forms"
+  ],
+  "needs": [
+   "headless-primitives",
+   "date-picker",
+   "calendar-view",
+   "select-combobox",
+   "data-table"
+  ],
+  "keywords": [
+   "date range",
+   "calendar",
+   "combobox",
+   "table",
+   "i18n"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install react-aria-components",
+  "summary": "Datas, grids e combobox com leitor de tela e RTL",
+  "a11y": "Padrao mais completo para calendario e selecao complexa",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "reka-ui",
+  "name": "Reka UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://reka-ui.com",
+  "repo": "https://github.com/unovue/reka-ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "dialog",
+   "select-combobox"
+  ],
+  "keywords": [
+   "dialog",
+   "combobox",
+   "vue",
+   "headless"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install reka-ui",
+  "summary": "Primitivos Vue acessiveis, sucessores do Radix Vue",
+  "a11y": "Mesma expectativa de teclado dos primitivos Radix",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "shadcn-svelte",
+  "name": "shadcn-svelte",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.shadcn-svelte.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Port do shadcn/ui para Svelte sobre Bits UI.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "shadcn-vue",
+  "name": "shadcn-vue",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.shadcn-vue.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit",
+   "headless-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx shadcn-vue@latest add button",
+  "summary": "Port do shadcn/ui para Vue sobre Reka UI.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "shadcn-ui",
+  "name": "shadcn/ui",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://ui.shadcn.com",
+  "repo": "https://github.com/shadcn-ui/ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit",
+   "headless-primitives",
+   "app-shell",
+   "dialog",
+   "data-table",
+   "pagination-breadcrumbs"
+  ],
+  "keywords": [
+   "dialog",
+   "select",
+   "tabs",
+   "dropdown",
+   "form",
+   "command palette",
+   "data table"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx shadcn@latest create  |  npx shadcn@latest add button dialog",
+  "summary": "Primitivos copiaveis, acessiveis, para re-tematizar com os tokens do projeto",
+  "a11y": "Base UI, Radix ou React Aria por baixo; teclado e foco ja encaminhados",
+  "notes": "'shadcn create' oferece estilos visuais (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea) e bases Radix, Base UI ou React Aria. O estilo e decisao da direcao, nao padrao. O Registry Directory lista registries abertos.",
+  "license_ok": true
+ },
+ {
+  "id": "untitled-ui-react",
+  "name": "Untitled UI React (parte livre)",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.untitledui.com/react",
+  "repo": "https://github.com/untitleduico/react",
+  "license": "MIT (somente a parte livre)",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "data-tables",
+   "forms"
+  ],
+  "needs": [
+   "styled-kit",
+   "data-table",
+   "date-picker",
+   "app-shell",
+   "kpi-card"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Componentes de aplicacao maduros (tabelas, abas, datas, graficos, navegacao) sobre React Aria.",
+  "a11y": "",
+  "notes": "Paginas e componentes PRO tem licenca paga; use so os livres.",
+  "license_ok": true
+ },
+ {
+  "id": "web-awesome",
+  "name": "Web Awesome (free)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://webawesome.com",
+  "repo": "https://github.com/shoelace-style/webawesome",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "web-components",
+   "styled-kit",
+   "dialog",
+   "drawer-sheet",
+   "toast"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @awesome.me/webawesome",
+  "summary": "Web Components prontos para HTML sem framework; sucessor do Shoelace.",
+  "a11y": "",
+  "notes": "A versao Pro e paga; a free cobre os componentes do Shoelace e mais.",
+  "license_ok": true
+ },
+ {
+  "id": "angular-material",
+  "name": "Angular Material + CDK",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://material.angular.io",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "angular"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit",
+   "headless-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit Material e CDK de comportamento para Angular.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "ant-design",
+  "name": "Ant Design",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ant.design",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit",
+   "data-table",
+   "form-state",
+   "timeline"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit enterprise completo.",
+  "a11y": "",
+  "notes": "Visual muito reconhecivel; re-tematize pelos tokens.",
+  "license_ok": true
+ },
+ {
+  "id": "ariakit",
+  "name": "Ariakit",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ariakit.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "select-combobox"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @ariakit/react",
+  "summary": "Primitivos acessiveis com combobox e menus muito bem resolvidos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "basecoat",
+  "name": "Basecoat",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://basecoatui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "css-framework",
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Visual do shadcn em HTML + Tailwind, sem React.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "blueprint",
+  "name": "Blueprint",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://blueprintjs.com",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations",
+   "data-tables"
+  ],
+  "needs": [
+   "styled-kit",
+   "data-grid"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit da Palantir para apps desktop densos de dados.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "carbon",
+  "name": "Carbon Design System",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://carbondesignsystem.com",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations",
+   "references"
+  ],
+  "needs": [
+   "styled-kit",
+   "design-system-anatomy",
+   "data-table"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Sistema da IBM: tabelas, formularios e densidade enterprise.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "chakra-ui",
+  "name": "Chakra UI v3",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://chakra-ui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit com tokens semanticos e recipes; reescrito sobre Ark/Zag.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "daisyui",
+  "name": "daisyUI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://daisyui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "css-framework",
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Classes de componentes para Tailwind com temas.",
+  "a11y": "",
+  "notes": "Temas prontos deixam a cara generica; re-tematize pelos tokens.",
+  "license_ok": true
+ },
+ {
+  "id": "fluent-ui-react",
+  "name": "Fluent UI React v9",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://react.fluentui.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes Fluent 2 para apps Windows e corporativos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "headless-ui",
+  "name": "Headless UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://headlessui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "dialog",
+   "popover-tooltip"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @headlessui/react",
+  "summary": "Primitivos sem estilo da Tailwind Labs (menu, listbox, dialog, tabs).",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "heroui",
+  "name": "HeroUI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.heroui.com",
+  "repo": "https://github.com/heroui-inc/heroui",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [
+   "navbar",
+   "modal",
+   "table",
+   "next"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @heroui/react",
+  "summary": "Kit React estilizado. So vale se o projeto aceitar a linguagem visual dele por inteiro",
+  "a11y": "Nao misture HeroUI cru com outro kit na mesma superficie",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "kobalte",
+  "name": "Kobalte",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://kobalte.dev",
+  "repo": "https://github.com/kobaltedev/kobalte",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "solid"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives",
+   "dialog",
+   "select-combobox"
+  ],
+  "keywords": [
+   "dialog",
+   "select",
+   "solid",
+   "headless"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @kobalte/core",
+  "summary": "Primitivos Solid acessiveis",
+  "a11y": "Nao porte visual de React sem rever o foco",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "material-web",
+  "name": "Material Web",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://material-web.dev",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "web-components"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Web Components do Material 3.",
+  "a11y": "",
+  "notes": "Manutencao reduzida; confirme antes de adotar.",
+  "license_ok": true
+ },
+ {
+  "id": "melt-ui",
+  "name": "Melt UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://melt-ui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Primitivos sem estilo para Svelte.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "mui-material",
+  "name": "MUI Material UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://mui.com/material-ui",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit Material maduro para React.",
+  "a11y": "",
+  "notes": "MUI X Pro/Premium e pago.",
+  "license_ok": true
+ },
+ {
+  "id": "naive-ui",
+  "name": "Naive UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.naiveui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit Vue com temas tipados.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "open-props",
+  "name": "Open Props (CSS Custom Properties & Easings)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://open-props.style",
+  "repo": "https://github.com/argyleink/open-props",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "color-tokens"
+  ],
+  "needs": [
+   "css-framework",
+   "tokens-pipeline"
+  ],
+  "keywords": [
+   "css",
+   "tokens",
+   "easing",
+   "shadows",
+   "gradients",
+   "html"
+  ],
+  "style": {
+   "skin": "tokens",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install open-props",
+  "summary": "Curvas de easing fisicas, sombras em camadas e escalas CSS modulares prontas para combinar com tokens.css",
+  "a11y": "Zero JS runtime",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "park-ui",
+  "name": "Park UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://park-ui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "solid"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes estilizados sobre Ark UI com Panda CSS ou Tailwind.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "preline",
+  "name": "Preline UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://preline.co",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "marketing"
+  ],
+  "needs": [
+   "styled-kit",
+   "hero",
+   "app-shell"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes e blocos em HTML + Tailwind com plugins JS.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "primevue",
+  "name": "PrimeVue / PrimeReact",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://primevue.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue",
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "data-tables"
+  ],
+  "needs": [
+   "styled-kit",
+   "data-table",
+   "timeline"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit amplo com modo unstyled e tabelas ricas.",
+  "a11y": "",
+  "notes": "Temas e blocos premium sao pagos.",
+  "license_ok": true
+ },
+ {
+  "id": "quasar",
+  "name": "Quasar",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://quasar.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "mobile-native"
+  ],
+  "needs": [
+   "styled-kit",
+   "mobile-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Vue para web, desktop e mobile hibrido.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "reui",
+  "name": "ReUI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://reui.io",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "data-tables"
+  ],
+  "needs": [
+   "styled-kit",
+   "data-table"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes e blocos de app sobre shadcn.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "semi-design",
+  "name": "Semi Design",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://semi.design",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Kit com bom tratamento de tema e dark mode.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "spartan-ng",
+  "name": "spartan/ui",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://spartan.ng",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "angular"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit",
+   "headless-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Equivalente ao shadcn para Angular.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "spectrum-ui",
+  "name": "Spectrum UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://ui.spectrumhq.in",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations",
+   "motion"
+  ],
+  "needs": [
+   "styled-kit",
+   "animation-lib"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes animados e acessiveis via shadcn CLI.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "vuetify",
+  "name": "Vuetify",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://vuetifyjs.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Material para Vue.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "zag-js",
+  "name": "Zag.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://zagjs.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "svelte",
+   "solid"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "headless-primitives"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Maquinas de estado de componentes, base do Ark UI; serve a qualquer framework.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "arco-design",
+  "name": "Arco Design",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://arco.design",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Kit enterprise da ByteDance.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "element-plus",
+  "name": "Element Plus",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://element-plus.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Kit Vue enterprise.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "flowbite",
+  "name": "Flowbite",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://flowbite.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Componentes Tailwind com JS de interacao.",
+  "a11y": "",
+  "notes": "Blocos Pro sao pagos.",
+  "license_ok": true
+ },
+ {
+  "id": "pico-css",
+  "name": "Pico CSS",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://picocss.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "foundations"
+  ],
+  "needs": [
+   "css-framework"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "CSS semantico quase sem classes; bom para prototipos de leitura.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ }
+]

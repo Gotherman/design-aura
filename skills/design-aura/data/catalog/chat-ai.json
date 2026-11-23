@@ -1,0 +1,175 @@
+[
+ {
+  "id": "ai-elements",
+  "name": "AI Elements (Vercel)",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://ai-sdk.dev/elements",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "chat-ai"
+  ],
+  "needs": [
+   "ai-elements"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Componentes de IA (mensagem, raciocinio, fontes) via registry shadcn.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "assistant-ui",
+  "name": "assistant-ui",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.assistant-ui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "chat-ai"
+  ],
+  "needs": [
+   "ai-elements",
+   "chat-ui"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Componentes de chat de IA com streaming e anexos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "prompt-kit",
+  "name": "Prompt Kit (AI & Chat UI Primitives)",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.prompt-kit.com",
+  "repo": "https://github.com/ibelick/prompt-kit",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "chat-ai"
+  ],
+  "needs": [
+   "ai-elements",
+   "chat-ui"
+  ],
+  "keywords": [
+   "chat",
+   "ai",
+   "bot",
+   "inbox",
+   "prompt",
+   "mensagem",
+   "simulador",
+   "streaming"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx shadcn@latest add https://prompt-kit.com/r/prompt-input",
+  "summary": "Componentes copiaveis de alta precisao para simuladores de bot, compositores de mensagem, citacoes de regras e steps de raciocinio",
+  "a11y": "Baseado em shadcn/ui com foco e atalhos Enter / Shift+Enter corretos",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "chatscope",
+  "name": "chatscope chat-ui-kit",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://chatscope.io",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "chat-ai"
+  ],
+  "needs": [
+   "chat-ui"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Kit de chat completo.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ }
+]

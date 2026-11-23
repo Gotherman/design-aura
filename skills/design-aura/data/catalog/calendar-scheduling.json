@@ -1,0 +1,364 @@
+[
+ {
+  "id": "schedule-x",
+  "name": "Schedule-X (Modern Calendar & Date Picker)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://schedule-x.dev",
+  "repo": "https://github.com/schedule-x/schedule-x",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "calendar-view"
+  ],
+  "keywords": [
+   "calendar",
+   "calendario",
+   "agenda",
+   "eventos",
+   "dark mode"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @schedule-x/calendar",
+  "summary": "Calendario moderno com Dark Mode nativo para agendas operacionais e reservas",
+  "a11y": "Suporte completo a teclado e fuso horario",
+  "notes": "Plugins premium sao pagos; o nucleo e MIT.",
+  "license_ok": true
+ },
+ {
+  "id": "event-calendar",
+  "name": "Event Calendar (vkurko)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/vkurko/calendar",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "calendar-view",
+   "scheduler"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Calendario estilo FullCalendar com views de recurso livres.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "frappe-gantt",
+  "name": "Frappe Gantt",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://frappe.io/gantt",
+  "repo": "https://github.com/frappe/gantt",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "gantt"
+  ],
+  "keywords": [
+   "gantt",
+   "cronograma",
+   "timeline",
+   "prazos",
+   "etapas",
+   "contratos",
+   "obras"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install frappe-gantt",
+  "summary": "Gantt em SVG para HTML/JS puro: fases, etapas e dependencias.",
+  "a11y": "Estilize barras e linhas de dependencia usando os tokens --chart-1..5",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "fullcalendar-core",
+  "name": "FullCalendar Standard (MIT Core)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://fullcalendar.io",
+  "repo": "https://github.com/fullcalendar/fullcalendar",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "calendar-view"
+  ],
+  "keywords": [
+   "calendar",
+   "calendario",
+   "agenda",
+   "prazos",
+   "sessao",
+   "ics",
+   "mes",
+   "semana"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/timegrid",
+  "summary": "Grade mensal, semanal e diaria interativa para agendas, vencimentos e reservas.",
+  "a11y": "Navegacao por teclado nas celulas e eventos com cores semanticas",
+  "notes": "Views por recurso (timeline/resource) sao Premium e pagas.",
+  "license_ok": true
+ },
+ {
+  "id": "svar-gantt",
+  "name": "SVAR Gantt",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://svar.dev/react/gantt",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "svelte",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "gantt"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Gantt interativo com dependencias.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "toast-ui-calendar",
+  "name": "TOAST UI Calendar",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://ui.toast.com/tui-calendar",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "calendar-view"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Calendario completo com arrastar eventos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-big-calendar",
+  "name": "React Big Calendar",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/jquense/react-big-calendar",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "calendar-view"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Calendario mes/semana/dia para React.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "vis-timeline",
+  "name": "vis-timeline",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://visjs.github.io/vis-timeline",
+  "repo": "",
+  "license": "Apache-2.0 / MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "timeline",
+   "gantt"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Linha do tempo interativa com grupos.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ }
+]

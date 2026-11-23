@@ -1,16 +1,15 @@
 [
   {
     "id": "progressive-drill-in-list",
-    "name": "Revelacao Progressiva Anti-Poluicao (Lista Limpa -> Detalhe Focado na Mesma Pagina)",
+    "name": "Revelacao progressiva: lista limpa -> detalhe focado na mesma area",
     "platforms": [
       "desktop",
       "system"
     ],
-    "taxonomy_category": "data-tables-lists-progressive",
-    "when_to_use": "Arquetipo #1 para filas e tabelas operacionais densas (Contas a Pagar, Contas a Receber, Radar de Editais, Cofre de Certidoes, Pedidos, Contratos) onde 3 colunas simultaneas gerariam poluicao visual",
+    "when_to_use": "Filas de conferencia e aprovacao em que a pessoa decide item a item e 3 colunas simultaneas gerariam poluicao (pedidos, contas, solicitacoes, contratos).",
     "anatomy": [
-      "Estado 1 (Lista Limpa em largura total): Faixa executiva de KPIs (.card-brand-hero no KPI-rei) + barra de busca/filtros (.seg / .well-z0) + tabela respiravel com hover interativo",
-      "Estado 2 (Detalhe Focado Inline na mesma pagina ao clicar na linha ou via ?item=id): Barra superior fixa com '<- Voltar a lista (Esc)' + contador + botoes '< Anterior / Proxima >' + documento completo + telemetria de cobertura/risco + CTA dominante com Desfazer"
+      "Estado 1: lista em largura total com busca e filtros curtos e um resumo so se ajudar a decidir",
+      "Estado 2: ao abrir um item, a lista recolhe para um trilho e o detalhe assume a area, com Voltar (Esc), Anterior/Proxima, evidencia do item e acao primaria no rodape estrutural"
     ],
     "states": [
       "Visao Lista Limpa (padrao ao abrir)",
@@ -31,7 +30,6 @@
       "desktop",
       "mobile"
     ],
-    "taxonomy_category": "charts-telemetry-financial",
     "when_to_use": "Projecao de caixa 15/30/45d, curvas de receita/despesa, cascata DRE (Waterfall), SLA por hora e telemetria operacional",
     "anatomy": [
       "Cabecalho HUD Vivo acima do canvas: exibe Data/Ponto em foco no mouse + Valor principal tabular + Badge de Delta (% vs piso/meta) + Breakdown Entradas/Saidas",
@@ -49,53 +47,53 @@
     ]
   },
   {
-    "id": "brand-presence-65-20-10-5",
-    "name": "Equilibrio Cromatico 65/20/10/5 com 3 Zonas de Presenca da Marca ('Estou Aqui!') + Paleta Harmonica",
+    "id": "brand-presence-zones",
+    "name": "Presenca da marca por zonas, com proporcao de area definida pela direcao",
     "platforms": [
       "system",
       "desktop",
       "mobile"
     ],
-    "taxonomy_category": "shell-navigation",
-    "when_to_use": "Todo sistema ou aplicativo que precisa manter a identidade da empresa presente e reconhecivel sem virar nem uma massa monocromatica pesada nem um preto/carvao generico sem alma",
+    "when_to_use": "Produtos que precisam reconhecer a marca no trabalho sem virar massa monocromatica nem neutro sem identidade.",
     "anatomy": [
-      "65% Base Arquitetonica com Subtom Sutil (Obsidiana Fria/Quente S=18-25% no Dark; Porcelana Aterrada com bordas nitidas >= 1.25:1 no Light)",
-      "20% Presenca da Marca em 3 Zonas Fixas: (1) Bloco de identidade da Sidebar/Header institucional, (2) Card-Rei (.card-brand-hero) no topo de cada tela com gradiente direcional 20% primary + borda luminosa, (3) Controles ativos (.subtab.is-active, .seg-btn.is-active)",
-      "10% Acento Complementar no CTA Primario + Paleta Categorica Harmonica de 6 Cores (--chart-1..6 em OKLCH de mesma energia luminosa)",
-      "5% Semanticas Puras (Esmeralda, Ambar, Coral/Carmim) reservadas para status reais"
+      "Neutros tingidos pela matiz da marca na maior parte da area (proporcao escolhida na direcao; 70-85% e um bom ponto de partida)",
+      "Marca em 2-3 zonas escolhidas pela direcao: identidade (sidebar ou cabecalho), estado ativo e selecao, e no maximo uma superficie de destaque por tela",
+      "Acento contido na acao primaria; paleta de graficos gerada para ter energia luminosa parecida",
+      "Semanticas so com significado real"
     ],
     "states": [
-      "Dark Mode com subtom arquitetonico e brilho especular",
-      "Light Mode com separacao nitida entre Z0, Z1, Z2 e bordas visiveis"
+      "Dark com elevacao mais clara por plano",
+      "Light com separacao de planos pelo estilo de profundidade escolhido"
     ],
     "avoid": [
-      "Extremo 1: tingir Z0-Z4, bordas e textos com 50% de saturacao azul (massa monocromatica cansativa)",
-      "Extremo 2: usar cinza carvao puro S=0% onde a cor da empresa some e so aparece num logo de 32px"
+      "Tingir todas as superficies, bordas e textos com a marca",
+      "Neutro sem matiz em que a marca so aparece no logo",
+      "Uma superficie de destaque da marca em todo cartao"
     ]
   },
   {
-    "id": "tactile-emblems-and-sla-chips",
-    "name": "Emblemas de Icone com Spotlight Duplo Anel (.icon-emblem) + Chips de SLA com Anel SVG (.chip-sla)",
+    "id": "status-and-deadline-chips",
+    "name": "Chips de estado e de prazo com informacao real",
     "platforms": [
       "system",
       "desktop",
       "mobile"
     ],
-    "taxonomy_category": "icons-emblems-avatars",
-    "when_to_use": "Cards de KPI, filas de decisao, listas financeiras, alertas de certidoes, timers de SLA/WhatsApp 24h e estados de bot/atendimento",
+    "when_to_use": "Listas e filas em que estado ou prazo decidem a prioridade.",
     "anatomy": [
-      "Emblema de Icone (.icon-emblem 38x38px, raio 10px): Spotlight radial no topo esquerdo (30% -> 6% da cor) + dupla borda optica (inset 0 1px 0 rgba(255,255,255,0.20) + 1px border calibrada) + SVG Duotone/1.75px especifico do dominio ou Monograma Vetorial do Banco (BB, CX, ST, BTG)",
-      "Chip de SLA/Timer (.chip-sla, raio 8px): Mini anel SVG circular de progresso (14x14px stroke-dasharray mostrando consumo do prazo) + rotulo curto ('SLA' / 'Janela 24h') + tempo em negrito tabular ('41m' / '22h 18m')",
-      "Chip de Status com Halo (.chip-status) & Badge Key-Value (.chip-kv): Ponto luminoso com halo duplo (box-shadow 3px) + micro-icone vetorial de transicao (ex: setas de transbordo) ou chip bipartido [Chave | Valor]"
+      "Prazo: anel ou barra fina proporcional ao consumo + rotulo curto + valor tabular (veja recipes.json: prazo-consumido)",
+      "Estado: badge tingido, ponto com rotulo ou icone + texto, conforme a densidade (recipes.json: estado-do-item)",
+      "Identidade de entidade: logo oficial, monograma ou emblema, um por linha (recipes.json: identidade-de-entidade)"
     ],
     "states": [
-      "Normal / Em dia (anel verde/azul)",
-      "Atencao / Transbordo (anel ambar + halo)",
-      "Critico / Vencido (anel coral + destaque)"
+      "Em dia (sem destaque)",
+      "Atencao",
+      "Critico ou vencido"
     ],
     "avoid": [
-      "Quadrado marrom-avermelhado chapado com icone de fonte borrado (<i class='ph ph-bank'> ou '!') repetido em tudo",
-      "Pilula oval 999px chapada escrita apenas '41 min' ou '• Transbordo' sem anel de progresso e sem chanfro"
+      "Pilula oval com texto solto e sem significado",
+      "O mesmo icone generico repetido em todos os itens",
+      "Emblema colorido em todo icone da tela"
     ]
   },
   {
@@ -105,7 +103,7 @@
       "desktop",
       "system"
     ],
-    "when_to_use": "Triagem e decisao em filas operacionais (Contas a Pagar, Inbox de Atendimento, Editais, Aprovacoes)",
+    "when_to_use": "Triagem com fila, documento e contexto consultados ao mesmo tempo em telas largas (>= 1440px). Abaixo disso, o contexto vira drawer.",
     "anatomy": [
       "Zona 1 (Esquerda 300px): Fila filtravel e priorizada",
       "Zona 2 (Centro 1fr): Documento/Registro vivo + barra fixa de acao",
@@ -119,7 +117,8 @@
     ],
     "avoid": [
       "Deixar 70% da direita vazia",
-      "Esconder o botao de acao no fim de um scroll longo"
+      "Esconder o botao de acao no fim de um scroll longo",
+      "Larguras fixas que somam mais que a largura minima declarada"
     ]
   },
   {
@@ -167,18 +166,18 @@
     ]
   },
   {
-    "id": "triagem-horizontes",
-    "name": "Triagem por Horizontes Temporais (Agora / Em Rota / Radar)",
+    "id": "triagem-por-urgencia",
+    "name": "Triagem por urgencia com nomes do proprio negocio",
     "platforms": [
       "system",
       "desktop",
       "mobile"
     ],
-    "when_to_use": "Portais iniciais e paineis executivos onde o usuario precisa decidir prioridades do dia",
+    "when_to_use": "Telas iniciais em que a pessoa decide as prioridades do dia. Os nomes dos blocos saem do vocabulario do projeto.",
     "anatomy": [
-      "Bloco 1 Agora: vencidos e bloqueios criticos",
-      "Bloco 2 Em Rota: proximos 7 dias",
-      "Bloco 3 Radar: oportunidades e saude do sistema"
+      "Bloco 1: o que exige acao hoje (vencido, bloqueado)",
+      "Bloco 2: o que vem em seguida (proximos dias)",
+      "Bloco 3: acompanhamento e saude, so se alguem decide algo com isso"
     ],
     "states": [
       "Tudo em dia (estado positivo calmo)",
@@ -375,7 +374,7 @@
       "desktop",
       "mobile"
     ],
-    "when_to_use": "Exclusao definitiva, cancelamento fiscal, estorno irreversivel ou desconexao de integracao",
+    "when_to_use": "Exclusao definitiva, cancelamento, estorno irreversivel ou desconexao de integracao",
     "anatomy": [
       "Modal/AlertDialog unico (nunca empilhado)",
       "Resumo concreto do impacto (ex: quais 3 registros serao removidos)",

@@ -1,0 +1,18 @@
+{
+  "$comment": "Dados fictícios compartilhados por todas as telas. Verossímeis, com distribuição irregular e casos extremos. Nunca dados reais de clientes.",
+  "empresa": {"nome": "Meridiano Frota & Operações", "cnpj": "12.345.678/0001-90", "cidade": "Joinville/SC"},
+  "pessoas": [
+    {"id": "p1", "nome": "Camila Reis", "papel": "Supervisora de operações"},
+    {"id": "p2", "nome": "Paulo Nunes", "papel": "Despachante"},
+    {"id": "p3", "nome": "Maria Aparecida de Souza Albuquerque Ferreira", "papel": "Motorista", "_caso": "nome longo"},
+    {"id": "p4", "nome": "Lê", "papel": "Motorista", "_caso": "nome curto"}
+  ],
+  "ocorrencias": [
+    {"id": "OC-2041", "rota": "R-118", "tipo": "Atraso na coleta", "aberta_em": "2026-11-25T07:42:00-03:00", "prazo_min": 38, "valor": 1284.9, "estado": "atencao"},
+    {"id": "OC-2042", "rota": "R-121", "tipo": "Avaria na carga", "aberta_em": "2026-11-25T08:05:00-03:00", "prazo_min": 12, "valor": 18730.15, "estado": "falha"},
+    {"id": "OC-2043", "rota": "R-097", "tipo": "Endereço não encontrado", "aberta_em": "2026-11-25T08:19:00-03:00", "prazo_min": 95, "valor": 0, "estado": "info"},
+    {"id": "OC-2044", "rota": "R-130", "tipo": "Entrega recusada pelo destinatário por divergência na nota fiscal", "aberta_em": "2026-11-25T09:02:00-03:00", "prazo_min": 210, "valor": 642.3, "estado": "atencao", "_caso": "texto longo"},
+    {"id": "OC-2045", "rota": "R-102", "tipo": "Comprovante pendente", "aberta_em": "2026-11-25T09:31:00-03:00", "prazo_min": null, "valor": 98.4, "estado": "neutro", "_caso": "campo vazio"}
+  ],
+  "listas_vazias": {"faturas_vencidas": []}
+}

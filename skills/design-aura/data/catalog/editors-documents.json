@@ -1,0 +1,518 @@
+[
+ {
+  "id": "codemirror",
+  "name": "CodeMirror 6",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://codemirror.net",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "code-editor"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Editor de codigo leve e acessivel.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "lexical",
+  "name": "Lexical",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://lexical.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "rich-text"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Editor rico extensivel da Meta.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "monaco",
+  "name": "Monaco Editor",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://microsoft.github.io/monaco-editor",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "code-editor"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Editor do VS Code.",
+  "a11y": "",
+  "notes": "Pesado; use quando o produto e ferramenta de codigo.",
+  "license_ok": true
+ },
+ {
+  "id": "pdf-js",
+  "name": "Mozilla PDF.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://mozilla.github.io/pdf.js/",
+  "repo": "https://github.com/mozilla/pdf.js",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "pdf-viewer"
+  ],
+  "keywords": [
+   "pdf",
+   "visualizador",
+   "documento"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install pdfjs-dist",
+  "summary": "Renderizacao e inspecao real de PDFs (contratos, laudos, faturas, relatorios) dentro do detalhe.",
+  "a11y": "Mantenha a camada de texto selecionavel ativa",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "papaparse",
+  "name": "PapaParse (Fast In-Browser CSV / Ledger Parser)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.papaparse.com",
+  "repo": "https://github.com/mholt/PapaParse",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "data-import"
+  ],
+  "keywords": [
+   "csv",
+   "planilha",
+   "importar",
+   "exportar",
+   "extrato",
+   "erp",
+   "conciliacao"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install papaparse",
+  "summary": "Leitura e exportacao real de arquivos CSV/planilhas de conciliação diretamente no navegador sem servidor",
+  "a11y": "Exiba resumo de linhas validas vs linhas com erro antes de confirmar a importacao",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "plate",
+  "name": "Plate",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://platejs.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "rich-text"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Editor rico com componentes estilo shadcn.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tiptap",
+  "name": "Tiptap (core)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tiptap.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "rich-text",
+   "markdown"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Editor rico headless sobre ProseMirror.",
+  "a11y": "",
+  "notes": "Extensoes Pro e colaboracao em nuvem sao pagas.",
+  "license_ok": true
+ },
+ {
+  "id": "blocknote",
+  "name": "BlockNote",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.blocknotejs.org",
+  "repo": "",
+  "license": "MPL-2.0 (nucleo)",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "rich-text"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Editor em blocos estilo Notion.",
+  "a11y": "",
+  "notes": "Pacotes XL tem outra licenca.",
+  "license_ok": false
+ },
+ {
+  "id": "milkdown",
+  "name": "Milkdown",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://milkdown.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "markdown",
+   "rich-text"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Editor Markdown WYSIWYG.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-pdf",
+  "name": "react-pdf",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/wojtekmaj/react-pdf",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "pdf-viewer"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Renderiza PDF em React sobre PDF.js.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "sheetjs",
+  "name": "SheetJS CE",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://sheetjs.com",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "data-import"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Ler e gravar planilhas no navegador.",
+  "a11y": "",
+  "notes": "Instale pelo CDN oficial; o pacote do npm esta desatualizado.",
+  "license_ok": false
+ },
+ {
+  "id": "quill",
+  "name": "Quill Rich Text Editor",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://quilljs.com",
+  "repo": "https://github.com/slab/quill",
+  "license": "BSD-3-Clause",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "editors-documents"
+  ],
+  "needs": [
+   "rich-text"
+  ],
+  "keywords": [
+   "editor",
+   "rich text",
+   "template",
+   "resposta",
+   "parecer",
+   "nota interna",
+   "html"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install quill",
+  "summary": "Editor rico em HTML/JS para respostas prontas, pareceres e modelos com variaveis.",
+  "a11y": "Estilize a toolbar em --surface-z3 e a area de texto em --surface-z0",
+  "notes": "",
+  "license_ok": true
+ }
+]

@@ -1,0 +1,264 @@
+[
+ {
+  "id": "cmdk",
+  "name": "cmdk",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://cmdk.paco.me",
+  "repo": "https://github.com/pacocoursey/cmdk",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "navigation"
+  ],
+  "needs": [
+   "command-palette"
+  ],
+  "keywords": [
+   "command palette",
+   "cmdk",
+   "search",
+   "keyboard"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install cmdk",
+  "summary": "Palette Cmd/Ctrl+K em desktop e sistemas",
+  "a11y": "Setas, Enter e Escape precisam permanecer ligados",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tinykeys",
+  "name": "tinykeys (1 KB Keyboard Shortcut Manager)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/jamiebuilds/tinykeys",
+  "repo": "https://github.com/jamiebuilds/tinykeys",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "desktop",
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "navigation"
+  ],
+  "needs": [
+   "keyboard-shortcuts"
+  ],
+  "keywords": [
+   "keyboard",
+   "atalho",
+   "shortcut",
+   "cmdk",
+   "sidebar toggle",
+   " chords",
+   "g p"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install tinykeys",
+  "summary": "Gerenciador de atalhos de teclado de 600 bytes (suporta '$mod+KeyK', '[', 'Escape', e sequencias 'g p' / 'g f' estilo Linear/GitHub)",
+  "a11y": "Ignore eventos disparados quando o foco estiver dentro de <input>, <textarea> ou <select>",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "kbar",
+  "name": "kbar",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://kbar.vercel.app",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "navigation"
+  ],
+  "needs": [
+   "command-palette"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Paleta de comandos com acoes aninhadas.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "ninja-keys",
+  "name": "ninja-keys",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/ssleptsov/ninja-keys",
+  "repo": "ssleptsov/ninja-keys",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "navigation"
+  ],
+  "needs": [
+   "command-palette"
+  ],
+  "keywords": [
+   "command palette",
+   "cmdk",
+   "ctrl+k",
+   "busca",
+   "atalho",
+   "rotina",
+   "teclado"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install ninja-keys",
+  "summary": "Command Palette Cmd+K / Ctrl+K como Web Component nativo para HTML puro, sem precisar de React",
+  "a11y": "Navegacao integral por setas, Enter e Esc; re-tematize as variaveis CSS --ninja-* com tokens.css",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-hotkeys-hook",
+  "name": "react-hotkeys-hook",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://react-hotkeys-hook.vercel.app",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "navigation"
+  ],
+  "needs": [
+   "keyboard-shortcuts"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Atalhos de teclado em hooks React.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "hotkeys-js",
+  "name": "hotkeys-js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/jaywcjlove/hotkeys-js",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "navigation"
+  ],
+  "needs": [
+   "keyboard-shortcuts"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Atalhos de teclado sem dependencias.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ }
+]

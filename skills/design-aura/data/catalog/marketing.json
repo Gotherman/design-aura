@@ -1,0 +1,402 @@
+[
+ {
+  "id": "tailark",
+  "name": "Tailark",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://tailark.com",
+  "repo": "",
+  "license": "MIT (conferir por bloco)",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "marketing"
+  ],
+  "needs": [
+   "hero",
+   "pricing",
+   "feature-sections",
+   "cta-footer"
+  ],
+  "keywords": [
+   "hero",
+   "pricing",
+   "landing"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": true,
+  "craft": 3,
+  "install": "",
+  "summary": "Blocos de marketing. So em Persuade, e um bloco re-tematizado, nao a pagina inteira.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "tailwind-plus",
+  "name": "Tailwind Plus",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://tailwindcss.com/plus",
+  "repo": "",
+  "license": "comercial",
+  "license_status": "trap",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "persuade"
+  ],
+  "categories": [
+   "marketing",
+   "foundations"
+  ],
+  "needs": [
+   "hero",
+   "pricing",
+   "styled-kit"
+  ],
+  "keywords": [
+   "pricing",
+   "application ui",
+   "marketing"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Catalogo pago. Nao e open source, mesmo quando a pagina publica mostra preview",
+  "a11y": "So olhar a estrutura se a equipe tiver licenca",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "cult-ui",
+  "name": "Cult UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.cult-ui.com",
+  "repo": "https://github.com/nolly-studio/cult-ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "marketing",
+   "overlays-feedback"
+  ],
+  "needs": [
+   "hero",
+   "feature-sections",
+   "drawer-sheet"
+  ],
+  "keywords": [
+   "shift card",
+   "family drawer",
+   "landing"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "npx shadcn@latest add @cult-ui/shift-card",
+  "summary": "Composicoes animadas MIT. Confirme o LICENSE no repo antes de copiar",
+  "a11y": "Somente Persuade, e ainda assim um gesto por tela",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "eldora-ui",
+  "name": "Eldora UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.eldoraui.site",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "marketing",
+   "effects"
+  ],
+  "needs": [
+   "hero",
+   "decorative-effects"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes animados para landing.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "hyperui",
+  "name": "HyperUI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.hyperui.dev",
+  "repo": "https://github.com/markmead/hyperui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "html"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "marketing",
+   "auth-settings"
+  ],
+  "needs": [
+   "hero",
+   "pricing",
+   "cta-footer",
+   "site-navbar",
+   "auth"
+  ],
+  "keywords": [
+   "banner",
+   "pricing",
+   "nav",
+   "ecommerce",
+   "filter"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "copiar o markup da pagina do componente",
+  "summary": "Blocos Tailwind v4 de marketing e comercio, sem pacote",
+  "a11y": "Reescreva textos e tokens; o HTML copiado ainda precisa de label e foco",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "kokonut-ui",
+  "name": "Kokonut UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://kokonutui.com",
+  "repo": "https://github.com/kokonut-labs/kokonutui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "marketing",
+   "chat-ai"
+  ],
+  "needs": [
+   "hero",
+   "feature-sections",
+   "ai-elements"
+  ],
+  "keywords": [
+   "ai input",
+   "card",
+   "button motion"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "npx shadcn@latest add @kokonutui/particle-button",
+  "summary": "Pecas MIT de produto com Motion. Kokonut Pro e pago",
+  "a11y": "Nao instale o botao de particulas num fluxo operacional",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "launch-ui",
+  "name": "Launch UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://www.launchuicomponents.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "marketing"
+  ],
+  "needs": [
+   "hero",
+   "feature-sections",
+   "pricing",
+   "cta-footer"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Secoes de landing sobre shadcn.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "page-ui",
+  "name": "Page UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://pageui.shipixen.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "marketing"
+  ],
+  "needs": [
+   "hero",
+   "pricing",
+   "social-proof",
+   "feature-sections"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Componentes de landing copiaveis.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": false
+ },
+ {
+  "id": "uiverse",
+  "name": "Uiverse",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://uiverse.io",
+  "repo": "",
+  "license": "MIT (comunidade)",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "marketing",
+   "effects"
+  ],
+  "needs": [
+   "decorative-effects",
+   "hero"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "own"
+  },
+  "flashy": true,
+  "craft": 1,
+  "install": "",
+  "summary": "Elementos da comunidade em HTML/CSS.",
+  "a11y": "",
+  "notes": "Qualidade varia; avalie peca a peca.",
+  "license_ok": false
+ }
+]

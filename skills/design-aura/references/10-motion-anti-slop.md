@@ -1,5 +1,7 @@
 # Motion com vida, sem cara de template
 
+Sites e páginas têm regras de motion próprias em [11](11-sites-e-paginas.md). O gesto de assinatura do domínio (por exemplo, um avião ao enviar) é definido na direção e registrado na Bíblia com ação, formato, duração, reduced motion e onde não entra.
+
 Animacao entra para o produto parecer vivo e responder ao gesto. Ela nao entra para a tela "ter animacao".
 
 Uma transicao de pagina, um card que abre, um botao que afunda e um sheet que segue o dedo sao desejaveis quando respondem a uma mudanca real. O mesmo efeito repetido em todo card, em toda linha e em toda troca de aba e slop: o olho aprende a ignorar, e a tarefa fica mais lenta.
@@ -32,7 +34,7 @@ Se nenhuma resposta for concreta, nao anime. "Fica moderno" nao conta.
 - Segurar o clique seguinte. Se a pessoa precisa esperar a animacao acabar para agir, a animacao esta longa demais.
 - Informacao que so aparece no hover. No celular ela nao existe.
 
-`transition: all`, `animate-bounce` e loop infinito fora de espera continuam reprovados pelo linter (`DA-B6-02`, `DA-B6-04`). O resto e criterio, nao banimento.
+`transition: all`, bounce decorativo e loop infinito fora de espera saem como sinais fortes (`DA-B6-02*`, `DA-B6-04`), e o auditor confere se animacoes infinitas param com `prefers-reduced-motion` (`DA-REDUCED-MOTION`). O resto e criterio, nao banimento.
 
 ## Asimetria comum as tres plataformas
 

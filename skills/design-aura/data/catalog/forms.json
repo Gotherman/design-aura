@@ -1,0 +1,804 @@
+[
+ {
+  "id": "coss-ui",
+  "name": "coss ui (ex-Origin UI)",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://coss.com/ui",
+  "repo": "https://github.com/cosscom/ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "forms",
+   "foundations"
+  ],
+  "needs": [
+   "select-combobox",
+   "date-picker",
+   "otp-input",
+   "file-upload",
+   "styled-kit"
+  ],
+  "keywords": [
+   "input",
+   "select",
+   "date picker",
+   "otp",
+   "file upload",
+   "micro interaction"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx shadcn@latest add https://coss.com/ui/r/input.json",
+  "summary": "Inputs, seletores e microinteracoes de produto. O repositorio antigo origin-space/originui aponta para ca",
+  "a11y": "Confirme o LICENSE no commit copiado; o snapshot legado Origin fica em apps/origin",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "imask-js",
+  "name": "IMask.js (Masks for CNPJ, CPF, Currency R$ & Barcodes)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://imask.js.org",
+  "repo": "https://github.com/uNmAnNeR/imaskjs",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "input-mask"
+  ],
+  "keywords": [
+   "mask",
+   "mascara",
+   "cnpj",
+   "cpf",
+   "moeda",
+   "boleto",
+   "telefone",
+   "input",
+   "formulario"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install imask",
+  "summary": "Mascaras de digitacao precisas em vanilla JS ou React para CNPJ, CPF, valores em R$, linha digitavel de boleto, CEP e datas",
+  "a11y": "Mantem posicao do cursor e colagem limpa",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "input-otp",
+  "name": "input-otp (Accessible One-Time Password 2FA)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://input-otp.rodz.dev",
+  "repo": "https://github.com/guilhermerodz/input-otp",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "forms",
+   "auth-settings"
+  ],
+  "needs": [
+   "otp-input",
+   "auth"
+  ],
+  "keywords": [
+   "otp",
+   "2fa",
+   "login",
+   "codigo",
+   "autenticacao",
+   "verificacao"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install input-otp",
+  "summary": "Campo 2FA/OTP de 6 digitos com colagem automatica, foco continuo e zero friccao",
+  "a11y": "Usa um unico <input> real oculto sob os slots visuais para compatibilidade total com leitores de tela e autofill do SO",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-day-picker",
+  "name": "React DayPicker",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://daypicker.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms",
+   "calendar-scheduling"
+  ],
+  "needs": [
+   "date-picker"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Seletor de data e periodo acessivel (base do shadcn).",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-hook-form",
+  "name": "React Hook Form",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://react-hook-form.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "form-state"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Estado e validacao de formularios com pouco render.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "uppy",
+  "name": "Uppy (Modular File Uploader & Dropzone)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://uppy.io",
+  "repo": "https://github.com/transloadit/uppy",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "file-upload"
+  ],
+  "keywords": [
+   "file upload",
+   "dropzone",
+   "importar",
+   "pdf",
+   "csv",
+   "anexo"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @uppy/core @uppy/dashboard",
+  "summary": "Importador de arquivos com arrasto, barra de progresso, previa de PDF/planilha e recuperacao de falha",
+  "a11y": "Botoes navegaveis por teclado e status anunciado via aria-live",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "cally",
+  "name": "Cally",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://wicky.nillia.ms/cally",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "date-picker"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Calendario de selecao como Web Component.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "downshift",
+  "name": "Downshift",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.downshift-js.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "select-combobox"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Combobox e autocomplete headless.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "filepond",
+  "name": "FilePond",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://pqina.nl/filepond/",
+  "repo": "https://github.com/pqina/filepond",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "file-upload"
+  ],
+  "keywords": [
+   "file upload",
+   "dropzone",
+   "anexo",
+   "comprovante"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install filepond",
+  "summary": "Dropzone elegante com validacao de formato/tamanho e animacao fluida de upload",
+  "a11y": "Totalmente operavel via Tab/Enter/Space",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "flatpickr",
+  "name": "Flatpickr (Date & Date-Range Picker)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://flatpickr.js.org",
+  "repo": "https://github.com/flatpickr/flatpickr",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "date-picker"
+  ],
+  "keywords": [
+   "date picker",
+   "date range",
+   "calendario",
+   "data",
+   "vencimento",
+   "agendar"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install flatpickr",
+  "summary": "Seletor de data e intervalo de datas leve e sem dependencias para HTML/JS, com localizacao pt-BR",
+  "a11y": "Re-estilize o popup em --surface-z4 com --border-strong",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "maskito",
+  "name": "Maskito",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://maskito.dev",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "angular"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "input-mask"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Mascaras robustas (moeda, data, documento).",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "react-colorful",
+  "name": "react-colorful",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://omgovich.github.io/react-colorful",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "color-picker"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Seletor de cor minimo e acessivel.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tanstack-form",
+  "name": "TanStack Form",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tanstack.com/form",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "react",
+   "vue",
+   "svelte",
+   "solid",
+   "angular"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "form-state"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Formularios tipados multi-framework.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "tom-select",
+  "name": "Tom Select (Accessible Combobox & Multi-Tag Select)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tom-select.js.org",
+  "repo": "https://github.com/orchidjs/tom-select",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "select-combobox"
+  ],
+  "keywords": [
+   "combobox",
+   "select",
+   "autocomplete",
+   "tags",
+   "multi-select",
+   "filtro",
+   "html"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install tom-select",
+  "summary": "Combobox com busca instantanea, selecao de multiplas tags e navegacao por teclado em HTML/JS puro",
+  "a11y": "Atributos ARIA combobox e listbox integrados",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "vanilla-calendar-pro",
+  "name": "Vanilla Calendar Pro",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://vanilla-calendar.pro",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "date-picker"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Seletor de data sem dependencias.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "air-datepicker",
+  "name": "Air Datepicker",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://air-datepicker.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "date-picker"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Seletor de data leve.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "choices-js",
+  "name": "Choices.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://choices-js.github.io/Choices",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "select-combobox"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Select e tags sem dependencias.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ },
+ {
+  "id": "nouislider",
+  "name": "noUiSlider",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://refreshless.com/nouislider",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "forms"
+  ],
+  "needs": [
+   "slider-range"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Slider de faixa sem dependencias.",
+  "a11y": "",
+  "notes": "",
+  "license_ok": true
+ }
+]

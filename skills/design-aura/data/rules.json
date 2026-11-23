@@ -1,0 +1,726 @@
+{
+  "version": "3.1.0",
+  "layers": {
+    "invariant": "Ofício objetivo e universal. Pode bloquear (BLOCK) ou exigir correção (HIGH). Vale para qualquer projeto.",
+    "tell": "Sinal forte de interface genérica com evidência no código. Vai até HIGH: corrige ou registra a exceção com motivo.",
+    "craft": "Acabamento. Vai até MEDIUM: entra na lista de polimento, nunca trava a entrega.",
+    "heuristic": "Sinal de gosto ou composição medido por aproximação. Sai como REVIEW: o orquestrador confirma na captura ou dispensa com motivo."
+  },
+  "caps": {
+    "invariant": null,
+    "tell": "HIGH",
+    "craft": "MEDIUM",
+    "heuristic": "REVIEW"
+  },
+  "severity_order": [
+    "BLOCK",
+    "HIGH",
+    "REVIEW",
+    "MEDIUM",
+    "LOW"
+  ],
+  "budgets": {
+    "notes": "Padrões por modo. A Bíblia do projeto pode mudar qualquer valor (Parte B, Orçamentos), e o manifesto repete os valores em project.budgets ou screens[].budgets.",
+    "operate": {
+      "headerMaxBars": 2,
+      "headerMaxPx": 225,
+      "mobileTopMaxPct": 42,
+      "mobileTopMaxPx": 340,
+      "maxSiblingTabs": 6,
+      "deadSpaceReviewPct": 70,
+      "cardVoidPx": 96,
+      "duplicateTextMin": 3,
+      "alignEdgesMax": 9,
+      "perfMaxKB": 3000,
+      "perfMaxRequests": 150,
+      "perfMaxFonts": 10
+    },
+    "read": {
+      "headerMaxBars": 2,
+      "headerMaxPx": 240,
+      "mobileTopMaxPct": 50,
+      "mobileTopMaxPx": 400,
+      "maxSiblingTabs": 7,
+      "deadSpaceReviewPct": 80,
+      "cardVoidPx": 140,
+      "duplicateTextMin": 3,
+      "alignEdgesMax": 8,
+      "perfMaxKB": 2500,
+      "perfMaxRequests": 120,
+      "perfMaxFonts": 8
+    },
+    "persuade": {
+      "headerMaxBars": 2,
+      "headerMaxPx": 320,
+      "mobileTopMaxPct": 100,
+      "mobileTopMaxPx": 2000,
+      "maxSiblingTabs": 8,
+      "deadSpaceReviewPct": 92,
+      "cardVoidPx": 220,
+      "duplicateTextMin": 4,
+      "alignEdgesMax": 12,
+      "perfMaxKB": 4000,
+      "perfMaxRequests": 120,
+      "perfMaxFonts": 8
+    }
+  },
+  "rules": [
+    {
+      "id": "DA-B3-01",
+      "layer": "invariant",
+      "title": "Contraste de texto e componente (WCAG AA + APCA)",
+      "evidence": "tokens/runtime",
+      "sources": [
+        "contrast",
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-SEMANTIC-HUE-PARITY",
+      "layer": "invariant",
+      "title": "Mesma família de matiz para cada estado no Light e no Dark",
+      "evidence": "tokens",
+      "sources": [
+        "contrast"
+      ]
+    },
+    {
+      "id": "DA-B3-03",
+      "layer": "invariant",
+      "title": "Alvos de toque e tamanho mínimo de texto",
+      "evidence": "runtime/código",
+      "sources": [
+        "capture",
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B9-01",
+      "layer": "invariant",
+      "title": "Campo com label acessível",
+      "evidence": "runtime/código",
+      "sources": [
+        "capture",
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B9-02",
+      "layer": "invariant",
+      "title": "Foco visível preservado",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B10-03",
+      "layer": "invariant",
+      "title": "Imagem com alt",
+      "evidence": "runtime/código",
+      "sources": [
+        "capture",
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B10-IMG",
+      "layer": "invariant",
+      "title": "Imagem que não carrega",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-DOM-OVERFLOW",
+      "layer": "invariant",
+      "title": "Rolagem horizontal da página",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-FIXED-OVERLAP",
+      "layer": "invariant",
+      "title": "Conteúdo encoberto por barra fixa",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-CLIPPED-CONTENT",
+      "layer": "invariant",
+      "title": "Cartão cortando o próprio conteúdo",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-MOBILE-FLEX-CLIP",
+      "layer": "invariant",
+      "title": "Cartões esmagados em coluna flex",
+      "evidence": "runtime/código",
+      "sources": [
+        "capture",
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-NAV-TRUNCATION",
+      "layer": "invariant",
+      "title": "Marca ou navegação truncada",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-HEADER-HSCROLL",
+      "layer": "invariant",
+      "title": "Barra superior com rolagem ou corte horizontal",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-JS-ERROR",
+      "layer": "invariant",
+      "title": "Erro de JavaScript",
+      "evidence": "runtime",
+      "sources": [
+        "capture",
+        "probe"
+      ]
+    },
+    {
+      "id": "DA-ASSET-404",
+      "layer": "invariant",
+      "title": "Recurso local que não carrega",
+      "evidence": "runtime",
+      "sources": [
+        "capture",
+        "probe"
+      ]
+    },
+    {
+      "id": "DA-AUDIT-COVERAGE",
+      "layer": "invariant",
+      "title": "Tela, largura ou estado declarado sem evidência",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-REACHABLE",
+      "layer": "invariant",
+      "title": "Ação visível encoberta ou fora de alcance",
+      "evidence": "runtime",
+      "sources": [
+        "probe"
+      ]
+    },
+    {
+      "id": "DA-B5-01",
+      "layer": "invariant",
+      "title": "Lorem ipsum e nomes de template",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B2-08A",
+      "layer": "invariant",
+      "title": "Texto de desenvolvimento vazado na tela",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-01",
+      "layer": "tell",
+      "title": "Gradiente roxo/índigo/neon como paleta padrão",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-02",
+      "layer": "tell",
+      "title": "Glow neon e glass decorativo",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-03",
+      "layer": "tell",
+      "title": "Emoji clichê como ícone",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-05",
+      "layer": "tell",
+      "title": "Eyebrow clichê e numeração decorativa",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-06A",
+      "layer": "tell",
+      "title": "Gradiente em texto",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-06B",
+      "layer": "tell",
+      "title": "Barrinha colorida repetida em cards",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B1-06C",
+      "layer": "tell",
+      "title": "Selo LIVE/NEW/AI sem estado real",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B5-02",
+      "layer": "tell",
+      "title": "Microcopy clichê de IA",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B6-02A",
+      "layer": "tell",
+      "title": "transition: all",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B6-02B",
+      "layer": "tell",
+      "title": "hover:scale em card",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B6-02C",
+      "layer": "tell",
+      "title": "bounce/pulse decorativo",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B6-02D",
+      "layer": "tell",
+      "title": "Transição longa em controle simples",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B6-04",
+      "layer": "tell",
+      "title": "Animação infinita sem espera real",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B9-05",
+      "layer": "tell",
+      "title": "Campo com visual cru do navegador",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B2-03",
+      "layer": "tell",
+      "title": "Texto longo centralizado",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B7-01",
+      "layer": "craft",
+      "title": "Raios aninhados não concêntricos",
+      "evidence": "código/runtime",
+      "sources": [
+        "lint",
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-B7-02",
+      "layer": "craft",
+      "title": "Espaço fora da escala do projeto",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B4-01",
+      "layer": "craft",
+      "title": "Peso tipográfico gratuito",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B4-02",
+      "layer": "craft",
+      "title": "Números sem tabular-nums",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B8-03",
+      "layer": "craft",
+      "title": "Colunas numéricas sem alinhamento à direita",
+      "evidence": "código/runtime",
+      "sources": [
+        "lint",
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-B3-02",
+      "layer": "craft",
+      "title": "Preto e branco puros sem controle de elevação",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B10-04",
+      "layer": "craft",
+      "title": "Avatar sem object-fit",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-DEAD-SPACE",
+      "layer": "heuristic",
+      "title": "Vazio grande na área de trabalho",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "deadSpaceReviewPct"
+    },
+    {
+      "id": "DA-STUB-SCREEN",
+      "layer": "heuristic",
+      "title": "Tela com pouco conteúdo real",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-B2-08B",
+      "layer": "heuristic",
+      "title": "Tabela operacional com 1–2 linhas",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-SURFACE-FLAT",
+      "layer": "heuristic",
+      "title": "Planos sem nenhuma pista de separação",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-CARD-INTERNAL-VOID",
+      "layer": "heuristic",
+      "title": "Buraco vertical dentro de card",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "cardVoidPx"
+    },
+    {
+      "id": "DA-BADGE-ECHO",
+      "layer": "heuristic",
+      "title": "Selo repetido que ecoa o filtro",
+      "evidence": "runtime/código",
+      "sources": [
+        "capture",
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-HEADER-STACK-BLOAT",
+      "layer": "heuristic",
+      "title": "Barras empilhadas acima dos dados",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "headerMaxBars/headerMaxPx"
+    },
+    {
+      "id": "DA-TAB-OVERFLOW",
+      "layer": "heuristic",
+      "title": "Abas irmãs demais",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "maxSiblingTabs"
+    },
+    {
+      "id": "DA-MOBILE-HERO-BLOAT",
+      "layer": "heuristic",
+      "title": "Topo mobile empurrando a lista para fora da dobra",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "mobileTopMaxPct/mobileTopMaxPx"
+    },
+    {
+      "id": "DA-RAW-LINK-LIST",
+      "layer": "heuristic",
+      "title": "Links crus servindo de menu",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-SERIF-OPERATE",
+      "layer": "heuristic",
+      "title": "Serifa editorial em tela operacional",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-B4-04",
+      "layer": "heuristic",
+      "title": "Serifa editorial em tela operacional",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B2-01",
+      "layer": "heuristic",
+      "title": "Card dentro de card com o mesmo peso",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-ICON-GENERIC-REPEAT",
+      "layer": "heuristic",
+      "title": "Mesmo ícone genérico repetido",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-FLAT-CHART-AXIS",
+      "layer": "heuristic",
+      "title": "Eixo do gráfico travado em zero numa série de pouca variação",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B7-03",
+      "layer": "heuristic",
+      "title": "Sombra preta chapada como única elevação no Dark",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-TECH-JARGON-UI",
+      "layer": "heuristic",
+      "title": "Jargão técnico na tela de quem não é técnico",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-REF-COPY-LEAK",
+      "layer": "heuristic",
+      "title": "Texto copiado de referência externa",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-BRAND-DARK-SCOPE",
+      "layer": "heuristic",
+      "title": "Superfície escura da marca sem tokens de texto claros",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B5-03",
+      "layer": "heuristic",
+      "title": "Subtítulo-eco e botsplaining",
+      "evidence": "código",
+      "sources": [
+        "lint"
+      ]
+    },
+    {
+      "id": "DA-B10-02",
+      "layer": "heuristic",
+      "title": "Rolagem aninhada",
+      "evidence": "código/runtime",
+      "sources": [
+        "lint",
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-DARK-FLAT-MONOLITH",
+      "layer": "heuristic",
+      "title": "Dark sem degrau entre planos",
+      "evidence": "tokens",
+      "sources": [
+        "contrast"
+      ]
+    },
+    {
+      "id": "DA-DARK-MONOCHROME",
+      "layer": "heuristic",
+      "title": "Dark tingido demais pela marca",
+      "evidence": "tokens",
+      "sources": [
+        "contrast"
+      ]
+    },
+    {
+      "id": "DA-LIGHT-WASHED-OUT",
+      "layer": "heuristic",
+      "title": "Light sem separação de planos",
+      "evidence": "tokens",
+      "sources": [
+        "contrast"
+      ]
+    },
+    {
+      "id": "DA-B3-04",
+      "layer": "heuristic",
+      "title": "Cor viva da marca escurecida até perder a vida",
+      "evidence": "tokens",
+      "sources": [
+        "contrast"
+      ]
+    },
+    {
+      "id": "DA-DUPLICATE-TEXT",
+      "layer": "heuristic",
+      "title": "Mesmo dado repetido em várias regiões da vista",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "duplicateTextMin"
+    },
+    {
+      "id": "DA-ALIGN-EDGES",
+      "layer": "heuristic",
+      "title": "Muitas bordas esquerdas distintas (alinhamento disperso)",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ],
+      "budget": "alignEdgesMax"
+    },
+    {
+      "id": "DA-PERF-BUDGET",
+      "layer": "heuristic",
+      "title": "Peso de página, fontes ou requisições acima do orçamento",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-A11Y-KEYBOARD",
+      "layer": "invariant",
+      "title": "Jornada que não completa só com teclado",
+      "evidence": "runtime",
+      "sources": [
+        "probe"
+      ]
+    },
+    {
+      "id": "DA-REDUCED-MOTION",
+      "layer": "heuristic",
+      "title": "Movimento que não respeita prefers-reduced-motion",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    }
+  ]
+}

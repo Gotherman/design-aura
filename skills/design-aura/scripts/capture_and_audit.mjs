@@ -3,7 +3,7 @@
  * Captura screenshots multi-viewport (Dark & Light) e audita o DOM real
  * via Chrome DevTools Protocol (Chromium headless, zero dependencias npm).
  *
- * Design Aura v2.3.0:
+ * Design Aura:
  *  - Pool paralelo de abas CDP (--concurrency 4 padrao) com progresso ao vivo em stderr
  *  - Pre-injecao limpa de data-theme antes do load (elimina flash dark->light e falsos positivos de transicao)
  *  - Audita automaticamente fluxo.html, preview.html e index.html com --manifest
@@ -22,6 +22,28 @@ import http from 'node:http';
 import { spawn } from 'node:child_process';
 
 import { resolveViewport, validateViewports } from './audit_viewports.mjs';
+
+// Registro unico de regras: a camada de cada regra limita a severidade (heuristica nunca bloqueia).
+const RULES = (() => {
+  try { return JSON.parse(fs.readFileSync(new URL('../data/rules.json', import.meta.url), 'utf8')); } catch { return { rules: [], caps: {}, budgets: {}, version: '' }; }
+})();
+const RULE_LAYER = Object.fromEntries((RULES.rules || []).map((r) => [r.id, r.layer]));
+const SEV_ORDER = { BLOCK: 0, HIGH: 1, REVIEW: 2, MEDIUM: 3, LOW: 4 };
+const DEFAULT_BUDGETS = RULES.budgets?.operate || {};
+function capIssue(issue) {
+  const base = String(issue.rule || '').replace(/-INTERACT$/, '');
+  const layer = RULE_LAYER[base];
+  if (!layer) return issue;
+  const limit = (RULES.caps || {})[layer];
+  let severity = issue.severity;
+  if (limit === 'REVIEW') severity = 'REVIEW';
+  else if (limit && SEV_ORDER[severity] < SEV_ORDER[limit]) severity = limit;
+  return { ...issue, severity, layer };
+}
+function budgetsFor(mode, overrides) {
+  const m = String(mode || 'operate').toLowerCase();
+  return { ...(RULES.budgets?.[m] || DEFAULT_BUDGETS), mode: m, ...(overrides || {}) };
+}
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -51,6 +73,8 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
   const data = JSON.parse(fs.readFileSync(abs, 'utf8'));
   const base = path.dirname(abs);
   const normBase = (baseUrl || data.project?.appBaseUrl || '').replace(/\/+$/, '');
+  const projectMode = data.project?.surfaceMode || data.project?.mode || 'operate';
+  const projectBudgets = data.project?.budgets || {};
   const entries = [];
   const screenDirs = new Set();
   const missing = [];
@@ -62,6 +86,8 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
       viewports: screen.viewports === undefined ? undefined : validateViewports(screen.viewports),
       clickSelector: (screen.clickSelector || '').trim(),
       afterClickSelector: (screen.afterClickSelector || '').trim(),
+      budgets: budgetsFor(screen.mode || projectMode, { ...projectBudgets, ...(screen.budgets || {}) }),
+      mode: String(screen.mode || projectMode).toLowerCase(),
     };
     if (state.afterClickSelector && !state.clickSelector) {
       throw new Error(`Tela ${screen.id}: afterClickSelector requer clickSelector.`);
@@ -126,7 +152,7 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
         const candidate = path.join(d, name);
         if (fs.existsSync(candidate) && !seen.has(candidate)) {
           seen.add(candidate);
-          // v2.4.1: se --base-url (ex.: serve_entrega.mjs) foi informado, audita a vitrine no servidor unificado
+          // se --base-url (ex.: serve_entrega.mjs) foi informado, audita a vitrine no servidor unificado
           // evitando 404 falso em iframes SPA (/app/*) que nao existem num servidor estatico secundario
           const target = normBase ? `${normBase}/${name}` : candidate;
           entries.push({
@@ -136,6 +162,8 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
             isVitrine: true,
             clickSelector: '',
             viewports: vitrineViewports,
+            budgets: budgetsFor('persuade'),
+            mode: 'persuade',
           });
           break;
         }
@@ -166,6 +194,9 @@ function parseArgs(argv) {
     concurrency: 4,
     quiet: false,
     missing: [],
+    mode: 'operate',
+    baseline: '',
+    checkMotion: true,
   };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
@@ -179,14 +210,20 @@ function parseArgs(argv) {
     else if (a === '--all-viewports') args.allViewports = true;
     else if (a === '--smoke-interact') args.smokeInteract = true;
     else if (a === '--quiet') args.quiet = true;
+    else if (a === '--mode' && argv[i + 1]) args.mode = argv[++i];
+    else if (a === '--baseline' && argv[i + 1]) args.baseline = argv[++i];
+    else if (a === '--no-motion-check') args.checkMotion = false;
     else if (a === '--strict') args.strict = true;
     else if (a === '--help' || a === '-h') {
-      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,1920x1080,mobile-360x800] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--quiet] [--strict]');
+      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,1920x1080,mobile-360x800] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--mode operate|read|persuade] [--baseline <dir-de-capturas-anteriores>] [--no-motion-check] [--quiet] [--strict]');
       process.exit(0);
     } else {
       const isVit = /(?:entrega|fluxo|preview|index|design-bible)\.html$/i.test(a);
       args.entries.push({ target: a, platform: isVit ? 'vitrine' : 'responsive', isVitrine: isVit, clickSelector: '' });
     }
+  }
+  for (const e of args.entries) {
+    if (!e.budgets) { e.budgets = budgetsFor(e.isVitrine ? 'persuade' : args.mode); e.mode = e.isVitrine ? 'persuade' : args.mode; }
   }
   if (args.manifest) {
     const res = entriesFromManifest(args.manifest, args.includeVitrine, args.baseUrl);
@@ -352,6 +389,9 @@ class CDPClient {
 
 const DOM_AUDIT_FN = `(() => {
   const issues = [];
+  const B = Object.assign(${JSON.stringify(DEFAULT_BUDGETS)}, window.__DA_BUDGETS__ || {});
+  // Sites (Persuade) e leitura (Read) tem outra gramatica: links sublinhados, pouco controle e muito respiro sao normais.
+  const isAppMode = !B.mode || B.mode === 'operate';
   const docEl = document.documentElement;
   const isMobile = window.innerWidth <= 480;
   const isDesktop = window.innerWidth >= 1024;
@@ -441,7 +481,7 @@ const DOM_AUDIT_FN = `(() => {
     }
   }
 
-  // 6. Amostra de contraste real computado (inclui emblemas/monogramas/badges em div/span - v2.4.0)
+  // 6. Amostra de contraste real computado (inclui emblemas/monogramas/badges em div/span)
   let contrastFails = 0;
   const contrastSamples = [];
   const primaryTextEls = Array.from(document.querySelectorAll('h1,h2,h3,p,a,button,td,th')).slice(0, 60);
@@ -525,7 +565,7 @@ const DOM_AUDIT_FN = `(() => {
     issues.push({ severity: 'HIGH', rule: 'DA-B8-03', detail: ragged + ' celulas numericas sem alinhamento a direita' });
   }
 
-  // === DESIGN AURA v2.0: CHECAGENS POSITIVAS DE CRAFT, COMPOSICAO E SUBSTANCIA ===
+  // === CHECAGENS POSITIVAS DE CRAFT, COMPOSICAO E SUBSTANCIA ===
   if (!isVitrine) {
     const mainEl = document.querySelector('main') || document.body;
 
@@ -566,7 +606,7 @@ const DOM_AUDIT_FN = `(() => {
 
     // 11. DA-RAW-LINK-LIST: links <a> sublinhados crus em listas/tabelas/menus de app
     let rawLinks = 0;
-    for (const a of document.querySelectorAll('li a, td a, nav a, [role="list"] a, [class*="list"] a, [class*="row"] a, [class*="item"] a')) {
+    for (const a of (isAppMode ? document.querySelectorAll('li a, td a, nav a, [role="list"] a, [class*="list"] a, [class*="row"] a, [class*="item"] a') : [])) {
       const r = a.getBoundingClientRect();
       const st = getComputedStyle(a);
       if (st.display === 'none' || st.visibility === 'hidden' || r.width === 0 || r.height === 0) continue;
@@ -592,7 +632,7 @@ const DOM_AUDIT_FN = `(() => {
     }
 
     // 13. DA-STUB-SCREEN: tabelas operacionais rasas (1-2 linhas) ou tela casca quase vazia
-    if (!isAuthPage) {
+    if (!isAuthPage && isAppMode) {
       let stubTables = 0;
       for (const tbl of document.querySelectorAll('table')) {
         const st = getComputedStyle(tbl);
@@ -625,11 +665,13 @@ const DOM_AUDIT_FN = `(() => {
     }
 
     // 14. DA-DEAD-SPACE: vazio morto em desktop (1440x900) + inspector/aside vazio ou subaproveitado
-    if (isDesktop && !isAuthPage) {
+    if (isDesktop && !isAuthPage && B.mode !== 'persuade') {
       for (const aside of document.querySelectorAll('aside, [class*="inspector"], [class*="detail-pane"], [class*="side-panel"]')) {
         const st = getComputedStyle(aside);
         const r = aside.getBoundingClientRect();
         if (st.display === 'none' || st.visibility === 'hidden') continue;
+        // Sidebar de navegacao nao e inspector: o vazio abaixo do menu e esperado.
+        if (aside.querySelector('nav, [role="navigation"]') || aside.matches('[class*="sidebar"], [class*="nav"]') || r.left < 24) continue;
         if (r.width >= 200 && r.height >= 280 && r.left < window.innerWidth && r.right > 0) {
           const txtLen = (aside.textContent || '').replace(/\\s+/g, ' ').trim().length;
           const meaningful = Array.from(aside.querySelectorAll('p, li, dd, tr, button, a, input, canvas, svg, [class*="row"], [class*="item"], [class*="kpi"], [class*="card"]')).filter((el) => {
@@ -690,16 +732,15 @@ const DOM_AUDIT_FN = `(() => {
         for (let i = 0; i < grid.length; i++) filled += grid[i];
         const fillRatio = filled / grid.length;
         const emptyPct = Math.round((1 - fillRatio) * 100);
-        if (fillRatio < 0.18) {
-          issues.push({ severity: 'BLOCK', rule: 'DA-DEAD-SPACE', detail: 'Vazio morto extremo na area principal desktop: ~' + emptyPct + '% da viewport sem conteudo real' });
-        } else if (fillRatio < 0.30) {
-          issues.push({ severity: 'HIGH', rule: 'DA-DEAD-SPACE', detail: 'Espaco vazio excessivo na area principal desktop: ~' + emptyPct + '% da viewport sem densidade util' });
+        const reviewFill = 1 - (B.deadSpaceReviewPct / 100);
+        if (fillRatio < reviewFill) {
+          issues.push({ severity: 'REVIEW', rule: 'DA-DEAD-SPACE', detail: 'Area principal desktop com ~' + emptyPct + '% sem conteudo (orcamento do projeto: ' + B.deadSpaceReviewPct + '%). Confirme na captura se o vazio e respiro intencional ou falta de estrutura.' });
         }
       }
     }
 
     // 15. DA-SURFACE-FLAT: falta de separacao visual Z1 vs Z2
-    if (!isAuthPage) {
+    if (!isAuthPage && isAppMode) {
       const bodyLum = lum(resolveBg(document.body));
       const containers = Array.from(mainEl.querySelectorAll('section, article, table, aside, [class*="card"], [class*="panel"], [class*="sheet"], [class*="box"], [class*="surface"]')).filter((el) => {
         const st = getComputedStyle(el);
@@ -724,7 +765,7 @@ const DOM_AUDIT_FN = `(() => {
       }
     }
 
-    // 16. DA-CARD-INTERNAL-VOID (v2.2): buraco vertical vazio (> 95px) dentro de um card Z2 esticado em Bento Grid
+    // 16. DA-CARD-INTERNAL-VOID: buraco vertical vazio (> 95px) dentro de um card Z2 esticado em Bento Grid
     if (isDesktop && !isAuthPage) {
       let voidCards = 0;
       const voidSamples = [];
@@ -744,7 +785,7 @@ const DOM_AUDIT_FN = `(() => {
             const r1 = kids[i].getBoundingClientRect();
             const r2 = kids[i + 1].getBoundingClientRect();
             const gap = r2.top - r1.bottom;
-            if (gap > 95) {
+            if (gap > B.cardVoidPx) {
               voidCards++;
               const title = (card.querySelector('h2, h3, h4, strong')?.textContent || card.className || 'card').trim().slice(0, 32);
               if (voidSamples.length < 2) voidSamples.push(title + ' (' + Math.round(gap) + 'px vazio interno)');
@@ -754,11 +795,11 @@ const DOM_AUDIT_FN = `(() => {
         }
       }
       if (voidCards > 0) {
-        issues.push({ severity: 'MEDIUM', rule: 'DA-CARD-INTERNAL-VOID', detail: voidCards + ' card(s) com buraco vertical interno > 95px (provavel space-between/margin-top:auto em Bento Grid): ' + voidSamples.join(', ') });
+        issues.push({ severity: 'MEDIUM', rule: 'DA-CARD-INTERNAL-VOID', detail: voidCards + ' card(s) com buraco vertical interno > ' + B.cardVoidPx + 'px (provavel space-between/margin-top:auto): ' + voidSamples.join(', ') });
       }
     }
 
-    // 17. DA-CLIPPED-CONTENT & DA-MOBILE-FLEX-CLIP (v2.2.1): detecta cards/paineis cortando proprio conteudo ou flex-column rolavel que esmaga filhos overflow:hidden
+    // 17. DA-CLIPPED-CONTENT & DA-MOBILE-FLEX-CLIP: detecta cards/paineis cortando proprio conteudo ou flex-column rolavel que esmaga filhos overflow:hidden
     {
       let clippedCards = 0;
       const clipSamples = [];
@@ -807,7 +848,7 @@ const DOM_AUDIT_FN = `(() => {
       }
     }
 
-    // 19. DA-BADGE-ECHO (v2.4.0): mesmo texto de badge/chip repetido >= 4x na mesma vista poluindo lista
+    // 19. DA-BADGE-ECHO: mesmo texto de badge/chip repetido >= 4x na mesma vista poluindo lista
     {
       const counts = new Map();
       for (const el of Array.from(mainEl.querySelectorAll('[class*="badge"], [class*="chip"], [class*="pill"], [class*="status"], [class*="tag"]')).slice(0, 160)) {
@@ -827,7 +868,7 @@ const DOM_AUDIT_FN = `(() => {
       }
     }
 
-    // 20. DA-MOBILE-HERO-BLOAT (v2.4.0): hero + banners de aviso no topo do mobile consumindo > 38% da tela antes da lista principal
+    // 20. DA-MOBILE-HERO-BLOAT: hero + banners de aviso no topo do mobile consumindo > 38% da tela antes da lista principal
     if (isMobile && !isAuthPage) {
       const heroEls = Array.from(mainEl.querySelectorAll('[class*="hero"], [class*="alert"], [class*="banner"], [class*="aviso"], [class*="notice"]')).filter((el) => {
         const st = getComputedStyle(el);
@@ -837,16 +878,16 @@ const DOM_AUDIT_FN = `(() => {
       // Dedup aninhados: conta apenas blocos de topo nao contidos em outro candidato
       const topBanners = heroEls.filter((el) => !heroEls.some((other) => other !== el && other.contains(el)));
       const totalBannerH = topBanners.reduce((acc, el) => acc + el.getBoundingClientRect().height, 0);
-      if (totalBannerH > window.innerHeight * 0.42 && totalBannerH > 340) {
+      if (totalBannerH > window.innerHeight * (B.mobileTopMaxPct / 100) && totalBannerH > B.mobileTopMaxPx) {
         issues.push({
           severity: 'HIGH',
           rule: 'DA-MOBILE-HERO-BLOAT',
-          detail: 'Hero + banners de topo no mobile consomem ' + Math.round(totalBannerH) + 'px (' + Math.round((totalBannerH / window.innerHeight) * 100) + '% da tela) antes da lista principal (teto recomendado <= 38% / 320px)',
+          detail: 'Hero + banners de topo no mobile consomem ' + Math.round(totalBannerH) + 'px (' + Math.round((totalBannerH / window.innerHeight) * 100) + '% da tela) antes da lista principal (orcamento do projeto: ' + B.mobileTopMaxPct + '% / ' + B.mobileTopMaxPx + 'px)',
         });
       }
     }
 
-    // 21. DA-HEADER-STACK-BLOAT & DA-TAB-OVERFLOW (v2.4.0): pilha de 3+ barras no topo desktop ou > 6 abas irmas numa unica linha
+    // 21. DA-HEADER-STACK-BLOAT & DA-TAB-OVERFLOW: pilha de 3+ barras no topo desktop ou > 6 abas irmas numa unica linha
     if (isDesktop && !isAuthPage) {
       const topBands = Array.from(document.querySelectorAll('header, [class*="topbar"], [class*="toolbar"], [class*="subbar"], [class*="status-bar"], [class*="filter-bar"], [class*="tabs"], [role="tablist"]')).filter((el) => {
         if (el.closest('aside, [class*="sidebar"]')) return false;
@@ -867,11 +908,11 @@ const DOM_AUDIT_FN = `(() => {
           lastBottom = r.bottom;
         }
       }
-      if (stackedCount >= 3 && totalStackH > 225) {
+      if (stackedCount > B.headerMaxBars && totalStackH > B.headerMaxPx) {
         issues.push({
           severity: 'HIGH',
           rule: 'DA-HEADER-STACK-BLOAT',
-          detail: stackedCount + ' barras horizontais empilhadas no topo do desktop consumindo ' + Math.round(totalStackH) + 'px antes dos dados reais (teto: max. 2 barras / <= 210px)',
+          detail: stackedCount + ' barras horizontais empilhadas no topo do desktop consumindo ' + Math.round(totalStackH) + 'px antes dos dados reais (orcamento do projeto: ' + B.headerMaxBars + ' barras / ' + B.headerMaxPx + 'px)',
         });
       }
 
@@ -885,11 +926,11 @@ const DOM_AUDIT_FN = `(() => {
           const cr = ch.getBoundingClientRect();
           return (tag === 'BUTTON' || tag === 'A' || ch.getAttribute('role') === 'tab') && cs.display !== 'none' && cr.width > 24 && cr.height > 20;
         });
-        if (tabKids.length > 6) {
+        if (tabKids.length > B.maxSiblingTabs) {
           issues.push({
             severity: 'MEDIUM',
             rule: 'DA-TAB-OVERFLOW',
-            detail: 'Barra de filtros/abas com ' + tabKids.length + ' abas irmas lado a lado (teto recomendado: 4-5 abas primarias + menu "Mais status")',
+            detail: 'Barra de filtros/abas com ' + tabKids.length + ' abas irmas lado a lado (orcamento do projeto: ' + B.maxSiblingTabs + '; considere agrupar as secundarias num menu)',
           });
           break;
         }
@@ -897,7 +938,7 @@ const DOM_AUDIT_FN = `(() => {
     }
   }
 
-  // 18. DA-NAV-TRUNCATION & DA-HEADER-HSCROLL (v2.3.0): detecta marca/nav cortados horizontalmente e barra superior com overflow/scrollbar
+  // 18. DA-NAV-TRUNCATION & DA-HEADER-HSCROLL: detecta marca/nav cortados horizontalmente e barra superior com overflow/scrollbar
   if (isDesktop) {
     let navTrunc = 0;
     const truncSamples = [];
@@ -957,6 +998,39 @@ const DOM_AUDIT_FN = `(() => {
     }
   }
 
+  // DA-DUPLICATE-TEXT e DA-ALIGN-EDGES (v3.1): sinais de composicao para revisao visual, nunca bloqueiam.
+  const mainForComp = document.querySelector('main, [role="main"]') || document.body;
+  if (isDesktop && !isVitrine && !isAuthPage && mainForComp) {
+    const regions = (el) => el.closest('section, article, aside, [class*="panel"], [class*="card"], [class*="drawer"], [class*="inspector"], [role="dialog"]');
+    const seenText = new Map();
+    for (const el of mainForComp.querySelectorAll('h1, h2, h3, h4, p, dd, dt, strong, span, div')) {
+      if (el.children.length || el.closest('nav, tr, li, [role="row"], [role="tab"], button, a, select, option, label, [class*="badge"], [class*="chip"], [class*="pill"]')) continue;
+      const st = getComputedStyle(el);
+      if (st.display === 'none' || st.visibility === 'hidden') continue;
+      const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (t.length < 6 || t.length > 64 || /^[\d\s.,:%R$+\-\/()]+$/.test(t)) continue;
+      const reg = regions(el);
+      if (!seenText.has(t)) seenText.set(t, new Set());
+      seenText.get(t).add(reg || mainForComp);
+    }
+    const dups = [...seenText.entries()].filter(([, regs]) => regs.size >= B.duplicateTextMin).map(([t, regs]) => '"' + t.slice(0, 40) + '" x' + regs.size);
+    if (dups.length) {
+      issues.push({ severity: 'REVIEW', rule: 'DA-DUPLICATE-TEXT', detail: 'Mesmo texto em varias regioes da vista: ' + dups.slice(0, 4).join(', ') + '. Cada dado deveria aparecer uma vez por vista.' });
+    }
+    const lefts = new Map();
+    for (const el of mainForComp.querySelectorAll('h1, h2, h3, h4, p, label, dt, legend, [class*="title"]')) {
+      if (el.closest('table, nav, [role="grid"], [class*="chart"], svg')) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width < 24 || r.height < 8 || r.top > window.innerHeight * 1.5) continue;
+      const x = Math.round(r.left / 4) * 4;
+      lefts.set(x, (lefts.get(x) || 0) + 1);
+    }
+    const edges = [...lefts.values()].filter((n) => n >= 2).length;
+    if (edges > B.alignEdgesMax) {
+      issues.push({ severity: 'REVIEW', rule: 'DA-ALIGN-EDGES', detail: edges + ' linhas de alinhamento a esquerda distintas na dobra (orcamento: ' + B.alignEdgesMax + '). Verifique se a grade esta coerente.' });
+    }
+  }
+
   return {
     title: document.title,
     scrollWidth: docEl.scrollWidth,
@@ -964,6 +1038,57 @@ const DOM_AUDIT_FN = `(() => {
     issues,
   };
 })()`;
+
+function auditExpr(budgets) {
+  return '(() => { window.__DA_BUDGETS__ = ' + JSON.stringify(budgets || DEFAULT_BUDGETS) + '; return ' + DOM_AUDIT_FN + '; })()';
+}
+
+const MOTION_CHECK_FN = `(() => {
+  const waiting = /skeleton|spinner|loading|progress|typing|shimmer|busy|recording|pulse-live/i;
+  const offenders = [];
+  for (const anim of document.getAnimations ? document.getAnimations() : []) {
+    const timing = anim.effect && anim.effect.getComputedTiming ? anim.effect.getComputedTiming() : {};
+    const el = anim.effect && anim.effect.target;
+    if (!el || anim.playState !== 'running') continue;
+    if (timing.iterations !== Infinity || !(timing.duration > 0)) continue;
+    const label = (el.className && String(el.className)) + ' ' + (el.getAttribute && (el.getAttribute('aria-busy') || el.getAttribute('role') || ''));
+    if (waiting.test(label) || el.closest('[aria-busy="true"], [role="progressbar"], [role="status"]')) continue;
+    offenders.push((el.tagName || '').toLowerCase() + (el.className ? '.' + String(el.className).trim().split(/\s+/).slice(0, 2).join('.') : ''));
+  }
+  return offenders.slice(0, 5);
+})()`;
+
+async function pixelDiff(cdp, currentPath, baselinePath, outPath) {
+  const cur = fs.readFileSync(currentPath).toString('base64');
+  const base = fs.readFileSync(baselinePath).toString('base64');
+  const res = await cdp.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const load = (src) => new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ko(new Error('img')); i.src = src; });
+      const [a, b] = await Promise.all([load('data:image/png;base64,${cur}'), load('data:image/png;base64,${base}')]);
+      if (a.width !== b.width || a.height !== b.height) return { sizeMismatch: [a.width, a.height, b.width, b.height] };
+      const w = a.width, h = a.height;
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const x = c.getContext('2d', { willReadFrequently: true });
+      x.drawImage(a, 0, 0); const da = x.getImageData(0, 0, w, h).data;
+      x.clearRect(0, 0, w, h); x.drawImage(b, 0, 0); const db = x.getImageData(0, 0, w, h).data;
+      const out = x.createImageData(w, h); let changed = 0;
+      for (let i = 0; i < da.length; i += 4) {
+        const d = Math.abs(da[i] - db[i]) + Math.abs(da[i + 1] - db[i + 1]) + Math.abs(da[i + 2] - db[i + 2]);
+        if (d > 48) { changed++; out.data[i] = 255; out.data[i + 1] = 48; out.data[i + 2] = 96; out.data[i + 3] = 255; }
+        else { const g = (da[i] + da[i + 1] + da[i + 2]) / 3; out.data[i] = out.data[i + 1] = out.data[i + 2] = g; out.data[i + 3] = 60; }
+      }
+      x.putImageData(out, 0, 0);
+      return { pct: Math.round((changed * 10000) / (w * h)) / 100, png: c.toDataURL('image/png').split(',')[1] };
+    })()`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  const val = res?.result?.value;
+  if (!val) return null;
+  if (val.sizeMismatch) return { baseline: baselinePath, sizeMismatch: val.sizeMismatch };
+  fs.writeFileSync(outPath, Buffer.from(val.png, 'base64'));
+  return { baseline: baselinePath, pct: val.pct, diff: outPath };
+}
 
 function pickViewportsForEntry(entry, args, hasMultiPlatform) {
   if (entry.viewports) return entry.viewports;
@@ -1059,6 +1184,7 @@ async function main() {
     const { target, vpName, vp, theme } = job;
     const consoleErrors = [];
     const failedAssets = [];
+    const net = { bytes: 0, requests: 0, fonts: 0 };
 
     const onEx = (p) => {
       const ex = p.exceptionDetails || {};
@@ -1076,6 +1202,8 @@ async function main() {
     const onNet = (p) => {
       const res = p.response || {};
       const url = res.url || '';
+      net.requests++;
+      if (p.type === 'Font') net.fonts++;
       if (res.status >= 400 && url.startsWith('http://127.0.0.1:') && !url.endsWith('/favicon.ico')) {
         failedAssets.push(`HTTP ${res.status}: ${new URL(url).pathname}`);
       }
@@ -1084,6 +1212,8 @@ async function main() {
     cdp.on('Runtime.exceptionThrown', onEx);
     cdp.on('Runtime.consoleAPICalled', onConsole);
     cdp.on('Network.responseReceived', onNet);
+    const onLoaded = (p) => { net.bytes += p.encodedDataLength || 0; };
+    cdp.on('Network.loadingFinished', onLoaded);
 
     let nextPreloadId = prevPreloadId;
     try {
@@ -1157,7 +1287,7 @@ async function main() {
       await new Promise((r) => setTimeout(r, 220));
 
       const evalRes = await cdp.send('Runtime.evaluate', {
-        expression: DOM_AUDIT_FN,
+        expression: auditExpr(target.budgets),
         returnByValue: true,
       });
       const domData = evalRes?.result?.value;
@@ -1177,7 +1307,26 @@ async function main() {
       const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
       fs.writeFileSync(shotPath, Buffer.from(shot.data, 'base64'));
 
-      // Smoke interativo pos-clique (v2.4.0): valida Resize In-Place / abertura de conferencia sem erro JS ou recorte
+      const budgets = target.budgets || DEFAULT_BUDGETS;
+      const transferKB = Math.round(net.bytes / 1024);
+      if (!target.isVitrine && budgets.perfMaxKB && (transferKB > budgets.perfMaxKB || net.requests > budgets.perfMaxRequests || net.fonts > budgets.perfMaxFonts)) {
+        issues.push({ severity: 'REVIEW', rule: 'DA-PERF-BUDGET', detail: `Carregou ${transferKB} KB em ${net.requests} requisicoes e ${net.fonts} fontes (orcamento: ${budgets.perfMaxKB} KB / ${budgets.perfMaxRequests} / ${budgets.perfMaxFonts}).` });
+      }
+      if (args.checkMotion && !target.isVitrine) {
+        try {
+          await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }, { name: 'prefers-reduced-motion', value: 'reduce' }] });
+          await new Promise((r) => setTimeout(r, 200));
+          const mres = await cdp.send('Runtime.evaluate', { expression: MOTION_CHECK_FN, returnByValue: true });
+          const offenders = mres?.result?.value || [];
+          if (offenders.length) {
+            issues.push({ severity: 'REVIEW', rule: 'DA-REDUCED-MOTION', detail: 'Animacoes infinitas seguem rodando com prefers-reduced-motion: ' + offenders.join(', ') });
+          }
+        } finally {
+          await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }] });
+        }
+      }
+
+      // Smoke interativo pos-clique: valida Resize In-Place / abertura de conferencia sem erro JS ou recorte
       let interactScreenshot = null;
       let interactionVerified = false;
       const interactSel = target.clickSelector || (args.smokeInteract && !target.isVitrine ? '[data-da-open]' : '');
@@ -1195,7 +1344,7 @@ async function main() {
         if (clickRes?.result?.value) {
           await new Promise((r) => setTimeout(r, 280));
           const postEval = await cdp.send('Runtime.evaluate', {
-            expression: DOM_AUDIT_FN,
+            expression: auditExpr(target.budgets),
             returnByValue: true,
           });
           const postIssues = postEval?.result?.value?.issues || [];
@@ -1233,9 +1382,24 @@ async function main() {
           issues.push({ severity: 'BLOCK', rule: 'DA-ASSET-404', detail });
         }
       }
+      let visualDiff = null;
+      if (args.baseline) {
+        const basePath = path.join(path.resolve(args.baseline), path.basename(shotPath));
+        if (fs.existsSync(basePath)) {
+          try { visualDiff = await pixelDiff(cdp, shotPath, basePath, shotPath.replace(/\.png$/, '-diff.png')); } catch (err) { visualDiff = { baseline: basePath, error: String(err.message || err) }; }
+        } else {
+          visualDiff = { baseline: basePath, missing: true };
+        }
+      }
+      const cappedIssues = issues.map(capIssue);
+      issues.length = 0;
+      issues.push(...cappedIssues);
       const entry = {
         target: target.label,
         url: target.url,
+        mode: target.mode || args.mode,
+        metrics: { transferKB: Math.round(net.bytes / 1024), requests: net.requests, fonts: net.fonts },
+        ...(visualDiff ? { visualDiff } : {}),
         viewport: `${vpName} (${vp.width}x${vp.height})`,
         theme,
         screenshot: shotPath,
@@ -1252,7 +1416,8 @@ async function main() {
       if (!args.quiet) {
         const blocks = issues.filter((i) => i.severity === 'BLOCK').length;
         const highs = issues.filter((i) => i.severity === 'HIGH').length;
-        const stLabel = blocks > 0 ? 'BLOCK' : highs > 0 ? 'HIGH' : 'PASS';
+        const reviews = issues.filter((i) => i.severity === 'REVIEW').length;
+        const stLabel = blocks > 0 ? 'BLOCK' : highs > 0 ? 'HIGH' : reviews > 0 ? 'REVIEW' : 'PASS';
         const sec = ((Date.now() - t0) / 1000).toFixed(1);
         const pad = String(completed).padStart(String(jobs.length).length, '0');
         process.stderr.write(`[${pad}/${jobs.length}] ${target.label} (${vpName} · ${theme}) -> ${stLabel} (${sec}s)\n`);
@@ -1268,6 +1433,7 @@ async function main() {
       cdp.off('Runtime.exceptionThrown', onEx);
       cdp.off('Runtime.consoleAPICalled', onConsole);
       cdp.off('Network.responseReceived', onNet);
+      cdp.off('Network.loadingFinished', onLoaded);
     }
   }
 
@@ -1344,26 +1510,36 @@ async function main() {
       issues: [{ severity: 'HIGH', rule: 'DA-AUDIT-COVERAGE', detail }],
     });
   }
+  for (const row of finalReport) row.issues = (row.issues || []).map(capIssue);
   const reportPath = path.join(outDir, 'audit-report.json');
   fs.writeFileSync(reportPath, JSON.stringify(finalReport, null, 2), 'utf-8');
 
   const elapsedSec = ((Date.now() - startedAt) / 1000).toFixed(1);
   let totalBlock = 0;
   let totalHigh = 0;
-  console.log('# Auditoria Visual & DOM Real (Design Aura v2.5.0)');
+  let totalReview = 0;
+  console.log(`# Auditoria Visual & DOM Real (Design Aura v${RULES.version || ''})`);
+  console.log('- BLOCK e HIGH falham em --strict. REVIEW e um sinal de composicao: abra a captura e confirme ou dispense com motivo.');
   console.log(`- **Capturas geradas:** ${finalReport.filter((entry) => entry.screenshot).length} · **Tempo:** ${elapsedSec}s (concurrency=${Math.min(args.concurrency, Math.max(1, jobs.length))}) · **Relatorio JSON:** ${reportPath}\n`);
   console.log('| Tela | Viewport | Tema | Screenshot | Status | Achados |');
   console.log('|---|---|---|---|---|---|');
   for (const r of finalReport) {
     const blocks = r.issues.filter((i) => i.severity === 'BLOCK').length;
     const highs = r.issues.filter((i) => i.severity === 'HIGH').length;
+    const reviews = r.issues.filter((i) => i.severity === 'REVIEW').length;
     totalBlock += blocks;
     totalHigh += highs;
-    const status = blocks > 0 ? 'BLOCK' : highs > 0 ? 'HIGH' : 'PASS';
+    totalReview += reviews;
+    const status = blocks > 0 ? 'BLOCK' : highs > 0 ? 'HIGH' : reviews > 0 ? 'REVIEW' : 'PASS';
     const summary = r.issues.length ? r.issues.map((i) => `${i.rule}: ${i.detail}`).join('; ') : 'OK';
     console.log(`| ${r.target} | ${r.viewport} | ${r.theme} | ${r.screenshot ? path.basename(r.screenshot) : '—'} | **${status}** | ${summary} |`);
   }
 
+  console.log(`\n- **Total:** BLOCK ${totalBlock} · HIGH ${totalHigh} · REVIEW ${totalReview}`);
+  const diffs = finalReport.filter((r) => r.visualDiff && typeof r.visualDiff.pct === 'number');
+  if (diffs.length) {
+    console.log('- **Mudanca contra a linha de base:** ' + diffs.map((r) => `${r.target} ${r.viewport} ${r.theme}: ${r.visualDiff.pct}%`).join(' · '));
+  }
   if (args.strict && (totalBlock > 0 || totalHigh > 0)) {
     process.exit(1);
   }

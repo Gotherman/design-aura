@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
- * Motor CDP de Testes Interativos de Workflow E2E (Design Aura v2.4.0 · Fase 4.5, zero dependencias npm).
+ * Motor CDP de jornadas E2E da Design Aura (zero dependencias npm).
  *
- * Projetado para os Subagentes Testers (Read-Only): navega, clica em botoes/linhas,
- * preenche campos, seleciona filtros, alterna tema Dark/Light, valida assertivas de negocio
- * + layout pos-clique (zero overflow, zero recorte, zero erro JS/404) e fotografa evidencias.
+ * Usado pelos testers (somente leitura): navega, clica, preenche, seleciona, alterna tema,
+ * percorre a jornada so por teclado (key, tabTo, assertFocused), emula reduced motion
+ * (setReducedMotion), confere resultados de negocio (assertText, assertReachable) e layout
+ * pos-acao (sem overflow, recorte, erro JS ou 404), fotografando as evidencias.
  *
  * Uso:
  *   node run_workflow_probe.mjs --scenario qa-scenario.json --out ./qa-evidence [--base-url http://127.0.0.1:4188] [--root ./design] [--strict]
@@ -192,6 +193,27 @@ function findElementExpr(selector) {
   })()`;
 }
 
+const REAL_KEYS = {
+  Tab: [9, 'Tab'], Enter: [13, 'Enter', '\r'], Escape: [27, 'Escape'], Space: [32, 'Space', ' '],
+  ArrowDown: [40, 'ArrowDown'], ArrowUp: [38, 'ArrowUp'], ArrowLeft: [37, 'ArrowLeft'], ArrowRight: [39, 'ArrowRight'],
+  Home: [36, 'Home'], End: [35, 'End'],
+};
+
+async function realKey(cdp, key, shift = false) {
+  const [vk, code, text] = REAL_KEYS[key] || [0, key, key.length === 1 ? key : undefined];
+  const base = { key: key === 'Space' ? ' ' : key, code, windowsVirtualKeyCode: vk, nativeVirtualKeyCode: vk, modifiers: shift ? 8 : 0 };
+  await cdp.send('Input.dispatchKeyEvent', { type: text ? 'keyDown' : 'rawKeyDown', ...base, ...(text ? { text } : {}) });
+  await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', ...base });
+}
+
+const FOCUS_INFO_EXPR = `(() => {
+  const el = document.activeElement;
+  if (!el || el === document.body) return { tag: 'BODY' };
+  const st = getComputedStyle(el);
+  const ring = (st.outlineStyle !== 'none' && parseFloat(st.outlineWidth) > 0) || (st.boxShadow && st.boxShadow !== 'none');
+  return { tag: el.tagName, id: el.id, text: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 50), ring };
+})()`;
+
 async function runStep(cdp, step, ctx) {
   const act = (step.action || '').trim();
   const label = step.label || `${act} ${step.selector || step.url || step.text || step.theme || ''}`.trim();
@@ -288,6 +310,43 @@ async function runStep(cdp, step, ctx) {
       });
       await new Promise((r) => setTimeout(r, 180));
       out.detail = `Tecla ${key} enviada`;
+    } else if (act === 'key') {
+      // Tecla real do teclado (CDP), move o foco e ativa botoes como uma pessoa faria.
+      const times = Math.max(1, step.times || 1);
+      for (let i = 0; i < times; i++) await realKey(cdp, step.key || 'Tab', !!step.shift);
+      await new Promise((r) => setTimeout(r, step.waitMs || 160));
+      const info = (await cdp.send('Runtime.evaluate', { expression: FOCUS_INFO_EXPR, returnByValue: true }))?.result?.value || {};
+      out.detail = `Tecla ${step.shift ? 'Shift+' : ''}${step.key || 'Tab'} x${times}; foco em ${info.tag}${info.id ? '#' + info.id : ''} "${info.text || ''}"`;
+    } else if (act === 'tabTo') {
+      // Jornada so por teclado: aperta Tab ate o foco chegar no seletor e confere o anel de foco.
+      const limit = step.maxTabs || 40;
+      let reached = false;
+      let info = {};
+      for (let i = 0; i < limit; i++) {
+        await realKey(cdp, 'Tab', !!step.shift);
+        const res = await cdp.send('Runtime.evaluate', {
+          expression: `(() => { const t = ${findElementExpr(step.selector)}; return !!t && (document.activeElement === t || t.contains(document.activeElement)); })()`,
+          returnByValue: true,
+        });
+        if (res?.result?.value) { reached = true; break; }
+      }
+      info = (await cdp.send('Runtime.evaluate', { expression: FOCUS_INFO_EXPR, returnByValue: true }))?.result?.value || {};
+      if (!reached) throw new Error(`DA-A11Y-KEYBOARD: ${step.selector} nao recebeu foco em ${limit} Tabs`);
+      if (step.requireRing !== false && !info.ring) throw new Error(`DA-A11Y-KEYBOARD: ${step.selector} recebe foco sem anel visivel`);
+      out.detail = `Foco por teclado em ${step.selector} com anel visivel`;
+    } else if (act === 'assertFocused') {
+      const res = await cdp.send('Runtime.evaluate', {
+        expression: `(() => { const t = ${findElementExpr(step.selector)}; return !!t && (document.activeElement === t || t.contains(document.activeElement)); })()`,
+        returnByValue: true,
+      });
+      if (!res?.result?.value) throw new Error(`DA-A11Y-KEYBOARD: foco esperado em ${step.selector}`);
+      out.detail = `Foco esta em ${step.selector}`;
+    } else if (act === 'setReducedMotion') {
+      const on = step.value !== false;
+      const theme = (await cdp.send('Runtime.evaluate', { expression: "document.documentElement.getAttribute('data-theme') || 'dark'", returnByValue: true }))?.result?.value || 'dark';
+      await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }, { name: 'prefers-reduced-motion', value: on ? 'reduce' : 'no-preference' }] });
+      await new Promise((r) => setTimeout(r, 120));
+      out.detail = `prefers-reduced-motion ${on ? 'reduce' : 'no-preference'}`;
     } else if (act === 'wait') {
       await new Promise((r) => setTimeout(r, step.ms || 300));
       out.detail = `Aguardou ${step.ms || 300}ms`;

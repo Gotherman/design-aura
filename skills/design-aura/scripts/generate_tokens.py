@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
-"""Compilador de Design Tokens em 3 camadas (tokens.json -> tokens.css) da Design Aura.
+"""Compilador de Design Tokens da Design Aura.
 
-Gera CSS com suporte completo a Light/Dark, 5 planos Z0->Z4, tematizacao de
-superficies do browser, tipografia tabular/balanced e prefers-reduced-motion.
+Dois caminhos:
+1. A partir da cor da marca (motor OKLCH):
+   python3 generate_tokens.py --seed "#0F3B57" --accent "#F08A4B" --depth-style hairline --emit-json tokens.json --out tokens.css
+2. A partir de um tokens.json ja escrito:
+   python3 generate_tokens.py tokens.json --out tokens.css --format all --check-contrast
+
+Saidas: CSS (Light/Dark, planos Z0-Z4, elevacao pelo estilo de profundidade), Tailwind v4,
+TypeScript, Swift, Kotlin, Dart e DTCG 2025.10 (tokens.dtcg.json).
 """
 import argparse
 import json
@@ -42,6 +48,11 @@ REQUIRED_SEMANTIC_KEYS = {
 }
 
 ALLOWED_SPACING_PX = {0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 32, 40, 48, 64, 80, 96}
+SHAPE_RADII = {
+    "sharp": {"control-sm": "2px", "control-md": "4px", "card-sm": "4px", "card-md": "6px", "card-lg": "8px", "pill": "999px"},
+    "soft": {"control-sm": "6px", "control-md": "8px", "card-sm": "10px", "card-md": "12px", "card-lg": "16px", "pill": "999px"},
+    "round": {"control-sm": "10px", "control-md": "12px", "card-sm": "16px", "card-md": "20px", "card-lg": "24px", "pill": "999px"},
+}
 
 
 def resolve_ref(val: str, primitives: dict) -> str:
@@ -95,7 +106,7 @@ def _mix_hex(hex_a: str, hex_b: str, ratio_a: float) -> str:
 
 
 def _enrich_semantic_theme(tmap: dict[str, str], theme: str) -> dict[str, str]:
-    """Completa tokens de superficie/borda/texto semanticos e cabecalhos da marca (v2.4.0) sem sobrescrever definidos."""
+    """Completa tokens de superficie/borda/texto semanticos e cabecalhos da marca sem sobrescrever definidos."""
     enriched = dict(tmap)
     z2 = enriched.get("surface-z2", "#ffffff" if theme == "light" else "#17202e")
     brand_dark = enriched.get("surface-brand-dark", "#0c254a")
@@ -129,6 +140,38 @@ def _enrich_semantic_theme(tmap: dict[str, str], theme: str) -> dict[str, str]:
         enriched.setdefault(f"{role}-border", bord)
         enriched.setdefault(f"{role}-text", txt)
     return enriched
+
+
+def elevation_lines(style: str, theme: str) -> list[str]:
+    """Sombras e brilho de borda por estilo de profundidade, tingidos pelos tokens do proprio projeto."""
+    ink = "var(--text-strong)"
+    if theme == "light":
+        table = {
+            "tactile": ("inset 0 1px 0 rgba(255, 255, 255, 0.85)",
+                        f"0 0 0 1px color-mix(in srgb, {ink} 9%, transparent), 0 1px 2px -1px color-mix(in srgb, {ink} 8%, transparent), 0 3px 8px -1px color-mix(in srgb, {ink} 6%, transparent)",
+                        f"0 0 0 1px color-mix(in srgb, {ink} 11%, transparent), 0 3px 6px -2px color-mix(in srgb, {ink} 9%, transparent), 0 10px 22px -6px color-mix(in srgb, {ink} 8%, transparent)",
+                        f"0 0 0 1px color-mix(in srgb, {ink} 14%, transparent), 0 8px 20px -4px color-mix(in srgb, {ink} 13%, transparent), 0 18px 34px -8px color-mix(in srgb, {ink} 10%, transparent)"),
+            "hairline": ("inset 0 1px 0 rgba(255, 255, 255, 0.6)",
+                         f"0 1px 2px color-mix(in srgb, {ink} 5%, transparent)",
+                         f"0 1px 3px color-mix(in srgb, {ink} 7%, transparent)",
+                         f"0 8px 24px -6px color-mix(in srgb, {ink} 16%, transparent), 0 0 0 1px color-mix(in srgb, {ink} 8%, transparent)"),
+            "soft": ("inset 0 1px 0 rgba(255, 255, 255, 0.7)",
+                     f"0 1px 2px color-mix(in srgb, {ink} 5%, transparent), 0 2px 8px color-mix(in srgb, {ink} 5%, transparent)",
+                     f"0 2px 4px color-mix(in srgb, {ink} 5%, transparent), 0 12px 28px -8px color-mix(in srgb, {ink} 12%, transparent)",
+                     f"0 16px 40px -12px color-mix(in srgb, {ink} 20%, transparent)"),
+            "tonal": ("none", "none", "none", f"0 6px 18px -6px color-mix(in srgb, {ink} 14%, transparent)"),
+        }
+    else:
+        rim = "color-mix(in srgb, var(--primary) 14%, transparent)"
+        table = {
+            "tactile": (f"inset 0 1px 0 {rim}", f"inset 0 1px 0 {rim}, 0 2px 10px -2px rgba(0, 0, 0, 0.36)",
+                        f"inset 0 1px 0 {rim}, 0 8px 22px -6px rgba(0, 0, 0, 0.44)", f"inset 0 1px 0 {rim}, 0 16px 36px -8px rgba(0, 0, 0, 0.54)"),
+            "hairline": ("inset 0 1px 0 rgba(255, 255, 255, 0.05)", "none", "0 1px 2px rgba(0, 0, 0, 0.3)", "0 12px 32px -8px rgba(0, 0, 0, 0.6)"),
+            "soft": ("inset 0 1px 0 rgba(255, 255, 255, 0.06)", "0 2px 8px rgba(0, 0, 0, 0.3)", "0 10px 26px -8px rgba(0, 0, 0, 0.5)", "0 18px 44px -12px rgba(0, 0, 0, 0.62)"),
+            "tonal": ("none", "none", "none", "0 10px 28px -10px rgba(0, 0, 0, 0.55)"),
+        }
+    rim_hl, z1, z2, z3 = table.get(style, table["tactile"])
+    return [f"  --rim-highlight: {rim_hl};", f"  --shadow-z1: {z1};", f"  --shadow-z2: {z2};", f"  --shadow-z3: {z3};"]
 
 
 LIGHT_ELEVATION_LINES = [
@@ -168,8 +211,9 @@ def build_css(data: dict) -> str:
         "dark",
     )
 
+    depth_style = str(meta.get("depth_style") or "tactile")
     base_theme_vars = dark_resolved if default_theme == "dark" else light_resolved
-    base_elevation = DARK_ELEVATION_LINES if default_theme == "dark" else LIGHT_ELEVATION_LINES
+    base_elevation = elevation_lines(depth_style, "dark" if default_theme == "dark" else "light")
 
     spacing_vars = {f"space-{k}": v for k, v in spacing.items()}
     radii_vars = {f"radius-{k}": v for k, v in radii.items()}
@@ -183,19 +227,20 @@ def build_css(data: dict) -> str:
         emit_css_vars(spacing_vars),
         emit_css_vars(radii_vars),
         emit_css_vars(motion_vars),
+        f"  --da-depth-style: {depth_style};",
         *base_elevation,
         "}",
         "",
         'html[data-theme="light"], [data-theme="light"] {',
         "  color-scheme: light;",
         emit_css_vars(light_resolved),
-        *LIGHT_ELEVATION_LINES,
+        *elevation_lines(depth_style, "light"),
         "}",
         "",
         'html[data-theme="dark"], [data-theme="dark"] {',
         "  color-scheme: dark;",
         emit_css_vars(dark_resolved),
-        *DARK_ELEVATION_LINES,
+        *elevation_lines(depth_style, "dark"),
         "}",
         "",
         "/* Superficies base e micro-craft obrigatorio (Blocos 3, 4, 6, 9) */",
@@ -421,6 +466,24 @@ def build_dart(data: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def build_dtcg(data: dict) -> str:
+    """Exporta no formato DTCG 2025.10 ($type/$value) para Figma Variables, Tokens Studio e Style Dictionary."""
+    primitives = data.get("primitive", {})
+    out: dict = {"$description": f"{data.get('meta', {}).get('brand', 'Projeto')} · Design Aura"}
+    for theme in ("light", "dark"):
+        tmap = _enrich_semantic_theme({k: resolve_ref(v, primitives) for k, v in data.get("semantic", {}).get(theme, {}).items()}, theme)
+        group = {}
+        for k, v in tmap.items():
+            hexv = color_to_hex(v)
+            group[k] = {"$type": "color", "$value": hexv.upper() if hexv else v}
+        out[theme] = {"color": group}
+    out["dimension"] = {f"space-{k}": {"$type": "dimension", "$value": v} for k, v in data.get("spacing", {}).items()}
+    out["dimension"].update({f"radius-{k}": {"$type": "dimension", "$value": v} for k, v in data.get("radii", {}).items()})
+    out["duration"] = {k: {"$type": "duration", "$value": v} for k, v in data.get("motion", {}).items() if str(v).endswith("ms")}
+    out["fontFamily"] = {k: {"$type": "fontFamily", "$value": v} for k, v in data.get("typography", {}).items() if k.startswith("font-")}
+    return json.dumps(out, ensure_ascii=False, indent=2) + "\n"
+
+
 def write_formats(data: dict, fmt: str, out: Path) -> list[Path]:
     builders = {
         "css": build_css,
@@ -429,6 +492,7 @@ def write_formats(data: dict, fmt: str, out: Path) -> list[Path]:
         "swift": build_swift,
         "kotlin": build_kotlin,
         "dart": build_dart,
+        "dtcg": build_dtcg,
     }
     names = {
         "css": "tokens.css",
@@ -437,6 +501,7 @@ def write_formats(data: dict, fmt: str, out: Path) -> list[Path]:
         "swift": "DesignTokens.swift",
         "kotlin": "DesignTokens.kt",
         "dart": "design_tokens.dart",
+        "dtcg": "tokens.dtcg.json",
     }
     if fmt != "all":
         path = out / names[fmt] if out.suffix == "" else out
@@ -455,25 +520,51 @@ def write_formats(data: dict, fmt: str, out: Path) -> list[Path]:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Compilador de tokens.json para CSS, Tailwind v4, TS, Swift, Kotlin e Dart.")
-    parser.add_argument("input", help="Caminho para tokens.json")
+    parser = argparse.ArgumentParser(description="Gera tokens a partir da cor da marca (OKLCH) ou compila um tokens.json.")
+    parser.add_argument("input", nargs="?", help="Caminho para tokens.json (dispensavel com --seed)")
     parser.add_argument("--out", default="tokens.css", help="Arquivo ou pasta de saida")
-    parser.add_argument(
-        "--format",
-        default="css",
-        choices=["css", "tailwind", "ts", "swift", "kotlin", "dart", "all"],
-        help="Formato de exportacao",
-    )
+    parser.add_argument("--format", default="css", choices=["css", "tailwind", "ts", "swift", "kotlin", "dart", "dtcg", "all"], help="Formato de exportacao")
     parser.add_argument("--check-contrast", action="store_true", help="Valida WCAG e APCA apos gerar o CSS")
+    parser.add_argument("--seed", help="Cor principal da marca (hex). Gera o tokens.json inteiro pelo motor OKLCH")
+    parser.add_argument("--accent", help="Cor de acento (hex). Sem ela, o acento sai da harmonia escolhida")
+    parser.add_argument("--harmony", default="complementar", choices=["complementar", "analoga", "dividida", "triade", "mono"])
+    parser.add_argument("--depth-style", default="hairline", choices=["hairline", "soft", "tonal", "tactile"])
+    parser.add_argument("--neutral-tint", type=float, default=0.012, help="Croma dos neutros tingidos pela marca (0 a 0.03)")
+    parser.add_argument("--shape", default="soft", choices=["sharp", "soft", "round"], help="Linguagem de forma (raios)")
+    parser.add_argument("--density", default="regular", choices=["compact", "regular", "airy"])
+    parser.add_argument("--default-theme", default="light", choices=["light", "dark"])
+    parser.add_argument("--brand", default="Projeto")
+    parser.add_argument("--font-display", default="")
+    parser.add_argument("--font-ui", default="")
+    parser.add_argument("--font-mono", default="")
+    parser.add_argument("--emit-json", help="Onde gravar o tokens.json gerado por --seed (padrao: ao lado de --out)")
     args = parser.parse_args()
 
-    src = Path(args.input)
-    if not src.exists():
-        print(f"Arquivo nao encontrado: {src}", file=sys.stderr)
-        sys.exit(1)
+    if not args.input and not args.seed:
+        parser.error("informe um tokens.json ou --seed")
 
     try:
-        data = json.loads(src.read_text(encoding="utf-8"))
+        if args.seed:
+            from color_engine import build_tokens  # noqa: E402
+
+            fonts = {k: v for k, v in (("display", args.font_display), ("ui", args.font_ui), ("mono", args.font_mono)) if v}
+            data = build_tokens(args.seed, args.accent, args.harmony, args.depth_style, args.neutral_tint, args.brand,
+                                args.default_theme, fonts, args.density)
+            data["radii"] = SHAPE_RADII[args.shape]
+            data["meta"]["shape"] = args.shape
+            out_path = Path(args.out)
+            json_path = Path(args.emit_json) if args.emit_json else (out_path if out_path.suffix == "" else out_path.parent) / "tokens.json"
+            json_path.parent.mkdir(parents=True, exist_ok=True)
+            json_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            print(f"tokens.json gerado pelo motor OKLCH: {json_path}")
+            for theme, checks in data["report"]["checks"].items():
+                print(f"  {theme}: " + ", ".join(f"{k}={v}" for k, v in checks.items()))
+        else:
+            src = Path(args.input)
+            if not src.exists():
+                print(f"Arquivo nao encontrado: {src}", file=sys.stderr)
+                sys.exit(1)
+            data = json.loads(src.read_text(encoding="utf-8"))
         errors = validate_tokens(data)
         if errors:
             for e in errors:
