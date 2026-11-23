@@ -204,6 +204,11 @@ function daSetTheme(next) {
 function daToggleTheme() {
   daSetTheme(daGetTheme() === 'dark' ? 'light' : 'dark');
 }
+window.addEventListener('message', function(ev) {
+  if (ev && ev.data && ev.data.type === 'designaura:theme' && (ev.data.theme === 'dark' || ev.data.theme === 'light')) {
+    if (daGetTheme() !== ev.data.theme) daSetTheme(ev.data.theme);
+  }
+});
 """
 
 
@@ -737,20 +742,47 @@ def verify_screen_files(manifest: dict, manifest_path: Path, out_dir: Path) -> l
         if not rel:
             errors.append(f"{screen.get('id')}: sem file")
             continue
-        if rel.startswith(("http://", "https://")):
+        if rel.startswith(("http://", "https://", "/")):
+            continue
+        if screen.get("isSpaRoute") or (screen.get("route") and not screen.get("file")):
             continue
         if not any((root / rel).exists() for root in roots):
             errors.append(f"{screen.get('id')}: arquivo ausente '{rel}'")
     return errors
 
 
+def _normalize_screen_targets(manifest: dict, app_base: str = "") -> bool:
+    """Resolve telas SPA ('route') em URLs navegaveis para vitrine unificada (v2.4.0). Retorna True se houver SPA."""
+    base = (app_base or manifest.get("project", {}).get("appBaseUrl") or "").rstrip("/")
+    has_spa = bool(base)
+    for screen in manifest.get("screens", []):
+        route = str(screen.get("route") or "").strip()
+        fval = str(screen.get("file") or "").strip()
+        if route and not fval:
+            has_spa = True
+            screen["isSpaRoute"] = True
+            if route.startswith(("http://", "https://")):
+                screen["file"] = route
+            elif base:
+                screen["file"] = f"{base}{route if route.startswith('/') else '/' + route}"
+            else:
+                screen["file"] = route if route.startswith("/") else "/" + route
+        elif fval.startswith("/") and not fval.startswith("//"):
+            has_spa = True
+            screen["isSpaRoute"] = True
+    return has_spa
+
+
 def verify_generated_links(out_dir: Path) -> list[str]:
     errors = []
     href_re = re.compile(r"""(?:href|src)=["']([^"']+)["']""")
-    for name in ("fluxo.html", "preview.html", "index.html"):
-        text = (out_dir / name).read_text(encoding="utf-8")
+    for name in ("fluxo.html", "preview.html", "index.html", "entrega.html"):
+        fpath = out_dir / name
+        if not fpath.exists():
+            continue
+        text = fpath.read_text(encoding="utf-8")
         for href in href_re.findall(text):
-            if href.startswith(("#", "mailto:", "javascript:", "data:", "http://", "https://")):
+            if href.startswith(("#", "mailto:", "javascript:", "data:", "http://", "https://", "/")):
                 continue
             path = href.split("?", 1)[0].split("#", 1)[0]
             if not path:
@@ -823,28 +855,28 @@ def build_base_css(manifest: dict, tokens_link: str, parsed_tokens: dict[str, di
     pt = parsed_tokens or {"light": {}, "dark": {}}
     tl, td = pt.get("light", {}), pt.get("dark", {})
 
-    bg_dark = td.get("--surface-z1") or th.get("canvasBgDark", "#0E131D")
-    card_dark = td.get("--surface-z2") or th.get("surfaceCardDark", "#141C29")
-    well_dark = td.get("--surface-z0") or "#080C12"
-    border_dark = td.get("--border-subtle") or "#263347"
-    border_strong_dark = td.get("--border-strong") or "#3E5270"
+    bg_dark = td.get("--surface-z1") or th.get("canvasBgDark", "#101620")
+    card_dark = td.get("--surface-z2") or th.get("surfaceCardDark", "#17202E")
+    well_dark = td.get("--surface-z0") or "#090E16"
+    border_dark = td.get("--border-subtle") or "#2C3E58"
+    border_strong_dark = td.get("--border-strong") or "#49638A"
     text_strong_dark = td.get("--text-strong") or "#F3F6FB"
-    text_body_dark = td.get("--text-body") or "#D5DFED"
-    text_muted_dark = td.get("--text-muted") or "#A8B7CC"
+    text_body_dark = td.get("--text-body") or "#D6E1F0"
+    text_muted_dark = td.get("--text-muted") or "#A9BAD1"
 
-    bg_light = tl.get("--surface-z1") or th.get("canvasBgLight", "#E1EAF4")
+    bg_light = tl.get("--surface-z1") or th.get("canvasBgLight", "#D9E5F3")
     card_light = tl.get("--surface-z2") or th.get("surfaceCardLight", "#FFFFFF")
-    well_light = tl.get("--surface-z0") or "#CFDCEB"
-    border_light = tl.get("--border-subtle") or "#B0C2D9"
-    border_strong_light = tl.get("--border-strong") or "#728AA8"
-    text_strong_light = tl.get("--text-strong") or "#101822"
-    text_body_light = tl.get("--text-body") or "#1E2D40"
-    text_muted_light = tl.get("--text-muted") or "#435163"
+    well_light = tl.get("--surface-z0") or "#C6D6EA"
+    border_light = tl.get("--border-subtle") or "#93ABC7"
+    border_strong_light = tl.get("--border-strong") or "#5A769B"
+    text_strong_light = tl.get("--text-strong") or "#0E1726"
+    text_body_light = tl.get("--text-body") or "#1C2B3F"
+    text_muted_light = tl.get("--text-muted") or "#3E4E63"
 
-    brand_navy = tl.get("--surface-brand-dark") or td.get("--surface-brand-dark") or th.get("brandNavy", "#0E294B")
-    accent_dark = td.get("--accent") or th.get("brandAccent", "#FF945E")
-    accent_light = tl.get("--accent") or th.get("brandAccentDeep", "#C2410C")
-    accent_deep = tl.get("--accent") or th.get("brandAccentDeep", "#C2410C")
+    brand_navy = tl.get("--surface-brand-dark") or td.get("--surface-brand-dark") or th.get("brandNavy", "#0C254A")
+    accent_dark = td.get("--primary") or td.get("--accent") or th.get("brandAccent", "#2563EB")
+    accent_light = tl.get("--primary") or tl.get("--accent") or th.get("brandAccentDeep", "#14427A")
+    accent_deep = tl.get("--primary") or td.get("--primary") or th.get("brandAccentDeep", "#14427A")
 
     css = BASE_STYLES
     replacements = {
@@ -2223,12 +2255,210 @@ def render_index_html(
 """
 
 
+def render_entrega_html(
+    manifest: dict,
+    tokens_link: str,
+    parsed_tokens: dict[str, dict[str, str]] | None = None,
+    out_dir: Path | None = None,
+    app_url: str = "",
+) -> str:
+    """Gera o Hub Unificado de Link Unico (entrega.html · v2.4.0)."""
+    proj = manifest.get("project", {})
+    name = html.escape(proj.get("name", "Projeto Design Aura"))
+    subtitle = html.escape(proj.get("subtitle", "Entrega Unificada"))
+    default_theme = html.escape(proj.get("defaultTheme", "dark"))
+    head_css = build_base_css(manifest, tokens_link, parsed_tokens)
+
+    live_app_url = (app_url or proj.get("appUrl") or "").strip()
+    if not live_app_url:
+        start_id = proj.get("startScreenId") or manifest["screens"][0]["id"]
+        start_screen = next((s for s in manifest["screens"] if s["id"] == start_id), manifest["screens"][0])
+        if start_screen.get("isSpaRoute"):
+            live_app_url = start_screen.get("file", "")
+
+    bible_html_href = ""
+    bible_pdf_href = ""
+    if out_dir is not None:
+        for cand in ("DESIGN-BIBLE.html", "../DESIGN-BIBLE.html"):
+            if (out_dir / cand).exists():
+                bible_html_href = cand
+                break
+        for cand in ("DESIGN-BIBLE.pdf", "../DESIGN-BIBLE.pdf"):
+            if (out_dir / cand).exists():
+                bible_pdf_href = cand
+                break
+
+    tabs = [
+        {"id": "figma", "label": "Mapa Figma", "src": "fluxo.html"},
+    ]
+    if live_app_url:
+        tabs.append({"id": "app", "label": "App ao Vivo", "src": live_app_url})
+    tabs.extend([
+        {"id": "preview", "label": "Preview Guiado", "src": "preview.html"},
+        {"id": "galeria", "label": "Galeria", "src": "index.html"},
+    ])
+    if bible_html_href:
+        tabs.append({"id": "biblia", "label": "Bíblia Visual", "src": bible_html_href})
+
+    tabs_html = "".join(
+        f'<button type="button" class="hub-tab" data-tab="{html.escape(t["id"])}" data-src="{html.escape(t["src"])}">{html.escape(t["label"])}</button>'
+        for t in tabs
+    )
+    pdf_btn = (
+        f'<a class="da-btn da-btn--sm hub-hide-xs" href="{html.escape(bible_pdf_href)}" target="_blank" rel="noopener">PDF</a>'
+        if bible_pdf_href
+        else ""
+    )
+    default_mobile_tab = "app" if live_app_url else "preview"
+
+    return f"""<!DOCTYPE html>
+<html lang="pt-BR" data-theme="{default_theme}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{name} · Entrega Unificada</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap">
+<script>{THEME_BOOT_JS}</script>
+{head_css}
+<style>
+  html, body {{ height: 100%; overflow: hidden; margin: 0; }}
+  .da-hub {{ display: flex; flex-direction: column; height: 100dvh; width: 100vw; overflow: hidden; background: var(--surface-z1); }}
+  .hub-bar {{
+    position: relative; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    min-height: 54px; padding: 6px 14px; background: var(--da-navy); color: #F8FAFC;
+    border-bottom: 1px solid rgba(148, 197, 255, 0.22); box-shadow: var(--shadow-z1);
+  }}
+  .hub-brand {{ display: flex; flex-direction: column; min-width: 0; max-width: 240px; flex: 0 1 auto; }}
+  .hub-brand strong {{ font-family: var(--da-font-display); font-size: 13.5px; font-weight: 700; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+  .hub-brand span {{ font-family: var(--da-font-mono); font-size: 11px; color: #C2D6EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+  .hub-tabs {{
+    display: flex; align-items: center; gap: 4px; padding: 3px; border-radius: 10px;
+    background: rgba(6, 15, 32, 0.48); border: 1px solid rgba(148, 197, 255, 0.22);
+    overflow-x: auto; scrollbar-width: none;
+  }}
+  .hub-tabs::-webkit-scrollbar {{ display: none; }}
+  .hub-tab {{
+    display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 0 12px;
+    border-radius: 7px; border: 1px solid transparent; background: transparent; color: #D7E5F7;
+    font-family: var(--da-font-ui); font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    transition-property: background-color, border-color, color; transition-duration: 150ms; transition-timing-function: ease-out;
+  }}
+  .hub-tab:hover {{ color: #FFFFFF; background: rgba(255, 255, 255, 0.08); }}
+  .hub-tab.is-active {{
+    background: var(--da-accent-deep); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 2px 8px rgba(0, 0, 0, 0.28);
+  }}
+  .hub-actions {{ display: flex; align-items: center; gap: 6px; flex: none; }}
+  .hub-actions .da-btn {{
+    background: rgba(255, 255, 255, 0.10); color: #FFFFFF; border-color: rgba(194, 214, 238, 0.28); box-shadow: none;
+  }}
+  .hub-actions .da-btn:hover {{ background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.45); }}
+  .hub-stage {{ position: relative; flex: 1 1 auto; min-height: 0; background: var(--surface-z0); }}
+  .hub-frame {{ width: 100%; height: 100%; display: block; border: 0; background: var(--surface-z1); }}
+
+  @media (max-width: 768px) {{
+    .hub-bar {{ flex-wrap: wrap; padding: 8px 10px; gap: 8px; }}
+    .hub-brand {{ max-width: calc(100% - 110px); }}
+    .hub-tabs {{ order: 3; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 4px; }}
+    .hub-tab {{ min-height: 44px; padding: 0 8px; font-size: 12.5px; }}
+    .hub-hide-xs {{ display: none; }}
+  }}
+</style>
+</head>
+<body>
+<div class="da-hub" data-hub="true">
+  <header class="hub-bar">
+    <div class="hub-brand">
+      <strong>{name}</strong>
+      <span>{subtitle}</span>
+    </div>
+    <nav class="hub-tabs" id="hubTabs" aria-label="Navegação da entrega">
+      {tabs_html}
+    </nav>
+    <div class="hub-actions">
+      {pdf_btn}
+      <a class="da-btn da-btn--sm hub-hide-xs" id="btnOpenDirect" href="fluxo.html" target="_blank" rel="noopener">Abrir aba</a>
+      <button type="button" class="da-btn da-btn--icon" id="btnThemeToggle" aria-label="Alternar tema" onclick="daToggleTheme()"></button>
+    </div>
+  </header>
+  <main class="hub-stage">
+    <iframe class="hub-frame" id="hubFrame" title="Visualizador unificado de entrega" src="fluxo.html"></iframe>
+  </main>
+</div>
+<script>
+{ICONS_JS}
+{THEME_TOGGLE_JS}
+(function() {{
+  var frame = document.getElementById('hubFrame');
+  var openDirect = document.getElementById('btnOpenDirect');
+  var tabBtns = Array.prototype.slice.call(document.querySelectorAll('.hub-tab'));
+  var defaultMobileTab = {json.dumps(default_mobile_tab)};
+
+  function syncFrameTheme(theme) {{
+    try {{ localStorage.setItem('design-aura:theme', theme); }} catch (e) {{}}
+    try {{
+      if (frame && frame.contentWindow) {{
+        frame.contentWindow.postMessage({{ type: 'designaura:theme', theme: theme }}, '*');
+      }}
+    }} catch (e) {{}}
+    try {{
+      if (frame && frame.contentDocument && frame.contentDocument.documentElement) {{
+        frame.contentDocument.documentElement.setAttribute('data-theme', theme);
+      }}
+    }} catch (e) {{}}
+  }}
+
+  function activateTab(tabId, pushUrl) {{
+    var target = tabBtns.find(function(b) {{ return b.dataset.tab === tabId; }}) || tabBtns[0];
+    if (!target) return;
+    tabBtns.forEach(function(b) {{
+      var on = b === target;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-current', on ? 'page' : 'false');
+    }});
+    var src = target.dataset.src;
+    if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+    if (openDirect) openDirect.setAttribute('href', src);
+    if (pushUrl) {{
+      try {{
+        var u = new URL(window.location.href);
+        u.searchParams.set('tab', target.dataset.tab);
+        window.history.replaceState(null, '', u.toString());
+      }} catch (e) {{}}
+    }}
+  }}
+
+  tabBtns.forEach(function(btn) {{
+    btn.addEventListener('click', function() {{ activateTab(btn.dataset.tab, true); }});
+  }});
+
+  frame.addEventListener('load', function() {{
+    syncFrameTheme(daGetTheme());
+  }});
+
+  document.addEventListener('designaura:themechange', function(e) {{
+    syncFrameTheme(e.detail && e.detail.theme ? e.detail.theme : daGetTheme());
+  }});
+
+  document.getElementById('btnThemeToggle').innerHTML = daGetTheme() === 'dark' ? DA_ICONS.sun : DA_ICONS.moon;
+
+  var qTab = new URLSearchParams(window.location.search).get('tab');
+  var initialTab = qTab || (window.innerWidth <= 768 ? defaultMobileTab : 'figma');
+  activateTab(initialTab, false);
+}})();
+</script>
+</body>
+</html>
+"""
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Gerador de vitrine estilo Figma (fluxo.html, preview.html, index.html).")
+    parser = argparse.ArgumentParser(description="Gerador de vitrine estilo Figma (fluxo.html, preview.html, index.html, entrega.html).")
     parser.add_argument("manifest", help="Caminho para screen-manifest.json")
     parser.add_argument("--tokens", default="", help="Caminho opcional para tokens.css relativo ao --out ou absoluto")
     parser.add_argument("--out", default=".", help="Diretorio de saida")
     parser.add_argument("--thumbs", default="", help="Diretorio opcional com PNGs de auditoria para miniaturas na Galeria (index.html)")
+    parser.add_argument("--app-base", default="", help="Prefixo/URL base para telas SPA ('route') e aba 'App ao Vivo' em entrega.html (ex.: /app ou http://127.0.0.1:4188/app)")
     parser.add_argument("--verify-files", action="store_true", help="Falha se alguma tela do manifesto ou href local nao existir")
     parser.add_argument("--relayout", action="store_true", help="Forca reorganizacao panoramica Hub-and-Spoke ignorando x/y antigos")
     args = parser.parse_args()
@@ -2240,6 +2470,7 @@ def main():
 
     try:
         manifest = json.loads(mpath.read_text(encoding="utf-8"))
+        _normalize_screen_targets(manifest, app_base=args.app_base)
         for note in apply_auto_layout(manifest, force_relayout=args.relayout):
             print(f"[layout] {note}")
         validate_manifest(manifest)
@@ -2274,8 +2505,13 @@ def main():
     (out_dir / "fluxo.html").write_text(render_fluxo_html(manifest, tokens_link, parsed_tokens), encoding="utf-8")
     (out_dir / "preview.html").write_text(render_preview_html(manifest, tokens_link, parsed_tokens), encoding="utf-8")
     (out_dir / "index.html").write_text(render_index_html(manifest, tokens_link, parsed_tokens, thumbs_map), encoding="utf-8")
+    (out_dir / "entrega.html").write_text(
+        render_entrega_html(manifest, tokens_link, parsed_tokens, out_dir=out_dir, app_url=args.app_base),
+        encoding="utf-8",
+    )
 
-    print(f"Vitrine estilo Figma gerada em: {out_dir}")
+    print(f"Vitrine estilo Figma + Hub Unificado gerados em: {out_dir}")
+    print(f"  - {out_dir / 'entrega.html'}")
     print(f"  - {out_dir / 'fluxo.html'}")
     print(f"  - {out_dir / 'preview.html'}")
     print(f"  - {out_dir / 'index.html'}")

@@ -82,10 +82,74 @@ def emit_css_vars(mapping: dict[str, str], prefix: str = "") -> str:
     return "\n".join(lines)
 
 
+def _mix_hex(hex_a: str, hex_b: str, ratio_a: float) -> str:
+    """Mistura duas cores hex (ratio_a de hex_a + (1 - ratio_a) de hex_b)."""
+    ha = color_to_hex(hex_a) or "#17202e"
+    hb = color_to_hex(hex_b) or "#ffffff"
+    ra, ga, ba = int(ha[1:3], 16), int(ha[3:5], 16), int(ha[5:7], 16)
+    rb, gb, bb = int(hb[1:3], 16), int(hb[3:5], 16), int(hb[5:7], 16)
+    r = int(round(ra * ratio_a + rb * (1.0 - ratio_a)))
+    g = int(round(ga * ratio_a + gb * (1.0 - ratio_a)))
+    b = int(round(ba * ratio_a + bb * (1.0 - ratio_a)))
+    return f"#{r:02x}{g:02x}{b:02x}"
+
+
+def _enrich_semantic_theme(tmap: dict[str, str], theme: str) -> dict[str, str]:
+    """Completa tokens de superficie/borda/texto semanticos e cabecalhos da marca (v2.4.0) sem sobrescrever definidos."""
+    enriched = dict(tmap)
+    z2 = enriched.get("surface-z2", "#ffffff" if theme == "light" else "#17202e")
+    brand_dark = enriched.get("surface-brand-dark", "#0c254a")
+    primary = enriched.get("primary", "#14427a" if theme == "light" else "#2563eb")
+
+    if theme == "light":
+        enriched.setdefault("surface-brand-header", _mix_hex(primary, "#ffffff", 0.12))
+        enriched.setdefault("surface-brand-panel", _mix_hex(primary, "#ffffff", 0.07))
+        defaults = {
+            "primary": ("#e3eefc", "#8eb4e6", primary),
+            "accent": ("#ffedd5", "#ea580c", enriched.get("accent", "#c2410c")),
+            "success": ("#dcfce7", "#16a34a", enriched.get("success", "#15803d")),
+            "warning": ("#fef3c7", "#d97706", "#9a4a06"),
+            "danger": ("#fee2e2", "#dc2626", enriched.get("danger", "#b91c1c")),
+            "info": ("#dbeafe", "#2563eb", enriched.get("info", "#1d4ed8")),
+        }
+    else:
+        enriched.setdefault("surface-brand-header", _mix_hex(brand_dark, primary, 0.78))
+        enriched.setdefault("surface-brand-panel", _mix_hex(brand_dark, z2, 0.65))
+        defaults = {
+            "primary": (_mix_hex(primary, z2, 0.22), _mix_hex(primary, "#ffffff", 0.76), "#7cbcff"),
+            "accent": (_mix_hex(enriched.get("accent", "#c8460e"), z2, 0.24), "#ea580c", "#ff9a66"),
+            "success": ("#0d2b1d", "#22c55e", "#4ade80"),
+            "warning": ("#2e1f0a", "#f59e0b", "#fbbf24"),
+            "danger": ("#2c1216", "#ef4444", "#ff6e6e"),
+            "info": ("#102546", "#3b82f6", "#74b8ff"),
+        }
+
+    for role, (surf, bord, txt) in defaults.items():
+        enriched.setdefault(f"{role}-surface", surf)
+        enriched.setdefault(f"{role}-border", bord)
+        enriched.setdefault(f"{role}-text", txt)
+    return enriched
+
+
+LIGHT_ELEVATION_LINES = [
+    "  --rim-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.85);",
+    "  --shadow-z1: 0 0 0 1px rgba(14, 41, 75, 0.09), 0 1px 2px -1px rgba(14, 41, 75, 0.08), 0 3px 8px -1px rgba(14, 41, 75, 0.06);",
+    "  --shadow-z2: 0 0 0 1px rgba(14, 41, 75, 0.11), 0 3px 6px -2px rgba(14, 41, 75, 0.09), 0 10px 22px -6px rgba(14, 41, 75, 0.08);",
+    "  --shadow-z3: 0 0 0 1px rgba(14, 41, 75, 0.14), 0 8px 20px -4px rgba(14, 41, 75, 0.13), 0 18px 34px -8px rgba(14, 41, 75, 0.10);",
+]
+
+DARK_ELEVATION_LINES = [
+    "  --rim-highlight: inset 0 1px 0 rgba(148, 197, 255, 0.12);",
+    "  --shadow-z1: inset 0 1px 0 rgba(148, 197, 255, 0.09), 0 2px 10px -2px rgba(2, 6, 18, 0.36);",
+    "  --shadow-z2: inset 0 1px 0 rgba(148, 197, 255, 0.12), 0 8px 22px -6px rgba(2, 6, 18, 0.44);",
+    "  --shadow-z3: inset 0 1px 0 rgba(148, 197, 255, 0.15), 0 16px 36px -8px rgba(2, 6, 18, 0.54);",
+]
+
+
 def build_css(data: dict) -> str:
     meta = data.get("meta", {})
     brand = meta.get("brand", "Design Aura Project")
-    version = meta.get("version", "1.0.0")
+    version = meta.get("version", "2.4.0")
     default_theme = meta.get("defaultTheme", "dark")
 
     primitives = data.get("primitive", {})
@@ -95,10 +159,17 @@ def build_css(data: dict) -> str:
     radii = data.get("radii", {})
     motion = data.get("motion", {})
 
-    light_resolved = {k: resolve_ref(v, primitives) for k, v in semantic.get("light", {}).items()}
-    dark_resolved = {k: resolve_ref(v, primitives) for k, v in semantic.get("dark", {}).items()}
+    light_resolved = _enrich_semantic_theme(
+        {k: resolve_ref(v, primitives) for k, v in semantic.get("light", {}).items()},
+        "light",
+    )
+    dark_resolved = _enrich_semantic_theme(
+        {k: resolve_ref(v, primitives) for k, v in semantic.get("dark", {}).items()},
+        "dark",
+    )
 
     base_theme_vars = dark_resolved if default_theme == "dark" else light_resolved
+    base_elevation = DARK_ELEVATION_LINES if default_theme == "dark" else LIGHT_ELEVATION_LINES
 
     spacing_vars = {f"space-{k}": v for k, v in spacing.items()}
     radii_vars = {f"radius-{k}": v for k, v in radii.items()}
@@ -112,25 +183,19 @@ def build_css(data: dict) -> str:
         emit_css_vars(spacing_vars),
         emit_css_vars(radii_vars),
         emit_css_vars(motion_vars),
-        "  --shadow-z1: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08), 0 2px 6px 0 rgba(15, 23, 42, 0.05);",
-        "  --shadow-z2: 0 0 0 1px rgba(15, 23, 42, 0.10), 0 2px 4px -1px rgba(15, 23, 42, 0.08), 0 6px 14px -2px rgba(15, 23, 42, 0.06);",
-        "  --shadow-z3: 0 0 0 1px rgba(15, 23, 42, 0.12), 0 6px 16px -4px rgba(15, 23, 42, 0.12), 0 14px 28px -6px rgba(15, 23, 42, 0.08);",
+        *base_elevation,
         "}",
         "",
         'html[data-theme="light"], [data-theme="light"] {',
         "  color-scheme: light;",
         emit_css_vars(light_resolved),
-        "  --shadow-z1: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08), 0 2px 6px 0 rgba(15, 23, 42, 0.05);",
-        "  --shadow-z2: 0 0 0 1px rgba(15, 23, 42, 0.10), 0 2px 4px -1px rgba(15, 23, 42, 0.08), 0 6px 14px -2px rgba(15, 23, 42, 0.06);",
-        "  --shadow-z3: 0 0 0 1px rgba(15, 23, 42, 0.12), 0 6px 16px -4px rgba(15, 23, 42, 0.12), 0 14px 28px -6px rgba(15, 23, 42, 0.08);",
+        *LIGHT_ELEVATION_LINES,
         "}",
         "",
         'html[data-theme="dark"], [data-theme="dark"] {',
         "  color-scheme: dark;",
         emit_css_vars(dark_resolved),
-        "  --shadow-z1: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.24);",
-        "  --shadow-z2: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 6px 18px rgba(0, 0, 0, 0.30);",
-        "  --shadow-z3: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 14px 32px rgba(0, 0, 0, 0.38);",
+        *DARK_ELEVATION_LINES,
         "}",
         "",
         "/* Superficies base e micro-craft obrigatorio (Blocos 3, 4, 6, 9) */",
@@ -211,7 +276,10 @@ def _resolved_themes(data: dict) -> tuple[dict, dict[str, dict[str, str]]]:
     semantic = data.get("semantic", {})
     themes = {}
     for theme in ("light", "dark"):
-        raw = {k: resolve_ref(v, primitives) for k, v in semantic.get(theme, {}).items()}
+        raw = _enrich_semantic_theme(
+            {k: resolve_ref(v, primitives) for k, v in semantic.get(theme, {}).items()},
+            theme,
+        )
         themes[theme] = {k: color_to_hex(v, raw) or v for k, v in raw.items()}
     return primitives, themes
 

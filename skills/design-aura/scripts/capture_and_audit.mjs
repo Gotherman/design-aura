@@ -50,34 +50,72 @@ function resolveManifestScreenPath(manifestDir, relFile) {
   return direct;
 }
 
-function entriesFromManifest(manifestPath, includeVitrine) {
+function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
   const abs = path.resolve(manifestPath);
   const data = JSON.parse(fs.readFileSync(abs, 'utf8'));
   const base = path.dirname(abs);
+  const normBase = (baseUrl || data.project?.appBaseUrl || '').replace(/\/+$/, '');
   const entries = [];
   const screenDirs = new Set();
 
   for (const screen of data.screens || []) {
-    const file = screen.file;
-    if (!file || /^https?:\/\//i.test(file)) continue;
+    const route = (screen.route || '').trim();
+    const file = (screen.file || '').trim();
+    const clickSelector = (screen.clickSelector || '').trim();
+    if (route && normBase) {
+      const url = /^https?:\/\//i.test(route)
+        ? route
+        : `${normBase}${route.startsWith('/') ? route : '/' + route}`;
+      entries.push({
+        target: url,
+        labelOverride: screen.id || '',
+        platform: (screen.platform || '').toLowerCase() || 'responsive',
+        isVitrine: false,
+        clickSelector,
+      });
+      continue;
+    }
+    if (!file) continue;
+    if (/^https?:\/\//i.test(file)) {
+      entries.push({
+        target: file,
+        labelOverride: screen.id || '',
+        platform: (screen.platform || '').toLowerCase() || 'responsive',
+        isVitrine: false,
+        clickSelector,
+      });
+      continue;
+    }
+    if (file.startsWith('/') && normBase) {
+      entries.push({
+        target: `${normBase}${file}`,
+        labelOverride: screen.id || '',
+        platform: (screen.platform || '').toLowerCase() || 'responsive',
+        isVitrine: false,
+        clickSelector,
+      });
+      continue;
+    }
     const resolved = resolveManifestScreenPath(base, file);
     screenDirs.add(path.dirname(resolved));
     entries.push({
       target: resolved,
+      labelOverride: screen.id || '',
       platform: (screen.platform || '').toLowerCase() || 'responsive',
       isVitrine: false,
+      clickSelector,
     });
   }
 
   if (includeVitrine) {
     const searchDirs = [...screenDirs, base];
     const seen = new Set();
-    for (const name of ['fluxo.html', 'preview.html', 'index.html']) {
+    for (const name of ['entrega.html', 'fluxo.html', 'preview.html', 'index.html']) {
       for (const d of searchDirs) {
         const candidate = path.join(d, name);
         if (fs.existsSync(candidate) && !seen.has(candidate)) {
           seen.add(candidate);
-          entries.push({ target: candidate, platform: 'vitrine', isVitrine: true });
+          entries.push({ target: candidate, platform: 'vitrine', isVitrine: true, clickSelector: '' });
           break;
         }
       }
@@ -95,8 +133,10 @@ function parseArgs(argv) {
     strict: false,
     manifest: '',
     manifestDir: '',
+    baseUrl: '',
     includeVitrine: true,
     allViewports: false,
+    smokeInteract: false,
     concurrency: 4,
     quiet: false,
   };
@@ -106,20 +146,23 @@ function parseArgs(argv) {
     else if (a === '--viewports' && argv[i + 1]) args.viewports = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--themes' && argv[i + 1]) args.themes = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--manifest' && argv[i + 1]) args.manifest = argv[++i];
+    else if (a === '--base-url' && argv[i + 1]) args.baseUrl = argv[++i];
     else if (a === '--concurrency' && argv[i + 1]) args.concurrency = Math.max(1, Math.min(8, parseInt(argv[++i], 10) || 4));
     else if (a === '--no-vitrine') args.includeVitrine = false;
     else if (a === '--all-viewports') args.allViewports = true;
+    else if (a === '--smoke-interact') args.smokeInteract = true;
     else if (a === '--quiet') args.quiet = true;
     else if (a === '--strict') args.strict = true;
     else if (a === '--help' || a === '-h') {
-      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--viewports desktop,tablet,mobile] [--themes dark,light] [--concurrency 4] [--all-viewports] [--no-vitrine] [--quiet] [--strict]');
+      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,tablet,mobile] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--quiet] [--strict]');
       process.exit(0);
     } else {
-      args.entries.push({ target: a, platform: 'responsive', isVitrine: false });
+      const isVit = /(?:entrega|fluxo|preview|index|design-bible)\.html$/i.test(a);
+      args.entries.push({ target: a, platform: isVit ? 'vitrine' : 'responsive', isVitrine: isVit, clickSelector: '' });
     }
   }
   if (args.manifest) {
-    const res = entriesFromManifest(args.manifest, args.includeVitrine);
+    const res = entriesFromManifest(args.manifest, args.includeVitrine, args.baseUrl);
     args.manifestDir = res.manifestDir;
     args.entries.push(...res.entries);
   }
@@ -278,7 +321,7 @@ const DOM_AUDIT_FN = `(() => {
   const docEl = document.documentElement;
   const isMobile = window.innerWidth <= 480;
   const isDesktop = window.innerWidth >= 1024;
-  const isVitrine = !!document.querySelector('.fx-app, .pv-app, .g-shell, .specimen-sheet') || /design-bible/i.test(location.pathname);
+  const isVitrine = !!document.querySelector('.fx-app, .pv-app, .g-shell, .specimen-sheet, .da-hub, [data-hub="true"]') || /(?:design-bible|entrega)\.html$/i.test(location.pathname);
   const titlePath = (document.title + ' ' + location.pathname).toLowerCase();
   const isAuthPage = !!document.querySelector('input[type="password"]') || /(?:login|entrada|acesso|auth|signin|signup|cadastro|2fa)/.test(titlePath);
 
@@ -364,10 +407,16 @@ const DOM_AUDIT_FN = `(() => {
     }
   }
 
-  // 6. Amostra de contraste real computado
+  // 6. Amostra de contraste real computado (inclui emblemas/monogramas/badges em div/span - v2.4.0)
   let contrastFails = 0;
   const contrastSamples = [];
-  const textEls = Array.from(document.querySelectorAll('h1,h2,h3,p,a,button,td,th')).slice(0, 60);
+  const primaryTextEls = Array.from(document.querySelectorAll('h1,h2,h3,p,a,button,td,th')).slice(0, 60);
+  const emblemBadgeEls = Array.from(document.querySelectorAll('[class*="emblem"],[class*="monogram"],[class*="badge"],[class*="chip"],[class*="pill"],[class*="avatar"],[class*="logo"]')).filter((el) => {
+    if (el.children.length > 1) return false;
+    const txt = (el.textContent || '').trim();
+    return txt.length >= 1 && txt.length <= 26;
+  }).slice(0, 30);
+  const textEls = [...new Set([...primaryTextEls, ...emblemBadgeEls])];
   for (const el of textEls) {
     const r = el.getBoundingClientRect();
     if (r.width === 0 || r.height === 0 || !(el.textContent || '').trim()) continue;
@@ -715,6 +764,95 @@ const DOM_AUDIT_FN = `(() => {
         issues.push({ severity: 'BLOCK', rule: 'DA-MOBILE-FLEX-CLIP', detail: shrinkBombs + ' card(s) com overflow:hidden dentro de container flex-column sem flex-shrink:0 (esmaga e corta texto ao abrir no mockup/preview!)' });
       }
     }
+
+    // 19. DA-BADGE-ECHO (v2.4.0): mesmo texto de badge/chip repetido >= 4x na mesma vista poluindo lista
+    {
+      const counts = new Map();
+      for (const el of Array.from(mainEl.querySelectorAll('[class*="badge"], [class*="chip"], [class*="pill"], [class*="status"], [class*="tag"]')).slice(0, 160)) {
+        const st = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        if (st.display === 'none' || st.visibility === 'hidden' || r.width < 12 || r.height < 12) continue;
+        const txt = (el.textContent || '').replace(/\\s+/g, ' ').trim();
+        if (txt.length < 3 || txt.length > 32 || /^[\\d.,%+\\-/: ]+$/.test(txt)) continue;
+        const key = txt.toLowerCase();
+        counts.set(key, (counts.get(key) || 0) + 1);
+      }
+      for (const [k, cnt] of counts.entries()) {
+        if (cnt >= 4) {
+          issues.push({ severity: 'HIGH', rule: 'DA-BADGE-ECHO', detail: 'Selo-eco "' + k + '" repetido ' + cnt + 'x na mesma lista/aba (exiba selos apenas para excecoes ou estados distintos)' });
+          break;
+        }
+      }
+    }
+
+    // 20. DA-MOBILE-HERO-BLOAT (v2.4.0): hero + banners de aviso no topo do mobile consumindo > 38% da tela antes da lista principal
+    if (isMobile && !isAuthPage) {
+      const heroEls = Array.from(mainEl.querySelectorAll('[class*="hero"], [class*="alert"], [class*="banner"], [class*="aviso"], [class*="notice"]')).filter((el) => {
+        const st = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        return st.display !== 'none' && st.visibility !== 'hidden' && r.top >= 0 && r.top < 540 && r.height >= 48 && r.width >= window.innerWidth * 0.65;
+      });
+      // Dedup aninhados: conta apenas blocos de topo nao contidos em outro candidato
+      const topBanners = heroEls.filter((el) => !heroEls.some((other) => other !== el && other.contains(el)));
+      const totalBannerH = topBanners.reduce((acc, el) => acc + el.getBoundingClientRect().height, 0);
+      if (totalBannerH > window.innerHeight * 0.42 && totalBannerH > 340) {
+        issues.push({
+          severity: 'HIGH',
+          rule: 'DA-MOBILE-HERO-BLOAT',
+          detail: 'Hero + banners de topo no mobile consomem ' + Math.round(totalBannerH) + 'px (' + Math.round((totalBannerH / window.innerHeight) * 100) + '% da tela) antes da lista principal (teto recomendado <= 38% / 320px)',
+        });
+      }
+    }
+
+    // 21. DA-HEADER-STACK-BLOAT & DA-TAB-OVERFLOW (v2.4.0): pilha de 3+ barras no topo desktop ou > 6 abas irmas numa unica linha
+    if (isDesktop && !isAuthPage) {
+      const topBands = Array.from(document.querySelectorAll('header, [class*="topbar"], [class*="toolbar"], [class*="subbar"], [class*="status-bar"], [class*="filter-bar"], [class*="tabs"], [role="tablist"]')).filter((el) => {
+        if (el.closest('aside, [class*="sidebar"]')) return false;
+        const st = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        return st.display !== 'none' && st.visibility !== 'hidden' && r.top >= 0 && r.top <= 250 && r.height >= 28 && r.height <= 92 && r.width >= 520;
+      });
+      const distinctBands = topBands.filter((el) => !topBands.some((o) => o !== el && o.contains(el)));
+      distinctBands.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+      let stackedCount = 0;
+      let lastBottom = -10;
+      let totalStackH = 0;
+      for (const b of distinctBands) {
+        const r = b.getBoundingClientRect();
+        if (r.top >= lastBottom - 4) {
+          stackedCount++;
+          totalStackH += r.height;
+          lastBottom = r.bottom;
+        }
+      }
+      if (stackedCount >= 3 && totalStackH > 225) {
+        issues.push({
+          severity: 'HIGH',
+          rule: 'DA-HEADER-STACK-BLOAT',
+          detail: stackedCount + ' barras horizontais empilhadas no topo do desktop consumindo ' + Math.round(totalStackH) + 'px antes dos dados reais (teto: max. 2 barras / <= 210px)',
+        });
+      }
+
+      for (const grp of document.querySelectorAll('[role="tablist"], [class*="tabs"], [class*="segmented"], [class*="filter-tabs"]')) {
+        if (grp.closest('aside, [class*="sidebar"]')) continue;
+        const st = getComputedStyle(grp);
+        if (st.display === 'none' || st.visibility === 'hidden') continue;
+        const tabKids = Array.from(grp.children).filter((ch) => {
+          const tag = ch.tagName;
+          const cs = getComputedStyle(ch);
+          const cr = ch.getBoundingClientRect();
+          return (tag === 'BUTTON' || tag === 'A' || ch.getAttribute('role') === 'tab') && cs.display !== 'none' && cr.width > 24 && cr.height > 20;
+        });
+        if (tabKids.length > 6) {
+          issues.push({
+            severity: 'MEDIUM',
+            rule: 'DA-TAB-OVERFLOW',
+            detail: 'Barra de filtros/abas com ' + tabKids.length + ' abas irmas lado a lado (teto recomendado: 4-5 abas primarias + menu "Mais status")',
+          });
+          break;
+        }
+      }
+    }
   }
 
   // 18. DA-NAV-TRUNCATION & DA-HEADER-HSCROLL (v2.3.0): detecta marca/nav cortados horizontalmente e barra superior com overflow/scrollbar
@@ -842,19 +980,21 @@ async function main() {
   const resolvedTargets = args.entries.map((e) => {
     if (/^https?:\/\//i.test(e.target)) {
       return {
-        label: e.target.replace(/[^a-z0-9]+/gi, '-').slice(0, 40),
+        label: e.labelOverride || e.target.replace(/^https?:\/\/[^/]+/i, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 40) || 'root',
         url: e.target,
         platform: e.platform,
         isVitrine: e.isVitrine,
+        clickSelector: e.clickSelector || '',
       };
     }
     const abs = path.resolve(e.target);
     const rel = path.relative(rootDir, abs).split(path.sep).join('/');
     return {
-      label: path.basename(abs, path.extname(abs)),
+      label: e.labelOverride || path.basename(abs, path.extname(abs)),
       url: `http://127.0.0.1:${staticSrv.port}/${rel}`,
       platform: e.platform,
       isVitrine: e.isVitrine,
+      clickSelector: e.clickSelector || '',
     };
   });
 
@@ -996,12 +1136,51 @@ async function main() {
       const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
       fs.writeFileSync(shotPath, Buffer.from(shot.data, 'base64'));
 
+      // Smoke interativo pos-clique (v2.4.0): valida Resize In-Place / abertura de conferencia sem erro JS ou recorte
+      let interactScreenshot = null;
+      const interactSel = target.clickSelector || (args.smokeInteract && !target.isVitrine ? '[data-da-open]' : '');
+      if (interactSel && !target.isVitrine) {
+        const clickRes = await cdp.send('Runtime.evaluate', {
+          expression: `(() => {
+            const el = document.querySelector(${JSON.stringify(interactSel)});
+            if (!el) return false;
+            el.scrollIntoView({ block: 'center' });
+            el.click();
+            return true;
+          })()`,
+          returnByValue: true,
+        });
+        if (clickRes?.result?.value) {
+          await new Promise((r) => setTimeout(r, 280));
+          const postEval = await cdp.send('Runtime.evaluate', {
+            expression: DOM_AUDIT_FN,
+            returnByValue: true,
+          });
+          const postIssues = postEval?.result?.value?.issues || [];
+          for (const pi of postIssues) {
+            if (['DA-DOM-OVERFLOW', 'DA-CLIPPED-CONTENT', 'DA-FIXED-OVERLAP', 'DA-MOBILE-FLEX-CLIP'].includes(pi.rule)) {
+              issues.push({ severity: pi.severity, rule: `${pi.rule}-INTERACT`, detail: `[Pos-clique ${interactSel}] ${pi.detail}` });
+            }
+          }
+          for (const ce of [...new Set(consoleErrors)]) {
+            if (!issues.some((i) => i.rule === 'DA-JS-ERROR' && i.detail === ce)) {
+              issues.push({ severity: 'BLOCK', rule: 'DA-JS-ERROR', detail: `[Pos-clique ${interactSel}] ${ce}` });
+            }
+          }
+          const iShotName = `${target.label}-${vpName}-${theme}-interact.png`;
+          interactScreenshot = path.join(outDir, iShotName);
+          const iShot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync(interactScreenshot, Buffer.from(iShot.data, 'base64'));
+        }
+      }
+
       const entry = {
         target: target.label,
         url: target.url,
         viewport: `${vpName} (${vp.width}x${vp.height})`,
         theme,
         screenshot: shotPath,
+        ...(interactScreenshot ? { interactScreenshot } : {}),
         issues,
       };
       report[job.idx] = entry;
@@ -1093,7 +1272,7 @@ async function main() {
   const elapsedSec = ((Date.now() - startedAt) / 1000).toFixed(1);
   let totalBlock = 0;
   let totalHigh = 0;
-  console.log('# Auditoria Visual & DOM Real (Design Aura v2.3.0)');
+  console.log('# Auditoria Visual & DOM Real (Design Aura v2.4.0)');
   console.log(`- **Capturas geradas:** ${finalReport.length} · **Tempo:** ${elapsedSec}s (concurrency=${Math.min(args.concurrency, Math.max(1, jobs.length))}) · **Relatorio JSON:** ${reportPath}\n`);
   console.log('| Tela | Viewport | Tema | Screenshot | Status | Achados |');
   console.log('|---|---|---|---|---|---|');

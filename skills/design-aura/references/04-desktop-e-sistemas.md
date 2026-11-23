@@ -20,12 +20,13 @@ Em sistemas operacionais (ERPs, CRMs, portais financeiros, painéis de SRE, IDEs
 
 O erro clássico de sistemas web/desktop tem dois polos opostos: **(1) deixar 60–70% do painel direito vazio** ou **(2) espremer 3 colunas permanentes em telas cheias de números criando poluição visual**. Escolha o arquétipo pela lógica real da tarefa de cada tela:
 
-### A. Revelação Progressiva Anti-Poluição: `Lista Limpa → Detalhe Focado na Mesma Página` (Arquétipo #1 para Filas & Tabelas Densas)
-Ideal para **Contas a Pagar, Contas a Receber, Radar de Editais, Cofre de Certidões, Pedidos e Contratos**:
-1. **Estado 1 — Visão Geral Limpa (largura total):** faixa executiva de KPIs (com `.card-brand-hero` no indicador principal) + barra de busca e filtros em poço `.well-z0` + tabela respirável e escaneável em `.panel-z2` com hover de elevação (`inset 3px 0 0 var(--primary)`).
-2. **Estado 2 — Detalhe Focado Inline na Mesma Página (ao clicar em qualquer linha ou abrir `?item=id`):** a lista dá lugar suavemente (`180ms`) à ficha completa do registro em largura total com:
-   - Barra fixa superior: **`← Voltar à lista` (`Esc`)**, contador (`Item 1 de 8`) e navegação **`‹ Anterior · Próxima ›`**;
-   - Documento completo (com picote técnico se for fatura/edital) + simulação de cobertura bancária/risco + 1 CTA dominante com **Toast Desfazer**.
+### A. Revelação Progressiva por Resize In-Place: `Fila Limpa → Conferência & Aprovação Focada` (Arquétipo #1 · `v2.4.0`)
+Ideal para **Filas de Pendências, Conferência/Aprovação Operacional, Contas a Pagar/Receber, Radar de Editais, Certidões e Contratos** — acaba de vez com o vício de jogar lista + 8 abas + resumo duplicado + documento + botões tudo ao mesmo tempo na tela:
+1. **Estado 1 — Fila Limpa (`100%` da área útil):** topo enxuto com **no máximo 2 barras horizontais (`<= 210px`, `DA-HEADER-STACK-BLOAT`)**, **máx. 4–5 abas primárias + dropdown `"Mais status"` (`DA-TAB-OVERFLOW`)** e lista/tabela respirável em `.panel-z2` com hover nítido (`inset 3px 0 0 var(--primary)`). Sem selos-eco repetindo o óbvio em cada linha (`DA-BADGE-ECHO`).
+2. **Estado 2 — Clique na Pendência → Resize Suave na Mesma Área (`180ms`):** a fila recolhe para um trilho compacto lateral (ou alterna com `← Voltar à fila [Esc]` e `‹ Anterior · Próxima ›`), abrindo uma **Tela de Conferência & Aprovação** simples, direta e objetiva em **3 blocos únicos**:
+   - **Bloco 1 (Identificação — Single Source of Truth):** quem, unidade/posto, data e motivo aparecem **1 única vez** (nunca duplicados em 2 cards diferentes!).
+   - **Bloco 2 (Evidência / Documento Real do Trabalho):** cartão comparativo tátil (`Antes → Proposto`) com faixa superior em `--surface-brand-header` + justificativa do solicitante, sem nenhum jargão de infraestrutura (`DA-TECH-JARGON-UI`).
+   - **Bloco 3 (Rodapé Estrutural `flex-shrink: 0`):** container em `display: flex; flex-direction: column` com corpo rolável (`flex: 1; overflow-y: auto`) + **Tactile Decision Bar** estrutural fixa na base (`Aprovar` em `--success` esmeralda + branco, `Devolver` secundário, `Indeferir` em vermelho real `--danger` — **nunca flutuando sobre texto, nunca rosa e nunca misturado com controles de demo!**).
 
 ### B. Inbox 2 Colunas + Drawer de Contexto Sob Demanda (Atendimento / Chat / Mensageria)
 Ideal para atendimento omnichannel (WhatsApp/Site), tickets em tempo real e simuladores:
@@ -69,18 +70,21 @@ Se o projeto compila para janela desktop nativa (Electron, Tauri, SwiftUI macOS,
 
 ---
 
-## 5. Equilíbrio Cromático `65 / 20 / 10 / 5` & Modo Claro Ancorado pela Marca (`v2.2.1`)
+## 5. Coerência Cromática (Fim do Monobloco Cinza/Branco) & Paridade Semântica Light/Dark (`v2.4.0`)
 
-- **Modo Claro Ancorado pela Marca (`Brand-Anchored Light Mode` — PROIBIDO "Tudo Branco/Cinza Lavado" · `DA-LIGHT-WASHED-OUT`):**
-  Um Modo Claro onde Sidebar, Topbar, Canvas, Login e todos os Cards são brancos ou cinza-pálido perde completamente o senso de divisão, profundidade e identidade! Use **variações da cor forte e da cor clara da marca**:
-  1. **Âncora Forte da Marca (`--surface-brand-dark`, ex.: Marinho `#0E294B → #163E70` com texto `#F8FAFC`):** aplique na **Sidebar Desktop no Light Mode** (ou no **Painel Institucional do Login Split-Screen**) e no **Card-Rei `.card-brand-hero`** de cada tela (ex.: Saldo Consolidado / Cabeçalho Mobile) — criando divisão arquitetônica imediata entre a Navegação/Hero ricos em cor e a Área de Trabalho clara!
-  2. **Variações de Azul/Cor Clara Estrutural (`--surface-tint-soft: #E6F0FD`, `--border-tint: #B5CEF0`):** aplique nos **cabeçalhos internos de cards compostos (`.panel-head`)**, nos **`<thead>` das tabelas**, nos **berços de ícone (`.icon-emblem`)** e nos **controles ativos** — substituindo cinza-morto por tintagem harmônica da marca.
-  3. **Canvas, Poços e Sombras Tintadas pela Marca:** `Z0 #CFDCEB` · `Z1 #E1EAF4` · `Z2 #FFFFFF` com borda nítida `#B0C2D9` (`>= 1.22:1` contra `Z2`), chanfro branco `inset 0 1px 0 #FFFFFF` e sombra física tintada com a cor profunda da marca (`rgba(14, 41, 75, 0.11)`).
-- **Dark Mode com Subtom Arquitetônico & Âncora de Marca Viva (`DA-DARK-MONOCHROME`):** evite tanto a **massa azul 50%-saturada** quanto o **carvão morto sem marca**. Use base `Z0–Z3` em Obsidiana com subtom sutil da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`) e expresse a cor oficial da empresa com clareza em **3 Zonas Fixas**:
-  1. Bloco de identidade na Sidebar/Header (`.sidebar-brand-card` em `--surface-brand-dark: #0D2442 → #163966` com fio especular superior `rgba(110,181,255,0.22)`) + item ativo (`18% --primary` + filete `3px --accent`);
-  2. **Card-Rei (`.card-brand-hero`)** no topo de cada tela com gradiente azul-marinho institucional (`--surface-brand-dark-2 → --surface-brand-dark`) + borda luminosa (mantendo personalidade da marca tanto no Dark quanto no Light!);
-  3. Controles selecionados (`.subtab.is-active`, `.seg-btn.is-active`) + paleta categórica harmônica de 6 cores (`--chart-1..6`).
-- **Escopo Automático `.on-brand-dark` (`DA-BRAND-DARK-SCOPE`):** toda superfície escura da marca (`.sidebar`, `.auth-brand-pane`, `.card-brand-hero`) DEVE redeclarar localmente `--text-strong`, `--text-body`, `--text-muted` e `--border-subtle` para tons claros de alto contraste — impedindo que texto escuro do Light Mode vaze sobre fundo marinho.
+- **Fim do Monobloco Cinza no Dark Mode (`DA-DARK-FLAT-MONOLITH`):** **PROIBIDO** deixar uma Sidebar azul rica ao lado de um paredão cinza chapado sem identidade, sem profundidade e sem separação de conteúdos!
+  1. **Traga a família de azuis profundos/fortes da marca (da própria Sidebar) para dentro do workspace:** use `--surface-brand-header` (ex.: `#112C54`) nos cabeçalhos de painéis de conferência/documentos, `--surface-brand-panel` (`#0E2240`) em cartões de destaque, `--primary` (`#2563EB` com `#FFFFFF`) nas abas ativas e na seleção da fila, e `--rim-highlight` (`inset 0 1px 0 rgba(148,197,255,0.12)`) + sombras calibradas Dark (`--shadow-z1..z3`) para criar **profundidade real entre planos `Z0 → Z4`** (`Z2/Z1 >= 1.08:1`, `border-subtle/Z2 >= 1.25:1`).
+  2. **Preto e cinza contidos:** entram apenas em detalhes de apoio e recessos discretos, nunca como bloco monocromático morto.
+- **Modo Claro Ancorado pela Marca (`DA-LIGHT-WASHED-OUT >= 1.85:1`):**
+  1. **Âncora Forte (`--surface-brand-dark: #0C254A → #143A70`)** na Sidebar, Painel Institucional e Card-Rei;
+  2. **Variações de Azul Claro Estrutural (`--surface-brand-header: #E3EEFC`, `--surface-tint-soft: #E6F0FD`, `--border-tint: #9DBCE6`)** nos cabeçalhos de painel, `<thead>` e berços de ícone;
+  3. **Profundidade física nítida:** `Z0 #C6D6EA` · `Z1 #D9E5F3` (`>= 1.18:1` vs `Z2 #FFFFFF`) · `border-subtle #93ABC7` (`>= 1.85:1`, ideal `2.0–2.4:1` contra `Z2`) + sombras tintadas pela marca.
+- **Paridade Semântica Rígida Light ↔ Dark (`DA-SEMANTIC-HUE-PARITY`):** cada cor semântica mantém a **mesma família de cor nos dois temas** (usando tokens separados para sólido `--{role}` + `--on-{role}` e para badge/texto `--{role}-surface` / `--{role}-border` / `--{role}-text`):
+  - **Erro / Falha / Indeferir:** **Vermelho real** nos dois modos (`#B91C1C` / `#DC2626` sólido + `#FFFFFF`; `--danger-text: #FF6E6E` no Dark) — **NUNCA rosa pastel (`#FDA4AF`)**!
+  - **Sucesso / Aprovar:** **Verde esmeralda real** nos dois modos (`#15803D` sólido + `#FFFFFF`; `--success-text: #4ADE80`) — **NUNCA verde-água neon com letra preta**!
+  - **Atenção / Pendente:** **Âmbar real** (`#B45309` / `#F59E0B`);
+  - **Ativo / Marca:** **Azul oficial da marca** (`#14427A` / `#2563EB` com `#FFFFFF`) — **NUNCA ciano-elétrico destoando da Sidebar**!
+- **Escopo Automático `.on-brand-dark` (`DA-BRAND-DARK-SCOPE`):** toda superfície escura da marca redeclara localmente `--text-strong`, `--text-body` e `--text-muted` claros.
 
 ---
 

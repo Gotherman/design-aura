@@ -1,15 +1,15 @@
-# Design Aura (`design-aura` · `v2.3.0`)
+# Design Aura (`design-aura` · `v2.4.0`)
 
-Skill de direção de design, arquitetura de informação e engenharia UI/UX para **Apps Desktop**, **Apps Mobile** (iOS HIG / SwiftUI, Android Material 3 / Jetpack Compose, React Native / Expo, Flutter, PWA) e **Sistemas Complexos** (SaaS, ERPs, Dashboards Operacionais).
+Skill de direção de design, arquitetura de informação, engenharia UI/UX e **QA interativo E2E** para **Apps Desktop**, **Apps Mobile** (iOS HIG / SwiftUI, Android Material 3 / Jetpack Compose, React Native / Expo, Flutter, PWA) e **Sistemas Complexos** (HTML estático ou SPA **React / Vite / Next.js**, SaaS, ERPs, Dashboards Operacionais).
 
 Transforma um repositório existente, um planejamento (`CONCEPCAO.md`/PRD) ou uma ideia do zero (ou executa **Polimento Cirúrgico** sobre telas já aprovadas) em:
-1. **Especificação Enxuta sem Jargão** (autópsia seletiva + entrevista curta obrigatória em português direto com trava anti-atropelo quando o usuário tem dúvida).
-2. **Mapeamento Categórico Automático de Componentes OSS (`16 Categorias Canônicas`)** (`discover_oss_components.py --scan <repo>` sobre `106+` registries/bibliotecas permissivas + `ui_elements_recipes.json` cobrindo gráficos de estúdio, `BarList`/`Tracker`, SVGs Duotone, emblemas `.icon-emblem`, chips `.chip-sla` com anel SVG, Kanban, calendários, máscaras e micro-interações).
-3. **Bíblia Visual de Design** (`DESIGN-BIBLE.md` + `tokens.json`/`tokens.css` em equilíbrio cromático **`65/20/10/5`** com âncora institucional `--surface-brand-dark` em Dark & Light, escopo automático `.on-brand-dark`, **Brand-Anchored Light Mode** com `--surface-tint-soft`, `--chart-1..6` + `DESIGN-BIBLE.pdf` com pranchas visuais reais e sincronia automática de hexes).
-4. **Portão das Telas-Mãe + `SHELL-CONTRACT.md` (Onda 0.5) & Modo Polimento Cirúrgico** (Design System com profundidade tátil em 5 camadas, Sidebar minimizável `248px ↔ 68px` anti-truncamento, padrão **Lista Limpa → Detalhe Focado na mesma página**, blindagem mobile contra corte por flex-shrink, `SHELL-CONTRACT.md` enxuto + 1 Tela-Mãe Desktop + 1 Tela-Mãe Mobile validadas visualmente antes de escalar).
-5. **Construção Turbo por Subagentes + Anti-Travamento & Fast-Audit Imediato** (`1–3` telas por subagente, **sem teto de 8**, ondas controladas com fallback transparente + auditoria rápida automática e visual do Orquestrador a cada entrega).
-6. **Vitrine Interativa Estilo Figma `v2.3.0`** (`fluxo.html` sincronizado com `tokens.css` em Dark/Light com `0` erros de contraste e Hub-and-Spoke fiel às seções, `preview.html` com seletor de jornadas sem scrollbar horizontal + bezel mobile `clip-path`, e `index.html` galeria `⌘K` com miniaturas visuais Dark/Light via `--thumbs`).
-7. **Auditoria Paralela Real em Chromium (`--concurrency 4` com contextos isolados e log ao vivo) + 10 Blocos** (`DA-NAV-TRUNCATION`, `DA-HEADER-HSCROLL`, `DA-BRAND-DARK-SCOPE`, `DA-REF-COPY-LEAK`, `DA-CLIPPED-CONTENT`, `DA-MOBILE-FLEX-CLIP`, `DA-DARK-MONOCHROME`, `DA-LIGHT-WASHED-OUT`, `DA-ICON-GENERIC-REPEAT`, `DA-FLAT-CHART-AXIS`, `DA-CARD-INTERNAL-VOID`, `DA-DEAD-SPACE`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT` e `DA-ASSET-404`).
+1. **Especificação Enxuta Zero-Treinamento** (fluxos humanos de 3–4 passos, documentos reais do trabalho, trava anti-atropelo quando o usuário tem dúvida e zero jargão técnico na interface do trabalhador).
+2. **Coerência Cromática & Paridade Semântica Light/Dark (`v2.4.0`)** — acaba com o **monobloco cinza** no Dark e o **tudo-branco** no Light trazendo a família de cores da marca para dentro do workspace (`--surface-brand-header`, `--rim-highlight`, sombras Dark/Light calibradas e superfícies semânticas prontas `--{role}-surface/border/text`), garantindo **vermelho real = erro** nos dois modos (bloqueia erro rosa pastel via `DA-SEMANTIC-HUE-PARITY`), **verde esmeralda = sucesso**, **âmbar = atenção** e `border-subtle >= 1.85:1` / `Z1/Z2 >= 1.18:1` no Light.
+3. **Bíblia Visual Autossuficiente & Catálogo Studio** (`DESIGN-BIBLE.md` com Orçamentos de Composição, **Resize In-Place `Fila Limpa → Conferência Focada`**, `DESIGN-BIBLE.pdf` com prancha squircle 6px + barra de decisão tátil + alertas/toasts, e `discover_oss_components.py --scan` sobre `16 Categorias Canônicas`).
+4. **Portão das Telas-Mãe (`Onda 0.5`) + Construção por Subagentes com Fast-Audit (`Onda 1`)** (`1–3` telas/subagente, sem teto de 8, `SHELL-CONTRACT.md` enxuto + auditoria imediata a cada entrega).
+5. **Vitrine Unificada em Link Único + SPA Dual-Engine (`Onda 2 · Fase 4 Obrigatória`)** (`entrega.html` unificando `Mapa Figma · App ao Vivo · Preview Guiado · Galeria · Bíblia Visual + PDF + Tema` em 3 canais + `serve_entrega.mjs` em 1 única porta `0.0.0.0:4188` servindo `/design/*` + SPA `dist/*`).
+6. **Auditoria Paralela Real em Chromium + Pós-Clique (`--concurrency 4 --smoke-interact`)** (`DA-SEMANTIC-HUE-PARITY`, `DA-DARK-FLAT-MONOLITH`, `DA-LIGHT-WASHED-OUT >= 1.85:1`, `DA-TECH-JARGON-UI`, `DA-BADGE-ECHO`, `DA-MOBILE-HERO-BLOAT`, `DA-HEADER-STACK-BLOAT`, `DA-TAB-OVERFLOW`, `DA-B3-01` estendido a emblemas/badges, whitelist `entrega.html`/`.da-hub`, suporte nativo `--base-url` + `"route"` para SPAs).
+7. **Fase 4.5 — QA Interativo E2E por Subagentes Testers (`Onda 3 · v2.4.0`)** — Subagentes Testers **Read-Only** fatiados por jornada clicam nos fluxos reais via `scripts/run_workflow_probe.mjs` (zero dependência npm), reportam falhas reais (`P0/P1/P2` + PNGs) ao Orquestrador, que faz triagem de causa raiz, cria o Plano de Correção, lança subagentes corretivos e valida com re-teste direcionado (trava anti-loop: máx. 2 ciclos).
 
 ---
 
@@ -51,11 +51,13 @@ Copie a pasta `skills/design-aura` para o diretório de skills do seu agente:
 |---|---|---|
 | `design_intel.py` | Python 3 stdlib | Motor offline BM25 para pesquisa de domínio, paletas, tipografia, padrões e bibliotecas OSS |
 | `discover_oss_components.py` | Python 3 stdlib | Casa uma interação com registries free/OSS, galerias de referência e a API do GitHub/npm (`--online`) |
-| `generate_tokens.py` | Python 3 stdlib | Compila `tokens.json` em CSS, Tailwind v4, TypeScript, Swift, Kotlin e Dart |
-| `audit_contrast.py` | Python 3 stdlib | Validador WCAG 2.1 + APCA-W3 sobre `tokens.css`, `tokens.json` ou pares avulsos |
-| `lint_design_aura.py` | Python 3 stdlib | Linter determinístico dos 10 Blocos de Leis Inegociáveis e AI tells |
-| `build_figma_canvas.py` | Python 3 stdlib | Gera `fluxo.html` (Canvas Figma), `preview.html` (Player guiado) e `index.html` (Galeria `⌘K`) |
-| `capture_and_audit.mjs` | Node 20+ + Chromium | Captura screenshots multi-viewport (Dark/Light) e audita DOM/contraste/touch-targets via CDP |
+| `generate_tokens.py` | Python 3 stdlib | Compila `tokens.json` em CSS, Tailwind v4, TypeScript, Swift, Kotlin e Dart com superfícies semânticas e sombras/rims Dark & Light |
+| `audit_contrast.py` | Python 3 stdlib | Validador WCAG 2.1 + APCA-W3 + `DA-SEMANTIC-HUE-PARITY` + `DA-DARK-FLAT-MONOLITH` + `DA-LIGHT-WASHED-OUT >= 1.85:1` |
+| `lint_design_aura.py` | Python 3 stdlib | Linter determinístico dos 10 Blocos + `DA-TECH-JARGON-UI` + `DA-BADGE-ECHO` |
+| `build_figma_canvas.py` | Python 3 stdlib | Gera `entrega.html` (Hub link único), `fluxo.html` (Canvas Figma), `preview.html` e `index.html` (HTML e SPA `"route"`) |
+| `serve_entrega.mjs` | Node 20+ (zero dep) | Servidor HTTP de porta única (`0.0.0.0:4188`) combinando `/`, `/design/*` e SPA `/app/*` (`dist/*`) |
+| `capture_and_audit.mjs` | Node 20+ + Chromium | Captura paralela (HTML + SPA `--base-url`), auditoria DOM/contraste/emblemas/anti-poluição e smoke pós-clique (`--smoke-interact`) |
+| `run_workflow_probe.mjs` | Node 20+ + Chromium | Motor CDP interativo E2E para Subagentes Testers (Fase 4.5) clicarem nos fluxos reais, validarem assertivas/layout e salvarem PNGs |
 
 ---
 

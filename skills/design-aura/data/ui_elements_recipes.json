@@ -42,9 +42,15 @@
       },
       {
         "id": "brand-hero-surface",
-        "name": "3 Zonas de Presença da Marca ('Estou Aqui!' — Regra 65/20/10/5)",
-        "anatomy": "Zona 1: Identidade institucional no topo da Sidebar/Mobile; Zona 2: .card-brand-hero no painel principal de cada tela (gradiente 135deg com 20% --primary -> --surface-z2 + borda 35% --primary + chanfro especular); Zona 3: Abas e filtros ativos (.is-active) na cor primária.",
-        "anti_slop": "Evita tanto o 'tudo azul' monocromático quanto o 'preto carvão morto' onde a cor da empresa desaparece."
+        "name": "3 Zonas de Presença da Marca ('Estou Aqui!' — Fim do Monobloco Cinza/Branco)",
+        "anatomy": "Zona 1: Sidebar/Identidade em --surface-brand-dark; Zona 2: Cabeçalhos de painel (--surface-brand-header) e .card-brand-hero trazendo tons profundos/claros da marca PARA DENTRO do workspace em Dark e Light Mode (preto e cinza ficam contidos em detalhes secundários); Zona 3: Abas ativas (.is-active) em --primary sólido com texto --on-primary + --rim-highlight.",
+        "anti_slop": "PROIBIDO isolar a cor da marca apenas na Sidebar enquanto o resto da tela vira um monobloco cinza morto (Dark) ou branco chapado sem profundidade (Light)."
+      },
+      {
+        "id": "primary-segmented-tabs",
+        "name": "Barra de Abas / Filtros Primários Estruturada (Máx. 4–5 Abas Visíveis + 'Mais status')",
+        "anatomy": "Container em poço --surface-z0 com borda --border-subtle e padding 4px. Máximo 4–5 abas principais visíveis + dropdown discreto 'Mais status' para filtros secundários. Aba ativa em azul/cor oficial da marca (--primary) com texto --on-primary (#FFFFFF), contador tabular integrado e --rim-highlight.",
+        "anti_slop": "PROIBIDO despejar 7–8 botões cinza idênticos lado a lado ou usar aba ativa ciano-neon com texto preto brigando com a sidebar marinho (DA-TAB-OVERFLOW)."
       }
     ],
     "icon_curation": {
@@ -153,9 +159,21 @@
       },
       {
         "id": "segmented-kv-badge",
-        "name": "Chip Bipartido Chave | Valor (.chip-kv)",
-        "anatomy": "Container squircle (border-radius: 8px, overflow: hidden, border: 1px solid var(--border-subtle)) dividido em 2 compartimentos: Esquerda em --surface-z0 com rótulo técnico ('Nota', 'Atraso', 'Regra') e Direita com fundo semântico translúcido e valor em destaque ('96', '2d', '#04').",
-        "anti_slop": "Evita que todos os selos da tela pareçam a mesma salsicha oval 999px."
+        "name": "Faixa de Metadados / Chip Bipartido Chave | Valor (.chip-kv / .meta-strip)",
+        "anatomy": "Container squircle (border-radius: 6px–8px, overflow: hidden, border: 1px solid var(--border-subtle)) dividido em compartimentos limpos: label discreto em --surface-z0 + valor forte em --surface-z2/--primary-surface. Exiba apenas metadados úteis ao trabalhador (Protocolo, Turno), nunca códigos internos de engenharia.",
+        "anti_slop": "PROIBIDO empilhar 4–5 caixinhas cinzas chapadas sem profundidade ou vazar IDs técnicos (deviceId, enc-409486, auto-reserva) na rotina do operador."
+      },
+      {
+        "id": "tinted-semantic-squircle-badge",
+        "name": "Badge Semântico Tingido Squircle 6px com Paridade Light/Dark (.badge-semantic)",
+        "anatomy": "Substitui pílulas ovais 999px genéricas e caixas cinzas sem presença. Usa border-radius: 6px, fundo --{tone}-surface, borda 1px --{tone}-border, texto e ícone SVG 13px em --{tone}-text com paridade exata entre Light e Dark (erro=vermelho real, nunca rosa; sucesso=verde esmeralda; atenção=âmbar; info=azul marca).",
+        "anti_slop": "PROIBIDO erro rosa pastel no Dark Mode (#FDA4AF) ou repetir o mesmo selo-eco (ex.: 6x 'Aguardando Mesa' dentro da aba Aguardando — DA-BADGE-ECHO)."
+      },
+      {
+        "id": "live-status-beacon",
+        "name": "Status Beacon de Conectividade/Automação (.status-beacon)",
+        "anatomy": "Ponto esmeralda real (--success-border) com halo suave e rótulo discreto posicionado no rodapé da sidebar ou tela técnica/automação — sem roubar uma faixa horizontal inteira do topo da operação.",
+        "anti_slop": "PROIBIDO colocar barra inteira de status de VM/robô/FIFO em cima da fila diária do operador."
       }
     ],
     "icon_curation": {
@@ -314,9 +332,21 @@
     "studio_recipes": [
       {
         "id": "clean-list-to-focused-detail",
-        "name": "Lista Limpa -> Detalhe Focado na Mesma Página (Drill-In Inline com Esc e Anterior/Próxima)",
-        "anatomy": "A página abre 100% focada na Lista Limpa (KPI Strip + Barra de Filtros/Busca em poço .well-z0 + Tabela em .panel-z2 com cabeçalho sticky Z3 e rodapé de resumo Z3). Ao clicar em qualquer linha (ou abrir ?item=id), a lista dá lugar na mesma página à Visão de Detalhe Focado em largura total: Barra fixa superior ('<- Voltar à lista [Esc]' + 'Item X de N' + '< Anterior | Próxima >') + Card Hero do Documento (com picote técnico se for fatura/edital) + Painel de Cobertura Bancária/Simulação + Barra de Ação com Toast Desfazer.",
-        "anti_slop": "Reduz drasticamente a poluição visual de espremer 3 colunas permanentes em telas financeiras e de licitações."
+        "name": "Resize In-Place: Fila Limpa -> Conferência & Aprovação Focada (Sem Jogar Tudo de Uma Vez)",
+        "anatomy": "Estado 1 (Fila Limpa): lista de pendências ocupa 100% da área útil com cabeçalho enxuto (máx. 2 barras no topo) e colunas objetivas — nada espremido nem duplicado. Estado 2 (Clique na pendência -> Resize suave na mesma área): a fila recolhe para trilho compacto lateral (ou alterna com '<- Voltar à fila [Esc]' e '< Anterior | Próximo >') e abre a Conferência Focada em 3 blocos únicos (1. Identificação única sem duplicação; 2. Evidência real / documento; 3. Rodapé estrutural flex-shrink: 0 com Tactile Decision Bar).",
+        "anti_slop": "PROIBIDO jogar fila + 8 abas + resumo duplicado 2x + documento + barra de decisão + controles de demo todos espremidos simultaneamente na mesma tela."
+      },
+      {
+        "id": "tactile-timecard-diff",
+        "name": "Documento Real / Cartão Comparativo Tátil Antes -> Proposto (.doc-diff-card)",
+        "anatomy": "Painel Z2 com faixa superior em --surface-brand-header (azul profundo da marca no Dark / azul suave estrutural no Light), badge de situação em --danger-surface/--danger-text (vermelho real) e grade de células onde o valor anterior ('Antes') aparece discreto/tachado e o valor proposto ('Depois') ganha cápsula destacada em --primary-surface + borda --primary-border com seta direcional clara.",
+        "anti_slop": "PROIBIDO renderizar 4 caixas pretas vazias com borda verde-neon fina e rótulo 'ANTES -> DEPOIS' colado na borda."
+      },
+      {
+        "id": "tactile-decision-bar",
+        "name": "Barra Estrutural de Decisão Tátil (Aprovar / Devolver / Indeferir)",
+        "anatomy": "Rodapé estrutural (flex-shrink: 0, background: var(--surface-z2), border-top: 1px solid var(--border-subtle), padding: 12px 20px) com 3 ações de hierarquia e cor coesas em Light e Dark: (1) Aprovar em --success esmeralda sólido + texto #FFFFFF + --rim-highlight; (2) Devolver em botão secundário --surface-z3 com borda --border-strong; (3) Indeferir em --danger-surface + borda --danger-border + texto --danger-text (vermelho real, nunca rosa). Controles de simulação/demo ficam FORA desta barra.",
+        "anti_slop": "PROIBIDO botão Aprovar verde-água neon com letra preta, Indeferir rosa pastel, botão flutuante cobrindo texto ou seletor de demo misturado no rodapé de aprovação."
       },
       {
         "id": "interactive-table-lift",
@@ -779,9 +809,33 @@
     "studio_recipes": [
       {
         "id": "choreographed-drill-in-motion",
-        "name": "Transição Coreografada Lista Limpa <-> Detalhe Focado (180ms cubic-bezier(0.16, 1, 0.3, 1))",
-        "anatomy": "Ao alternar entre a Lista Limpa e o Detalhe Focado na mesma página, aplique uma entrada suave de 180ms (opacity 0->1 + translateY(6px->0)) respeitando prefers-reduced-motion, mantendo o scroll no topo do painel.",
+        "name": "Transição Coreografada Fila Limpa <-> Conferência em Resize (180ms cubic-bezier(0.16, 1, 0.3, 1))",
+        "anatomy": "Ao clicar num item da fila e expandir/redimensionar a Conferência Focada na mesma área, aplique entrada suave de 180ms (opacity 0->1 + translateY(6px->0)) respeitando prefers-reduced-motion e mantendo foco de teclado acessível.",
         "anti_slop": "PROIBIDO transition: all, hover:scale-105 em cards de tabela ou loops infinitos decorativos (DA-B6-01, DA-B6-04)."
+      },
+      {
+        "id": "semantic-alert-banner",
+        "name": "Banner de Alerta Semântico Estruturado (.alert-banner)",
+        "anatomy": "Superfície --{tone}-surface, borda 1px --{tone}-border, filete esquerdo 3px --{tone}-border, ícone SVG semântico 18px em --{tone}-text, título direto + 1 frase objetiva + botão de ação claro ('Entendi' / 'Revisar').",
+        "anti_slop": "PROIBIDO alerta cinza apagado sem cor semântica ou banner gigante que come mais de 38% da tela mobile."
+      },
+      {
+        "id": "destructive-confirm-dialog",
+        "name": "Dialog de Confirmação Crítica com Motivo Obrigatório (.confirm-dialog)",
+        "anatomy": "Modal Z4 com cabeçalho tingido (--danger-surface para Indeferir ou --warning-surface para Devolver), ícone semântico destacado, resumo curto do item afetado, campo <textarea> estilizado para motivo obrigatório e par de botões claro ('Cancelar' + 'Confirmar Indeferimento' em --danger sólido com texto #FFFFFF).",
+        "anti_slop": "PROIBIDO usar window.confirm() cru ou modal cinza genérico com botão rosa."
+      },
+      {
+        "id": "tactile-toast-undo",
+        "name": "Toast Tátil Semântico com Barra de Tempo e 'Desfazer' (.da-toast)",
+        "anatomy": "Flutuante no canto inferior direito (desktop) ou acima da tab bar (mobile), superfície --surface-z3 elevada com --shadow-z3, filete lateral semântico (--success/--danger/--warning), ícone SVG, mensagem objetiva do resultado e botão 'Desfazer' com tempo real antes de fechar.",
+        "anti_slop": "PROIBIDO toast invisível sem contraste ou ações irreversíveis sem feedback visual claro."
+      },
+      {
+        "id": "actionable-empty-state",
+        "name": "Estado Vazio Acionável & Skeleton Real (.empty-state)",
+        "anatomy": "Quando uma fila ou filtro zera, exibe emblema vetorial 44px em --primary-surface, título humano ('Nenhuma pendência nesta aba'), explicação curta e 1 ação útil ('Limpar filtros' ou 'Ver todas as pendências'). Em carregamento, skeleton com shimmer contido respeitando a geometria exata da lista.",
+        "anti_slop": "PROIBIDO tela em branco muda quando o filtro não encontra registros."
       }
     ],
     "icon_curation": {

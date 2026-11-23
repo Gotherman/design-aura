@@ -36,11 +36,18 @@ ONDA 1 + FAST-AUDIT LOOP (Subagentes — 1 a 3 telas cada · SEM teto de 8)
        3. Abre os PNGs e compara diretamente com a Tela-Mãe aprovada (substância, vazio, cor, hierarquia)
        4. Se reprovar (técnico OU estético): corrige na hora ou redespacha feedback cirúrgico ao subagente ANTES de integrar!
 
-ONDA 2 (Consolidação + Vitrine Figma + Auditoria Global + Entrega Acessível)
-  ├─ Orquestrador verifica 100% de cobertura no disco e zero links quebrados
-  ├─ Roda build_figma_canvas.py --verify-files (fluxo.html Hub-and-Spoke, preview.html, index.html)
-  ├─ Roda os 3 portões globais (audit_contrast.py, lint_design_aura.py, capture_and_audit.mjs --manifest incl. vitrine)
-  └─ Inspeciona PNGs finais (inclusive fluxo.html) e entrega com preview aberto ou link acessível HTTP 200
+ONDA 2 (Consolidação + Vitrine Unificada `entrega.html` + Auditoria Global)
+  ├─ Orquestrador verifica 100% de cobertura no disco (HTML estático OU rotas SPA React/Vite/Next) e zero links quebrados
+  ├─ Roda build_figma_canvas.py --verify-files (entrega.html + fluxo.html Hub-and-Spoke + preview.html + index.html)
+  └─ Roda os 3 portões globais (audit_contrast.py --strict, lint_design_aura.py --strict, capture_and_audit.mjs --manifest --smoke-interact --strict)
+
+ONDA 3 · FASE 4.5 (QA Interativo E2E por Subagentes Testers Read-Only → Triagem → Correção · v2.4.0)
+  ├─ Orquestrador fatia os Subagentes Testers POR JORNADA/PERSONA (ex.: Tester-Mobile, Tester-Operacao-Desktop, Tester-Vitrine-Tema)
+  ├─ Cada Tester recebe um QA-BRIEF (escopo geral + fluxo passo a passo + invariantes que NÃO podem quebrar) e executa cliques reais com scripts/run_workflow_probe.mjs
+  ├─ REGRA DE SEPARAÇÃO: Tester é READ-ONLY (nunca edita código) — reporta falhas com severidade P0/P1/P2, passo exato, erro JS/404 e PNG do instante da quebra
+  ├─ Orquestrador faz a TRIAGEM REAL: confirma se é falha genuína, encontra a causa raiz (estado compartilhado/shell vs tela isolada) e cria um Plano Cirúrgico de Correção
+  ├─ Orquestrador lança Subagentes Corretivos focados no plano e dispara Re-teste Cirúrgico pelo Tester apenas nas jornadas afetadas (trava anti-loop: máx. 2 ciclos)
+  └─ Só após 0 falhas P0/P1 + PNGs inspecionados, o Orquestrador sobe serve_entrega.mjs (1 porta, 1 link) e entrega ao usuário!
 ```
 
 ---
@@ -157,7 +164,49 @@ Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes
 
 ---
 
-## Reconciliação Final (Onda 2)
+## Reconciliação Final (Onda 2) & Fase 4.5 — QA Interativo E2E por Subagentes Testers (`v2.4.0`)
+
+Após a Onda 2 (auditoria estática + capturas visuais + geração da vitrine unificada `entrega.html`), **toda entrega interativa (apps, sistemas web, protótipos clicáveis ou SPAs React/Vite/Next)** passa pela **Onda 3 (Fase 4.5)** antes de ir ao usuário:
+
+### 1. Fatiamento por Jornada (Não por Tela Solta)
+Lance `2` a `3` **Subagentes Testers Read-Only** em paralelo, cada um dono de uma jornada real ponta a ponta:
+- **`Tester-1` (Operação Desktop):** login/seleção de perfil → filtros/abas → clique na 1ª pendência (**Resize In-Place** abrindo conferência) → validação de dados sem duplicação → fluxo de Aprovar, Devolver (com motivo obrigatório), Indeferir (com confirmação crítica) → estado vazio & Toast Desfazer.
+- **`Tester-2` (Jornada Mobile / Campo):** viewport `390×844` → escolha de unidade/escola → toque no colaborador → preenchimento e envio de formulário/contestação → bottom sheet / tab bar inferior sem corte → retorno e atualização de contador.
+- **`Tester-3` (Vitrine `entrega.html` & Cross-Theme):** alternância de todas as abas (`Mapa Figma · App ao Vivo · Preview Guiado · Galeria · Bíblia`), sincronia Dark ↔ Light em 3 canais, busca `⌘K`, zero erro JS/404.
+
+### 2. Template Obrigatório de `QA-BRIEF` para Subagente Tester (Read-Only)
+```markdown
+### Missão QA E2E (READ-ONLY): Jornada [NOME_DA_JORNADA] — Projeto [NOME]
+
+Você é um Engenheiro de QA da Design Aura (`v2.4.0`). **VOCÊ NÃO EDITA CÓDIGO.**
+Sua função é clicar como um usuário real e descobrir quebras reais de fluxo, dados ou layout pós-interação.
+
+1. **Escopo Geral do Sistema (o que o produto faz):**
+   - <2–3 frases diretas com regras de negócio, perfis e objetivo real>
+2. **Jornada que Você Deve Executar (Passo a Passo):**
+   - Passo 1: Abrir `<url/arquivo>` em `<desktop|mobile>` (Dark e Light)
+   - Passo 2: Clicar em `<elemento>` → **Deve acontecer:** `<ex.: resize abre painel de conferência sem duplicar nome e com rodapé visível>`
+   - Passo 3: Testar ação positiva (`Aprovar`) e ação negativa (`Indeferir`/`Devolver` exige motivo) → **Deve acontecer:** `<contador atualiza, toast aparece, sem erro JS>`
+3. **Invariantes que NÃO Podem Quebrar:**
+   - Zero `console.error`, exceção JS ou HTTP `404`;
+   - Zero overflow horizontal ou corte de botão/rodapé pós-clique (`assertNoOverflow` / `assertNoClip`);
+   - Tema Dark/Light persiste entre telas e mantém paridade semântica (erro = vermelho, sucesso = verde);
+   - Nenhum jargão técnico vazado para o usuário final e nenhum controle de demo dentro do rodapé real.
+4. **Como Executar (Motor Pronto Zero-Dependência):**
+   Monte o cenário JSON e rode:
+   ```bash
+   node <skill_dir>/scripts/run_workflow_probe.mjs --scenario <qa-jornada.json> --out <dir_qa>/<jornada> [--base-url http://127.0.0.1:4188] [--root <dir>] --strict
+   ```
+5. **Formato Obrigatório de Retorno ao Orquestrador:**
+   - Status (`PASS` / `FAIL`) + caminho do `probe-report.json` e PNGs capturados;
+   - Lista de achados apenas reais, cada um com: **Severidade (`P0 Quebra funcional` / `P1 Fluxo-UX ou layout quebrado pós-clique` / `P2 Polimento`)**, **Passo exato de reprodução**, **Esperado vs Observado**, **Erro console/404** e **Screenshot**.
+```
+
+### 3. Ciclo de Triagem, Plano Cirúrgico & Correção (Trava Anti-Loop: Máx. 2 Ciclos)
+1. **Triagem do Orquestrador:** ao receber os relatórios dos Testers, o Orquestrador verifica cada achado — descarta falsos positivos, agrupa sintomas que vêm da **mesma causa raiz** (ex.: estado global, `shell.js` ou componente compartilhado) e redige um **Plano Cirúrgico de Correção** curto.
+2. **Subagentes Corretivos Focados:** o Orquestrador dispara subagentes corretivos (ou corrige diretamente quando for ajuste global único) atacando a causa raiz de todos os itens **`P0` e `P1`**.
+3. **Re-teste Direcionado:** o Tester re-executa o `run_workflow_probe.mjs` **nas jornadas corrigidas + smoke rápido** para confirmar a correção sem regressão.
+4. **Trava Anti-Loop (máx. 2 rodadas):** no máximo **2 ciclos** Tester → Plano → Fix → Re-teste. Se restar bloqueio externo real após o ciclo 2, o Orquestrador escala com diagnóstico transparente ao usuário em vez de rodar indefinidamente.
 
 Após todos os slices passarem no Fast-Audit individual:
 1. Confirme **100% de cobertura** no disco contra `screen-manifest.json` e zero links quebrados.

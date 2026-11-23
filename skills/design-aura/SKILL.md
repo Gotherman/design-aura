@@ -1,19 +1,19 @@
 ---
 name: design-aura
 description: >-
-  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards. Use sempre que o usuario pedir para planejar, especificar, desenhar, criar, revisar ou remodelar o visual de interfaces e telas já existentes, fluxos, design systems, tokens ou prototipos navegaveis, aplicar anti-AI-slop, garantir alto contraste otico, micro-craft e acessibilidade WCAG/APCA, procurar componentes free/open source que caibam na interface, ou definir animacoes com vida para desktop, iOS e Android. Tambem use para ler um repositorio ou planejamento e transformar isso em uma Biblia Visual de Design com especimes reais, Portao de Telas-Mae, construcao fiel por subagentes (1-3 telas por subagente com auditoria rapida imediata do orquestrador) e vitrine estilo Figma (fluxo.html, preview.html, index.html).
+  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards (HTML estático ou SPA React/Vite/Next). Use sempre que o usuario pedir para planejar, especificar, desenhar, criar, revisar ou remodelar o visual de interfaces e telas já existentes, fluxos, design systems, tokens ou prototipos navegaveis, aplicar anti-AI-slop, garantir paridade semântica Light/Dark (vermelho real = erro, nunca rosa), profundidade sem monobloco cinza/branco, Resize In-Place (Lista -> Conferência Focada), alto contraste otico WCAG/APCA, procurar componentes free/open source ou definir animacoes com vida. Tambem use para gerar Biblia Visual autossuficiente com PDF, construir telas via subagentes com Fast-Audit, rodar Fase 4.5 de Subagentes Testers E2E clicando nos fluxos reais e entregar vitrine unificada em link unico (entrega.html, fluxo.html, preview.html, index.html).
 license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.3.0"
+  version: "2.4.0"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.3.0`)
+# Design Aura (`v2.4.0`)
 
-Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual e orquestração multi-agente para produzir **sistemas web operacionais, apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero telas casca vazias, contraste irretocável, ergonomia nativa e verificação visual real em cada etapa.
+Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual, orquestração multi-agente e **QA interativo E2E** para produzir **sistemas web operacionais (HTML estático ou SPA React/Vite/Next), apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero monobloco cinza/branco, paridade semântica Light/Dark (vermelho real = erro, nunca rosa), resize in-place sem poluição, contraste irretocável e verificação real clicável em cada jornada.
 
 ## Ponto de partida universal
 
@@ -30,14 +30,15 @@ Regra absoluta: **nunca invente dados de negócio, diferenciais ou métricas.** 
 
 ---
 
-## Fluxo End-to-End (5 Etapas com Portões Reais)
+## Fluxo End-to-End (6 Etapas com Portões Reais + QA Interativo E2E)
 
 ```text
-FASE 1 (Especificação Enxuta)  → Entrevista curta obrigatória nos pontos críticos em aberto
-FASE 2 (Onda 0 · Bíblia Visual) → DESIGN-BIBLE.md + tokens.css + screen-manifest + PDF VISUAL → [PORTÃO 1: Aprovação]
+FASE 1 (Especificação Enxuta)  → Entrevista curta (fluxo zero-treinamento 3–4 passos, documentos reais, modelos)
+FASE 2 (Onda 0 · Bíblia Visual) → DESIGN-BIBLE.md autossuficiente + tokens.css + screen-manifest + PDF VISUAL → [PORTÃO 1]
 FASE 2.5 (Onda 0.5 · Telas-Mãe) → Design System + 1 Tela-Mãe Desktop + 1 Mobile + PNGs → [PORTÃO 2: Validação Visual]
 FASE 3 (Onda 1 + Fast-Audit)   → Subagentes (1–3 telas cada, SEM teto de 8) + Fast-Audit imediato por entrega
-FASE 4 (Onda 2 · Vitrine + QA) → build_figma_canvas.py (Hub-and-Spoke) + Auditoria Global + Entrega Acessível
+FASE 4 (Onda 2 · Hub + QA DOM) → build_figma_canvas.py (entrega.html + Figma) + Auditoria Global + Pós-Clique
+FASE 4.5 (Onda 3 · Testers E2E) → Subagentes Testers (Read-Only, run_workflow_probe.mjs) → Triagem Orquestrador → Fixers → Re-teste (máx. 2 ciclos) → Entrega em 1 Link (serve_entrega.mjs)
 ```
 
 ---
@@ -52,8 +53,8 @@ Antes de paleta, tipografia ou layout, leia o pedido, o repositório e os docume
 
 **6 pontos críticos obrigatórios** (nunca assuma silenciosamente se o prompt atual não respondeu):
 1. **Em remodelação — o que manter vs o que incomoda:** o que já existe que precisa sobreviver e o que o usuário quer ver drasticamente melhorado.
-2. **Tema padrão & Equilíbrio da Cor da Marca (`65/20/10/5`):** qual tema abre por padrão (*Escuro com alternância para Claro* ou *Claro com alternância para Escuro*) e se prefere o **equilíbrio 65/20/10/5 (Recomendado)** — fundo arquitetônico com subtom suave, a cor oficial da empresa presente com personalidade nas zonas principais (*Sidebar, Card-Rei de cada tela e abas ativas*) e acompanhada de cores harmônicas nos gráficos e alertas (nem "tudo azul pesado", nem "preto morto onde a marca sumiu").
-3. **Estratégia Anti-Poluição em Telas Densas no Desktop:** **(Recomendado) Lista Limpa → Detalhe Focado na mesma página** (abre em lista espaçosa com KPIs e filtros; ao clicar num item, expande o detalhe completo em tela cheia na mesma página com `← Voltar à lista / Esc` e `‹ Anterior · Próxima ›`), ou painéis em 3 colunas simultâneas (reservado apenas para Chat/Inbox em tempo real).
+2. **Tema padrão, Marca no Workspace & Paridade Semântica (`v2.4.0`):** qual tema abre por padrão (*Escuro com alternância para Claro* ou *Claro com alternância para Escuro*) aplicando a **cor oficial da marca para dentro do workspace nos dois temas** (cabeçalhos `--surface-brand-header`, seleções, abas ativas e profundidade real `Z0→Z4` — matando tanto o **monobloco cinza** no Dark quanto o **tudo-branco** no Light) + **paridade semântica rígida** (`vermelho real` = falha nos dois temas, nunca rosa pastel; `verde esmeralda` = sucesso; `âmbar` = atenção).
+3. **Fluxo Zero-Treinamento & Resize In-Place para Filas Densas (`v2.4.0`):** **(Recomendado) Fila Limpa → Clique abre Conferência & Aprovação em Resize na mesma área** (em vez de jogar lista + 8 abas + resumo duplicado + documento + botões tudo de uma vez na tela), usando **fluxos humanos de 3–4 passos**, **documentos reais do trabalho**, **máx. 2 barras no topo**, **zero jargão técnico** e **controles de demo isolados** da operação.
 4. **Superfícies & papel do Mobile:** web desktop, desktop nativo, mobile (iOS / Android / PWA) — e se o mobile será um **app executivo focado** ou as **mesmas rotinas do desktop adaptadas**.
 5. **Personalidade Tipográfica & Detalhes do Domínio:** **(Recomendado) Precisão executiva (`Geist` / `Inter` com números monetários tabulares proporcionais + mono só para códigos/CNPJ/atalhos)** e se entra algum detalhe sutil do ofício (com descrição prática).
 6. **Modelos de execução (OBRIGATÓRIO):** qual modelo conduz o **Orquestrador** (desenha Bíblia, Telas-Mãe e audita) e qual modelo constrói as demais telas em paralelo nos **subagentes** (`1–3` telas cada). Grave ambos no Contrato de plataforma e obedeça na Fase 3.
@@ -155,29 +156,51 @@ Consulte [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.m
 
 ---
 
-### Fase 4 — Vitrine Estilo Figma (Hub-and-Spoke) + Auditoria Global + Entrega Acessível (Onda 2)
+### Fase 4 — Vitrine Unificada (`entrega.html`) + Auditoria Global + SPA Dual-Engine (Onda 2 · Obrigatória)
 
-1. **Reconciliação de cobertura 100% + Vitrine Estilo Figma** ([08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)):
+> **Regra Anti-Esquecimento da Fase 4:** mesmo quando o trabalho editar diretamente um app React/Vite/Next em `src/`, a **Fase 4 continua 100% obrigatória** (nunca encerre sem regenerar `entrega.html` + `fluxo.html` + `preview.html` + `index.html` sincronizados com a versão atual do app!).
+
+1. **Reconciliação de cobertura 100% + Vitrine Unificada (`entrega.html` + Figma)** ([08-canvas-figma-manifest.md](references/08-canvas-figma-manifest.md)):
    ```bash
-   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <dir_telas> --verify-files
+   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css [--app-base /app] --out <dir_telas> --verify-files
    ```
-   Entrega automaticamente:
-   - `fluxo.html`: canvas estúdio Figma **Dark-first** sincronizado com `tokens.css` em Dark e Light (zero fundo bege), layout panorâmico **Hub-and-Spoke** fiel às seções, filtros com acentuação legível, higiene automática de arestas (`Setas: Principais` vs `Todas (E)`), botões rápidos `★ Início` e `Mobile`, previews ao vivo em iframe, inspetor e minimapa.
-   - `preview.html`: player guiado de uso real por jornada/persona (com seletor limpo `<select>` para 4+ jornadas, zero scrollbar horizontal no topo e enquadramento mobile `clip-path`).
-   - `index.html`: galeria filtrável por módulo com busca instantânea `⌘K` / `Ctrl+K` e suporte a miniaturas visuais Dark/Light (`--thumbs <dir_audit>`).
+   Entrega automaticamente **4 artefatos** (suportando tanto telas `.html` quanto rotas SPA `"route"` de React/Vite/Next):
+   - **`entrega.html` (Hub Unificado de Link Único · `v2.4.0`):** topbar única `Mapa Figma · App ao Vivo · Preview Guiado · Galeria · Bíblia Visual + PDF + Tema`, aba inteligente Desktop=Figma / Mobile=App, grade mobile `>= 44px` e sync de tema em 3 canais.
+   - `fluxo.html`: canvas estúdio Figma **Dark-first** sincronizado com `tokens.css` em Dark e Light, Hub-and-Spoke panorâmico, filtros acentuados, higiene de arestas `primary`/`secondary`, `★ Início` e `Mobile`.
+   - `preview.html`: player guiado por jornada/persona (`<select>` para 4+ jornadas, enquadramento mobile `clip-path`).
+   - `index.html`: galeria filtrável com `⌘K` e miniaturas Dark/Light (`--thumbs <dir_audit>`).
 
-2. **Executar os 3 portões globais de auditoria (Paralelo `--concurrency 4`, nunca abandonado em background!)** ([07-auditoria-e-veredito.md](references/07-auditoria-e-veredito.md)):
+2. **Executar os 3 portões globais de auditoria (Paralelo `--concurrency 4` + `--smoke-interact`)** ([07-auditoria-e-veredito.md](references/07-auditoria-e-veredito.md)):
    ```bash
    python3 <skill_dir>/scripts/audit_contrast.py tokens.css --strict
    python3 <skill_dir>/scripts/lint_design_aura.py <dir_projeto> --strict
-   node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --concurrency 4 --strict
-   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --thumbs <dir_audit> --out <dir_telas> --verify-files
+   node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json [--base-url http://127.0.0.1:4188] --out <dir_audit> --viewports desktop,mobile --themes dark,light --concurrency 4 --smoke-interact --strict
+   python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css [--app-base /app] --thumbs <dir_audit> --out <dir_telas> --verify-files
    ```
-   *(Em `v2.3.0`, `capture_and_audit.mjs` roda em **4 abas CDP paralelas com contextos isolados** e progresso ao vivo em `stderr` (~30s para 46 capturas), pré-injeta o tema antes do carregamento e audita também `DA-NAV-TRUNCATION`, `DA-HEADER-HSCROLL`, `DA-CLIPPED-CONTENT`, `DA-MOBILE-FLEX-CLIP`, `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT`, `DA-JS-ERROR` e `DA-ASSET-404`; e `lint_design_aura.py` checa ainda `DA-BRAND-DARK-SCOPE`, `DA-REF-COPY-LEAK`, `DA-ICON-GENERIC-REPEAT`, `DA-FLAT-CHART-AXIS` e `DA-MOBILE-FLEX-CLIP`. **Regra de transparência:** aguarde a conclusão da auditoria no próprio turno antes de responder ao usuário.)*
+   *(Valida `DA-SEMANTIC-HUE-PARITY`, `DA-DARK-FLAT-MONOLITH`, `DA-LIGHT-WASHED-OUT >= 1.85:1`, `DA-TECH-JARGON-UI`, `DA-BADGE-ECHO`, `DA-MOBILE-HERO-BLOAT`, `DA-HEADER-STACK-BLOAT`, `DA-TAB-OVERFLOW`, `DA-B3-01` inclusive em emblemas/badges, whitelist `entrega.html`/`.da-hub`, e smoke pós-clique `--smoke-interact`.)*
 
-3. **Inspeção visual final & Entrega real em ambiente local ou remoto**:
-   - Inspecione os PNGs finais (inclusive `fluxo.html`, `preview.html`, `index.html`). Só encerre com veredito **`Approve`** (`0 BLOCK`, `0 HIGH` e qualidade estética validada).
-   - **Regra de entrega acessível:** se estiver em sandbox/servidor remoto onde o navegador do usuário não alcança `localhost`, **nunca** entregue apenas caminhos locais ou `http://localhost:...` sem alternativa funcional — abra a vitrine na ferramenta de preview do ambiente (quando disponível) ou informe um link público/acessível verificado com `HTTP 200`, além dos caminhos dos arquivos.
+---
+
+### Fase 4.5 — QA Interativo E2E por Subagentes Testers + Ciclo de Correção (Onda 3 · `v2.4.0`)
+
+Após a parte visual e interativa construída e aprovada na Fase 4, **valide os fluxos reais clicando como usuário final** ([03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.md)):
+
+1. **Subagentes Testers por Jornada (Estritamente Read-Only):** lance `2–3` Testers em paralelo fatiados por persona/jornada (`Desktop Operação`, `Mobile Campo`, `Vitrine entrega.html & Tema`). Entregue a cada um o **`QA-BRIEF`** (escopo geral do produto, fluxo esperado passo a passo e invariantes que NÃO podem quebrar).
+2. **Cliques Reais com `run_workflow_probe.mjs` (zero dependência npm):**
+   ```bash
+   node <skill_dir>/scripts/run_workflow_probe.mjs --scenario <qa-jornada.json> --out <dir_qa>/<jornada> [--base-url http://127.0.0.1:4188] --strict
+   ```
+   Testa cliques reais (filtros, abertura do Resize In-Place, preenchimento de motivo em Indeferir/Devolver, Aprovar + atualização de contadores, estados vazios, alternância Dark/Light), valida zero overflow/recorte pós-clique, coleta `console.error`/`pageerror`/`404` e salva PNGs das falhas.
+3. **Triagem do Orquestrador → Plano Cirúrgico → Subagentes Corretivos → Re-teste (Máx. 2 Ciclos):**
+   - O Tester **nunca edita código** — reporta achados (`P0`/`P1`/`P2`) com passo de reprodução e PNG ao Orquestrador.
+   - O **Orquestrador** confirma se cada falha é real, identifica a causa raiz (shell/estado global vs tela isolada), monta o **Plano de Melhoria e Conserto** e lança subagentes corretivos focados.
+   - O Tester re-executa o probe nas jornadas corrigidas para confirmar `0` falhas `P0`/`P1` (trava anti-loop: máx. 2 ciclos).
+
+4. **Inspeção visual final & Entrega Unificada em 1 Link / 1 Porta (`serve_entrega.mjs`):**
+   ```bash
+   node <skill_dir>/scripts/serve_entrega.mjs --design-dir <dir_design> [--app-dir <dir_dist>] --port 4188
+   ```
+   Inspecione os PNGs finais (inclusive `entrega-desktop-dark.png`, `fluxo-desktop-dark.png` e evidências pós-clique). Em ambiente remoto/sandbox, entregue 1 link acessível verificado com `HTTP 200` (ou abra no preview integrado) + caminhos locais, encerrando com veredito **`Approve`**.
 
 ---
 
@@ -226,8 +249,10 @@ Qualquer violação abaixo **reprova automaticamente** (`BLOCK` / `HIGH`). Detal
 - `scripts/render_design_bible.py` — Gera `DESIGN-BIBLE.html` e `DESIGN-BIBLE.pdf` com pranchas visuais reais a partir de `tokens.css`.
 - `scripts/design_intel.py` — Pesquisa offline BM25 sobre domínios, tipografia, padrões e OSS.
 - `scripts/discover_oss_components.py` — Caça componentes OSS por necessidade/stack/plataforma (`--online` GitHub/npm).
-- `scripts/generate_tokens.py` — Compila `tokens.json` em CSS, Tailwind v4, TS, Swift, Kotlin e Dart.
-- `scripts/audit_contrast.py` — Validador WCAG 2.1 + APCA em Light & Dark.
-- `scripts/lint_design_aura.py` — Linter determinístico dos 10 Blocos + anti-stub/anti-serif/anti-dev-leak.
-- `scripts/build_figma_canvas.py` — Gerador da vitrine `fluxo.html` (Hub-and-Spoke) + `preview.html` + `index.html`.
-- `scripts/capture_and_audit.mjs` — Captura multi-viewport e auditoria DOM real (incluindo vitrine, `DA-DEAD-SPACE`, `DA-STUB-SCREEN`, `DA-FIXED-OVERLAP`, `DA-RAW-LINK-LIST`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT`, `DA-ASSET-404`).
+- `scripts/generate_tokens.py` — Compila `tokens.json` em CSS, Tailwind v4, TS, Swift, Kotlin e Dart com superfícies semânticas prontas (`--{role}-surface/border/text`) e sombras/rims calibrados Dark vs Light.
+- `scripts/audit_contrast.py` — Validador WCAG 2.1 + APCA + `DA-SEMANTIC-HUE-PARITY` (bloqueia erro rosa no Dark) + `DA-DARK-FLAT-MONOLITH` + `DA-LIGHT-WASHED-OUT >= 1.85:1`.
+- `scripts/lint_design_aura.py` — Linter determinístico dos 10 Blocos + `DA-TECH-JARGON-UI`, `DA-BADGE-ECHO`, anti-stub, anti-serif e anti-dev-leak.
+- `scripts/build_figma_canvas.py` — Gerador do Hub Unificado `entrega.html` + `fluxo.html` (Hub-and-Spoke) + `preview.html` + `index.html` (HTML estático e SPA `"route"` + `--app-base`).
+- `scripts/serve_entrega.mjs` — Servidor HTTP de porta única (`0.0.0.0:4188`, zero dep) servindo `/`, `/design/*` e SPA `/app/*` (`dist/*`).
+- `scripts/capture_and_audit.mjs` — Captura multi-viewport paralela (HTML + SPA `--base-url`) + auditoria DOM real + smoke pós-clique (`--smoke-interact`).
+- `scripts/run_workflow_probe.mjs` — Motor CDP interativo E2E (zero dep) para os Subagentes Testers da Fase 4.5 clicarem em fluxos reais, validarem assertivas/layout pós-clique e capturarem evidências.

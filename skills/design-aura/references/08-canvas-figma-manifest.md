@@ -3,11 +3,17 @@
 Ao final da construção, o Orquestrador compila todas as telas do projeto em uma **vitrine navegável estilo Figma** usando `scripts/build_figma_canvas.py`. Isso permite ao usuário inspecionar o sistema inteiro, testar fluxos ponta a ponta e validar a navegação Desktop + Mobile no navegador.
 
 ```bash
-python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css --out <pasta_saida> --verify-files [--relayout]
+python3 <skill_dir>/scripts/build_figma_canvas.py screen-manifest.json --tokens tokens.css [--app-base /app] [--thumbs <dir_audit>] --out <pasta_saida> --verify-files [--relayout]
+node <skill_dir>/scripts/serve_entrega.mjs --design-dir <pasta_saida> [--app-dir <dist>] --port 4188
 ```
 
 Arquivos gerados automaticamente na pasta `<pasta_saida>`:
-1. **`fluxo.html`** — Canvas Infinito Estilo Figma (`v2.0` Hub-and-Spoke):
+0. **`entrega.html`** — **Hub Unificado de Link Único (`v2.4.0`, raiz `.da-hub`):**
+   - Barra superior única unificando **`Mapa Figma · App ao Vivo (se SPA) · Preview Guiado · Galeria · Bíblia Visual + PDF + Tema Dark/Light`**.
+   - **Aba inteligente por dispositivo:** Desktop abre em `Mapa Figma` (ou `?tab=app`); Mobile (`<= 768px`) abre em `App ao Vivo` / `Preview Guiado` com grade de botões `>= 44px`.
+   - **Sincronia de Tema em 3 Canais:** `localStorage`, `postMessage({ type: 'designaura:theme' })` e injeção direta `data-theme` nos iframes filhos.
+   - Servido em **1 única porta** (`0.0.0.0:4188`) por `scripts/serve_entrega.mjs` combinando `/`, `/design/*` e `/app/*` (fallback SPA de `dist/`).
+1. **`fluxo.html`** — Canvas Infinito Estilo Figma (`v2.4.0` Hub-and-Spoke):
    - **Estúdio Dark-First** (`project.canvasTheme` padrão `"dark"`, independente do tema padrão do app; tecla `T` alterna Dark/Light e propaga para todos os iframes).
    - **Auto-Layout Hub-and-Spoke panorâmico:** organiza automaticamente Acesso/Conta à esquerda → **`★ Tela Inicial / Hub`** em destaque central com borda laranja → módulos Desktop em **raias horizontais equilibradas** à direita → faixa dedicada **Mobile** embaixo. Detecta torres verticais degeneradas (`height > width * 1.12` com `>= 10` telas) e reorganiza automaticamente (use `--relayout` para forçar ou `project.lockManualLayout: true` para travar coordenadas manuais).
    - **Higiene de arestas (`tier: "primary" | "secondary"`):** em mapas grandes (`> 22` arestas), exibe apenas as setas principais coloridas por módulo na visão geral — eliminando a macarronada de linhas cruzadas. Ao clicar/isolar uma tela ou ativar **`Setas: Todas (E)`**, todas as conexões secundárias/de retorno acendem instantaneamente.
@@ -22,10 +28,11 @@ Arquivos gerados automaticamente na pasta `<pasta_saida>`:
 
 ---
 
-## Como funciona para Protótipos HTML e para Apps Reais
+## Como funciona para Protótipos HTML e para Apps Reais (Dual-Engine `v2.4.0`)
 
-- **Protótipos HTML estáticos / Sistema de páginas**: `file` aponta para caminhos relativos na mesma pasta ou subpastas (ex.: `"desktop-portal.html"`, `"mobile-hoje.html"`).
-- **Apps reais (React / Vite / Next.js / Electron Web / Expo Web / Flutter Web)**: rode o servidor de dev local (ex.: `http://127.0.0.1:5173`) e preencha `file` com a rota/URL completa ou relativa (`"/portal"`, `"http://127.0.0.1:5173/financeiro/pagar"`), ou gere o build estático e sirva a vitrine junto.
+- **Protótipos HTML estáticos / Sistema de páginas:** `file` aponta para caminhos relativos (`"desktop-portal.html"`, `"mobile-hoje.html"`).
+- **Apps reais SPA (React / Vite / Next.js / Vue / Expo Web):** use `"route": "/fila-operacional"` (ou `file` começando com `/`) no `screen-manifest.json`, passe `--app-base /app` (ou `http://127.0.0.1:4188/app`) no `build_figma_canvas.py` e `--base-url http://127.0.0.1:4188` no `capture_and_audit.mjs`, e sirva tudo junto na mesma porta com `serve_entrega.mjs --design-dir ./design --app-dir ./dist`.
+- **Smoke pós-clique opcional por tela:** adicione `"clickSelector": "[data-da-open]"` (ou seletor da 1ª pendência) em qualquer tela do `screen-manifest.json` para que `capture_and_audit.mjs --smoke-interact` valide automaticamente o estado aberto/redimensionado.
 
 ---
 

@@ -42,15 +42,27 @@ Preenchido na Fase 1, antes de cor, tipo e tela. Subagentes leem este bloco e n�
 
 ## 3. DNA da Marca & Vocabulário do Domínio
 - **Essência traduzida em geometria e ritmo:** ...
-- **Vocabulário oficial (botões e estados):** *(ex.: "Liberar lote", "Em trânsito", "Atrasado 2d")*
-- **Termos banidos de copy:** clichês genéricos de IA, *Lorem ipsum*, *botsplaining*.
+- **Vocabulário oficial (botões e estados):** *(ex.: "Aprovar", "Devolver", "Indeferir", "Em dia", "Aguardando")*
+- **Zero jargão técnico na tela do trabalhador (`DA-TECH-JARGON-UI`):** proibido expor termos de engenharia/infraestrutura em telas operacionais ou login (`deviceId`, `Fallback VLM`, `Dry-Run`, `SHA-256`, `Backup R2`, `PWA Mobile`, `ScreenMap`, `auto-reserva`, `Fila FIFO`).
+- **Termos banidos de copy:** clichês genéricos de IA, *Lorem ipsum*, *botsplaining* e referências a sistemas terceiros (`DA-REF-COPY-LEAK`).
 
-## 4. Sistema Cromático (60 · 30 · 10) & Semântica
-- **Light Mode (Aterrado / Alto Contraste):** `Z0` `{{LIGHT_Z0}}` · `Z1` `{{LIGHT_Z1}}` · `Z2` `{{LIGHT_Z2}}` · Primária 30% `{{LIGHT_PRIMARY}}` · Acento 10% `{{LIGHT_ACCENT}}`
-- **Dark Mode (Luminosidade Progressiva):** `Z0` `{{DARK_Z0}}` · `Z1` `{{DARK_Z1}}` · `Z2` `{{DARK_Z2}}` · Primária 30% `{{DARK_PRIMARY}}` · Acento 10% `{{DARK_ACCENT}}`
-- **Papel da marca:** ação e foco. Superfícies e texto neutro não são a mesma cor clareada.
-- **Semântica funcional:** Sucesso (`{{SEM_SUCCESS}}`), Alerta (`{{SEM_WARNING}}`), Crítico (`{{SEM_DANGER}}`), Informação (`{{SEM_INFO}}`). Distintas da cor da marca.
-- **Auditoria de contraste:** validado por `audit_contrast.py --strict` (WCAG AA + APCA Lc >= 60).
+## 3.5 Orçamentos de Composição, Resize In-Place & Anti-Poluição *(Autossuficiente — Vale mesmo fora da skill)*
+- **Topo Desktop (`DA-HEADER-STACK-BLOAT`):** máximo **2 barras horizontais** (`<= 210px` totais) antes do primeiro dado real; máximo **4–5 abas de filtro** visíveis + menu `"Mais status"` (`DA-TAB-OVERFLOW`).
+- **Estrutura de Trabalho por Resize In-Place (Filas & Conferência):** **PROIBIDO** jogar fila + 8 abas + resumo duplicado + documento + barra de decisão todos de uma vez na tela! Abra na **Fila Limpa (100% da área útil)** → clicar numa pendência faz um **resize suave na mesma área** abrindo a **Conferência & Aprovação Focada** em 3 blocos únicos (1. Identificação única sem duplicar nome/unidade 2×; 2. Evidência/Documento real do trabalho; 3. Rodapé estrutural `flex-shrink: 0` com ações coesas).
+- **Zero Duplicação (`Single Source of Truth`) & Zero Selo-Eco (`DA-BADGE-ECHO`):** cada dado (colaborador, unidade, solicitante) aparece **1 única vez** no painel; proibido repetir o mesmo badge-eco em cada card de uma aba que já diz aquele estado.
+- **Orçamento Mobile (`DA-MOBILE-HERO-BLOAT`):** Hero + avisos no topo ocupam no máximo **`38%` (`<= 310px` em `390×844`)** para a lista acionável principal aparecer imediatamente acima da dobra.
+- **Isolamento Estrito de Controles de Demo/Simulador:** seletores de cenário ou botões de simulação NUNCA entram dentro da barra operacional nem no rodapé de decisão real (ficam num drawer/rodapé discreto de demonstração).
+
+## 4. Sistema Cromático (Marca no Workspace + Paridade Light/Dark)
+- **Fim do Monobloco Cinza (Dark) e do Tudo-Branco (Light):** traga variações fortes e suaves da **cor oficial da marca** da Sidebar para dentro da área de trabalho — cabeçalhos de painel (`--surface-brand-header`), cards em destaque (`--surface-brand-panel`), abas ativas (`--primary` sólido com `--on-primary`) e bordas estruturais. Preto e cinza entram apenas como apoio sutil.
+- **Light Mode (Aterrado / Alto Contraste):** `Z0` `{{LIGHT_Z0}}` · `Z1` `{{LIGHT_Z1}}` (`>= 1.18:1` vs `Z2`) · `Z2` `{{LIGHT_Z2}}` · `border-subtle` (`>= 1.85:1` vs `Z2`, ideal `2.0–2.4:1`) · Primária `{{LIGHT_PRIMARY}}` · Acento `{{LIGHT_ACCENT}}`
+- **Dark Mode (Profundidade Real `Z0→Z4` + Marca):** `Z0` `{{DARK_Z0}}` · `Z1` `{{DARK_Z1}}` · `Z2` `{{DARK_Z2}}` (`>= 1.08:1` vs `Z1`, `border-subtle >= 1.25:1`, `--rim-highlight`) · Primária `{{DARK_PRIMARY}}` · Acento `{{DARK_ACCENT}}`
+- **Paridade Semântica Obrigatória (`DA-SEMANTIC-HUE-PARITY`):** a família de cor de cada estado é **idêntica** no Light e no Dark — **NUNCA** erro vermelho no Claro e rosa pastel (`#FDA4AF`) no Escuro, nem sucesso esmeralda no Claro e verde-água neon com texto preto no Escuro:
+  - **Erro / Falha / Indeferir:** Vermelho real nos dois modos (`--danger` / `--danger-surface` / `--danger-border` / `--danger-text`)
+  - **Sucesso / Aprovar:** Verde esmeralda real nos dois modos (`--success` / `--success-surface` / `--success-border` / `--success-text`)
+  - **Atenção / Pendente:** Âmbar real nos dois modos (`--warning` / `--warning-surface` / `--warning-border` / `--warning-text`)
+  - **Marca / Ativo / Info:** Azul/cor da marca coesa nos dois modos (`--primary` / `--primary-surface` / `--primary-border` / `--primary-text`)
+- **Auditoria de contraste:** validado por `audit_contrast.py --strict` (WCAG AA + APCA + `DA-SEMANTIC-HUE-PARITY` + `DA-DARK-FLAT-MONOLITH` + `DA-LIGHT-WASHED-OUT`).
 
 ## 5. Arquitetura de Profundidade em 5 Planos (`Z0 → Z4`)
 | Plano | Papel | Light Mode | Dark Mode |
@@ -124,8 +136,9 @@ Nomes e zonas saem do fluxo real. Não copie Agora / Em Rota / Radar se o negóc
 |---|---|---|---|---|---|
 | `...` | `...` | `...` | `...` | `...` | `...` |
 
-## 12. Portões CDO de Aprovação (Saída Onda 2)
-- [ ] `audit_contrast.py tokens.css --strict` verde (Light & Dark)
-- [ ] `lint_design_aura.py <dir> --strict` com `0` bloqueios
-- [ ] `capture_and_audit.mjs` verde em `1440x900`, `768x1024`, `390x844` (Dark & Light)
-- [ ] `100%` das telas do `screen-manifest.json` criadas e navegáveis via `fluxo.html`, `preview.html` e `index.html`
+## 12. Portões CDO de Aprovação (Saída Onda 2 + Onda 3 QA E2E)
+- [ ] `audit_contrast.py tokens.css --strict` verde (Light & Dark + `DA-SEMANTIC-HUE-PARITY` + `DA-DARK-FLAT-MONOLITH` + `DA-LIGHT-WASHED-OUT >= 1.85:1`)
+- [ ] `lint_design_aura.py <dir> --strict` com `0` bloqueios (`DA-TECH-JARGON-UI`, `DA-BADGE-ECHO`, 10 Blocos)
+- [ ] `capture_and_audit.mjs` verde em Desktop e Mobile (Dark & Light + pós-clique `--smoke-interact`)
+- [ ] **Fase 4.5 (Onda 3 · Subagentes Testers E2E):** fluxos clicáveis validados com `run_workflow_probe.mjs` (0 falhas P0/P1, zero erro JS/404)
+- [ ] `100%` das telas navegáveis em link único via `entrega.html` (`serve_entrega.mjs` · `Mapa Figma · App ao Vivo · Preview · Galeria · Bíblia + PDF`)

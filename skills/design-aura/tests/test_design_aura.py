@@ -564,5 +564,248 @@ class V22UpgradeTests(unittest.TestCase):
             self.assertIn("DA-REF-COPY-LEAK", {f["rule"] for f in scan_file(leak_html, Path(tmp))})
 
 
+class V24UpgradeTests(unittest.TestCase):
+    def test_v24_semantic_hue_parity_dark_monolith_strict_light_and_enriched_tokens(self):
+        # 1. tokens.example.json v2.4.0 gera superficies semanticas, cabecalho marca e sombras Dark/Light calibradas
+        with tempfile.TemporaryDirectory() as tmp:
+            out_css = Path(tmp) / "tokens.css"
+            proc = run_py(
+                "generate_tokens.py",
+                [str(ROOT / "assets" / "tokens.example.json"), "--out", str(out_css), "--check-contrast"],
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+            css_text = out_css.read_text(encoding="utf-8")
+            for expected_tok in (
+                "--danger-surface:",
+                "--danger-border:",
+                "--danger-text:",
+                "--success-surface:",
+                "--surface-brand-header:",
+                "--rim-highlight:",
+            ):
+                self.assertIn(expected_tok, css_text)
+            rows = audit_file(out_css)
+            self.assertGreaterEqual(len(rows), 40)
+            self.assertFalse(any(r["severity"] != "PASS" for r in rows), [r for r in rows if r["severity"] != "PASS"])
+
+        # 2. Erro rosa pastel (#FDA4AF) no Dark -> BLOCK DA-SEMANTIC-HUE-PARITY;
+        #    Light com borda 1.52:1 (< 1.85:1) -> HIGH DA-LIGHT-WASHED-OUT;
+        #    Dark monobloco cinza chapado -> HIGH DA-DARK-FLAT-MONOLITH
+        bad_css = """
+        [data-theme="light"] {
+          --surface-z1: #EFF3F8;
+          --surface-z2: #FFFFFF;
+          --border-subtle: #C8D3E0;
+          --primary: #14427A;
+          --on-primary: #FFFFFF;
+          --danger: #B91C1C;
+          --on-danger: #FFFFFF;
+          --success: #15803D;
+          --on-success: #FFFFFF;
+          --text-strong: #0E1726;
+        }
+        [data-theme="dark"] {
+          --surface-z1: #14181F;
+          --surface-z2: #161B23;
+          --border-subtle: #1D232E;
+          --primary: #2563EB;
+          --on-primary: #FFFFFF;
+          --danger: #FDA4AF;
+          --on-danger: #190808;
+          --success: #2DD4BF;
+          --on-success: #071510;
+          --text-strong: #F3F6FB;
+        }
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "bad-v24.css"
+            p.write_text(bad_css, encoding="utf-8")
+            rows = audit_file(p)
+        labels = [r["label"] for r in rows]
+        self.assertTrue(any("DA-SEMANTIC-HUE-PARITY" in lb and r["severity"] == "BLOCK" for r, lb in zip(rows, labels)), rows)
+        self.assertTrue(any("DA-LIGHT-WASHED-OUT" in lb for lb in labels), labels)
+        self.assertTrue(any("DA-DARK-FLAT-MONOLITH" in lb for lb in labels), labels)
+
+    def test_v24_lint_tech_jargon_and_badge_echo(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "desktop-fila.html"
+            p.write_text(
+                "<main><p>Fallback VLM ativo na Fila FIFO com deviceId.</p>"
+                + '<span class="badge-status">Aguardando Mesa</span>' * 6
+                + "</main>",
+                encoding="utf-8",
+            )
+            findings = scan_file(p, Path(tmp))
+        rules = {f["rule"] for f in findings}
+        self.assertIn("DA-TECH-JARGON-UI", rules)
+        self.assertIn("DA-BADGE-ECHO", rules)
+
+    def test_v24_bible_squircle_specimens_and_entrega_hub_spa(self):
+        # 1. Biblia PDF usa squircle 6px + barra de decisao + diff strip (sem .sp-pill 999px)
+        page = build_html(
+            "# Biblia v2.4\n\n## 1. Teste\n",
+            "Biblia v2.4",
+            tokens_light={"--surface-z1": "#D9E5F3", "--surface-z2": "#FFFFFF", "--danger": "#B91C1C"},
+            tokens_dark={"--surface-z1": "#101620", "--surface-z2": "#17202E", "--danger": "#DC2626"},
+        )
+        self.assertIn("sp-squircle", page)
+        self.assertIn("sp-diff-strip", page)
+        self.assertIn("sp-tabs", page)
+        self.assertNotIn("sp-pill", page)
+
+        # 2. build_figma_canvas suporta SPA route + --app-base e gera entrega.html com Biblia/PDF e 3-channel sync
+        manifest = {
+            "project": {"name": "Portal Operacional", "startScreenId": "fila"},
+            "screens": [
+                {"id": "fila", "title": "Fila Operacional", "route": "/fila", "platform": "desktop", "flow": "operacao", "group": "Mesa"},
+                {"id": "campo", "title": "App Campo", "route": "/campo", "platform": "mobile", "flow": "mobile", "group": "Campo"},
+            ],
+            "edges": [{"id": "e1", "from": "fila", "to": "campo", "label": "Ver Mobile", "flow": "mobile"}],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder / "DESIGN-BIBLE.html").write_text("<!doctype html><title>B</title>", encoding="utf-8")
+            (folder / "DESIGN-BIBLE.pdf").write_bytes(b"%PDF-1.4\n")
+            mpath = folder / "screen-manifest.json"
+            mpath.write_text(json.dumps(manifest), encoding="utf-8")
+            proc = run_py("build_figma_canvas.py", [str(mpath), "--app-base", "/app", "--out", str(folder), "--verify-files"])
+            self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+            entrega = (folder / "entrega.html").read_text(encoding="utf-8")
+            self.assertIn('class="da-hub"', entrega)
+            self.assertIn("App ao Vivo", entrega)
+            self.assertIn("Bíblia Visual", entrega)
+            self.assertIn("DESIGN-BIBLE.pdf", entrega)
+            self.assertIn("designaura:theme", entrega)
+
+    def test_v24_serve_entrega_and_workflow_probe_e2e(self):
+        import socket
+        import time
+        import urllib.request
+
+        # Escolhe porta livre
+        with socket.socket() as s:
+            s.bind(("127.0.0.1", 0))
+            port = s.getsockname()[1]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            design_dir = base / "design"
+            dist_dir = base / "dist"
+            design_dir.mkdir()
+            dist_dir.mkdir()
+            (dist_dir / "index.html").write_text("<!doctype html><title>SPA</title><main>App SPA Vivo</main>", encoding="utf-8")
+            (design_dir / "tela-fila.html").write_text(
+                """<!doctype html><html lang="pt-BR" data-theme="dark"><head><meta charset="utf-8"><title>Fila</title>
+                <style>
+                  body { margin: 0; font-family: system-ui, sans-serif; background: #101620; color: #D6E1F0; }
+                  main { padding: 24px; min-height: 100dvh; box-sizing: border-box; }
+                  .list { display: grid; gap: 10px; }
+                  .row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 12px; background: #17202E; border: 1px solid #2C3E58; color: #F3F6FB; cursor: pointer; font-size: 14px; }
+                  .conf { margin-top: 16px; padding: 20px; border-radius: 14px; background: #17202E; border: 1px solid #3B7CF0; }
+                  .conf[hidden] { display: none; }
+                  button { min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #15803D; background: #15803D; color: #FFFFFF; font-weight: 700; cursor: pointer; }
+                  #toast { margin-top: 12px; font-weight: 700; color: #4ADE80; }
+                </style></head><body><main>
+                  <h1 style="color:#F3F6FB;margin:0 0 14px;">Fila de Conferência</h1>
+                  <div class="list">
+                    <button type="button" class="row" data-da-open="1" onclick="document.getElementById('conf').hidden=false"><span>Ana Paula · Unidade Norte</span><span>Falta indevida</span></button>
+                    <button type="button" class="row"><span>Carlos Lima · Unidade Sul</span><span>Horário</span></button>
+                    <button type="button" class="row"><span>Marina Alves · Unidade Centro</span><span>Atestado</span></button>
+                    <button type="button" class="row"><span>Pedro Souza · Unidade Leste</span><span>Falta</span></button>
+                    <button type="button" class="row"><span>Lucia Dias · Unidade Oeste</span><span>Batida</span></button>
+                  </div>
+                  <section id="conf" class="conf" hidden>
+                    <h2 style="color:#F3F6FB;margin:0 0 10px;">Conferência · Ana Paula</h2>
+                    <label for="obs">Observação</label>
+                    <input id="obs" type="text" placeholder="Motivo" style="display:block;margin:8px 0;padding:10px;min-height:44px;background:#090E16;color:#F3F6FB;border:1px solid #2C3E58;border-radius:8px;">
+                    <button type="button" id="btnApprove" onclick="document.getElementById('toast').textContent='Solicitação aprovada com sucesso'">Aprovar solicitação</button>
+                    <p id="toast"></p>
+                  </section>
+                </main></body></html>""",
+                encoding="utf-8",
+            )
+            manifest = {
+                "project": {"name": "E2E", "startScreenId": "fila"},
+                "screens": [{"id": "fila", "title": "Fila", "file": "tela-fila.html", "platform": "desktop", "flow": "op", "group": "Op", "clickSelector": "[data-da-open]"}],
+                "edges": [],
+            }
+            mpath = design_dir / "screen-manifest.json"
+            mpath.write_text(json.dumps(manifest), encoding="utf-8")
+            build = run_py("build_figma_canvas.py", [str(mpath), "--out", str(design_dir), "--verify-files"])
+            self.assertEqual(build.returncode, 0, build.stderr)
+
+            # 1. Testa serve_entrega.mjs em 1 porta combinando / + /design/* + /app/* SPA
+            srv = subprocess.Popen(
+                ["node", str(SCRIPTS / "serve_entrega.mjs"), "--design-dir", str(design_dir), "--app-dir", str(dist_dir), "--port", str(port), "--host", "127.0.0.1"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            try:
+                for _ in range(30):
+                    try:
+                        with urllib.request.urlopen(f"http://127.0.0.1:{port}/healthz", timeout=1) as resp:
+                            if resp.status == 200:
+                                break
+                    except Exception:
+                        time.sleep(0.1)
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/", timeout=2) as r_root:
+                    self.assertIn("da-hub", r_root.read().decode("utf-8"))
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/app/rota-dinamica", timeout=2) as r_spa:
+                    self.assertIn("App SPA Vivo", r_spa.read().decode("utf-8"))
+
+                # 2. Testa run_workflow_probe.mjs (Fase 4.5) clicando no fluxo real via Chromium CDP
+                scenario = {
+                    "name": "Fluxo Resize e Aprovacao",
+                    "viewport": "desktop",
+                    "theme": "dark",
+                    "steps": [
+                        {"action": "goto", "url": "/design/tela-fila.html"},
+                        {"action": "assertHidden", "selector": "#conf"},
+                        {"action": "click", "selector": "[data-da-open]"},
+                        {"action": "assertVisible", "selector": "#conf"},
+                        {"action": "fill", "selector": "#obs", "value": "Conferido no cartao"},
+                        {"action": "click", "selector": "#btnApprove"},
+                        {"action": "assertText", "selector": "#toast", "contains": "aprovada com sucesso"},
+                        {"action": "assertNoOverflow"},
+                        {"action": "setTheme", "theme": "light"},
+                        {"action": "screenshot", "name": "apos-aprovacao"},
+                    ],
+                }
+                spath = base / "qa.json"
+                spath.write_text(json.dumps(scenario), encoding="utf-8")
+                qa_out = base / "qa-out"
+                probe = subprocess.run(
+                    ["node", str(SCRIPTS / "run_workflow_probe.mjs"), "--scenario", str(spath), "--base-url", f"http://127.0.0.1:{port}", "--out", str(qa_out), "--strict"],
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(probe.returncode, 0, probe.stdout + probe.stderr)
+                self.assertTrue((qa_out / "apos-aprovacao.png").exists())
+                rep = json.loads((qa_out / "probe-report.json").read_text(encoding="utf-8"))
+                self.assertTrue(rep["passed"])
+
+                # 3. Testa capture_and_audit.mjs com entrega.html whitelisted + --smoke-interact
+                audit_out = base / "audit-out"
+                aud = subprocess.run(
+                    ["node", str(SCRIPTS / "capture_and_audit.mjs"), "--manifest", str(mpath), "--out", str(audit_out), "--viewports", "desktop", "--themes", "dark", "--concurrency", "2", "--smoke-interact", "--strict"],
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(aud.returncode, 0, aud.stdout + aud.stderr)
+                self.assertTrue((audit_out / "fila-desktop-dark-interact.png").exists())
+                self.assertTrue((audit_out / "entrega-desktop-dark.png").exists())
+            finally:
+                srv.terminate()
+                try:
+                    srv.wait(timeout=3)
+                except Exception:
+                    srv.kill()
+                if srv.stdout:
+                    srv.stdout.close()
+                if srv.stderr:
+                    srv.stderr.close()
+
+
 if __name__ == "__main__":
     unittest.main()

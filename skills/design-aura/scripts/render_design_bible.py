@@ -109,62 +109,111 @@ def build_specimen_board(light: dict[str, str], dark: dict[str, str], title: str
     def theme_palette(m: dict[str, str], is_dark: bool) -> dict[str, str]:
         if is_dark:
             return {
-                "z0": pick_token(m, ["--surface-z0", "--bg-well", "--well", "--bg-recess"], "#081018"),
-                "z1": pick_token(m, ["--surface-z1", "--bg-canvas", "--bg", "--canvas"], "#0E1724"),
-                "z2": pick_token(m, ["--surface-z2", "--bg-card", "--card", "--surface"], "#152336"),
-                "z3": pick_token(m, ["--surface-z3", "--bg-elevated", "--popover"], "#1D3048"),
-                "z4": pick_token(m, ["--surface-z4", "--bg-modal", "--drawer"], "#243A56"),
-                "border": pick_token(m, ["--border-card", "--border", "--border-subtle"], "#2B3F57"),
-                "borderStrong": pick_token(m, ["--border-strong", "--border-focus"], "#456384"),
-                "textStrong": pick_token(m, ["--text-strong", "--ink-strong", "--fg-strong", "--text"], "#F3F6FA"),
-                "textBody": pick_token(m, ["--text-body", "--ink", "--fg", "--text-primary"], "#D3DEEC"),
-                "textMuted": pick_token(m, ["--text-muted", "--ink-muted", "--muted"], "#95A8BE"),
-                "primary": pick_token(m, ["--brand-primary", "--primary", "--brand-navy"], "#3B82F6"),
-                "accent": pick_token(m, ["--brand-accent", "--accent", "--cta", "--accent-deep"], "#FF6B38"),
-                "onAccent": pick_token(m, ["--on-accent", "--text-on-accent"], "#101822"),
-                "success": pick_token(m, ["--semantic-success", "--success", "--ok"], "#34D399"),
-                "warning": pick_token(m, ["--semantic-warning", "--warning", "--warn"], "#FBBF24"),
-                "danger": pick_token(m, ["--semantic-danger", "--danger", "--error"], "#F87171"),
-                "info": pick_token(m, ["--semantic-info", "--info"], "#60A5FA"),
-                "fontDisplay": pick_token(m, ["--font-display", "--font-heading"], "'Plus Jakarta Sans', system-ui, sans-serif"),
-                "fontUi": pick_token(m, ["--font-ui", "--font-sans", "--font-body"], "'Inter', system-ui, sans-serif"),
-                "fontMono": pick_token(m, ["--font-mono"], "'JetBrains Mono', ui-monospace, monospace"),
+                "z0": pick_token(m, ["--surface-z0", "--bg-well", "--well", "--bg-recess"], "#090E16"),
+                "z1": pick_token(m, ["--surface-z1", "--bg-canvas", "--bg", "--canvas"], "#101620"),
+                "z2": pick_token(m, ["--surface-z2", "--bg-card", "--card", "--surface"], "#17202E"),
+                "z3": pick_token(m, ["--surface-z3", "--bg-elevated", "--popover"], "#1F2B3E"),
+                "z4": pick_token(m, ["--surface-z4", "--bg-modal", "--drawer"], "#283750"),
+                "brandDark": pick_token(m, ["--surface-brand-dark"], "#0C254A"),
+                "brandHeader": pick_token(m, ["--surface-brand-header", "--surface-brand-dark"], "#112C54"),
+                "border": pick_token(m, ["--border-card", "--border", "--border-subtle"], "#2C3E58"),
+                "borderStrong": pick_token(m, ["--border-strong", "--border-focus"], "#49638A"),
+                "textStrong": pick_token(m, ["--text-strong", "--ink-strong", "--fg-strong", "--text"], "#F3F6FB"),
+                "textBody": pick_token(m, ["--text-body", "--ink", "--fg", "--text-primary"], "#D6E1F0"),
+                "textMuted": pick_token(m, ["--text-muted", "--ink-muted", "--muted"], "#A9BAD1"),
+                "primary": pick_token(m, ["--brand-primary", "--primary", "--brand-navy"], "#2563EB"),
+                "onPrimary": pick_token(m, ["--on-primary"], "#FFFFFF"),
+                "primarySurf": pick_token(m, ["--primary-surface"], "#10264A"),
+                "primaryBorder": pick_token(m, ["--primary-border"], "#3B7CF0"),
+                "primaryText": pick_token(m, ["--primary-text"], "#7CBCFF"),
+                "accent": pick_token(m, ["--brand-accent", "--accent", "--cta", "--accent-deep"], "#C8460E"),
+                "onAccent": pick_token(m, ["--on-accent", "--text-on-accent"], "#FFFFFF"),
+                "success": pick_token(m, ["--semantic-success", "--success", "--ok"], "#15803D"),
+                "onSuccess": pick_token(m, ["--on-success"], "#FFFFFF"),
+                "successSurf": pick_token(m, ["--success-surface"], "#0D2B1D"),
+                "successBorder": pick_token(m, ["--success-border"], "#22C55E"),
+                "successText": pick_token(m, ["--success-text"], "#4ADE80"),
+                "warning": pick_token(m, ["--semantic-warning", "--warning", "--warn"], "#F59E0B"),
+                "onWarning": pick_token(m, ["--on-warning"], "#140B02"),
+                "warningSurf": pick_token(m, ["--warning-surface"], "#2E1F0A"),
+                "warningBorder": pick_token(m, ["--warning-border"], "#F59E0B"),
+                "warningText": pick_token(m, ["--warning-text"], "#FBBF24"),
+                "danger": pick_token(m, ["--semantic-danger", "--danger", "--error"], "#DC2626"),
+                "onDanger": pick_token(m, ["--on-danger"], "#FFFFFF"),
+                "dangerSurf": pick_token(m, ["--danger-surface"], "#2C1216"),
+                "dangerBorder": pick_token(m, ["--danger-border"], "#EF4444"),
+                "dangerText": pick_token(m, ["--danger-text"], "#FF6E6E"),
+                "info": pick_token(m, ["--semantic-info", "--info"], "#1D6FD6"),
+                "infoSurf": pick_token(m, ["--info-surface"], "#102546"),
+                "infoBorder": pick_token(m, ["--info-border"], "#3B82F6"),
+                "infoText": pick_token(m, ["--info-text"], "#74B8FF"),
+                "rim": "inset 0 1px 0 rgba(148,197,255,0.14)",
+                "fontDisplay": pick_token(m, ["--font-display", "--font-heading"], "'Geist', 'Inter', system-ui, sans-serif"),
+                "fontUi": pick_token(m, ["--font-ui", "--font-sans", "--font-body"], "'Geist', 'Inter', system-ui, sans-serif"),
+                "fontMono": pick_token(m, ["--font-mono"], "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace"),
             }
         return {
-            "z0": pick_token(m, ["--surface-z0", "--bg-well", "--well", "--bg-recess"], "#E2E8F0"),
-            "z1": pick_token(m, ["--surface-z1", "--bg-canvas", "--bg", "--canvas"], "#F1F5F9"),
+            "z0": pick_token(m, ["--surface-z0", "--bg-well", "--well", "--bg-recess"], "#C6D6EA"),
+            "z1": pick_token(m, ["--surface-z1", "--bg-canvas", "--bg", "--canvas"], "#D9E5F3"),
             "z2": pick_token(m, ["--surface-z2", "--bg-card", "--card", "--surface"], "#FFFFFF"),
-            "z3": pick_token(m, ["--surface-z3", "--bg-elevated", "--popover"], "#FFFFFF"),
+            "z3": pick_token(m, ["--surface-z3", "--bg-elevated", "--popover"], "#ECF3FB"),
             "z4": pick_token(m, ["--surface-z4", "--bg-modal", "--drawer"], "#FFFFFF"),
-            "border": pick_token(m, ["--border-card", "--border", "--border-subtle"], "#CBD5E1"),
-            "borderStrong": pick_token(m, ["--border-strong", "--border-focus"], "#94A3B8"),
-            "textStrong": pick_token(m, ["--text-strong", "--ink-strong", "--fg-strong", "--text"], "#0F172A"),
-            "textBody": pick_token(m, ["--text-body", "--ink", "--fg", "--text-primary"], "#334155"),
-            "textMuted": pick_token(m, ["--text-muted", "--ink-muted", "--muted"], "#64748B"),
-            "primary": pick_token(m, ["--brand-primary", "--primary", "--brand-navy"], "#0F2942"),
-            "accent": pick_token(m, ["--brand-accent", "--accent", "--cta", "--accent-deep"], "#EA580C"),
+            "brandDark": pick_token(m, ["--surface-brand-dark"], "#0C254A"),
+            "brandHeader": pick_token(m, ["--surface-brand-header", "--surface-tint-soft"], "#E3EEFC"),
+            "border": pick_token(m, ["--border-card", "--border", "--border-subtle"], "#93ABC7"),
+            "borderStrong": pick_token(m, ["--border-strong", "--border-focus"], "#5A769B"),
+            "textStrong": pick_token(m, ["--text-strong", "--ink-strong", "--fg-strong", "--text"], "#0E1726"),
+            "textBody": pick_token(m, ["--text-body", "--ink", "--fg", "--text-primary"], "#1C2B3F"),
+            "textMuted": pick_token(m, ["--text-muted", "--ink-muted", "--muted"], "#3E4E63"),
+            "primary": pick_token(m, ["--brand-primary", "--primary", "--brand-navy"], "#14427A"),
+            "onPrimary": pick_token(m, ["--on-primary"], "#F8FAFC"),
+            "primarySurf": pick_token(m, ["--primary-surface"], "#E3EEFC"),
+            "primaryBorder": pick_token(m, ["--primary-border"], "#8EB4E6"),
+            "primaryText": pick_token(m, ["--primary-text", "--primary"], "#14427A"),
+            "accent": pick_token(m, ["--brand-accent", "--accent", "--cta", "--accent-deep"], "#C2410C"),
             "onAccent": pick_token(m, ["--on-accent", "--text-on-accent"], "#FFFFFF"),
-            "success": pick_token(m, ["--semantic-success", "--success", "--ok"], "#059669"),
-            "warning": pick_token(m, ["--semantic-warning", "--warning", "--warn"], "#D97706"),
-            "danger": pick_token(m, ["--semantic-danger", "--danger", "--error"], "#DC2626"),
-            "info": pick_token(m, ["--semantic-info", "--info"], "#2563EB"),
-            "fontDisplay": pick_token(m, ["--font-display", "--font-heading"], "'Plus Jakarta Sans', system-ui, sans-serif"),
-            "fontUi": pick_token(m, ["--font-ui", "--font-sans", "--font-body"], "'Inter', system-ui, sans-serif"),
-            "fontMono": pick_token(m, ["--font-mono"], "'JetBrains Mono', ui-monospace, monospace"),
+            "success": pick_token(m, ["--semantic-success", "--success", "--ok"], "#15803D"),
+            "onSuccess": pick_token(m, ["--on-success"], "#FFFFFF"),
+            "successSurf": pick_token(m, ["--success-surface"], "#DCFCE7"),
+            "successBorder": pick_token(m, ["--success-border"], "#16A34A"),
+            "successText": pick_token(m, ["--success-text", "--success"], "#15803D"),
+            "warning": pick_token(m, ["--semantic-warning", "--warning", "--warn"], "#B45309"),
+            "onWarning": pick_token(m, ["--on-warning"], "#FFFFFF"),
+            "warningSurf": pick_token(m, ["--warning-surface"], "#FEF3C7"),
+            "warningBorder": pick_token(m, ["--warning-border"], "#D97706"),
+            "warningText": pick_token(m, ["--warning-text"], "#9A4A06"),
+            "danger": pick_token(m, ["--semantic-danger", "--danger", "--error"], "#B91C1C"),
+            "onDanger": pick_token(m, ["--on-danger"], "#FFFFFF"),
+            "dangerSurf": pick_token(m, ["--danger-surface"], "#FEE2E2"),
+            "dangerBorder": pick_token(m, ["--danger-border"], "#DC2626"),
+            "dangerText": pick_token(m, ["--danger-text", "--danger"], "#B91C1C"),
+            "info": pick_token(m, ["--semantic-info", "--info"], "#1D4ED8"),
+            "infoSurf": pick_token(m, ["--info-surface"], "#DBEAFE"),
+            "infoBorder": pick_token(m, ["--info-border"], "#2563EB"),
+            "infoText": pick_token(m, ["--info-text", "--info"], "#1D4ED8"),
+            "rim": "inset 0 1px 0 rgba(255,255,255,0.85)",
+            "fontDisplay": pick_token(m, ["--font-display", "--font-heading"], "'Geist', 'Inter', system-ui, sans-serif"),
+            "fontUi": pick_token(m, ["--font-ui", "--font-sans", "--font-body"], "'Geist', 'Inter', system-ui, sans-serif"),
+            "fontMono": pick_token(m, ["--font-mono"], "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace"),
         }
 
     lp = theme_palette(light, False)
     dp = theme_palette(dark, True)
 
+    ico_ok = '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.5 12 13 4.5"/></svg>'
+    ico_warn = '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2 14.2 13H1.8Z"/><path d="M8 6.2v3.2M8 11.4h.01"/></svg>'
+    ico_err = '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="m5.7 5.7 4.6 4.6m0-4.6-4.6 4.6"/></svg>'
+    ico_info = '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 7.4v3.4M8 5.2h.01"/></svg>'
+
     def render_theme_card(label: str, p: dict[str, str]) -> str:
         e = html.escape
         swatches = [
-            ("Z0 Poço", p["z0"]),
             ("Z1 Canvas", p["z1"]),
             ("Z2 Card", p["z2"]),
-            ("Z3 Float", p["z3"]),
+            ("Marca/Head", p["brandHeader"]),
             ("Primary", p["primary"]),
-            ("Accent", p["accent"]),
+            ("Success", p["success"]),
+            ("Danger", p["danger"]),
         ]
         sw_html = "".join(
             f'<div class="sp-sw">'
@@ -176,29 +225,43 @@ def build_specimen_board(light: dict[str, str], dark: dict[str, str], title: str
         )
         return f"""
         <div class="sp-panel" style="background:{e(p['z1'])};color:{e(p['textBody'])};border:1.25px solid {e(p['border'])};font-family:{e(p['fontUi'])}">
-          <div class="sp-panel-head" style="border-bottom:1px solid {e(p['border'])}">
+          <div class="sp-panel-head" style="background:{e(p['brandHeader'])};border-bottom:1px solid {e(p['border'])};margin:-3mm -3mm 0;padding:2.2mm 3mm;border-radius:2.2mm 2.2mm 0 0">
             <strong style="color:{e(p['textStrong'])};font-family:{e(p['fontDisplay'])}">{e(label)}</strong>
             <span class="sp-mono" style="color:{e(p['textMuted'])};font-family:{e(p['fontMono'])}">{e(p['z1'])} → {e(p['z2'])}</span>
           </div>
           <div class="sp-swatch-grid">{sw_html}</div>
-          <div class="sp-card" style="background:{e(p['z2'])};border:1.25px solid {e(p['border'])};color:{e(p['textBody'])}">
+          <div class="sp-tabs" style="background:{e(p['z0'])};border:1px solid {e(p['border'])}">
+            <span class="sp-tab is-active" style="background:{e(p['primary'])};color:{e(p['onPrimary'])};box-shadow:{e(p['rim'])}">Aguardando <b>6</b></span>
+            <span class="sp-tab" style="color:{e(p['textBody'])}">Em revisão <b>2</b></span>
+            <span class="sp-tab" style="color:{e(p['textBody'])}">Concluídas <b>14</b></span>
+          </div>
+          <div class="sp-card" style="background:{e(p['z2'])};border:1.25px solid {e(p['border'])};color:{e(p['textBody'])};box-shadow:{e(p['rim'])}">
             <div class="sp-card-top">
               <div>
-                <div class="sp-title" style="color:{e(p['textStrong'])};font-family:{e(p['fontDisplay'])}">Superfície Z2 &amp; Hierarquia Real</div>
-                <div class="sp-sub" style="color:{e(p['textMuted'])}">Display: {e(p['fontDisplay'].split(',')[0])} · UI: {e(p['fontUi'].split(',')[0])}</div>
+                <div class="sp-title" style="color:{e(p['textStrong'])};font-family:{e(p['fontDisplay'])}">Conferência Focada · Superfície Z2</div>
+                <div class="sp-sub" style="color:{e(p['textMuted'])}">Protocolo <code style="background:{e(p['z0'])};color:{e(p['textStrong'])}">#2408</code> · Turno Manhã</div>
               </div>
-              <div class="sp-kpi" style="color:{e(p['textStrong'])};font-family:{e(p['fontMono'])}">R$ 48.920,00</div>
+              <span class="sp-squircle" style="background:{e(p['dangerSurf'])};color:{e(p['dangerText'])};border:1px solid {e(p['dangerBorder'])}">{ico_err} Crítico</span>
+            </div>
+            <div class="sp-diff-strip" style="background:{e(p['z0'])};border:1px solid {e(p['border'])}">
+              <span class="sp-diff-old" style="color:{e(p['textMuted'])}">Antes: <s>--:--</s></span>
+              <span style="color:{e(p['primaryText'])};font-weight:700">→</span>
+              <span class="sp-diff-new" style="background:{e(p['primarySurf'])};color:{e(p['primaryText'])};border:1px solid {e(p['primaryBorder'])}">Proposto: 07:00 · 16:00</span>
             </div>
             <div class="sp-badges">
-              <span class="sp-pill" style="background:{e(p['success'])}22;color:{e(p['success'])};border:1px solid {e(p['success'])}55">Em dia</span>
-              <span class="sp-pill" style="background:{e(p['warning'])}22;color:{e(p['warning'])};border:1px solid {e(p['warning'])}55">Vence hoje</span>
-              <span class="sp-pill" style="background:{e(p['danger'])}22;color:{e(p['danger'])};border:1px solid {e(p['danger'])}55">Crítico</span>
-              <span class="sp-pill" style="background:{e(p['info'])}22;color:{e(p['info'])};border:1px solid {e(p['info'])}55">Info</span>
+              <span class="sp-squircle" style="background:{e(p['successSurf'])};color:{e(p['successText'])};border:1px solid {e(p['successBorder'])}">{ico_ok} Em dia</span>
+              <span class="sp-squircle" style="background:{e(p['warningSurf'])};color:{e(p['warningText'])};border:1px solid {e(p['warningBorder'])}">{ico_warn} Aguardando</span>
+              <span class="sp-squircle" style="background:{e(p['dangerSurf'])};color:{e(p['dangerText'])};border:1px solid {e(p['dangerBorder'])}">{ico_err} Falha</span>
+              <span class="sp-squircle" style="background:{e(p['infoSurf'])};color:{e(p['infoText'])};border:1px solid {e(p['infoBorder'])}">{ico_info} Info</span>
+            </div>
+            <div class="sp-alert" style="background:{e(p['warningSurf'])};border:1px solid {e(p['warningBorder'])};border-left:2.4px solid {e(p['warningBorder'])};color:{e(p['warningText'])}">
+              {ico_warn} <span>Confirmação explícita obrigatória para ações críticas · Toast com Desfazer.</span>
             </div>
             <div class="sp-actions">
-              <span class="sp-btn" style="background:{e(p['accent'])};color:{e(p['onAccent'])};border:1px solid {e(p['accent'])}">Ação Primária</span>
-              <span class="sp-btn" style="background:{e(p['z0'])};color:{e(p['textStrong'])};border:1px solid {e(p['borderStrong'])}">Secundária</span>
-              <span class="sp-input" style="background:{e(p['z0'])};color:{e(p['textMuted'])};border:1px solid {e(p['border'])}">Buscar rotina · Ctrl+K</span>
+              <span class="sp-btn" style="background:{e(p['success'])};color:{e(p['onSuccess'])};border:1px solid {e(p['success'])};box-shadow:{e(p['rim'])}">Aprovar</span>
+              <span class="sp-btn" style="background:{e(p['z3'])};color:{e(p['textStrong'])};border:1px solid {e(p['borderStrong'])}">Devolver</span>
+              <span class="sp-btn" style="background:{e(p['dangerSurf'])};color:{e(p['dangerText'])};border:1px solid {e(p['dangerBorder'])}">Indeferir</span>
+              <span class="sp-btn" style="background:{e(p['accent'])};color:{e(p['onAccent'])};border:1px solid {e(p['accent'])}">Ação</span>
             </div>
           </div>
         </div>
@@ -207,12 +270,12 @@ def build_specimen_board(light: dict[str, str], dark: dict[str, str], title: str
     return f"""
     <section class="specimen-sheet" aria-label="Prancha Visual de Tokens">
       <div class="specimen-head">
-        <span class="specimen-kicker">Espécime Visual Renderizado · {html.escape(title)}</span>
-        <p>Esta prancha renderiza diretamente as cores, planos Z0–Z4, tipografia, badges semânticos e botões definidos em <code>tokens.css</code> para validação visual imediata antes de construir as telas.</p>
+        <span class="specimen-kicker">Espécime Visual Studio · Paridade Cromática Light &amp; Dark · {html.escape(title)}</span>
+        <p>Prancha gerada diretamente de <code>tokens.css</code>: valida profundidade Z0→Z4, cabeçalhos com cor da marca (zero monobloco cinza/branco), badges squircle 6px com ícone semântico e paridade de cor (vermelho=falha, verde=sucesso, âmbar=atenção, azul=marca) nos dois modos.</p>
       </div>
       <div class="specimen-grid">
-        {render_theme_card("Dark Mode (Luminosidade Z0 → Z4)", dp)}
-        {render_theme_card("Light Mode (Canvas Aterrado Z0 → Z4)", lp)}
+        {render_theme_card("Dark Mode (Profundidade Z0 → Z4 + Marca)", dp)}
+        {render_theme_card("Light Mode (Canvas Aterrado + Marca)", lp)}
       </div>
     </section>
     """
@@ -383,10 +446,16 @@ blockquote { margin: 0 0 4mm; padding: 2mm 3.5mm; border-left: 0.9mm solid #2563
 .sp-title { font-size: 9.5pt; font-weight: 700; }
 .sp-sub { font-size: 7.5pt; }
 .sp-kpi { font-size: 10pt; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.sp-badges { display: flex; flex-wrap: wrap; gap: 1.5mm; }
-.sp-pill { font-size: 7.5pt; font-weight: 700; padding: 0.6mm 1.8mm; border-radius: 999px; }
-.sp-actions { display: flex; flex-wrap: wrap; gap: 1.5mm; align-items: center; }
-.sp-btn { font-size: 8pt; font-weight: 700; padding: 1.2mm 2.6mm; border-radius: 1.4mm; display: inline-block; }
+.sp-tabs { display: flex; gap: 1mm; padding: 0.9mm; border-radius: 1.6mm; }
+.sp-tab { font-size: 7.2pt; font-weight: 600; padding: 0.8mm 1.8mm; border-radius: 1.1mm; display: inline-flex; align-items: center; gap: 1mm; }
+.sp-tab b { font-family: "JetBrains Mono", monospace; font-size: 6.8pt; opacity: 0.88; }
+.sp-diff-strip { display: flex; align-items: center; gap: 1.8mm; padding: 1.2mm 2mm; border-radius: 1.4mm; font-size: 7.3pt; font-family: "JetBrains Mono", monospace; }
+.sp-diff-new { padding: 0.4mm 1.4mm; border-radius: 1mm; font-weight: 700; }
+.sp-badges { display: flex; flex-wrap: wrap; gap: 1.3mm; }
+.sp-squircle { display: inline-flex; align-items: center; gap: 1mm; font-size: 7.2pt; font-weight: 700; padding: 0.65mm 1.8mm; border-radius: 6px; }
+.sp-alert { display: flex; align-items: center; gap: 1.4mm; font-size: 7pt; font-weight: 600; padding: 1.1mm 1.8mm; border-radius: 1.4mm; }
+.sp-actions { display: flex; flex-wrap: wrap; gap: 1.4mm; align-items: center; }
+.sp-btn { font-size: 7.6pt; font-weight: 700; padding: 1.1mm 2.3mm; border-radius: 1.4mm; display: inline-block; }
 .sp-input { font-size: 7.5pt; padding: 1.2mm 2.2mm; border-radius: 1.4mm; flex: 1; min-width: 24mm; }
 .live-specimen { margin: 3.5mm 0 5mm; padding: 3.5mm; background: #FFFFFF; border: 0.35mm solid #CBD5E1; border-radius: 2.5mm; }
 .golden-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }

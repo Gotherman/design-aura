@@ -18,48 +18,47 @@ Nenhuma entrega da **Design Aura** é considerada pronta por "leitura de código
 
 Execute nesta ordem exata e **nunca pule etapas**:
 
-### Passo 1 — Contraste Matemático (`audit_contrast.py`)
+### Passo 1 — Contraste Matemático, Paridade Semântica & Profundidade (`audit_contrast.py` v2.4.0)
 ```bash
 python3 <skill_dir>/scripts/audit_contrast.py tokens.css --strict
 ```
-Valida WCAG AA (`>= 4.5:1` / `>= 3.0:1`) e APCA (`|Lc| >= 60` / `>= 45`) em **Light e Dark**, detecta `#000000`/`#FFFFFF` crus e cinzas lavados.
+Valida WCAG AA (`>= 4.5:1` / `>= 3.0:1`), APCA (`|Lc| >= 60` / `>= 45`) incluindo superfícies semânticas (`--{role}-text` sobre `--{role}-surface`), **Paridade Semântica Light/Dark (`DA-SEMANTIC-HUE-PARITY` — bloqueia erro rosa pastel no Dark!)**, **Anti-Monobloco Cinza (`DA-DARK-FLAT-MONOLITH`)** e **Light Mode Nítido (`DA-LIGHT-WASHED-OUT`: `border-subtle >= 1.85:1`, `Z1/Z2 >= 1.18:1`)**.
 
-### Passo 2 — Linter dos 10 Blocos (`lint_design_aura.py`)
+### Passo 2 — Linter dos 10 Blocos + Anti-Jargão & Anti-Eco (`lint_design_aura.py` v2.4.0)
 ```bash
 python3 <skill_dir>/scripts/lint_design_aura.py <caminho-do-projeto> --strict
 ```
-Varre todos os arquivos HTML/CSS/JS/TS/TSX/Vue/Svelte/Swift/Kotlin/Dart contra as regras determinísticas dos Blocos 1 a 10 (AI tells, copy clichê, `transition-all`, magic numbers, inputs sem label, falta de `tabular-nums`, foco removido, etc.).
+Varre HTML/CSS/JS/TS/TSX/Vue/Svelte/Swift/Kotlin/Dart contra os 10 Blocos + `DA-TECH-JARGON-UI` (bloqueia jargão técnico vazado ao trabalhador) e `DA-BADGE-ECHO` (selos-eco repetidos).
 
-### Passo 3 — Renderização Real + Auditoria DOM & Craft (`capture_and_audit.mjs` v2.3.0 · Paralelo)
+### Passo 3 — Renderização Real + Auditoria DOM, SPA & Pós-Clique (`capture_and_audit.mjs` v2.4.0 · Paralelo)
 ```bash
-node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json --out <dir_audit> --viewports desktop,mobile --themes dark,light --concurrency 4 --strict
+node <skill_dir>/scripts/capture_and_audit.mjs --manifest screen-manifest.json [--base-url http://127.0.0.1:4188] --out <dir_audit> --viewports desktop,mobile --themes dark,light --concurrency 4 --smoke-interact --strict
 ```
-Abre Chromium headless real via CDP com **pool paralelo de 4 abas em contextos isolados** (`Target.createBrowserContext`, ~25–35s para 46 capturas + progresso ao vivo `[04/46] ... PASS (0.8s)` em `stderr`), pré-injeta o tema antes do carregamento, audita automaticamente as telas **e a vitrine (`fluxo.html`, `preview.html`, `index.html`)**, captura PNGs de cada viewport × tema e inspeciona em runtime:
-- Overflow horizontal (`DA-DOM-OVERFLOW`), imagens quebradas/sem `alt`, alvos mobile `< 44×44px`, corpo `< 12px`, inputs sem label (`DA-B9-01`), contraste real WCAG AA com amostra do elemento (`DA-B3-01`), raios beliscados (`DA-B7-01`), scroll aninhado e números desalinhados (`DA-B8-03`)
-- Erros de console/exceções JS com stack completo (`DA-JS-ERROR`) e assets/scripts locais com HTTP 404 (`DA-ASSET-404`)
-- **Piso de Craft, Composição & Integridade (`v2.3.0`):**
-  - `DA-DEAD-SPACE`: detecta vazio morto em desktop (`1440×900`) e inspectors/painéis laterais quase vazios
-  - `DA-CARD-INTERNAL-VOID`: detecta buracos verticais `> 95px` dentro de cards `Z2` esticados em Bento Grid
-  - `DA-STUB-SCREEN`: bloqueia/alerta tabelas operacionais rasas (`1–2` linhas) e telas casca com `< 4` elementos úteis
-  - `DA-RAW-LINK-LIST`: detecta links `<a>` azuis sublinhados crus em listas/tabelas/menus de app
-  - `DA-FIXED-OVERLAP`: bloqueia conteúdo cortado ou escondido sob barra fixa inferior/superior mesmo no fim da rolagem
-  - `DA-CLIPPED-CONTENT` & `DA-MOBILE-FLEX-CLIP`: bloqueiam cards cortando o próprio texto com `overflow:hidden` ou containers mobile `flex-column` sem `flex-shrink: 0`
-  - `DA-NAV-TRUNCATION` & `DA-HEADER-HSCROLL`: detectam nome de marca/nav truncado horizontalmente na Sidebar (ex.: nome cortado pelo botão `«`) e barras superiores com overflow/scrollbar horizontal em desktop (`1440px`)
-  - `DA-SERIF-OPERATE`: detecta tipografia serifada editorial indevida em telas operacionais `Operate`
-  - `DA-SURFACE-FLAT`: detecta falta de separação visual entre canvas `Z1` e painéis/cards `Z2`
-- **Miniaturas na Galeria (`index.html`):** após a auditoria global gerar os PNGs em `<dir_audit>`, re-execute `build_figma_canvas.py screen-manifest.json --tokens tokens.css --thumbs <dir_audit> --out <dir_telas> --verify-files` para embutir miniaturas reais (com troca automática Dark/Light) nos cards de `index.html`.
-- **Nunca abandone a auditoria em background:** aguarde a conclusão (leva ~30s com `--concurrency 4`) antes de responder ao usuário.
+Suporta **HTML estático E rotas SPA React/Vite/Next (`"route"` + `--base-url`)**, audita automaticamente `entrega.html` (whitelist `.da-hub`), `fluxo.html`, `preview.html` e `index.html`, estende `DA-B3-01` a emblemas/monogramas (`div`/`span`), e checa em runtime:
+- Overflow horizontal (`DA-DOM-OVERFLOW`), imagens quebradas/sem `alt`, alvos mobile `< 44×44px`, corpo `< 12px`, inputs sem label (`DA-B9-01`), contraste real WCAG AA inclusive em emblemas (`DA-B3-01`), raios beliscados (`DA-B7-01`), scroll aninhado e números desalinhados (`DA-B8-03`)
+- Erros de console/exceções JS (`DA-JS-ERROR`) e assets locais HTTP 404 (`DA-ASSET-404`)
+- **Piso de Craft & Anti-Poluição (`v2.4.0`):** `DA-BADGE-ECHO`, `DA-MOBILE-HERO-BLOAT` (hero/alertas mobile `<= 38%`), `DA-HEADER-STACK-BLOAT` (máx. 2 barras topo desktop `<= 210px`), `DA-TAB-OVERFLOW` (máx. 6 abas irmãs), `DA-DEAD-SPACE`, `DA-CARD-INTERNAL-VOID`, `DA-STUB-SCREEN`, `DA-RAW-LINK-LIST`, `DA-FIXED-OVERLAP`, `DA-CLIPPED-CONTENT`, `DA-MOBILE-FLEX-CLIP`, `DA-NAV-TRUNCATION`, `DA-HEADER-HSCROLL`, `DA-SERIF-OPERATE`, `DA-SURFACE-FLAT` e **smoke pós-clique (`--smoke-interact` / `clickSelector`)** validando o estado aberto do Resize In-Place!
+- **Miniaturas na Galeria (`index.html`):** re-execute `build_figma_canvas.py screen-manifest.json --tokens tokens.css --thumbs <dir_audit> --out <dir_telas> --verify-files`.
+
+### Passo 3.5 — QA Interativo E2E por Subagentes Testers (Fase 4.5 · Onda 3 · `v2.4.0`)
+```bash
+node <skill_dir>/scripts/run_workflow_probe.mjs --scenario <qa-jornada.json> --out <dir_qa> [--base-url http://127.0.0.1:4188] --strict
+```
+Subagentes Testers Read-Only percorrem cada jornada real clicando nos controles, testando fluxos positivos/negativos/estados vazios e alternância Dark/Light. O Orquestrador tria as falhas reais, gera o Plano de Correção, lança subagentes corretivos e confirma via re-teste direcionado (máx. 2 ciclos).
 
 ### Passo 4 — Inspeção Visual Comparativa contra a Tela-Mãe (Batch Review)
-Abra e analise os PNGs gerados em `<dir_audit>` (incluindo `fluxo-desktop-dark.png`) — **zero erros automáticos NÃO basta se a tela estiver feia**:
-1. **Paridade Visual sem Clonagem Estrutural & Zero Telas Casca**: cada tela usa a mesma linguagem visual e nível de acabamento da Tela-Mãe aprovada, **mas respeitando a organização interna natural do seu módulo** (ex.: Kanban em funil, formulário agrupado em configurações/perfil, inbox em atendimento — nunca cópia cega das zonas da Tela-Mãe), com dados completos, widgets OSS vivos e sem vazio morto?
-2. **Alto Contraste Ótico & Vitalidade Cromática**: os planos `Z0→Z4` separam com nitidez sem clarão branco no Light nem borrão escuro no Dark? A cor da marca continua viva (sem virar marrom/bege apagado)?
-3. **Alinhamento, Badges & Densidade**: números à direita, ícones consistentes, sem links azuis crus, sem badges brigando e sem texto cortado sob a barra mobile?
-4. **Vitrine Estilo Figma**: `fluxo.html` está panorâmico (Hub-and-Spoke), legível (sem torre vertical a 25% de zoom e sem macarronada de setas) e com zero erro JS?
+Abra e analise os PNGs gerados em `<dir_audit>` e `<dir_qa>` (incluindo `entrega-desktop-dark.png`, `fluxo-desktop-dark.png` e os PNGs pós-clique `-interact.png`) — **zero erros automáticos NÃO basta se a tela estiver feia**:
+1. **Paridade Visual sem Clonagem Estrutural & Zero Monobloco Cinza/Branco:** a cor da marca vive nos cabeçalhos, seleções e profundidade em Dark & Light, e a paridade semântica está impecável (vermelho = falha, verde = sucesso, âmbar = alerta, zero rosa)?
+2. **Fluxo Humano & Resize In-Place:** dá para usar sem "estudar a tela"? A fila limpa abre conferência focada sem duplicar dados nem empilhar barras?
+3. **Alinhamento, Badges & Mobile:** zero selo-eco, zero jargão técnico, hero mobile compacto e zero corte sob tab bar?
+4. **Vitrine Unificada (`entrega.html`):** link único operando com `Mapa Figma · App ao Vivo · Preview · Galeria · Bíblia + PDF + Tema` sem erros JS?
 
-### Passo 5 — Regra de Entrega Acessível (Local ou Sandbox Remoto)
-Antes de encerrar, verifique como o usuário vai abrir o protótipo:
-- Se estiver em ambiente remoto/cloud onde o navegador do usuário não alcança `localhost`, **nunca** entregue apenas caminhos locais ou `http://localhost:...` — abra no preview integrado do ambiente (quando disponível) ou forneça uma URL acessível verificada com `HTTP 200` junto dos caminhos no repositório.
+### Passo 5 — Regra de Entrega Unificada em 1 Porta / 1 Link (`serve_entrega.mjs`)
+Suba o servidor unificado de porta única (`0.0.0.0:4188`) combinando `/design/*` + SPA `dist/*`:
+```bash
+node <skill_dir>/scripts/serve_entrega.mjs --design-dir <dir_design> [--app-dir <dir_dist>] --port 4188
+```
+Se estiver em ambiente remoto/cloud onde o navegador do usuário não alcança `localhost`, abra no preview integrado do ambiente ou forneça URL acessível verificada com `HTTP 200` (via túnel HTTPS quando necessário), sempre em **1 único link** apontando para `entrega.html`.
 
 *(Opcional: se o usuário tiver conectado o MCP Uizze com token válido, `find_ui_references` e `get_ui_flow` podem servir para comparar soluções de referência em telas problemáticas — sempre distinguindo claramente o que foi inspecionado do que foi inferido.)*
 

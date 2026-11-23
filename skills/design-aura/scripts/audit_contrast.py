@@ -453,8 +453,137 @@ def _hue_dist(h1: float, h2: float) -> float:
     return min(d, 360.0 - d)
 
 
+OPTIONAL_SEMANTIC_SURFACE_PAIRS = [
+    ("primary-text", "primary-surface", "ui", "primary-text sobre primary-surface (badge/aba)"),
+    ("success-text", "success-surface", "ui", "success-text sobre success-surface (badge sucesso)"),
+    ("warning-text", "warning-surface", "ui", "warning-text sobre warning-surface (badge alerta)"),
+    ("danger-text", "danger-surface", "ui", "danger-text sobre danger-surface (badge erro)"),
+    ("info-text", "info-surface", "ui", "info-text sobre info-surface (badge info)"),
+]
+
+
+def _evaluate_theme_pairs(tname: str, tmap: dict[str, str]) -> list[dict]:
+    out: list[dict] = []
+    for fg_k, bg_k, kind, label in REQUIRED_LIGHT_DARK_PAIRS:
+        actual_fg_k = fg_k
+        actual_label = label
+        if fg_k in ("primary", "accent") and bg_k == "surface-z2":
+            text_cand = _resolve_token_key(tmap, f"{fg_k}-text")
+            if text_cand:
+                actual_fg_k = f"{fg_k}-text"
+                actual_label = f"{fg_k}-text sobre surface-z2 (UI/link/icone)"
+        fg_val = _resolve_token_key(tmap, actual_fg_k)
+        bg_val = _resolve_token_key(tmap, bg_k)
+        if fg_val and bg_val:
+            out.append(evaluate_pair(fg_val, bg_val, kind, actual_label, theme=tname, token_map=tmap))
+
+    for fg_k, bg_k, kind, label in OPTIONAL_SEMANTIC_SURFACE_PAIRS:
+        fg_val = _resolve_token_key(tmap, fg_k)
+        bg_val = _resolve_token_key(tmap, bg_k)
+        if fg_val and bg_val:
+            out.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
+    return out
+
+
+def audit_semantic_hue_parity(themes_map: dict[str, dict[str, str]]) -> list[dict]:
+    """Garante paridade de matiz semantico entre Light e Dark (v2.4.0): erro e vermelho nos dois modos, nunca rosa pastel."""
+    findings: list[dict] = []
+    light_map = themes_map.get("light") or {}
+    dark_map = themes_map.get("dark") or {}
+
+    # 1. Bloqueia vermelho-erro virando rosa pastel no Dark Mode (ex.: #FDA4AF / #F472B6)
+    for key in ("danger", "danger-text"):
+        d_val = _resolve_token_key(dark_map, key) if dark_map else None
+        if not d_val:
+            continue
+        d_rgb = color_to_opaque_rgb(d_val, dark_map, backdrop_for("dark"))
+        if not d_rgb:
+            continue
+        hd, ld, sd = _rgb_to_hls_deg(d_rgb)
+        if sd >= 0.30 and ld > 0.72 and (318.0 <= hd <= 357.0):
+            d_hex = f"#{d_rgb[0]:02x}{d_rgb[1]:02x}{d_rgb[2]:02x}"
+            findings.append({
+                "theme": "dark",
+                "label": f"DA-SEMANTIC-HUE-PARITY ({key} rosa pastel no Dark)",
+                "fg": d_hex,
+                "bg": "#17202e",
+                "kind": "ui",
+                "wcag": round(wcag_ratio(d_rgb, (23, 32, 46)), 2),
+                "apca_lc": round(apca_lc(d_rgb, (23, 32, 46)), 1),
+                "severity": "BLOCK",
+                "status": "FAIL",
+                "reason": (
+                    f"DA-SEMANTIC-HUE-PARITY: '{key}' no Dark Mode ({d_hex}, H={int(round(hd))}°, L={int(round(ld*100))}%) "
+                    "virou rosa pastel em vez de vermelho real. Use vermelho verdadeiro em solidos (ex.: #DC2626 c/ #FFFFFF) "
+                    "e vermelho vivo em texto/icone (--danger-text: #FF6E6E, H=0°)."
+                ),
+            })
+
+    # 2. Alerta se 'success' fugir do verde esmeralda para ciano/turquesa neon (hue > 168°)
+    for tname, tmap in (("light", light_map), ("dark", dark_map)):
+        s_val = _resolve_token_key(tmap, "success") if tmap else None
+        if not s_val:
+            continue
+        s_rgb = color_to_opaque_rgb(s_val, tmap, backdrop_for(tname))
+        if not s_rgb:
+            continue
+        hs, ls, ss = _rgb_to_hls_deg(s_rgb)
+        if ss >= 0.25 and (hs > 168.0 or hs < 105.0):
+            s_hex = f"#{s_rgb[0]:02x}{s_rgb[1]:02x}{s_rgb[2]:02x}"
+            findings.append({
+                "theme": tname,
+                "label": f"DA-SEMANTIC-HUE-PARITY (success fora do verde esmeralda)",
+                "fg": s_hex,
+                "bg": "#17202e" if tname == "dark" else "#ffffff",
+                "kind": "ui",
+                "wcag": 0.0,
+                "apca_lc": 0.0,
+                "severity": "HIGH",
+                "status": "FAIL",
+                "reason": (
+                    f"DA-SEMANTIC-HUE-PARITY: 'success' em {tname} ({s_hex}, H={int(round(hs))}°) "
+                    "escapou da familia verde esmeralda (120°-165°). Mantenha verde real (ex.: #15803D solid / #4ADE80 text)."
+                ),
+            })
+
+    # 3. Divergencia de matiz > 38° entre Light e Dark para o mesmo papel semantico
+    if light_map and dark_map:
+        for role in ("danger", "success", "warning", "primary"):
+            lv = _resolve_token_key(light_map, role)
+            dv = _resolve_token_key(dark_map, role)
+            if not (lv and dv):
+                continue
+            l_rgb = color_to_opaque_rgb(lv, light_map, backdrop_for("light"))
+            d_rgb = color_to_opaque_rgb(dv, dark_map, backdrop_for("dark"))
+            if not (l_rgb and d_rgb):
+                continue
+            hl, _, sl = _rgb_to_hls_deg(l_rgb)
+            hd, _, sd = _rgb_to_hls_deg(d_rgb)
+            dist = _hue_dist(hl, hd)
+            if sl >= 0.25 and sd >= 0.25 and dist > 38.0:
+                l_hex = f"#{l_rgb[0]:02x}{l_rgb[1]:02x}{l_rgb[2]:02x}"
+                d_hex = f"#{d_rgb[0]:02x}{d_rgb[1]:02x}{d_rgb[2]:02x}"
+                findings.append({
+                    "theme": "parity",
+                    "label": f"DA-SEMANTIC-HUE-PARITY ({role} Light vs Dark)",
+                    "fg": d_hex,
+                    "bg": l_hex,
+                    "kind": "ui",
+                    "wcag": round(wcag_ratio(d_rgb, l_rgb), 2),
+                    "apca_lc": 0.0,
+                    "severity": "HIGH",
+                    "status": "FAIL",
+                    "reason": (
+                        f"DA-SEMANTIC-HUE-PARITY: '{role}' divergiu {int(round(dist))}° entre Light ({l_hex}, H={int(round(hl))}°) "
+                        f"e Dark ({d_hex}, H={int(round(hd))}°). Mantenha a mesma familia de cor nos dois temas."
+                    ),
+                })
+
+    return findings
+
+
 def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
-    """Verifica equilibrio cromatico 65/20/10/5: evita massa monocromatica no Dark e contornos apagados no Light."""
+    """Verifica equilibrio cromatico 65/20/10/5, profundidade real no Dark (anti-monobloco) e nitidez no Light."""
     findings: list[dict] = []
     z1_val = _resolve_token_key(tmap, "surface-z1")
     z2_val = _resolve_token_key(tmap, "surface-z2")
@@ -471,8 +600,8 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
         return findings
 
     if theme == "dark":
-        h1, _, s1 = _rgb_to_hls_deg(z1_rgb)
-        h2, _, s2 = _rgb_to_hls_deg(z2_rgb)
+        h1, l1, s1 = _rgb_to_hls_deg(z1_rgb)
+        h2, l2, s2 = _rgb_to_hls_deg(z2_rgb)
         hp, _, sp = _rgb_to_hls_deg(p_rgb)
         if s1 > 0.36 and s2 > 0.36 and sp > 0.35 and _hue_dist(h1, hp) <= 28 and _hue_dist(h2, hp) <= 28:
             findings.append({
@@ -487,14 +616,35 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
                 "status": "FAIL",
                 "reason": (
                     f"DA-DARK-MONOCHROME: Superficies Dark saturadas demais (S={int(round(s1*100))}%/{int(round(s2*100))}%) "
-                    "no mesmo matiz da cor primaria (massa monocromatica pesada). Calibre Z0-Z3 para subtom sutil (S=18-26%) "
-                    "e expresse a marca nas 3 Zonas (.sidebar-brand-card, .card-brand-hero e controles .is-active) + --chart-1..6"
+                    "no mesmo matiz da cor primaria (massa monocromatica pesada). Calibre Z0-Z3 para ardosia com subtom (S=24-35%) "
+                    "e puxe os tons fortes de azul/marca em --surface-brand-header, .card-brand-hero e controles .is-active."
+                ),
+            })
+
+        z2_vs_z1 = round(wcag_ratio(z2_rgb, z1_rgb), 2)
+        border_vs_z2 = round(wcag_ratio(b_rgb, z2_rgb), 2)
+        if z2_vs_z1 < 1.08 or border_vs_z2 < 1.25:
+            findings.append({
+                "theme": "dark",
+                "label": "DA-DARK-FLAT-MONOLITH (Z1->Z2 / border-subtle sem profundidade)",
+                "fg": f"#{b_rgb[0]:02x}{b_rgb[1]:02x}{b_rgb[2]:02x}",
+                "bg": f"#{z2_rgb[0]:02x}{z2_rgb[1]:02x}{z2_rgb[2]:02x}",
+                "kind": "ui",
+                "wcag": min(z2_vs_z1, border_vs_z2),
+                "apca_lc": round(apca_lc(b_rgb, z2_rgb), 1),
+                "severity": "HIGH",
+                "status": "FAIL",
+                "reason": (
+                    f"DA-DARK-FLAT-MONOLITH: Monobloco escuro sem divisao clara (Z2/Z1={z2_vs_z1}:1 < 1.08:1 ou "
+                    f"border-subtle/Z2={border_vs_z2}:1 < 1.25:1). Separe os planos Z0->Z4 com degrau nitido, borda >= 1.35:1 "
+                    "e cabecalhos/destaques no tom da marca (--surface-brand-header / --rim-highlight)."
                 ),
             })
 
     if theme == "light":
         border_vs_z2 = round(wcag_ratio(b_rgb, z2_rgb), 2)
-        if border_vs_z2 < 1.22:
+        z1_vs_z2 = round(wcag_ratio(z1_rgb, z2_rgb), 2)
+        if border_vs_z2 < 1.85:
             findings.append({
                 "theme": "light",
                 "label": "DA-LIGHT-WASHED-OUT (border-subtle sobre surface-z2)",
@@ -503,11 +653,28 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
                 "kind": "ui",
                 "wcag": border_vs_z2,
                 "apca_lc": round(apca_lc(b_rgb, z2_rgb), 1),
-                "severity": "MEDIUM",
+                "severity": "HIGH",
                 "status": "FAIL",
                 "reason": (
-                    f"DA-LIGHT-WASHED-OUT: Borda sutil clara demais no Light Mode ({border_vs_z2}:1 < 1.22:1 contra Z2), "
-                    "apagando contornos de cards e linhas divisórias. Use border-subtle mais definida (ex.: #B4C1D1) e Z0/Z1 aterrados (#DCE3EC / #E6ECF3)"
+                    f"DA-LIGHT-WASHED-OUT: Borda sutil clara demais no Light Mode ({border_vs_z2}:1 < 1.85:1 contra Z2), "
+                    "apagando contornos de cards e divisoes. Use border-subtle nitida (ideal 2.0-2.4:1, ex.: #93ABC7) "
+                    "com Z1 aterrado (#D9E5F3) e variacoes azul-claro/marinho da marca."
+                ),
+            })
+        elif relative_luminance(z2_rgb) > 0.94 and z1_vs_z2 < 1.18:
+            findings.append({
+                "theme": "light",
+                "label": "DA-LIGHT-WASHED-OUT (surface-z1 colada em surface-z2)",
+                "fg": f"#{z1_rgb[0]:02x}{z1_rgb[1]:02x}{z1_rgb[2]:02x}",
+                "bg": f"#{z2_rgb[0]:02x}{z2_rgb[1]:02x}{z2_rgb[2]:02x}",
+                "kind": "ui",
+                "wcag": z1_vs_z2,
+                "apca_lc": round(apca_lc(z1_rgb, z2_rgb), 1),
+                "severity": "HIGH",
+                "status": "FAIL",
+                "reason": (
+                    f"DA-LIGHT-WASHED-OUT: Canvas Z1 claro demais frente aos cards brancos Z2 ({z1_vs_z2}:1 < 1.18:1), "
+                    "deixando a tela 'tudo branco'. Aterre surface-z1 (ex.: #D9E5F3) e surface-z0 (#C6D6EA) para profundidade real."
                 ),
             })
     return findings
@@ -515,6 +682,7 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
 
 def audit_file(path: Path) -> list[dict]:
     results = []
+    themes_map: dict[str, dict[str, str]] = {}
     if path.suffix.lower() == ".json":
         data = json.loads(path.read_text(encoding="utf-8"))
         primitives = data.get("primitive", {})
@@ -523,22 +691,17 @@ def audit_file(path: Path) -> list[dict]:
             tmap = resolve_token_map(semantic.get(tname, {}), primitives)
             if not tmap:
                 continue
-            for fg_k, bg_k, kind, label in REQUIRED_LIGHT_DARK_PAIRS:
-                fg_val = _resolve_token_key(tmap, fg_k)
-                bg_val = _resolve_token_key(tmap, bg_k)
-                if fg_val and bg_val:
-                    results.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
+            themes_map[tname] = tmap
+            results.extend(_evaluate_theme_pairs(tname, tmap))
             results.extend(audit_theme_harmony(tname, tmap))
     else:
         css_text = path.read_text(encoding="utf-8")
         themes = parse_css_themes(css_text)
         for tname, tmap in themes.items():
-            for fg_k, bg_k, kind, label in REQUIRED_LIGHT_DARK_PAIRS:
-                fg_val = _resolve_token_key(tmap, fg_k)
-                bg_val = _resolve_token_key(tmap, bg_k)
-                if fg_val and bg_val:
-                    results.append(evaluate_pair(fg_val, bg_val, kind, label, theme=tname, token_map=tmap))
+            themes_map[tname] = tmap
+            results.extend(_evaluate_theme_pairs(tname, tmap))
             results.extend(audit_theme_harmony(tname, tmap))
+    results.extend(audit_semantic_hue_parity(themes_map))
     return results
 
 

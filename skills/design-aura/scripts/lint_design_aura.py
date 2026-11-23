@@ -397,10 +397,10 @@ def check_structural_rules(raw_text: str, clean_text: str, ext: str, rel_path: s
 
 
 def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: str, starts: list[int]) -> list[dict]:
-    """Checagens estaticas de piso de craft (v2.0): anti-stub, serifa em Operate e textarea cru."""
+    """Checagens estaticas de piso de craft (v2.4.0): anti-stub, serifa em Operate, anti-jargao e anti-eco."""
     findings: list[dict] = []
     lower_name = Path(rel_path).name.lower()
-    is_vitrine = lower_name in {"fluxo.html", "preview.html", "index.html", "design-bible.html"}
+    is_vitrine = lower_name in {"fluxo.html", "preview.html", "index.html", "entrega.html", "design-bible.html"}
 
     # DA-B4-04: fonte serifada editorial em tela operacional ou CSS de sistema
     if not is_vitrine and ext in (MARKUP_EXTS | CSS_EXTS):
@@ -545,6 +545,54 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                 "message": "Nome de sistema de referencia externa vazou para o texto visivel da interface (Bloco 5)",
                 "fix": "Use o vocabulario proprio do negocio do cliente (ex.: 'Janelas & Preferencias' em vez de citar sistemas terceiros de inspiracao)",
             })
+
+    # DA-TECH-JARGON-UI (v2.4.0): jargao tecnico/infraestrutura vazado na copy visivel do trabalhador
+    if not is_vitrine and ext in MARKUP_EXTS:
+        visible_html = re.sub(r"<(?:script|style)\b[^>]*>.*?</(?:script|style)>", " ", clean_text, flags=re.I | re.S)
+        visible_text_only = re.sub(r"<[^>]+>", " ", visible_html)
+        m_jargon = re.search(
+            r"\b(?:deviceId|Fallback\s+VLM|Dry-Run|SHA-256|Backup\s+R2|Deduplicados|PWA\s+Mobile|ScreenMap|auto-reserva|Fila\s+FIFO)\b",
+            visible_text_only,
+            re.I,
+        )
+        if m_jargon:
+            m_raw = re.search(re.escape(m_jargon.group(0)), raw_text, re.I)
+            pos = m_raw.start() if m_raw else 0
+            findings.append({
+                "rule": "DA-TECH-JARGON-UI",
+                "severity": "HIGH",
+                "location": f"{rel_path}:{pos_to_line(starts, pos)}",
+                "evidence": snippet_at(raw_text, pos),
+                "message": f"Jargao tecnico/infraestrutura ('{m_jargon.group(0)}') vazado para a interface do trabalhador (Bloco 5 / v2.4.0)",
+                "fix": "Traduza para linguagem humana do negocio (ou mova para tela estritamente tecnica de engenharia/automacao)",
+            })
+
+        # DA-BADGE-ECHO estatico (v2.4.0): mesmo texto de badge/chip repetido >= 5x na mesma tela
+        badge_texts: dict[str, tuple[int, int]] = {}
+        for bm in re.finditer(
+            r"<(?:span|div|small)\b[^>]*class(?:Name)?=[\"'][^\"']*(?:badge|chip|pill|status|tag)[^\"']*[\"'][^>]*>([^<]{3,32})</(?:span|div|small)>",
+            visible_html,
+            re.I,
+        ):
+            txt = re.sub(r"\s+", " ", bm.group(1)).strip()
+            if not txt or re.fullmatch(r"[\d.,%+\-/: ]+", txt):
+                continue
+            key = txt.lower()
+            prev_cnt, first_pos = badge_texts.get(key, (0, bm.start()))
+            badge_texts[key] = (prev_cnt + 1, first_pos)
+        for key, (cnt, first_pos) in badge_texts.items():
+            if cnt >= 5:
+                m_raw = re.search(re.escape(key), raw_text, re.I)
+                pos = m_raw.start() if m_raw else first_pos
+                findings.append({
+                    "rule": "DA-BADGE-ECHO",
+                    "severity": "MEDIUM",
+                    "location": f"{rel_path}:{pos_to_line(starts, pos)}",
+                    "evidence": f"Badge '{key}' repetido {cnt}x na mesma tela",
+                    "message": f"Selo-eco repetido {cnt}x ('{key}') poluindo lista ou aba que ja indica esse estado (Bloco 8 / v2.4.0)",
+                    "fix": "Remova o selo redundante dos itens individuais; exiba selos apenas para excecoes ou estados distintos",
+                })
+                break
 
     return findings
 
