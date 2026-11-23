@@ -21,11 +21,7 @@ import path from 'node:path';
 import http from 'node:http';
 import { spawn } from 'node:child_process';
 
-const VIEWPORTS = {
-  desktop: { width: 1440, height: 900, mobile: false, dpr: 1 },
-  tablet: { width: 768, height: 1024, mobile: true, dpr: 2 },
-  mobile: { width: 390, height: 844, mobile: true, dpr: 2 },
-};
+import { resolveViewport, validateViewports } from './audit_viewports.mjs';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -57,12 +53,20 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
   const normBase = (baseUrl || data.project?.appBaseUrl || '').replace(/\/+$/, '');
   const entries = [];
   const screenDirs = new Set();
+  const missing = [];
 
   for (const screen of data.screens || []) {
     const route = (screen.route || '').trim();
     const file = (screen.file || '').trim();
-    const clickSelector = (screen.clickSelector || '').trim();
-    if (route && normBase) {
+    const state = {
+      viewports: screen.viewports === undefined ? undefined : validateViewports(screen.viewports),
+      clickSelector: (screen.clickSelector || '').trim(),
+      afterClickSelector: (screen.afterClickSelector || '').trim(),
+    };
+    if (state.afterClickSelector && !state.clickSelector) {
+      throw new Error(`Tela ${screen.id}: afterClickSelector requer clickSelector.`);
+    }
+    if (route && (normBase || /^https?:\/\//i.test(route))) {
       const url = /^https?:\/\//i.test(route)
         ? route
         : `${normBase}${route.startsWith('/') ? route : '/' + route}`;
@@ -71,18 +75,23 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
         labelOverride: screen.id || '',
         platform: (screen.platform || '').toLowerCase() || 'responsive',
         isVitrine: false,
-        clickSelector,
+        ...state,
       });
       continue;
     }
-    if (!file) continue;
+    if (!file) {
+      for (const viewport of state.viewports || [undefined]) {
+        missing.push({ target: screen.id || route || 'Tela sem rota', viewport, detail: 'Rota requer --base-url ou arquivo válido.' });
+      }
+      continue;
+    }
     if (/^https?:\/\//i.test(file)) {
       entries.push({
         target: file,
         labelOverride: screen.id || '',
         platform: (screen.platform || '').toLowerCase() || 'responsive',
         isVitrine: false,
-        clickSelector,
+        ...state,
       });
       continue;
     }
@@ -92,7 +101,7 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
         labelOverride: screen.id || '',
         platform: (screen.platform || '').toLowerCase() || 'responsive',
         isVitrine: false,
-        clickSelector,
+        ...state,
       });
       continue;
     }
@@ -103,10 +112,12 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
       labelOverride: screen.id || '',
       platform: (screen.platform || '').toLowerCase() || 'responsive',
       isVitrine: false,
-      clickSelector,
+      ...state,
     });
   }
 
+  const vitrineViewports = data.project?.vitrineViewports === undefined
+    ? undefined : validateViewports(data.project.vitrineViewports);
   if (includeVitrine) {
     const searchDirs = [...screenDirs, base];
     const seen = new Set();
@@ -124,13 +135,19 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
             platform: 'vitrine',
             isVitrine: true,
             clickSelector: '',
+            viewports: vitrineViewports,
           });
           break;
         }
       }
     }
   }
-  return { entries, manifestDir: base };
+  if (vitrineViewports && !entries.some((entry) => entry.isVitrine && entry.labelOverride === 'entrega')) {
+    for (const viewport of vitrineViewports) {
+      missing.push({ target: 'entrega', viewport, detail: 'Vitrine declarada sem captura (arquivo ausente ou --no-vitrine).' });
+    }
+  }
+  return { entries, manifestDir: base, missing };
 }
 
 function parseArgs(argv) {
@@ -148,6 +165,7 @@ function parseArgs(argv) {
     smokeInteract: false,
     concurrency: 4,
     quiet: false,
+    missing: [],
   };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
@@ -163,7 +181,7 @@ function parseArgs(argv) {
     else if (a === '--quiet') args.quiet = true;
     else if (a === '--strict') args.strict = true;
     else if (a === '--help' || a === '-h') {
-      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,tablet,mobile] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--quiet] [--strict]');
+      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,1920x1080,mobile-360x800] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--quiet] [--strict]');
       process.exit(0);
     } else {
       const isVit = /(?:entrega|fluxo|preview|index|design-bible)\.html$/i.test(a);
@@ -173,19 +191,26 @@ function parseArgs(argv) {
   if (args.manifest) {
     const res = entriesFromManifest(args.manifest, args.includeVitrine, args.baseUrl);
     args.manifestDir = res.manifestDir;
+    args.missing = res.missing;
     args.entries.push(...res.entries);
   }
   const seen = new Set();
   args.entries = args.entries.filter((e) => {
-    const k = /^https?:\/\//i.test(e.target) ? e.target : path.resolve(e.target);
+    const address = /^https?:\/\//i.test(e.target) ? e.target : path.resolve(e.target);
+    const k = JSON.stringify([address, e.labelOverride, e.viewports, e.clickSelector, e.afterClickSelector]);
     if (seen.has(k)) return false;
     seen.add(k);
     return true;
   });
-  if (!args.entries.length) {
+  if (!args.entries.length && !args.missing.length) {
     console.error('Erro: informe ao menos 1 arquivo HTML, URL ou --manifest.');
     process.exit(1);
   }
+  args.viewports = validateViewports(args.viewports);
+  if (!args.themes.length || args.themes.some((theme) => !['dark', 'light'].includes(theme))) {
+    throw new Error('Temas válidos: dark e light.');
+  }
+  args.themes = [...new Set(args.themes)];
   return args;
 }
 
@@ -588,7 +613,13 @@ const DOM_AUDIT_FN = `(() => {
         const r = el.getBoundingClientRect();
         return st.display !== 'none' && st.visibility !== 'hidden' && r.width > 12 && r.height > 12;
       });
-      if (leafNodes.length < 4) {
+      const hasFocusedForm = leafNodes.length < 4 && Array.from(mainEl.querySelectorAll('form')).some((form) => {
+        const controls = leafNodes.filter((el) => form.contains(el));
+        const hasLabeledField = controls.some((el) => el.matches('input, select, textarea') && el.labels?.length);
+        const hasAction = controls.some((el) => el.matches('button, input[type="submit"]') && !el.disabled);
+        return hasLabeledField && hasAction;
+      });
+      if (leafNodes.length < 4 && !hasFocusedForm) {
         issues.push({ severity: 'HIGH', rule: 'DA-STUB-SCREEN', detail: 'Tela operacional rasa com apenas ' + leafNodes.length + ' elementos estruturais/interativos visiveis' });
       }
     }
@@ -628,7 +659,9 @@ const DOM_AUDIT_FN = `(() => {
       const mr = mainEl.getBoundingClientRect();
       const vx1 = Math.max(0, mr.left);
       const vy1 = Math.max(0, mr.top);
-      const vx2 = Math.min(window.innerWidth, Math.max(mr.right, vx1 + 600));
+      const workspace = mainEl.closest('[data-da-workspace]');
+      const workspaceRight = workspace?.getBoundingClientRect().right;
+      const vx2 = Math.min(window.innerWidth, Math.max(workspaceRight ?? mr.right, vx1 + 600));
       // Mede contra a altura util real da viewport (nao apenas mr.bottom) para detectar telas que morrem no terco superior!
       const vy2 = window.innerHeight;
       const vw = Math.max(0, vx2 - vx1), vh = Math.max(0, vy2 - vy1);
@@ -933,6 +966,7 @@ const DOM_AUDIT_FN = `(() => {
 })()`;
 
 function pickViewportsForEntry(entry, args, hasMultiPlatform) {
+  if (entry.viewports) return entry.viewports;
   if (entry.isVitrine) return args.viewports.includes('desktop') ? ['desktop'] : [args.viewports[0]];
   if (args.allViewports || !hasMultiPlatform) return args.viewports;
   if (entry.platform === 'desktop' && args.viewports.includes('desktop')) return ['desktop'];
@@ -943,7 +977,7 @@ function pickViewportsForEntry(entry, args, hasMultiPlatform) {
 async function main() {
   const args = parseArgs(process.argv);
   const browserPath = findBrowser();
-  if (!browserPath) {
+  if (!browserPath && args.entries.length) {
     console.error('Erro: Chromium/Google Chrome nao encontrado no ambiente.');
     process.exit(1);
   }
@@ -991,9 +1025,7 @@ async function main() {
       return {
         label: e.labelOverride || e.target.replace(/^https?:\/\/[^/]+/i, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 40) || 'root',
         url: e.target,
-        platform: e.platform,
-        isVitrine: e.isVitrine,
-        clickSelector: e.clickSelector || '',
+        ...e,
       };
     }
     const abs = path.resolve(e.target);
@@ -1001,9 +1033,7 @@ async function main() {
     return {
       label: e.labelOverride || path.basename(abs, path.extname(abs)),
       url: `http://127.0.0.1:${staticSrv.port}/${rel}`,
-      platform: e.platform,
-      isVitrine: e.isVitrine,
-      clickSelector: e.clickSelector || '',
+      ...e,
     };
   });
 
@@ -1011,8 +1041,7 @@ async function main() {
   for (const target of resolvedTargets) {
     const vps = pickViewportsForEntry(target, args, hasMultiPlatform);
     for (const vpName of vps) {
-      const vp = VIEWPORTS[vpName];
-      if (!vp) continue;
+      const vp = resolveViewport(vpName);
       for (const theme of args.themes) {
         jobs.push({ idx: jobs.length, target, vpName, vp, theme });
       }
@@ -1131,8 +1160,11 @@ async function main() {
         expression: DOM_AUDIT_FN,
         returnByValue: true,
       });
-      const domData = evalRes?.result?.value || { issues: [] };
-      const issues = [...(domData.issues || [])];
+      const domData = evalRes?.result?.value;
+      const issues = [...(domData?.issues || [])];
+      if (!domData) {
+        issues.push({ severity: 'BLOCK', rule: 'DA-AUDIT-COVERAGE', detail: 'Auditoria do DOM sem resultado.' });
+      }
       for (const ce of [...new Set(consoleErrors)]) {
         issues.push({ severity: 'BLOCK', rule: 'DA-JS-ERROR', detail: ce });
       }
@@ -1147,6 +1179,7 @@ async function main() {
 
       // Smoke interativo pos-clique (v2.4.0): valida Resize In-Place / abertura de conferencia sem erro JS ou recorte
       let interactScreenshot = null;
+      let interactionVerified = false;
       const interactSel = target.clickSelector || (args.smokeInteract && !target.isVitrine ? '[data-da-open]' : '');
       if (interactSel && !target.isVitrine) {
         const clickRes = await cdp.send('Runtime.evaluate', {
@@ -1166,6 +1199,15 @@ async function main() {
             returnByValue: true,
           });
           const postIssues = postEval?.result?.value?.issues || [];
+          let expectedState = !target.afterClickSelector;
+          if (target.afterClickSelector) {
+            const state = await cdp.send('Runtime.evaluate', {
+              expression: `document.querySelector(${JSON.stringify(target.afterClickSelector)})?.checkVisibility()`,
+              returnByValue: true,
+            });
+            expectedState = state?.result?.value === true;
+          }
+          interactionVerified = Boolean(postEval?.result?.value) && expectedState;
           for (const pi of postIssues) {
             if (['DA-DOM-OVERFLOW', 'DA-CLIPPED-CONTENT', 'DA-FIXED-OVERLAP', 'DA-MOBILE-FLEX-CLIP'].includes(pi.rule)) {
               issues.push({ severity: pi.severity, rule: `${pi.rule}-INTERACT`, detail: `[Pos-clique ${interactSel}] ${pi.detail}` });
@@ -1183,12 +1225,25 @@ async function main() {
         }
       }
 
+      if (target.afterClickSelector && !interactionVerified) {
+        issues.push({ severity: 'HIGH', rule: 'DA-AUDIT-COVERAGE', detail: `Estado pós-clique não verificado: ${target.afterClickSelector}` });
+      }
+      for (const detail of new Set(failedAssets)) {
+        if (!issues.some((issue) => issue.rule === 'DA-ASSET-404' && issue.detail === detail)) {
+          issues.push({ severity: 'BLOCK', rule: 'DA-ASSET-404', detail });
+        }
+      }
       const entry = {
         target: target.label,
         url: target.url,
         viewport: `${vpName} (${vp.width}x${vp.height})`,
         theme,
         screenshot: shotPath,
+        dimensions: { width: vp.width, height: vp.height, layoutWidth: domData?.innerWidth ?? null },
+        states: {
+          initial: domData ? 'captured' : 'unverified',
+          ...(interactSel && { postClick: interactionVerified ? 'captured' : 'unverified' }),
+        },
         ...(interactScreenshot ? { interactScreenshot } : {}),
         issues,
       };
@@ -1203,6 +1258,12 @@ async function main() {
         process.stderr.write(`[${pad}/${jobs.length}] ${target.label} (${vpName} · ${theme}) -> ${stLabel} (${sec}s)\n`);
       }
       return nextPreloadId;
+    } catch (error) {
+      report[job.idx] = {
+        target: target.label, url: target.url, viewport: vpName, theme, screenshot: null,
+        issues: [{ severity: 'BLOCK', rule: 'DA-AUDIT-COVERAGE', detail: `Captura falhou: ${error.message}` }],
+      };
+      return nextPreloadId;
     } finally {
       cdp.off('Runtime.exceptionThrown', onEx);
       cdp.off('Runtime.consoleAPICalled', onConsole);
@@ -1210,7 +1271,7 @@ async function main() {
     }
   }
 
-  try {
+  if (jobs.length) try {
     browser = await launchBrowser(browserPath);
     const workerCount = Math.max(1, Math.min(args.concurrency, jobs.length));
     let cursor = 0;
@@ -1274,15 +1335,23 @@ async function main() {
     }
   }
 
-  const finalReport = report.filter(Boolean);
+  const finalReport = jobs.map(({ idx, target, vpName, theme }) => report[idx] ?? {
+    target: target.label, viewport: vpName, theme, screenshot: null,
+    issues: [{ severity: 'BLOCK', rule: 'DA-AUDIT-COVERAGE', detail: 'Captura planejada sem resultado.' }],
+  });
+  for (const { target, viewport, detail } of args.missing) {
+    finalReport.push({ target, viewport: viewport || '—', theme: '—', screenshot: null,
+      issues: [{ severity: 'HIGH', rule: 'DA-AUDIT-COVERAGE', detail }],
+    });
+  }
   const reportPath = path.join(outDir, 'audit-report.json');
   fs.writeFileSync(reportPath, JSON.stringify(finalReport, null, 2), 'utf-8');
 
   const elapsedSec = ((Date.now() - startedAt) / 1000).toFixed(1);
   let totalBlock = 0;
   let totalHigh = 0;
-  console.log('# Auditoria Visual & DOM Real (Design Aura v2.4.0)');
-  console.log(`- **Capturas geradas:** ${finalReport.length} · **Tempo:** ${elapsedSec}s (concurrency=${Math.min(args.concurrency, Math.max(1, jobs.length))}) · **Relatorio JSON:** ${reportPath}\n`);
+  console.log('# Auditoria Visual & DOM Real (Design Aura v2.5.0)');
+  console.log(`- **Capturas geradas:** ${finalReport.filter((entry) => entry.screenshot).length} · **Tempo:** ${elapsedSec}s (concurrency=${Math.min(args.concurrency, Math.max(1, jobs.length))}) · **Relatorio JSON:** ${reportPath}\n`);
   console.log('| Tela | Viewport | Tema | Screenshot | Status | Achados |');
   console.log('|---|---|---|---|---|---|');
   for (const r of finalReport) {
@@ -1292,7 +1361,7 @@ async function main() {
     totalHigh += highs;
     const status = blocks > 0 ? 'BLOCK' : highs > 0 ? 'HIGH' : 'PASS';
     const summary = r.issues.length ? r.issues.map((i) => `${i.rule}: ${i.detail}`).join('; ') : 'OK';
-    console.log(`| ${r.target} | ${r.viewport} | ${r.theme} | ${path.basename(r.screenshot)} | **${status}** | ${summary} |`);
+    console.log(`| ${r.target} | ${r.viewport} | ${r.theme} | ${r.screenshot ? path.basename(r.screenshot) : '—'} | **${status}** | ${summary} |`);
   }
 
   if (args.strict && (totalBlock > 0 || totalHigh > 0)) {

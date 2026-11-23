@@ -145,3 +145,8 @@ A vitrine é um percurso, não um cartaz de telas soltas.
 - Telas Mobile recomendam artboard `w: 250–270, h: 350–380` com `vw: 430, vh: 932` (ou `390x844`).
 - `fromSide` e `toSide` aceitam `"l"` (esquerda), `"r"` (direita), `"t"` (topo), `"b"` (base).
 - Sempre garanta que todas as strings de `screens[].id`, `edges[].from/to` e `journeys[].steps[].screenId` existam de verdade no array `screens`. O script `build_figma_canvas.py` valida referências quebradas e aborta com erro claro se algo estiver desconectado.
+
+
+## Demonstrações ilustrativas, quando solicitadas
+
+Para still, animação ou bento de apresentação, escolha uma ação e seu resultado. Confira a abertura, o quadro mais carregado, o resultado e o reinício na composição publicada e em mobile quando aplicável. Use o quadro do resultado como alternativa estática quando contar a história sozinho. Identifique o material como ilustrativo. O QA do produto continua nas rotas e interações reais. [Stageshow](https://benji.org/stageshow) · [Ensaio](https://raw.githubusercontent.com/benjitaylor/skills/main/stageshow/references/rehearse.md)

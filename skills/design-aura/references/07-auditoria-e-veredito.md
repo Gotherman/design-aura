@@ -16,7 +16,7 @@ Nenhuma entrega da **Design Aura** é considerada pronta por "leitura de código
 
 ## Pipeline de Verificação Obrigatório (Onda 2)
 
-Execute nesta ordem exata e **nunca pule etapas**:
+Use os passos aplicáveis ao escopo. Em ajuste localizado, cubra a tela, o estado e os contratos afetados.
 
 ### Passo 1 — Contraste Matemático, Paridade Semântica & Profundidade (`audit_contrast.py` v2.4.0)
 ```bash
@@ -46,6 +46,13 @@ node <skill_dir>/scripts/run_workflow_probe.mjs --scenario <qa-jornada.json> --o
 ```
 Subagentes Testers Read-Only percorrem cada jornada real clicando nos controles, testando fluxos positivos/negativos/estados vazios e alternância Dark/Light. O Orquestrador tria as falhas reais, gera o Plano de Correção, lança subagentes corretivos e confirma via re-teste direcionado (máx. 2 ciclos).
 
+### Cobertura declarada e estado pós-interação
+
+- Use `screens[].viewports` para declarar dimensões por tela, por exemplo `["desktop", "1920x1080"]` ou `["mobile", "mobile-360x800"]`. Use `project.vitrineViewports` quando a vitrine também precisar de cobertura mobile. O manifesto prevalece sobre o padrão da linha de comando para essas entradas. Entradas antigas mantêm os padrões.
+- Use `clickSelector` com `afterClickSelector` para verificar o estado aberto no smoke. Quando for necessário preparar dados ou navegar antes do clique, use uma jornada E2E para esse estado. Consulte dimensões e estados no JSON. Uma rota ou estado declarado sem evidência aparece como lacuna.
+- No probe, `viewport` aceita os mesmos tamanhos. Use `{"action":"assertReachable","selector":"#aprovar"}` com um overlay ativo para checar o controle na área visível. Para um gráfico em base conhecida, use `{"action":"assertText","selector":"[data-day-total]","equals":"12"}` depois de trocar o dia. Um clique isolado demonstra a ação; a assertiva demonstra o resultado.
+- Marque o contêiner amplo com `data-da-workspace` quando o vazio externo do conteúdo dentro dele importar. Em formulários e leitura, preserve a medida do conteúdo. Confirme em captura se o vazio indicado prejudica o uso.
+
 ### Passo 4 — Inspeção Visual Comparativa contra a Tela-Mãe (Batch Review)
 Abra e analise os PNGs gerados em `<dir_audit>` e `<dir_qa>` (incluindo `entrega-desktop-dark.png`, `fluxo-desktop-dark.png` e os PNGs pós-clique `-interact.png`) — **zero erros automáticos NÃO basta se a tela estiver feia**:
 1. **Paridade Visual sem Clonagem Estrutural & Zero Monobloco Cinza/Branco:** a cor da marca vive nos cabeçalhos, seleções e profundidade em Dark & Light, e a paridade semântica está impecável (vermelho = falha, verde = sucesso, âmbar = alerta, zero rosa)?
@@ -53,12 +60,16 @@ Abra e analise os PNGs gerados em `<dir_audit>` e `<dir_qa>` (incluindo `entrega
 3. **Alinhamento, Badges & Mobile:** zero selo-eco, zero jargão técnico, hero mobile compacto e zero corte sob tab bar?
 4. **Vitrine Unificada (`entrega.html`):** link único operando com `Mapa Figma · App ao Vivo · Preview · Galeria · Bíblia + PDF + Tema` sem erros JS?
 
+Compare o antes e o depois no mesmo tema, largura, dados e estado quando houver uma base anterior válida. Abra capturas da área usada e, quando a questão envolver ritmo ou vazios abaixo da dobra, também da página ou região rolável inteira. Para dados críticos pequenos ou sobre fundos compostos, inspecione a leitura no tamanho real. Classifique achados pela evidência disponível (código, comportamento renderizado ou revisão visual) e agrupe sintomas pela causa. Trate adornos repetidos pela função, como um separador visual que torna uma fila escaneável. [Impeccable](https://impeccable.style/slop/) · [Auditoria de Meng To](https://github.com/MengTo/skills/blob/main/agent-skills/ui/audit-ai-design-slop/SKILL.md)
+
 ### Passo 5 — Regra de Entrega Unificada em 1 Porta / 1 Link (`serve_entrega.mjs`)
 Suba o servidor unificado de porta única (`0.0.0.0:4188`) combinando `/design/*` + SPA `dist/*`:
 ```bash
 node <skill_dir>/scripts/serve_entrega.mjs --design-dir <dir_design> [--app-dir <dir_dist>] --port 4188
 ```
 Se estiver em ambiente remoto/cloud onde o navegador do usuário não alcança `localhost`, abra no preview integrado do ambiente ou forneça URL acessível verificada com `HTTP 200` (via túnel HTTPS quando necessário), sempre em **1 único link** apontando para `entrega.html`.
+
+Informe quais artefatos a URL oferece e se a hospedagem depende da sessão. Depois de publicar, confirme que a rota renderiza a tela esperada e que cada download responde com seu conteúdo real. O fallback de SPA pode responder com HTML no lugar de um arquivo.
 
 *(Opcional: se o usuário tiver conectado o MCP Uizze com token válido, `find_ui_references` e `get_ui_flow` podem servir para comparar soluções de referência em telas problemáticas — sempre distinguindo claramente o que foi inspecionado do que foi inferido.)*
 
@@ -98,8 +109,5 @@ Liste `1–3` (quick) ou `2–5` (full) candidatos reais avaliados durante a aud
 | `desktop-caixa.html:112` | Aumentar sombra dos cards | A elevação atual segue `Z2` da `DESIGN-BIBLE.md`; alterar isoladamente quebra a consistência dos 5 planos |
 
 ### 4. Verificação & Veredito (`Verification and Verdict`)
-1. **Verification Receipt**: liste os comandos exatos executados após a última edição, quantos PNGs/viewports foram inspecionados e os resultados observados. Qualquer item não executado deve aparecer explicitamente como **Not verified**.
-2. **Verdict**:
-   - **`Block`**: se restar qualquer achado `BLOCK` ou `HIGH`, ou falha de renderização.
-   - **`Needs changes`**: se restarem apenas `MEDIUM` ou `LOW` acionáveis.
-   - **`Approve`**: apenas quando `0` achados `BLOCK`/`HIGH` permanecerem e todos os portões aplicáveis tiverem passado após a última edição.
+1. **Registro de verificação.** Identifique o build testado, as telas, dimensões, temas e estados que foram abertos, os comandos, os artefatos e o resultado visual. Confira a aprovação ou a autorização para seguir direto no piloto quando pertinente. Reconcilie Bíblia, shell, manifesto e interface. Use `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css --check-sync --shell SHELL-CONTRACT.md` para verificar tabelas e declarações explícitas no shell, como `border-subtle` Light `#86A2C7`. Acrescente `--compare-css caminho/tokens.css` para cada cópia compilada que deve ser idêntica. Confira na revisão as rotas atuais, as escolhas em prosa, o histórico e o estado dos portões.
+2. **Veredito:** `Requer correção` quando a evidência comprovar um problema acionável dentro do escopo. `Pendente de verificação` quando faltar evidência exigida. `Aprovado` quando o QA funcional e a inspeção visual aplicáveis estiverem concluídos no build final, com o contrato coerente.

@@ -147,3 +147,8 @@ O que ficou de fora de proposito:
 - **AGPL e GPL** (Cal.com, Plane, Grafana, Signal, Zed) servem para ler. Copiar o codigo para o repositorio do cliente exige a licenca, e a skill nao faz isso sozinha.
 
 Uma referencia por necessidade. Se a tela seguinte precisa de outra, busque de novo. Tres produtos misturados na mesma tela viram colcha.
+
+
+## Procedência e adaptação
+
+Registre na seção OSS da Bíblia a fonte escolhida, o uso pretendido, o que foi adaptado e a implementação local. Verifique a licença e avisos da peça quando houver reaproveitamento de código ou ativos. Traga para o briefing só as referências usadas naquela entrega, traduzidas para os tokens locais. Em ilustração, comece pela função no estado vazio, no onboarding ou na apresentação. [OpenDesign](https://github.com/nexu-io/open-design#design-systems) · [Ilustrações de Meng To](https://github.com/MengTo/skills#illustration-14)

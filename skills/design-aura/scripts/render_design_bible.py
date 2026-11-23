@@ -534,6 +534,26 @@ def sync_markdown_token_tables(
     return "\n".join(new_lines) + ("\n" if md.endswith("\n") else ""), synced_vars
 
 
+def check_inline_token_values(
+    markdown: str, light: dict[str, str], dark: dict[str, str]
+) -> list[str]:
+    """Verifica declarações explícitas como `border-subtle` Light `#86A2C7`."""
+    pattern = re.compile(
+        r"`(?P<token>[-\w]+)`[ \t]+(?P<theme>Light|Claro|Dark|Escuro)[ \t]+"
+        r"`(?P<value>#[a-f0-9]{6})(?=`|[ \t])",
+        re.IGNORECASE,
+    )
+    differences = []
+    for match in pattern.finditer(markdown):
+        token = "--" + match["token"].removeprefix("--")
+        theme = match["theme"]
+        active = light if theme.lower() in {"light", "claro"} else dark
+        expected = active.get(token)
+        if expected and re.fullmatch(r"#[0-9a-fA-F]{6}", expected) and expected.lower() != match["value"].lower():
+            differences.append(f"{token} {theme}: {match['value']} → {expected}")
+    return differences
+
+
 def build_html(
     md: str,
     title: str,
@@ -620,7 +640,14 @@ def main() -> None:
     parser.add_argument("--tokens", default="", help="Caminho opcional para tokens.css ou tokens.json (autodetectado por padrao)")
     parser.add_argument("--golden-desktop", default="", help="Screenshot opcional da Tela-Mae Desktop")
     parser.add_argument("--golden-mobile", default="", help="Screenshot opcional da Tela-Mae Mobile")
+    parser.add_argument("--check-sync", action="store_true", help="Verifica referências de tokens sem escrever artefatos")
+    parser.add_argument("--shell", type=Path, help="Contrato de shell a conferir junto da Bíblia com --check-sync")
+    parser.add_argument("--compare-css", type=Path, action="append", default=[], help="Cópia compilada a comparar byte a byte com --tokens")
     args = parser.parse_args()
+    if (args.shell or args.compare_css) and not args.check_sync:
+        parser.error("--shell e --compare-css requerem --check-sync")
+    if args.compare_css and (not args.tokens or Path(args.tokens).suffix.lower() != ".css"):
+        parser.error("--compare-css requer um arquivo CSS em --tokens")
 
     source = Path(args.markdown)
     if not source.exists():
@@ -635,6 +662,29 @@ def main() -> None:
 
     tokens_light, tokens_dark = load_tokens_for_bible(source, args.tokens)
     text_synced, synced_vars = sync_markdown_token_tables(text, tokens_light, tokens_dark)
+    if args.check_sync:
+        if not tokens_light or not tokens_dark:
+            parser.error("Nenhum token Light/Dark encontrado para conferir")
+        errors = []
+        if synced_vars:
+            errors.append(f"{source}: tokens divergentes: {', '.join(dict.fromkeys(synced_vars))}")
+        if args.shell:
+            shell_markdown = args.shell.read_text(encoding="utf-8")
+            _, shell_drift = sync_markdown_token_tables(shell_markdown, tokens_light, tokens_dark)
+            shell_drift += check_inline_token_values(shell_markdown, tokens_light, tokens_dark)
+            if shell_drift:
+                errors.append(f"{args.shell}: tokens divergentes: {', '.join(dict.fromkeys(shell_drift))}")
+        if args.compare_css:
+            compiled = Path(args.tokens).read_bytes()
+            for copy in args.compare_css:
+                if copy.read_bytes() != compiled:
+                    errors.append(f"{copy}: CSS diverge de {args.tokens}")
+        if errors:
+            for error in errors:
+                print(error, file=sys.stderr)
+            sys.exit(1)
+        print("Referências de tokens e cópias CSS informadas conferidas.")
+        return
     if synced_vars:
         source.write_text(text_synced, encoding="utf-8")
         text = text_synced

@@ -1,37 +1,38 @@
 ---
 name: design-aura
 description: >-
-  Diretor de design e engenharia UI/UX de classe mundial para apps Desktop (Electron, Tauri, macOS, Windows), Mobile (iOS HIG/SwiftUI, Android Material 3/Compose, React Native/Expo, Flutter, PWA) e Sistemas Web/SaaS/ERPs/Dashboards (HTML estático ou SPA React/Vite/Next). Use sempre que o usuario pedir para planejar, especificar, desenhar, criar, revisar ou remodelar o visual de interfaces e telas já existentes, fluxos, design systems, tokens ou prototipos navegaveis, aplicar anti-AI-slop, garantir paridade semântica Light/Dark (vermelho real = erro, nunca rosa), profundidade sem monobloco cinza/branco, Resize In-Place (Lista -> Conferência Focada), alto contraste otico WCAG/APCA, procurar componentes free/open source ou definir animacoes com vida. Tambem use para gerar Biblia Visual autossuficiente com PDF, construir telas via subagentes com Fast-Audit, rodar Fase 4.5 de Subagentes Testers E2E clicando nos fluxos reais e entregar vitrine unificada em link unico (entrega.html, fluxo.html, preview.html, index.html).
+  Projeta, refina e audita interfaces web, desktop e mobile. Use para direção de UI/UX,
+  design systems, Bíblia Visual, protótipos navegáveis, fluxos operacionais, contraste,
+  motion e testes visuais e interativos em telas reais.
 license: MIT
-compatibility: >-
-  Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.4.2"
+  version: "2.5.0"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.4.2`)
+# Design Aura (`v2.5.0`)
 
 Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual, orquestração multi-agente e **QA interativo E2E** para produzir **sistemas web operacionais (HTML estático ou SPA React/Vite/Next), apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero monobloco cinza/branco, paridade semântica Light/Dark (vermelho real = erro, nunca rosa), resize in-place sem poluição, contraste irretocável e verificação real clicável em cada jornada.
+
+**Ferramentas locais:** Python, Node.js e Chromium/Chrome. Os guias indicam quais são usados em cada etapa.
 
 ## Ponto de partida universal
 
 Leia o repositório e o planejamento por completo antes de desenhar: concepção, PRD, proposta, rotas, telas, tokens, componentes, logo e o vocabulário real do negócio. Cada projeto ganha um design saído desse material.
 
-1. **Repositório que já tem design e telas.** Quatro caminhos claros:
-   - **Upgrade para Nova Versão da Skill (`Bíblia antiga + Skill nova` · OBRIGATÓRIO checar primeiro!):** ao abrir um projeto que já possui `DESIGN-BIBLE.md`, compare o selo `**Design Aura:** vX.Y.Z` no topo da Bíblia com a versão atual desta skill (`v2.4.2`). Se o selo estiver ausente ou desatualizado (`< v2.4.2`), **NUNCA fique preso às regras antigas da Bíblia velha!** Execute o upgrade completo:
-     1. **Preserve 100% do negócio do projeto** (domínio, personas, fluxos/rotas aprovados, dados reais e marca);
-     2. **Promova a `DESIGN-BIBLE.md`** incorporando todas as novas regras, seções, orçamentos (ex.: Resize In-Place, Paridade Semântica Light/Dark sem rosa, Fim do Monobloco Cinza/Branco, Componentes Studio, Portões `v2.4+` e Fase 4.5 Testers E2E), atualize o selo para `Design Aura: v2.4.2` + Seção 13 (Histórico) e regere `tokens.json`/`tokens.css`/`DESIGN-BIBLE.pdf`/`SHELL-CONTRACT.md`;
-     3. **Construa ou refine as telas** aplicando todos os pontos novos da skill atualizada + **Fase 4 (`entrega.html`) + Fase 4.5 (Subagentes Testers E2E)**.
+Registre a versão carregada e mantenha acessíveis os scripts e referências usados naquele ambiente. Abra os guias pertinentes à plataforma e ao modo escolhido.
+
+1. **Repositório que já tem design e telas.** Determine o modo pelo pedido:
+   - **Upgrade de versão:** quando o pedido cobre a atualização do projeto, compare o selo `Design Aura: vX.Y.Z` da Bíblia com esta versão. Se for anterior ou ausente, mapeie os deltas aplicáveis, preserve domínio, dados e fluxos aprovados, sincronize Bíblia, shell, manifesto e tokens e complete os portões do escopo. Registre as exceções com motivo e atualize o selo da Bíblia após verificar a aplicação. O selo antigo pode informar um ajuste pontual sem ampliar o pedido. Siga [o protocolo de upgrade](references/03-orquestracao-subagentes.md).
    - **Remodelar o visual (Autópsia Seletiva):** identifique objetivamente o que incomoda/falha nas telas atuais (ex.: contraste fraco, desorganização, visual genérico) e o que precisa sobreviver (rotas, tarefas, dados reais, riqueza funcional). **Regra anti-sabotagem:** remodelar significa *superar em beleza, clareza e densidade útil* o que já existia — **NUNCA** use "remodelar" para proibir cards/superfícies `Z2`, recusar bibliotecas OSS úteis (como ECharts/gráficos/ícones), apagar as cores vivas da marca em bege/marrom morto ou empobrecer telas em tabelas peladas!
    - **Modo 3 — Polimento Cirúrgico / Refinamento sobre Telas Aprovadas (`v2.4.1 · Anti-Drift`):** quando o usuário já aprovou a arquitetura, fluxos e dados e pede refinamento visual, estrutural (ex.: Resize In-Place) ou de componentes:
      1. **NUNCA apague nem refaça do zero o domínio/fluxos da `DESIGN-BIBLE.md`**, mas **SEMPRE atualize cirurgicamente o Contrato Triplo** antes de propagar para telas/subagentes:
         - **Fonte Única de Tokens:** edite `tokens.json` → recompile para o CSS/Tailwind real usado pelo app E pela vitrine (proibido editar cópia bifurcada em `src/` deixando `design/tokens.css` velho);
         - **Bíblia Sincronizada (texto + hexes + PDF):** atualize **também o texto** das seções alteradas na `DESIGN-BIBLE.md` (Seção 3.5 composição/Resize, Seção 4 cores/paridade, Seção 8/9 componentes), registre a revisão no Histórico e rode `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css` (para que nenhuma thread futura que leia só a Bíblia regrida!);
         - **Contrato & Vitrine:** atualize `SHELL-CONTRACT.md` e `screen-manifest.json`; em apps SPA (`React`/`Vite`/`Next`), rode **`npm run build`** antes de auditar/testar (Fase 4.5) ou servir `entrega.html`; se dados de demo mudarem em `localStorage`, **versione a chave** (`app:state:v2`) para não carregar cache corrompido!
-     2. Valide **2 telas-piloto** (1 Desktop + 1 Mobile) com o usuário e propague em lotes enxutos controlados, encerrando com **Fase 4 (`entrega.html`) + Fase 4.5 (Testers E2E)**.
-   - **Ajuste pontual:** altere só o que foi pedido e preserve o que já funciona.
+     2. Capture o estado anterior com dados, tema e dimensão comparáveis. Valide pilotos nas plataformas afetadas, incluindo o estado após a interação principal. Registre a aprovação ou a autorização explícita para seguir direto antes de propagar. Uma mudança de direção reabre o piloto no escopo afetado. Encerre com a revisão visual e funcional da mudança.
+   - **Ajuste pontual:** altere só o que foi pedido e verifique a tela, os estados e os contratos afetados.
 2. **Planejamento sem telas** (`CONCEPCAO.md`, PRD, requisitos, proposta): extraia domínio, perfis, módulos, fluxos e restrições já decididas.
 3. **Ideia do zero:** conduza a especificação enxuta antes de gerar código ou telas.
 
@@ -60,7 +61,7 @@ Antes de paleta, tipografia ou layout, leia o pedido, o repositório e os docume
 - **Português simples e efeito visual concreto:** NUNCA jogue jargão de design/técnico solto (*"WCAG/APCA"*, *"assinatura contida"*, *"Contrato de Plataforma"*) sem traduzir em 1 frase curta o que o usuário vai **ver e sentir na tela**.
 - **Trava Anti-Atropelo em Caso de Dúvida:** se o usuário responder *"não entendi"*, *"como assim?"* ou demonstrar dúvida em qualquer pergunta, **PARE IMEDIATAMENTE** — **NUNCA assuma a opção por conta própria nem gere a Bíblia ainda!** Explique em português direto com exemplo visual do produto e peça a confirmação dele antes de seguir para a Onda 0.
 
-**6 pontos críticos obrigatórios** (nunca assuma silenciosamente se o prompt atual não respondeu):
+**Pontos da entrevista.** Reaproveite respostas do briefing e da Bíblia aprovados. Pergunte apenas o que está em aberto e afeta a entrega:
 1. **Em remodelação — o que manter vs o que incomoda:** o que já existe que precisa sobreviver e o que o usuário quer ver drasticamente melhorado.
 2. **Tema padrão, Marca no Workspace & Paridade Semântica (`v2.4.0`):** qual tema abre por padrão (*Escuro com alternância para Claro* ou *Claro com alternância para Escuro*) aplicando a **cor oficial da marca para dentro do workspace nos dois temas** (cabeçalhos `--surface-brand-header`, seleções, abas ativas e profundidade real `Z0→Z4` — matando tanto o **monobloco cinza** no Dark quanto o **tudo-branco** no Light) + **paridade semântica rígida** (`vermelho real` = falha nos dois temas, nunca rosa pastel; `verde esmeralda` = sucesso; `âmbar` = atenção).
 3. **Fluxo Zero-Treinamento & Resize In-Place para Filas Densas (`v2.4.0`):** **(Recomendado) Fila Limpa → Clique abre Conferência & Aprovação em Resize na mesma área** (em vez de jogar lista + 8 abas + resumo duplicado + documento + botões tudo de uma vez na tela), usando **fluxos humanos de 3–4 passos**, **documentos reais do trabalho**, **máx. 2 barras no topo**, **zero jargão técnico** e **controles de demo isolados** da operação.
@@ -136,7 +137,7 @@ Imediatamente após a aprovação da Bíblia, **ANTES** de disparar os subagente
    ```
    Se houver ajustes após a revisão do usuário no Portão 2, atualize `tokens.css`, `shell.css`, `SHELL-CONTRACT.md` e re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css` (sincronizando automaticamente as tabelas da Bíblia) antes de disparar os subagentes!
 3. **Portão 2 — Validação rápida do padrão visual:**
-   Mostre os PNGs (ou link preview) das 2 Telas-Mãe ao usuário para confirmar que o visual real bate 100% com a expectativa (pule esta pausa apenas se o usuário já pediu explicitamente *"aprovado, construa tudo direto sem parar nas telas-mãe"*).
+   Mostre os PNGs (ou link preview) das Telas-Mãe aplicáveis ao usuário para confirmar que o visual real bate 100% com a expectativa (pule esta pausa apenas se o usuário já pediu explicitamente *"aprovado, construa tudo direto sem parar nas telas-mãe"*).
    - **Fronteira rígida — o que a Tela-Mãe trava vs o que NUNCA se copia:**
      - **HERDA 100% (DNA Visual & Sistema):** tokens (`Z0–Z4`, paleta, bordas, sombras, Dark/Light), tipografia, escala `4/8px`, raios concêntricos, shell externo (barra superior, sidebar/rail, dock mobile, `⌘K`, ícones), gramática de componentes (botões, badges, inputs, cards `Z2`, drawers/sheets, toasts) e **régua de acabamento**.
      - **NUNCA COPIA (Arquitetura Interna & Lógica da Tela):** o layout interno, o número de zonas e o fluxo de trabalho pertencem **exclusivamente à tarefa daquela tela**. Exemplo: se a Tela-Mãe é um cockpit de 3 zonas (Financeiro), o Funil continua Kanban de colunas arrastáveis, Editais continua tabela + inspector, Atendimento continua Inbox + chat + ficha, Configurações/Perfil usa seções de formulário focadas, e Login usa split-screen limpo. **Clonar a estrutura interna da Tela-Mãe para telas de outra natureza reprova no Fast-Audit.**
@@ -209,16 +210,16 @@ Após a parte visual e interativa construída e aprovada na Fase 4, **valide os 
    ```bash
    node <skill_dir>/scripts/serve_entrega.mjs --design-dir <dir_design> [--app-dir <dir_dist>] --port 4188
    ```
-   Inspecione os PNGs finais (inclusive `entrega-desktop-dark.png`, `fluxo-desktop-dark.png` e evidências pós-clique). Em ambiente remoto/sandbox, entregue 1 link acessível verificado com `HTTP 200` (ou abra no preview integrado) + caminhos locais, encerrando com veredito **`Approve`**.
+   Use o [guia de auditoria](references/07-auditoria-e-veredito.md) para fechar a cobertura declarada, inspecionar as evidências e conferir o contrato e o build entregues. Verifique o conteúdo das rotas e artefatos da URL oferecida. Feche com o veredito correspondente às evidências.
 
 ---
 
 ## Os 10 Blocos de Leis Inegociáveis (Resumo Executivo `v2.0`)
 
-Qualquer violação abaixo **reprova automaticamente** (`BLOCK` / `HIGH`). Detalhes completos em [01-leis-inegociaveis.md](references/01-leis-inegociaveis.md):
+Confirme as violações com a evidência adequada e aplique a severidade do guia de auditoria. Detalhes completos em [01-leis-inegociaveis.md](references/01-leis-inegociaveis.md):
 
 1. **Zero Estética "SaaS de IA Genérico"**: proibido gradientes roxo/índigo/neon gratuitos, glow/glass decorativo, emojis clichês (`✨🚀⚡🛡️`) como ícones, mistura de outline/solid, eyebrows decorativos, numeração `01 //`, gradiente em texto, barrinha lateral em card arredondado e dots/badges `LIVE` falsos.
-2. **Hierarquia, Superfícies `Z2` & Piso de Substância (Anti-Cardite ≠ Proibir Cards)**: proibido *card dentro de card* e *3 cards vazios de landing*, mas **obrigatório** usar superfícies `Z2` elevadas com contorno/profundidade real. **Proibido** banir cards (`"sem classe card"`), entregar telas casca rasas (`DA-STUB-SCREEN`), deixar `> 45%` de vazio morto ou inspector de 1 linha (`DA-DEAD-SPACE`) ou usar links `<a>` azuis sublinhados crus em listas/menus (`DA-RAW-LINK-LIST`).
+2. **Hierarquia, Superfícies `Z2` & Piso de Substância (Anti-Cardite ≠ Proibir Cards)**: reprove caixas redundantes que disputam atenção e *3 cards vazios de landing*, mas **obrigatório** usar superfícies `Z2` elevadas com contorno/profundidade real. **Proibido** banir cards (`"sem classe card"`), entregar telas casca rasas (`DA-STUB-SCREEN`), deixar `> 45%` de vazio morto ou inspector de 1 linha (`DA-DEAD-SPACE`) ou usar links `<a>` azuis sublinhados crus em listas/menus (`DA-RAW-LINK-LIST`).
 3. **Contraste, Vitalidade Cromática & Acessibilidade**: WCAG AA `>= 4.5:1` normal / `>= 3:1` grande, APCA `|Lc| >= 60`; proibido `#000000`/`#FFFFFF` crus ou apagar a cor viva da marca em marrom/bege morto (`DA-B3-04`: prefira texto escuro sobre acento vivo quando necessário); touch targets `>= 44×44px` (mobile/iOS) e `>= 48×48dp` (Android); corpo `>= 14px`.
 4. **Tipografia Intencional (`Operate` sem Serifa Editorial)**: escala/peso nítidos; `tabular-nums` obrigatório em dados/tabelas; `text-wrap: balance/pretty`; `-webkit-font-smoothing: antialiased`; **proibido** usar fontes serifadas editoriais (`Source Serif`, `Georgia`, `Palatino`, `Times`) em sistemas operacionais `Operate` sem pedido explícito (`DA-B4-04` / `DA-SERIF-OPERATE`).
 5. **Conteúdo Real & Zero Copy de Template ou Dev-Leak**: proibido *Lorem ipsum*, clichês de IA, *botsplaining* e textos vazados de desenvolvimento (*"não estão nesta amostra"*, *"semente do funil"* — `DA-B2-08A`).
@@ -234,7 +235,7 @@ Qualquer violação abaixo **reprova automaticamente** (`BLOCK` / `HIGH`). Detal
 
 | Pedido | Ação | Referência |
 |---|---|---|
-| **`/designaura`** | Autópsia seletiva + Fase 1 curta obrigatória → Bíblia Visual PDF → Telas-Mãe → Subagentes (1–3 telas) + Fast-Audit → Vitrine Figma | [designaura/SKILL.md](../designaura/SKILL.md) |
+| **`/designaura`** | Detecte o modo pelo pedido e execute os portões aplicáveis | [designaura/SKILL.md](../designaura/SKILL.md) |
 | **`biblia`** | Rodar Fase 1 + Fase 2 e gerar `DESIGN-BIBLE.md/.pdf` visual, `tokens.json/css` e `screen-manifest.json` | [02-biblia-de-design.md](references/02-biblia-de-design.md) |
 | **`construir`** | Validar Telas-Mãe (Onda 0.5), fatiar 1–3 telas/subagente sem teto de 8 com Fast-Audit imediato e gerar vitrine | [03-orquestracao-subagentes.md](references/03-orquestracao-subagentes.md) |
 | **`auditar`** | Rodar `audit_contrast.py`, `lint_design_aura.py` e `capture_and_audit.mjs` (incluindo vitrine e craft checks) | [07-auditoria-e-veredito.md](references/07-auditoria-e-veredito.md) |

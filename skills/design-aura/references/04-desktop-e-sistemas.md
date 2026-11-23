@@ -107,6 +107,8 @@ O mesmo produto web não tem um layout só. Tem um shell por largura, com os mes
 
 ## 7. Gráficos de Estúdio & Micro-Componentes Analíticos OSS (`v2.3.0`)
 
+Antes de escolher o componente, descreva na Bíblia a pergunta, a métrica, sua unidade e denominador, a escala, o estado zero e a interação necessária. Explicite quando um comparativo tem escala própria por linha ou quando o vazio mostra outra métrica. Verifique o número com dados conhecidos após trocar dia, série ou filtro. Disponibilize a leitura relevante também sem hover.
+
 Nunca entregue gráficos "tutorial" (1 linha quase reta no topo com paredão monocromático até o zero):
 1. **Fluxo de Caixa / Séries Financeiras (`TradingView Lightweight Charts` / `Apache ECharts` / `ApexCharts`):**
    - **Escala Y Dinâmica Calibrada (`DA-FLAT-CHART-AXIS`):** nunca trave `min: 0` numa série que varia entre `3,2M` e `3,5M`; ajuste `min` à faixa real ou combine **Combo Barras Diárias (`+Entradas` / `-Saídas`) + Curva Suave de Saldo Acumulado**;

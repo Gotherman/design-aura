@@ -654,11 +654,11 @@ def _nested_surface_findings(clean_text: str, raw_text: str, ext: str, rel_path:
         if cardish and any(item[1] for item in stack):
             findings.append({
                 "rule": "DA-B2-01",
-                "severity": "BLOCK",
+                "severity": "MEDIUM",
                 "location": f"{rel_path}:{pos_to_line(starts, match.start())}",
                 "evidence": snippet_at(raw_text, match.start()),
-                "message": "Card dentro de card (Bloco 2)",
-                "fix": "Achate a hierarquia: superficie externa unica e conteudo interno sem segunda caixa",
+                "message": "Superfícies aninhadas a revisar (Bloco 2)",
+                "fix": "Confirme no render se a camada interna tem função própria. Se competir pela mesma atenção, use faixa recuada, proximidade ou divisórias.",
             })
         if radius:
             for item in reversed(stack):

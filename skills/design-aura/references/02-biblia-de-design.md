@@ -2,6 +2,8 @@
 
 A **Bíblia de Design** é o contrato visual, ergonômico e estrutural criado pelo **Orquestrador na Onda 0** antes de qualquer tela ser construída ou delegada a subagentes. Ela garante que 100% das telas — sejam 3 ou 25, em Desktop, Web e Mobile — pareçam projetadas por uma única diretoria de design.
 
+Para valores de token repetidos no shell, prefira referências pelo nome ou use uma tabela Token | Light | Dark verificável por `--check-sync`. A revisão também confere decisões escritas em prosa e rotas.
+
 Use o template copiável em [assets/design-bible-template.md](../assets/design-bible-template.md).
 
 O primeiro bloco do arquivo, antes das 12 seções, é o **Contrato de plataforma**: trabalho (remodelar com autópsia seletiva, completar ou criar), tipo de produto, superfícies, qual é a principal, papel do mobile, stack, tema, uso das cores da marca (com vitalidade cromática), detalhes do domínio aprovados, modelo do Orquestrador, modelo dos subagentes, como o trabalho se organiza e **adaptações do molde ao vocabulário e fluxo do projeto**. Também lista as hipóteses que não foram confirmadas. Cor, tipo e tela só começam depois desse bloco.
@@ -118,3 +120,8 @@ python3 <skill_dir>/scripts/render_design_bible.py DESIGN-BIBLE.md --tokens toke
 ```
 
 O PDF sai em A4 retrato com fundo limpo neutro, tipografia moderna de estúdio (sem viés de papel bege/serifa) e blocos ` ```html-specimen ` renderizados ao vivo quando presentes no Markdown.
+
+
+## Decisões de refinamento
+
+Quando houver dúvida material no piloto, compare variantes que mudem composição ou acabamento mantendo os mesmos dados, fluxos e ações. Registre a escolha aprovada e o motivo. Absorva feedback na Bíblia da superfície em que ocorreu. Promova a regra à skill apenas quando ela explicar uma falha reproduzível ou se sustentar em outros projetos. [Design-First de Meng To](https://github.com/MengTo/skills/blob/main/agent-skills/ui/design-first-ui-prompting/SKILL.md) · [Learn Taste de Emil Kowalski](https://aiforui.dev/skills/learn-taste)

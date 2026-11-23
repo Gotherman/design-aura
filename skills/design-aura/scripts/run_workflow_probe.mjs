@@ -14,11 +14,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 
-const VIEWPORTS = {
-  desktop: { width: 1440, height: 900, mobile: false, dpr: 1 },
-  tablet: { width: 768, height: 1024, mobile: true, dpr: 2 },
-  mobile: { width: 390, height: 844, mobile: true, dpr: 2 },
-};
+import { resolveViewport } from './audit_viewports.mjs';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -330,15 +326,38 @@ async function runStep(cdp, step, ctx) {
       if (act === 'assertVisible' && !visible) throw new Error(`Esperava elemento visivel: ${step.selector}`);
       if (act === 'assertHidden' && visible) throw new Error(`Esperava elemento oculto: ${step.selector}`);
       out.detail = `${act} OK (${step.selector})`;
+    } else if (act === 'assertReachable') {
+      if (!step.selector) throw new Error('assertReachable requer selector.');
+      const res = await cdp.send('Runtime.evaluate', {
+        expression: `(() => {
+          const el = ${findElementExpr(step.selector)};
+          if (!el || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) return 'Controle oculto ou ausente';
+          if (el.matches(':disabled') || el.closest('[inert], [aria-disabled="true"]')) return 'Controle desabilitado';
+          const r = el.getBoundingClientRect();
+          if (r.left < 0 || r.top < 0 || r.right > innerWidth || r.bottom > innerHeight) return 'Controle fora da área visível';
+          for (const [x, y] of [[0.5, 0.5], [0.2, 0.25], [0.8, 0.25], [0.2, 0.75], [0.8, 0.75]]) {
+            const hit = document.elementFromPoint(r.left + r.width * x, r.top + r.height * y);
+            if (!el.contains(hit)) return 'Ação encoberta por ' + (hit?.id || hit?.tagName || 'uma região recortada');
+          }
+          return '';
+        })()`,
+        returnByValue: true,
+      });
+      const issue = res?.result?.value;
+      if (issue !== '') throw new Error(`${step.selector}: ${issue || 'Não foi possível verificar o controle'}`);
+      out.detail = `Controle alcançável: ${step.selector}`;
     } else if (act === 'assertText') {
       const sel = step.selector || 'body';
-      const needle = String(step.contains ?? step.text ?? '');
+      const exact = step.equals !== undefined;
+      const needle = String(step.equals ?? step.contains ?? step.text ?? '');
+      if (!exact && !needle) throw new Error('assertText requer equals, contains ou text.');
+      const expected = JSON.stringify(needle.replace(/\s+/g, ' ').trim());
       const res = await cdp.send('Runtime.evaluate', {
         expression: `(() => {
           const el = ${findElementExpr(sel)};
           if (!el) return { ok: false, reason: 'Elemento nao encontrado: ' + ${JSON.stringify(sel)} };
           const txt = (el.textContent || '').replace(/\\s+/g, ' ').trim();
-          return { ok: txt.toLowerCase().includes(${JSON.stringify(needle.toLowerCase())}), sample: txt.slice(0, 140) };
+          return { ok: ${exact} ? txt === ${expected} : txt.toLowerCase().includes(${expected}.toLowerCase()), sample: txt.slice(0, 140) };
         })()`,
         returnByValue: true,
       });
@@ -419,6 +438,12 @@ async function main() {
     process.exit(1);
   }
   const scenario = JSON.parse(fs.readFileSync(path.resolve(args.scenario), 'utf8'));
+  const vpName = scenario.viewport || 'desktop';
+  const vp = resolveViewport(vpName);
+  const initTheme = scenario.theme || 'dark';
+  if (!['dark', 'light'].includes(initTheme)) throw new Error('Temas válidos: dark e light.');
+  const steps = scenario.steps;
+  if (!Array.isArray(steps) || !steps.length) throw new Error('Cenário sem passos de QA.');
   const outDir = path.resolve(args.out);
   fs.mkdirSync(outDir, { recursive: true });
 
@@ -429,11 +454,6 @@ async function main() {
     staticSrv = await startStaticServer(rootDir);
     baseUrl = `http://127.0.0.1:${staticSrv.port}`;
   }
-
-  const vpName = scenario.viewport || 'desktop';
-  const vp = VIEWPORTS[vpName] || VIEWPORTS.desktop;
-  const initTheme = scenario.theme || 'dark';
-  const steps = scenario.steps || [];
 
   const consoleErrors = [];
   const failedAssets = [];
@@ -507,6 +527,7 @@ async function main() {
   const report = {
     name: scenario.name || path.basename(args.scenario),
     viewport: vpName,
+    dimensions: { width: vp.width, height: vp.height },
     theme: initTheme,
     passed,
     summary: {

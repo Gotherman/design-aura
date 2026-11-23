@@ -112,3 +112,8 @@ Nao exporte um `transition` de CSS para os tres.
 ## O que o linter pega e o que fica para o olho
 
 O linter marca `transition-all`, bounce, scale de hover em 105%, duracao de controle acima de 300 ms e loop infinito que nao e espera. Ele nao sabe se a troca de pagina tem motivo. Isso continua na revisao: uma animacao por mudanca de estado, nenhuma animacao para "dar vida" generica, e a curva da plataforma em vez de uma receita unica.
+
+
+## Revisão de gestos e interrupções
+
+Para gestos e transições alterados, exercite abrir, cancelar, inverter e repetir rapidamente. O alvo deve acompanhar a interação e assentar no estado correto após a soltura. Verifique foco e controles críticos durante e após a transição. A alternativa com movimento reduzido preserva a relação entre ação e resultado. Em caso de lentidão, identifique a causa antes de mudar a técnica ou a biblioteca. [Gestos](https://aiforui.dev/skills/gestures) · [Performance](https://aiforui.dev/skills/animation-performance)

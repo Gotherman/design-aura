@@ -116,7 +116,7 @@ Nenhum slice de subagente é considerado "pronto" apenas porque o subagente diss
 ```markdown
 ### Tarefa: Construir Slice [NOME_DO_MODULO] ([1 a 3] tela(s)) — Projeto [NOME_DO_PROJETO]
 
-Você é um Engenheiro de UI Sênior da Design Aura (`v2.2.0`). Sua entrega deve igualar ou superar o acabamento visual das **Telas-Mãe aprovadas**, seguindo 100% os tokens `65/20/10/5`, a profundidade tátil em 5 camadas e os 10 Blocos.
+Você é um Engenheiro de UI Sênior da Design Aura. Sua entrega deve igualar ou superar o acabamento visual das **Telas-Mãe aprovadas**, seguindo 100% os tokens `65/20/10/5`, a profundidade tátil em 5 camadas e os 10 Blocos.
 
 1. **Leitura Rápida & Direta (MÁXIMO 2 leituras antes de gravar o 1º HTML!):**
    - Leia `<caminho/SHELL-CONTRACT.md>` (`~100 linhas` — já contém `<head>`, esqueleto HTML do shell, sidebar minimizável, classes `.card-brand-hero`, `.panel-z2`, `.well-z0`, `.icon-emblem`, `.chip-sla`, `.chip-status`, `.chip-kv`, `.num`/`.mono` e helpers de `shell.js`).
@@ -150,16 +150,14 @@ Você é um Engenheiro de UI Sênior da Design Aura (`v2.2.0`). Sua entrega deve
 
 ---
 
-## Protocolo de Upgrade de Projeto (`Bíblia antiga → Skill atualizada` · `v2.4.2`)
+## Protocolo de upgrade de projeto
 
-Sempre que a skill atualizada for rodada sobre um projeto que já possui `DESIGN-BIBLE.md` de uma versão anterior (ou sem o selo `**Design Aura:** v2.4.2`):
-1. **Auditoria de Delta (`Versão da Bíblia vs Versão Atual da Skill`):** identifique em segundos quais evoluções da skill ainda não existem na Bíblia e nas telas do projeto (ex.: paridade semântica Light/Dark sem rosa, fim do monobloco cinza/branco, Resize In-Place, orçamento de barras/mobile, novos componentes Studio, `entrega.html` + `serve_entrega.mjs`, Fase 4.5 Testers E2E).
-2. **Promoção da Bíblia sem Perder o Negócio:** preserve 100% do domínio, personas, regras de negócio e dados reais já validados, **atualize/adicione na `DESIGN-BIBLE.md` todas as seções e leis novas da skill**, atualize o selo para `**Design Aura:** v2.4.2`, registre na Seção 13 (Histórico) e recompile `tokens.json` → `tokens.css` + `DESIGN-BIBLE.pdf` + `SHELL-CONTRACT.md` (em SPA, atualize a fonte única de tokens consumida por `src/`).
-3. **Execução Completa com o Novo Workflow:** aplique os novos padrões nas telas (validando 2 telas-piloto quando for refinamento sobre telas aprovadas), rode **Fase 4 (`entrega.html` + auditoria global)** e **Fase 4.5 (Subagentes Testers E2E → Triagem → Fixers → Re-teste)** antes da entrega.
+1. Confirme a versão instalada e abra as referências pertinentes ao delta. Use o escopo solicitado para decidir entre ajuste, refinamento, remodelação e upgrade.
+2. Compare o estado documentado ao app renderizado. Registre na Bíblia os deltas aplicáveis e as exceções com motivo. Vincule decisões ao shell, aos tokens e às rotas ou estados no manifesto.
+3. Valide os pilotos das plataformas afetadas e registre a aprovação ou a autorização para seguir direto. Passe a cada colaborador apenas o contrato e os trechos relevantes ao seu trabalho.
+4. Após as verificações visual e funcional, registre a evidência, promova o selo da Bíblia e regere seus derivados. Se houver lacuna, registre o que falta e use o veredito correspondente.
 
----
-
-## Modo 3 Oficial — Polimento Cirúrgico & Refinamento Anti-Drift sobre Telas Aprovadas (`v2.4.2`)
+## Modo 3 Oficial — Polimento Cirúrgico & Refinamento Anti-Drift sobre Telas Aprovadas (`v2.5.0`)
 
 Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes e pede **refinamento visual, estrutural (ex.: Resize In-Place) ou de componentes**:
 1. **NÃO apague nem refaça a Bíblia nem reescreva as telas do zero** — preserve 100% do domínio, rotas e textos de negócio já aprovados.
@@ -168,7 +166,7 @@ Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes
    - **Atualização Cirúrgica da `DESIGN-BIBLE.md` + PDF:** atualize **também o texto** das seções que mudaram (ex.: Seção 3.5 Resize In-Place/orçamentos, Seção 4 cores/paridade semântica, Seção 8/9 novos componentes Studio), anote a revisão na Seção 13 (Histórico) e re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css` (para que futuras threads que leiam apenas a Bíblia não regridam ao visual antigo!);
    - **Sincronia de `SHELL-CONTRACT.md` & `screen-manifest.json`:** atualize classes, helpers e rotas novas no `SHELL-CONTRACT.md` e no `screen-manifest.json` ANTES de disparar qualquer subagente ou fixer — evitando que subagentes reintroduzam classes velhas!
 3. **Etapa Piloto + Rebuild & Versionamento de Cache (`localStorage`):**
-   - Aplique em **1 Tela-Piloto Desktop + 1 Tela-Piloto Mobile**, valide com o usuário nos PNGs piloto e propague em lotes curtos (`2–3` subagentes por vez).
+   - Compare o estado anterior e o piloto com os mesmos dados, largura e tema. Valide com o usuário as plataformas afetadas antes de propagar, salvo autorização explícita para seguir direto.
    - **Regra SPA Rebuild (`npm run build`):** sempre que o refinamento ou um Fixer da Fase 4.5 editar código em `src/` (React/Vite/Next), rode **`npm run build`** ANTES de executar `capture_and_audit.mjs`, `run_workflow_probe.mjs` ou servir `entrega.html` — garantindo que os Testers e o usuário nunca testem um bundle `dist/` antigo!
    - **Versionamento de Estado Demo (`localStorage`):** se a estrutura de dados mockados mudar no refinamento, incremente a versão da chave (`app:state:v2`) para o navegador do usuário não reaproveitar cache antigo corrompido.
    - Encerre sempre re-gerando a vitrine (`build_figma_canvas.py --thumbs ...`) e rodando a **Fase 4.5 (Testers E2E)**.
@@ -194,7 +192,7 @@ Lance `2` a `3` **Subagentes Testers Read-Only** em paralelo, cada um dono de um
 ```markdown
 ### Missão QA E2E (READ-ONLY): Jornada [NOME_DA_JORNADA] — Projeto [NOME]
 
-Você é um Engenheiro de QA da Design Aura (`v2.4.0`). **VOCÊ NÃO EDITA CÓDIGO.**
+Você é um Engenheiro de QA da Design Aura. **VOCÊ NÃO EDITA CÓDIGO.**
 Sua função é clicar como um usuário real e descobrir quebras reais de fluxo, dados ou layout pós-interação.
 
 1. **Escopo Geral do Sistema (o que o produto faz):**
@@ -203,7 +201,9 @@ Sua função é clicar como um usuário real e descobrir quebras reais de fluxo,
    - Passo 1: Abrir `<url/arquivo>` em `<desktop|mobile>` (Dark e Light)
    - Passo 2: Clicar em `<elemento>` → **Deve acontecer:** `<ex.: resize abre painel de conferência sem duplicar nome e com rodapé visível>`
    - Passo 3: Testar ação positiva (`Aprovar`) e ação negativa (`Indeferir`/`Devolver` exige motivo) → **Deve acontecer:** `<contador atualiza, toast aparece, sem erro JS>`
-3. **Invariantes que NÃO Podem Quebrar:**
+3. **Invariantes e condições de risco:**
+   - Nomeie os estados, larguras e temas que a jornada precisa cobrir. Use dados de teste isolados com casos extremos pertinentes (texto longo, campos ausentes, lista cheia).
+   - Confira o efeito de cada interação importante. Verifique a ação prioritária com toast, diálogo ou outro overlay ativo. Em gráficos, confirme série, unidade e valor após a seleção. Em motion relevante, exercite também cancelamento ou reversão durante a transição.
    - Zero `console.error`, exceção JS ou HTTP `404`;
    - Zero overflow horizontal ou corte de botão/rodapé pós-clique (`assertNoOverflow` / `assertNoClip`);
    - Tema Dark/Light persiste entre telas e mantém paridade semântica (erro = vermelho, sucesso = verde);

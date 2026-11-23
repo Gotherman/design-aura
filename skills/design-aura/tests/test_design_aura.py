@@ -772,6 +772,9 @@ class V24UpgradeTests(unittest.TestCase):
                         {"action": "screenshot", "name": "apos-aprovacao"},
                     ],
                 }
+                scenario["viewport"] = "1920x1080"
+                scenario["steps"].insert(6, {"action": "assertReachable", "selector": "#btnApprove"})
+                scenario["steps"][7] = {"action": "assertText", "selector": "#toast", "equals": "Solicitação aprovada com sucesso"}
                 spath = base / "qa.json"
                 spath.write_text(json.dumps(scenario), encoding="utf-8")
                 qa_out = base / "qa-out"
@@ -784,6 +787,43 @@ class V24UpgradeTests(unittest.TestCase):
                 self.assertTrue((qa_out / "apos-aprovacao.png").exists())
                 rep = json.loads((qa_out / "probe-report.json").read_text(encoding="utf-8"))
                 self.assertTrue(rep["passed"])
+                self.assertEqual(rep["dimensions"], {"width": 1920, "height": 1080})
+
+                # A fixture reproduz overlay sobre a ação e valor do gráfico que ficou antigo.
+                fixture_path = design_dir / "tela-fila.html"
+                fixture = fixture_path.read_text(encoding="utf-8")
+                fixture_path.write_text(fixture.replace(
+                    '<p id="toast"></p>',
+                    '<p id="toast" style="position:absolute;inset:0;z-index:2;background:#17202E" hidden></p>'
+                    """<button id="dia" onclick="this.setAttribute('aria-pressed','true')">Dia 2</button>"""
+                    '<output id="total">7</output>',
+                ).replace(
+                    "document.getElementById('toast').textContent=",
+                    "document.getElementById('toast').hidden=false;document.getElementById('toast').textContent=",
+                ), encoding="utf-8")
+                bad_scenario = {
+                    "viewport": "mobile-360x800",
+                    "steps": [
+                        {"action": "goto", "url": "/design/tela-fila.html"},
+                        {"action": "click", "selector": "[data-da-open]"},
+                        {"action": "click", "selector": "#dia"},
+                        {"action": "assertText", "selector": "#total", "equals": "12"},
+                        {"action": "click", "selector": "#btnApprove"},
+                        {"action": "assertReachable", "selector": "#btnApprove"},
+                    ],
+                }
+                spath.write_text(json.dumps(bad_scenario), encoding="utf-8")
+                failure = subprocess.run(
+                    ["node", str(SCRIPTS / "run_workflow_probe.mjs"), "--scenario", str(spath), "--base-url", f"http://127.0.0.1:{port}", "--out", str(qa_out), "--strict"],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(failure.returncode, 1, failure.stdout + failure.stderr)
+                negative = json.loads((qa_out / "probe-report.json").read_text(encoding="utf-8"))
+                self.assertEqual(negative["dimensions"], {"width": 360, "height": 800})
+                failed = {step["action"]: step["detail"] for step in negative["steps"] if step["status"] == "FAIL"}
+                self.assertIn("obtido: \"7\"", failed["assertText"])
+                self.assertIn("encoberta por toast", failed["assertReachable"])
+                fixture_path.write_text(fixture, encoding="utf-8")
 
                 # 3. Testa capture_and_audit.mjs com entrega.html whitelisted + --smoke-interact + --base-url no servidor unificado
                 audit_out = base / "audit-out"
@@ -798,6 +838,31 @@ class V24UpgradeTests(unittest.TestCase):
                 aud_rep = json.loads((audit_out / "audit-report.json").read_text(encoding="utf-8"))
                 entrega_row = next(r for r in aud_rep if r["target"] == "entrega")
                 self.assertIn(f"127.0.0.1:{port}/entrega.html", entrega_row["url"])
+                # A small working form is valid at a deliberate reading width.
+                (design_dir / "preferencias.html").write_text(
+                    '<!doctype html><html lang="pt-BR"><head><title>Preferências</title>'
+                    '<style>body{background:#101a27;color:#ecf1f8;font:16px system-ui} main{max-width:38rem;margin:auto}'
+                    'form{display:grid;gap:16px} input,select,button{min-height:44px}</style></head><body>'
+                    '<main><h1>Preferências</h1><p>Configure seus avisos.</p><form>'
+                    '<label for="address">E-mail</label><input id="address" type="email">'
+                    '<label for="frequency">Frequência</label><select id="frequency"><option>Semanal</option></select>'
+                    '<button>Salvar</button></form></main></body></html>', encoding="utf-8",
+                )
+                manifest["screens"].append({"id": "preferencias", "file": "preferencias.html", "viewports": ["1920x1080"]})
+                manifest["screens"][0].update(viewports=["1920x1080"], afterClickSelector="#conf")
+                manifest["screens"].append({"id": "mobile-ausente", "viewports": ["mobile-360x800"]})
+                mpath.write_text(json.dumps(manifest), encoding="utf-8")
+                aud = subprocess.run(
+                    ["node", str(SCRIPTS / "capture_and_audit.mjs"), "--manifest", str(mpath), "--out", str(audit_out), "--themes", "dark", "--no-vitrine", "--strict"],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(aud.returncode, 1, aud.stdout + aud.stderr)
+                audited = {row["target"]: row for row in json.loads((audit_out / "audit-report.json").read_text(encoding="utf-8"))}
+                self.assertEqual(audited["fila"]["dimensions"]["width"], 1920)
+                self.assertEqual(audited["fila"]["states"]["postClick"], "captured")
+                self.assertFalse(audited["preferencias"]["issues"])
+                self.assertEqual(audited["mobile-ausente"]["viewport"], "mobile-360x800")
+                self.assertEqual(audited["mobile-ausente"]["issues"][0]["rule"], "DA-AUDIT-COVERAGE")
             finally:
                 srv.terminate()
                 try:
@@ -808,6 +873,26 @@ class V24UpgradeTests(unittest.TestCase):
                     srv.stdout.close()
                 if srv.stderr:
                     srv.stderr.close()
+
+    def test_check_sync_reports_shell_drift_without_writing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bible, shell, tokens, copy = (root / name for name in ("DESIGN-BIBLE.md", "SHELL-CONTRACT.md", "tokens.css", "app.css"))
+            current = "| Token | Light | Dark |\n|---|---|---|\n| `--edge` | `#86A2C7` | `#334C73` |\n"
+            stale = "Borda interna: `edge` Light `#91A9C6`\n"
+            css = ':root { --edge: #86A2C7; } [data-theme="dark"] { --edge: #334C73; }'
+            bible.write_text(current)
+            shell.write_text(stale)
+            tokens.write_text(css)
+            copy.write_text(css)
+            args = [str(bible), "--tokens", str(tokens), "--check-sync", "--shell", str(shell), "--compare-css", str(copy), "--out-dir", str(root)]
+            result = run_py("render_design_bible.py", args)
+            self.assertEqual(result.returncode, 1, result.stdout)
+            self.assertIn("SHELL-CONTRACT.md: tokens divergentes: --edge", result.stderr)
+            self.assertEqual(shell.read_text(), stale)
+            self.assertFalse((root / "DESIGN-BIBLE.html").exists())
+            shell.write_text(current)
+            self.assertEqual(run_py("render_design_bible.py", args).returncode, 0)
 
     def test_v241_bible_sync_respects_light_dark_column_header_for_dark_semantic_tokens(self):
         # Antes da v2.4.1, --danger (#B91C1C Light vs #DC2626 Dark) e --primary (#14427A Light vs #2563EB Dark)

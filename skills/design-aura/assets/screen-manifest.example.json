@@ -6,6 +6,7 @@
     "startScreenId": "portal",
     "bibleLink": "",
     "defaultTheme": "dark",
+    "vitrineViewports": ["desktop", "mobile"],
     "worldWidth": 1920,
     "worldHeight": 1200
   },
@@ -53,6 +54,7 @@
       "title": "Portal de Despacho",
       "file": "desktop-portal.html",
       "platform": "desktop",
+      "viewports": ["desktop", "1920x1080"],
       "x": 70,
       "y": 100,
       "w": 360,
@@ -113,6 +115,7 @@
       "title": "Viagem Atual",
       "file": "mobile-viagem.html",
       "platform": "mobile",
+      "viewports": ["mobile", "mobile-360x800"],
       "x": 80,
       "y": 605,
       "w": 250,

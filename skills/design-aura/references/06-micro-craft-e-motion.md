@@ -37,6 +37,10 @@ A geometria matemática às vezes parece torta ao olho humano; corrija opticamen
 
 Um card chapado com 1 borda simples parece 2D mesmo passando no WCAG. Construa profundidade real combinando **5 técnicas táteis**:
 
+Escolha o acabamento depois de identificar o papel de cada superfície. Um painel elevado pode conter uma faixa recuada de metadados, com divisórias, ou um bloco de leitura com fundo próprio. Use tipografia e proximidade para juntar informações que a pessoa precisa ler ou comparar ao mesmo tempo.
+
+Como variante de material, use luz de borda e sombra de contato em uma face quase opaca. Diferencie os planos pela espessura visual e preserve a distinção entre foco, hover, seleção e indisponibilidade. Compare com a variante opaca nos dois temas e no fundo real. Aplique a textura e o bisel onde ajudarem a indicar a hierarquia. [Material do Solid Glass](https://github.com/deeplethe/solid-glass#the-style)
+
 ### 3.1 Chanfro Óptico Duplo (`Double-Ring Bevel`) nos Cards `Z2`
 ```css
 /* Dark Mode: Obsidiana com subtom arquitetonico sutil (S=18-25%) + luz zenital + chanfro duplo */

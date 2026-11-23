@@ -1,6 +1,6 @@
 # Os 10 Blocos de Leis Inegociáveis (Design Aura)
 
-Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na auditoria de Design, Visual, UI e UX. Nenhum componente, tela ou protótipo pode receber veredito `Approve` enquanto violar qualquer regra destes 10 blocos sem justificativa explícita aprovada no briefing da marca.
+Aplique os blocos ao escopo da entrega. Achados objetivos em código ou runtime e achados de inspeção visual confirmados seguem a severidade do guia de auditoria. Uma heurística de código sinaliza onde inspecionar quando o contexto visual determina a adequação.
 
 ---
 
@@ -21,7 +21,7 @@ Regras objetivas e verificáveis que **reprovam automaticamente (`BLOCK`)** na a
 
 | ID | Regra Inegociável | Como verificar |
 |---|---|---|
-| `DA-B2-01` | **Anti-Cardite ≠ Proibir Cards:** proibido "cardite aguda" (colocar caixas decorativas onde lista/tabela resolve melhor) e **proibido card dentro de card**. Por outro lado, superfícies elevadas `Z2` (cards, painéis, KPIs estruturados, drawers) são **obrigatórias** para dar profundidade e separação visual — é **estritamente proibido** banir cards (`"sem classe card"`) no briefing de subagentes ou achá-los dispensáveis em dashboards/módulos. | `lint_design_aura.py` + `DA-SURFACE-FLAT` + inspeção visual |
+| `DA-B2-01` | **Anti-Cardite ≠ Proibir Cards:** proibido "cardite aguda" (colocar caixas decorativas onde lista/tabela resolve melhor) e **reprove caixas redundantes com o mesmo peso visual**. Uma faixa recuada, um bloco de evidência ou um painel interno com função própria pode organizar a tarefa. Por outro lado, superfícies elevadas `Z2` (cards, painéis, KPIs estruturados, drawers) são **obrigatórias** para dar profundidade e separação visual — é **estritamente proibido** banir cards (`"sem classe card"`) no briefing de subagentes ou achá-los dispensáveis em dashboards/módulos. | `lint_design_aura.py` sinaliza o aninhamento para triagem; a inspeção verifica função e separação visual |
 | `DA-B2-02` | Proibido repetir o template preguiçoso de "3 cards idênticos com ícone em círculo/quadrado colorido + título + 2 linhas" como solução padrão de seção. | Inspeção visual |
 | `DA-B2-03` | Proibido centralizar blocos de texto longos ou listas de leitura; alinhamento deve favorecer escaneabilidade pela margem esquerda. | `lint_design_aura.py` |
 | `DA-B2-04` | Proibido espaçamento uniforme sem agrupamento lógico (**Lei da Proximidade**): elementos relacionados ficam mais próximos entre si do que de grupos distintos; sempre há mais espaço acima de um título do que abaixo dele. | Inspeção visual + CSS |

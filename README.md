@@ -1,4 +1,4 @@
-# Design Aura (`design-aura` · `v2.4.2`)
+# Design Aura (`design-aura` · `v2.5.0`)
 
 Skill de direção de design, arquitetura de informação, engenharia UI/UX e **QA interativo E2E** para **Apps Desktop**, **Apps Mobile** (iOS HIG / SwiftUI, Android Material 3 / Jetpack Compose, React Native / Expo, Flutter, PWA) e **Sistemas Complexos** (HTML estático ou SPA **React / Vite / Next.js**, SaaS, ERPs, Dashboards Operacionais).
 
@@ -11,12 +11,15 @@ Transforma um repositório existente, um planejamento (`CONCEPCAO.md`/PRD) ou um
 6. **Auditoria Paralela Real em Chromium + Pós-Clique (`--concurrency 4 --smoke-interact`)** (`DA-SEMANTIC-HUE-PARITY`, `DA-DARK-FLAT-MONOLITH`, `DA-LIGHT-WASHED-OUT >= 1.85:1`, `DA-TECH-JARGON-UI`, `DA-BADGE-ECHO`, `DA-MOBILE-HERO-BLOAT`, `DA-HEADER-STACK-BLOAT`, `DA-TAB-OVERFLOW`, `DA-B3-01` estendido a emblemas/badges, whitelist `entrega.html`/`.da-hub`, suporte nativo `--base-url` + `"route"` para SPAs).
 7. **Fase 4.5 — QA Interativo E2E por Subagentes Testers (`Onda 3 · v2.4.0`)** — Subagentes Testers **Read-Only** fatiados por jornada clicam nos fluxos reais via `scripts/run_workflow_probe.mjs` (zero dependência npm), reportam falhas reais (`P0/P1/P2` + PNGs) ao Orquestrador, que faz triagem de causa raiz, cria o Plano de Correção, lança subagentes corretivos e valida com re-teste direcionado (trava anti-loop: máx. 2 ciclos).
 
+
+Na v2.5.0, a cobertura pode ser declarada por tela e estado. O probe verifica ações encobertas e valores exatos após interação. O fechamento combina a inspeção dos pilotos, a evidência do build entregue e a verificação de sincronia entre tokens e contratos. Receitas externas entram nos guias existentes conforme a necessidade da entrega.
+
 ---
 
 ## Os 10 Blocos de Leis Inegociáveis
 
 1. **Zero Estética "SaaS de IA Genérico"**: proibido gradientes roxo/índigo/neon gratuitos, glow/glassmorphism sem hierarquia, emojis clichês (`✨🚀⚡🛡️`) como ícones, mistura de outline/solid, eyebrows decorativos, numeração `01 //`, gradiente em texto, barrinha lateral em card e dots/badges `LIVE` falsos.
-2. **Hierarquia, Layout & Anti-Cardite**: proibido "cardite aguda" e card dentro de card; proibido repetir "3 cards idênticos de ícone em círculo + título + 2 linhas"; proibido centralizar texto longo; respeitar Lei da Proximidade; 1 CTA primário dominante por dobra; Alto Contraste Ótico com 5 planos `Z0→Z4` e zero espaços mortos em desktop.
+2. **Hierarquia, Layout & Anti-Cardite**: reprove caixas redundantes que competem pela atenção; proibido repetir "3 cards idênticos de ícone em círculo + título + 2 linhas"; proibido centralizar texto longo; respeitar Lei da Proximidade; 1 CTA primário dominante por dobra; Alto Contraste Ótico com 5 planos `Z0→Z4` com distribuição adequada à tarefa em desktop.
 3. **Contraste, Cor & Acessibilidade**: WCAG AA ≥ 4.5:1 (normal/placeholder) e ≥ 3:1 (grande/UI), APCA `|Lc| >= 60` corpo; proibido `#000000`/`#FFFFFF` puros sem elevação controlada ou cinzas lavados em dark mode; touch targets ≥ 44×44px (mobile/iOS) e ≥ 48×48dp (Android); corpo ≥ 14px.
 4. **Tipografia Intencional**: contraste claro de escala/peso/line-height; `tabular-nums` em dados dinâmicos, preços e tabelas; `text-wrap: balance` em títulos curtos e `pretty` em parágrafos; proteção contra overflow/truncamento.
 5. **Conteúdo Real & Zero Copy de Template**: proibido *Lorem ipsum*, *John Doe*, *Acme Corp*; proibido clichês ("Transforme seu negócio", "Eleve sua experiência", "Solução definitiva", "Potencializado por IA"); zero subtítulos redundantes e zero *botsplaining*.

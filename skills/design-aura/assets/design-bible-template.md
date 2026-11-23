@@ -1,6 +1,6 @@
 # Bíblia de Direção de Design — {{PROJECT_NAME}}
 
-> **Versão do Projeto:** {{VERSION}} · **Design Aura:** `v2.4.2` · **Plataformas:** {{PLATFORMS}} · **Modo de Superfície:** {{SURFACE_MODE}} (`Operate` | `Read` | `Persuade`)
+> **Versão do Projeto:** {{VERSION}} · **Design Aura:** `v2.5.0` · **Plataformas:** {{PLATFORMS}} · **Modo de Superfície:** {{SURFACE_MODE}} (`Operate` | `Read` | `Persuade`)
 
 ---
 
@@ -149,3 +149,11 @@ Nomes e zonas saem do fluxo real. Não copie Agora / Em Rota / Radar se o negóc
 | Versão | Data | O que mudou na Bíblia | Artefatos sincronizados |
 |---|---|---|---|
 | `v1.0` | `YYYY-MM-DD` | Direção inicial aprovada (Portão 1) | `tokens.json`, `tokens.css`, `DESIGN-BIBLE.pdf`, `SHELL-CONTRACT.md` |
+
+
+### Evidência da revisão
+
+- Modo, escopo, deltas aplicáveis e exceções com motivo.
+- Pilotos e estado anterior comparável, quando disponível. Aprovação ou autorização para seguir direto.
+- Build, cobertura declarada no manifesto e relatórios da inspeção visual e do QA funcional.
+- Decisões de acabamento e interação com referência à implementação local. Rotas e artefatos publicados verificados por conteúdo.
