@@ -834,6 +834,19 @@ class V24UpgradeTests(unittest.TestCase):
         self.assertEqual(lines[3], "| `--primary` | `#14427A` | `#2563EB` |")
         self.assertEqual(lines[7], "| `--danger` | `#DC2626` | `#B91C1C` |")
 
+    def test_v242_skill_upgrade_version_stamp_consistency(self):
+        import re
+        skill_md = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        m = re.search(r'version:\s*"([^"]+)"', skill_md)
+        self.assertIsNotNone(m)
+        ver = m.group(1)
+        bible_tpl = (ROOT / "assets" / "design-bible-template.md").read_text(encoding="utf-8")
+        cmd_md = (ROOT.parent / "designaura" / "SKILL.md").read_text(encoding="utf-8")
+        readme = (ROOT.parents[1] / "README.md").read_text(encoding="utf-8")
+        self.assertIn(f"**Design Aura:** `v{ver}`", bible_tpl)
+        self.assertIn(f"v{ver}", cmd_md)
+        self.assertIn(f"v{ver}", readme)
+
 
 if __name__ == "__main__":
     unittest.main()

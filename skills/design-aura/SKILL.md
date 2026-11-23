@@ -6,12 +6,12 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.4.1"
+  version: "2.4.2"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.4.1`)
+# Design Aura (`v2.4.2`)
 
 Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual, orquestração multi-agente e **QA interativo E2E** para produzir **sistemas web operacionais (HTML estático ou SPA React/Vite/Next), apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero monobloco cinza/branco, paridade semântica Light/Dark (vermelho real = erro, nunca rosa), resize in-place sem poluição, contraste irretocável e verificação real clicável em cada jornada.
 
@@ -19,7 +19,11 @@ Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual,
 
 Leia o repositório e o planejamento por completo antes de desenhar: concepção, PRD, proposta, rotas, telas, tokens, componentes, logo e o vocabulário real do negócio. Cada projeto ganha um design saído desse material.
 
-1. **Repositório que já tem design e telas.** Três caminhos claros:
+1. **Repositório que já tem design e telas.** Quatro caminhos claros:
+   - **Upgrade para Nova Versão da Skill (`Bíblia antiga + Skill nova` · OBRIGATÓRIO checar primeiro!):** ao abrir um projeto que já possui `DESIGN-BIBLE.md`, compare o selo `**Design Aura:** vX.Y.Z` no topo da Bíblia com a versão atual desta skill (`v2.4.2`). Se o selo estiver ausente ou desatualizado (`< v2.4.2`), **NUNCA fique preso às regras antigas da Bíblia velha!** Execute o upgrade completo:
+     1. **Preserve 100% do negócio do projeto** (domínio, personas, fluxos/rotas aprovados, dados reais e marca);
+     2. **Promova a `DESIGN-BIBLE.md`** incorporando todas as novas regras, seções, orçamentos (ex.: Resize In-Place, Paridade Semântica Light/Dark sem rosa, Fim do Monobloco Cinza/Branco, Componentes Studio, Portões `v2.4+` e Fase 4.5 Testers E2E), atualize o selo para `Design Aura: v2.4.2` + Seção 13 (Histórico) e regere `tokens.json`/`tokens.css`/`DESIGN-BIBLE.pdf`/`SHELL-CONTRACT.md`;
+     3. **Construa ou refine as telas** aplicando todos os pontos novos da skill atualizada + **Fase 4 (`entrega.html`) + Fase 4.5 (Subagentes Testers E2E)**.
    - **Remodelar o visual (Autópsia Seletiva):** identifique objetivamente o que incomoda/falha nas telas atuais (ex.: contraste fraco, desorganização, visual genérico) e o que precisa sobreviver (rotas, tarefas, dados reais, riqueza funcional). **Regra anti-sabotagem:** remodelar significa *superar em beleza, clareza e densidade útil* o que já existia — **NUNCA** use "remodelar" para proibir cards/superfícies `Z2`, recusar bibliotecas OSS úteis (como ECharts/gráficos/ícones), apagar as cores vivas da marca em bege/marrom morto ou empobrecer telas em tabelas peladas!
    - **Modo 3 — Polimento Cirúrgico / Refinamento sobre Telas Aprovadas (`v2.4.1 · Anti-Drift`):** quando o usuário já aprovou a arquitetura, fluxos e dados e pede refinamento visual, estrutural (ex.: Resize In-Place) ou de componentes:
      1. **NUNCA apague nem refaça do zero o domínio/fluxos da `DESIGN-BIBLE.md`**, mas **SEMPRE atualize cirurgicamente o Contrato Triplo** antes de propagar para telas/subagentes:

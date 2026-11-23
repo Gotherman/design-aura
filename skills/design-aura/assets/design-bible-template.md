@@ -1,6 +1,6 @@
 # Bíblia de Direção de Design — {{PROJECT_NAME}}
 
-> **Versão:** {{VERSION}} · **Plataformas:** {{PLATFORMS}} · **Modo de Superfície:** {{SURFACE_MODE}} (`Operate` | `Read` | `Persuade`)
+> **Versão do Projeto:** {{VERSION}} · **Design Aura:** `v2.4.2` · **Plataformas:** {{PLATFORMS}} · **Modo de Superfície:** {{SURFACE_MODE}} (`Operate` | `Read` | `Persuade`)
 
 ---
 

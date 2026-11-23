@@ -150,7 +150,16 @@ Você é um Engenheiro de UI Sênior da Design Aura (`v2.2.0`). Sua entrega deve
 
 ---
 
-## Modo 3 Oficial — Polimento Cirúrgico & Refinamento Anti-Drift sobre Telas Aprovadas (`v2.4.1`)
+## Protocolo de Upgrade de Projeto (`Bíblia antiga → Skill atualizada` · `v2.4.2`)
+
+Sempre que a skill atualizada for rodada sobre um projeto que já possui `DESIGN-BIBLE.md` de uma versão anterior (ou sem o selo `**Design Aura:** v2.4.2`):
+1. **Auditoria de Delta (`Versão da Bíblia vs Versão Atual da Skill`):** identifique em segundos quais evoluções da skill ainda não existem na Bíblia e nas telas do projeto (ex.: paridade semântica Light/Dark sem rosa, fim do monobloco cinza/branco, Resize In-Place, orçamento de barras/mobile, novos componentes Studio, `entrega.html` + `serve_entrega.mjs`, Fase 4.5 Testers E2E).
+2. **Promoção da Bíblia sem Perder o Negócio:** preserve 100% do domínio, personas, regras de negócio e dados reais já validados, **atualize/adicione na `DESIGN-BIBLE.md` todas as seções e leis novas da skill**, atualize o selo para `**Design Aura:** v2.4.2`, registre na Seção 13 (Histórico) e recompile `tokens.json` → `tokens.css` + `DESIGN-BIBLE.pdf` + `SHELL-CONTRACT.md` (em SPA, atualize a fonte única de tokens consumida por `src/`).
+3. **Execução Completa com o Novo Workflow:** aplique os novos padrões nas telas (validando 2 telas-piloto quando for refinamento sobre telas aprovadas), rode **Fase 4 (`entrega.html` + auditoria global)** e **Fase 4.5 (Subagentes Testers E2E → Triagem → Fixers → Re-teste)** antes da entrega.
+
+---
+
+## Modo 3 Oficial — Polimento Cirúrgico & Refinamento Anti-Drift sobre Telas Aprovadas (`v2.4.2`)
 
 Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes e pede **refinamento visual, estrutural (ex.: Resize In-Place) ou de componentes**:
 1. **NÃO apague nem refaça a Bíblia nem reescreva as telas do zero** — preserve 100% do domínio, rotas e textos de negócio já aprovados.
