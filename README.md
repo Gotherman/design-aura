@@ -1,4 +1,4 @@
-# Design Aura (`design-aura` · `v2.4.0`)
+# Design Aura (`design-aura` · `v2.4.1`)
 
 Skill de direção de design, arquitetura de informação, engenharia UI/UX e **QA interativo E2E** para **Apps Desktop**, **Apps Mobile** (iOS HIG / SwiftUI, Android Material 3 / Jetpack Compose, React Native / Expo, Flutter, PWA) e **Sistemas Complexos** (HTML estático ou SPA **React / Vite / Next.js**, SaaS, ERPs, Dashboards Operacionais).
 

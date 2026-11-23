@@ -80,7 +80,16 @@ O erro clássico de IA no Android é copiar um iPhone (switches estilo Cupertino
 
 ---
 
-## 7. Blindagem contra Corte de Dados e Vazamento de Mockup Mobile (`DA-CLIPPED-CONTENT` & `DA-MOBILE-FLEX-CLIP` · `v2.2.1`)
+## 5. Orçamento de Topo Mobile & Primeira Dobra (`DA-MOBILE-HERO-BLOAT` · `v2.4.0`)
+
+Em apps operacionais mobile (`390×844`), a pessoa abriu o celular para **agir na lista de trabalho** (escolas, entregas, pendências), não para ler dois banners gigantes antes de rolar:
+- **Teto rígido de topo (`<= 38%` / `<= 320px`):** o conjunto **Header + Hero/Resumo + Aviso da Mesa** nunca pode consumir mais de `38%` da altura útil da viewport.
+- **Lista acionável acima da dobra:** o primeiro item real da lista principal precisa aparecer claramente visível sem obrigar rolagem (`y < 480px`), com alertas secundários condensados em 1 linha expansível ou dispensável (`Entendi`).
+- **Zero selo-eco em listas estreitas (`DA-BADGE-ECHO`):** nunca repita o mesmo selo genérico (ex.: `8× PWA Mobile`) roubando largura e truncando nomes de pessoas ou unidades.
+
+---
+
+## 6. Blindagem contra Corte de Dados e Vazamento de Mockup Mobile (`DA-CLIPPED-CONTENT` & `DA-MOBILE-FLEX-CLIP`)
 
 Dois erros técnicos clássicos destroem protótipos mobile quando abertos no desktop (`preview.html` ou visualização em moldura de aparelho):
 

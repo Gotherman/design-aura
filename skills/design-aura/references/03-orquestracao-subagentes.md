@@ -150,12 +150,19 @@ Você é um Engenheiro de UI Sênior da Design Aura (`v2.2.0`). Sua entrega deve
 
 ---
 
-## Modo 3 Oficial — Polimento Cirúrgico sobre Telas Aprovadas (`v2.3.0`)
+## Modo 3 Oficial — Polimento Cirúrgico & Refinamento Anti-Drift sobre Telas Aprovadas (`v2.4.1`)
 
-Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes e pede apenas **polimento visual** (cores Dark/Light, profundidade de cards, ícones/emblemas, correções mobile ou vitrine):
-1. **NÃO** refaça a Bíblia nem reescreva as telas do zero — preserve 100% do layout, rotas e textos aprovados.
-2. **Etapa Piloto (Orquestrador):** atualize primeiro `tokens.json` → `tokens.css` → `shell.css` (incluindo escopo `.on-brand-dark` e `.mob-scroll > * { flex-shrink: 0; }`) + sincronize `DESIGN-BIBLE.md/.pdf` + aplique os novos padrões em **1 Tela-Piloto Desktop + 1 Tela-Piloto Mobile**, audite com `capture_and_audit.mjs --concurrency 4` e **pare para o OK rápido do usuário** nos PNGs piloto.
-3. **Propagação Rápida sem Travamento:** como polimento cirúrgico mexe em classes/ícones pontuais (não constrói 800 linhas por tela do zero), prefira **lotes curtos controlados (`2–3` subagentes por vez ou edição em lotes diretos)** em vez de explodir 6 subagentes simultâneos que podem travar aguardando entrada.
+Quando o usuário já aprovou a arquitetura, fluxos e dados das telas existentes e pede **refinamento visual, estrutural (ex.: Resize In-Place) ou de componentes**:
+1. **NÃO apague nem refaça a Bíblia nem reescreva as telas do zero** — preserve 100% do domínio, rotas e textos de negócio já aprovados.
+2. **Trava de Sincronia do Contrato Triplo (OBRIGATÓRIA antes de propagar para telas/subagentes):**
+   - **Fonte Única de Tokens:** atualize `tokens.json` → recompile para `tokens.css` (e `tokens.tailwind.css`/`tokens.ts` se SPA) garantindo que app (`src/`) e vitrine (`design/`) consumam exatamente os mesmos tokens, nunca cópias bifurcadas;
+   - **Atualização Cirúrgica da `DESIGN-BIBLE.md` + PDF:** atualize **também o texto** das seções que mudaram (ex.: Seção 3.5 Resize In-Place/orçamentos, Seção 4 cores/paridade semântica, Seção 8/9 novos componentes Studio), anote a revisão na Seção 13 (Histórico) e re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css` (para que futuras threads que leiam apenas a Bíblia não regridam ao visual antigo!);
+   - **Sincronia de `SHELL-CONTRACT.md` & `screen-manifest.json`:** atualize classes, helpers e rotas novas no `SHELL-CONTRACT.md` e no `screen-manifest.json` ANTES de disparar qualquer subagente ou fixer — evitando que subagentes reintroduzam classes velhas!
+3. **Etapa Piloto + Rebuild & Versionamento de Cache (`localStorage`):**
+   - Aplique em **1 Tela-Piloto Desktop + 1 Tela-Piloto Mobile**, valide com o usuário nos PNGs piloto e propague em lotes curtos (`2–3` subagentes por vez).
+   - **Regra SPA Rebuild (`npm run build`):** sempre que o refinamento ou um Fixer da Fase 4.5 editar código em `src/` (React/Vite/Next), rode **`npm run build`** ANTES de executar `capture_and_audit.mjs`, `run_workflow_probe.mjs` ou servir `entrega.html` — garantindo que os Testers e o usuário nunca testem um bundle `dist/` antigo!
+   - **Versionamento de Estado Demo (`localStorage`):** se a estrutura de dados mockados mudar no refinamento, incremente a versão da chave (`app:state:v2`) para o navegador do usuário não reaproveitar cache antigo corrompido.
+   - Encerre sempre re-gerando a vitrine (`build_figma_canvas.py --thumbs ...`) e rodando a **Fase 4.5 (Testers E2E)**.
 
 ## Protocolo Anti-Travamento de Subagentes & Transparência (`v2.3.0`)
 

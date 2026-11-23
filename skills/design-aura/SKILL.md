@@ -6,12 +6,12 @@ license: MIT
 compatibility: >-
   Python 3.9+ (stdlib) e Node.js 20+ com Chromium/Chrome opcional para captura, PDF visual e auditoria DOM real headless.
 metadata:
-  version: "2.4.0"
+  version: "2.4.1"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
 
-# Design Aura (`v2.4.0`)
+# Design Aura (`v2.4.1`)
 
 Sistema completo de direção criativa, arquitetura de UI/UX, engenharia visual, orquestração multi-agente e **QA interativo E2E** para produzir **sistemas web operacionais (HTML estático ou SPA React/Vite/Next), apps desktop e aplicativos mobile** com nível de estúdio premiado — zero estética genérica de IA, zero monobloco cinza/branco, paridade semântica Light/Dark (vermelho real = erro, nunca rosa), resize in-place sem poluição, contraste irretocável e verificação real clicável em cada jornada.
 
@@ -21,7 +21,12 @@ Leia o repositório e o planejamento por completo antes de desenhar: concepção
 
 1. **Repositório que já tem design e telas.** Três caminhos claros:
    - **Remodelar o visual (Autópsia Seletiva):** identifique objetivamente o que incomoda/falha nas telas atuais (ex.: contraste fraco, desorganização, visual genérico) e o que precisa sobreviver (rotas, tarefas, dados reais, riqueza funcional). **Regra anti-sabotagem:** remodelar significa *superar em beleza, clareza e densidade útil* o que já existia — **NUNCA** use "remodelar" para proibir cards/superfícies `Z2`, recusar bibliotecas OSS úteis (como ECharts/gráficos/ícones), apagar as cores vivas da marca em bege/marrom morto ou empobrecer telas em tabelas peladas!
-   - **Modo 3 — Polimento Cirúrgico sobre Telas Aprovadas (`v2.3.0`):** quando o usuário já aprovou a arquitetura, fluxos e dados das telas e quer atualizar apenas cores Dark/Light, profundidade, ícones/emblemas, gráficos ou correções mobile/vitrine — atualize primeiro `tokens.json`/`tokens.css`/`shell.css` (com escopo `.on-brand-dark`) + **2 telas-piloto** (1 Desktop + 1 Mobile), valide com o usuário e propague em lotes enxutos controlados sem refazer telas do zero.
+   - **Modo 3 — Polimento Cirúrgico / Refinamento sobre Telas Aprovadas (`v2.4.1 · Anti-Drift`):** quando o usuário já aprovou a arquitetura, fluxos e dados e pede refinamento visual, estrutural (ex.: Resize In-Place) ou de componentes:
+     1. **NUNCA apague nem refaça do zero o domínio/fluxos da `DESIGN-BIBLE.md`**, mas **SEMPRE atualize cirurgicamente o Contrato Triplo** antes de propagar para telas/subagentes:
+        - **Fonte Única de Tokens:** edite `tokens.json` → recompile para o CSS/Tailwind real usado pelo app E pela vitrine (proibido editar cópia bifurcada em `src/` deixando `design/tokens.css` velho);
+        - **Bíblia Sincronizada (texto + hexes + PDF):** atualize **também o texto** das seções alteradas na `DESIGN-BIBLE.md` (Seção 3.5 composição/Resize, Seção 4 cores/paridade, Seção 8/9 componentes), registre a revisão no Histórico e rode `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css` (para que nenhuma thread futura que leia só a Bíblia regrida!);
+        - **Contrato & Vitrine:** atualize `SHELL-CONTRACT.md` e `screen-manifest.json`; em apps SPA (`React`/`Vite`/`Next`), rode **`npm run build`** antes de auditar/testar (Fase 4.5) ou servir `entrega.html`; se dados de demo mudarem em `localStorage`, **versione a chave** (`app:state:v2`) para não carregar cache corrompido!
+     2. Valide **2 telas-piloto** (1 Desktop + 1 Mobile) com o usuário e propague em lotes enxutos controlados, encerrando com **Fase 4 (`entrega.html`) + Fase 4.5 (Testers E2E)**.
    - **Ajuste pontual:** altere só o que foi pedido e preserve o que já funciona.
 2. **Planejamento sem telas** (`CONCEPCAO.md`, PRD, requisitos, proposta): extraia domínio, perfis, módulos, fluxos e restrições já decididas.
 3. **Ideia do zero:** conduza a especificação enxuta antes de gerar código ou telas.

@@ -142,3 +142,10 @@ Nomes e zonas saem do fluxo real. Não copie Agora / Em Rota / Radar se o negóc
 - [ ] `capture_and_audit.mjs` verde em Desktop e Mobile (Dark & Light + pós-clique `--smoke-interact`)
 - [ ] **Fase 4.5 (Onda 3 · Subagentes Testers E2E):** fluxos clicáveis validados com `run_workflow_probe.mjs` (0 falhas P0/P1, zero erro JS/404)
 - [ ] `100%` das telas navegáveis em link único via `entrega.html` (`serve_entrega.mjs` · `Mapa Figma · App ao Vivo · Preview · Galeria · Bíblia + PDF`)
+
+## 13. Histórico de Revisões *(Anti-Drift em Refinamentos · Modo 3)*
+> Sempre que um refinamento alterar tokens, composição, paridade semântica ou componentes, atualize cirurgicamente as seções afetadas acima, sincronize `SHELL-CONTRACT.md` + `DESIGN-BIBLE.pdf` e registre 1 linha aqui.
+
+| Versão | Data | O que mudou na Bíblia | Artefatos sincronizados |
+|---|---|---|---|
+| `v1.0` | `YYYY-MM-DD` | Direção inicial aprovada (Portão 1) | `tokens.json`, `tokens.css`, `DESIGN-BIBLE.pdf`, `SHELL-CONTRACT.md` |

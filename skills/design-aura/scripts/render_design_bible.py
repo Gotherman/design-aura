@@ -471,17 +471,36 @@ def sync_markdown_token_tables(
     tokens_light: dict[str, str],
     tokens_dark: dict[str, str],
 ) -> tuple[str, list[str]]:
-    """Sincroniza hexes em tabelas Markdown (ex.: Secao 8.1) contra tokens.css atual."""
+    """Sincroniza hexes em tabelas Markdown (ex.: Secao 8.1) contra tokens.css atual.
+
+    v2.4.1: detecta a ordem real das colunas (Light|Dark vs Dark|Light) pelo cabecalho
+    da tabela, evitando inversao em tokens escuros como --danger (#B91C1C) ou --primary (#14427A).
+    """
     if not tokens_light and not tokens_dark:
         return md, []
     hex_re = re.compile(r"#[0-9A-Fa-f]{6}\b")
     var_re = re.compile(r"--([a-zA-Z0-9_-]+)")
     synced_vars: list[str] = []
     new_lines: list[str] = []
+    table_first_is_dark: bool | None = None
+
     for line in md.splitlines():
-        if line.strip().startswith("|") and "--" in line:
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            table_first_is_dark = None
+            new_lines.append(line)
+            continue
+
+        # Detecta cabecalho de tabela com colunas Light/Claro e Dark/Escuro
+        if "--" not in line and not re.match(r"^\|[\s:\-|]+\|$", stripped):
+            cells_low = [c.strip().lower() for c in stripped.strip("|").split("|")]
+            dark_idx = next((i for i, c in enumerate(cells_low) if "dark" in c or "escuro" in c), None)
+            light_idx = next((i for i, c in enumerate(cells_low) if "light" in c or "claro" in c), None)
+            if dark_idx is not None and light_idx is not None and dark_idx != light_idx:
+                table_first_is_dark = dark_idx < light_idx
+
+        if "--" in line:
             cells = line.split("|")
-            # Detecta o primeiro --token-name na linha da tabela
             token_name = None
             for cell in cells:
                 m_var = var_re.search(cell)
@@ -494,15 +513,18 @@ def sync_markdown_token_tables(
                 d_val = tokens_dark.get(token_name, "")
                 l_val = tokens_light.get(token_name, "")
                 hexes = hex_re.findall(line)
-                # Quando a linha tem 2 hexes (Dark | Light ou Light | Dark) e diverge de tokens.css
                 if len(hexes) >= 2 and d_val.startswith("#") and l_val.startswith("#"):
                     h0, h1 = hexes[0].upper(), hexes[1].upper()
                     du, lu = d_val.upper(), l_val.upper()
-                    if {h0, h1} != {du, lu}:
-                        # Preserva ordem Dark vs Light conforme a luminancia do primeiro hex
-                        first_is_dark = int(h0[1:3], 16) + int(h0[3:5], 16) + int(h0[5:7], 16) < 380
-                        rep0 = du if first_is_dark else lu
-                        rep1 = lu if first_is_dark else du
+                    if table_first_is_dark is not None:
+                        first_is_dark = table_first_is_dark
+                    else:
+                        s0 = int(h0[1:3], 16) + int(h0[3:5], 16) + int(h0[5:7], 16)
+                        s1 = int(h1[1:3], 16) + int(h1[3:5], 16) + int(h1[5:7], 16)
+                        first_is_dark = s0 < s1
+                    rep0 = du if first_is_dark else lu
+                    rep1 = lu if first_is_dark else du
+                    if (h0, h1) != (rep0, rep1):
                         updated = hex_re.sub("__HEX_SLOT__", line, count=2)
                         updated = updated.replace("__HEX_SLOT__", rep0, 1).replace("__HEX_SLOT__", rep1, 1)
                         if updated != line:

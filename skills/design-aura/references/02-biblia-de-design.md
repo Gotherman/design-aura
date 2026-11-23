@@ -31,17 +31,15 @@ Traduza a essência do negócio para **linguagem de UI**. Um avião, um carimbo 
 - O que a marca representa no mundo real → como isso vira geometria, superfície, ritmo e nomenclatura.
 - Vocabulário oficial do domínio (verbos de ação, rótulos de status, métricas reais).
 
-### 4. Sistema Cromático `65 / 20 / 10 / 5` (Presença da Marca "Estou Aqui!" + Harmonia Multi-Cor)
-- **65% Base Arquitetônica com Subtom Sutil (Nem Massa Monocromática, Nem Carvão Morto):**
-  - **Dark Mode:** planos `Z0–Z3` em Obsidiana com subtom calibrado da marca (`S = 18%–26%`, ex.: `#080C12 → #0E131D → #141C29 → #1B2637`). Proibido saturar tudo no mesmo azul (`S > 36%` → `DA-DARK-MONOCHROME`) e proibido cinza puro sem identidade.
-  - **Light Mode:** Porcelana/Alabastro aterrado (`Z0 #DCE3EC`, `Z1 #E6ECF3`, `Z2 #FFFFFF`, `Z3 #F3F6FA`) com **bordas nítidas** (`border-subtle >= 1.22:1` contra `Z2`, ex.: `#B4C1D1` e `#7A8CA3` → `DA-LIGHT-WASHED-OUT`).
-- **20% Presença Estrutural da Marca (3 Zonas Fixas Obrigatórias):**
-  1. **Identidade na Navegação:** cabeçalho institucional da Sidebar/Mobile (`.sidebar-brand-card`) + item ativo com cápsula `18% --primary` e filete `3px --accent`;
-  2. **Card-Rei de cada Tela (`.card-brand-hero`):** gradiente direcional `135deg` com `20% --primary → --surface-z2` + borda `35% --primary` + chanfro especular;
-  3. **Controles Ativos:** `.subtab.is-active`, `.seg-btn.is-active` e foco de tabela na cor primária.
-- **10% Acento Complementar + Paleta Categórica Harmônica de 6 Cores (`--chart-1` a `--chart-6`):**
-  - Acento quente/contrastante da marca no CTA Primário único + **6 tokens categóricos harmônicos em OKLCH** (`--chart-1` Azul Marca, `--chart-2` Teal/Oceano, `--chart-3` Índigo, `--chart-4` Laranja/Âmbar, `--chart-5` Esmeralda, `--chart-6` Coral/Rosa) para gráficos, barras de composição e setores nunca ficarem monocromáticos.
-- **5% Cores Semânticas Puras:** `success` (esmeralda), `warning` (âmbar), `danger` (carmim/coral), `info` (azul técnico) — validados por `audit_contrast.py --strict` em **Light e Dark**.
+### 4. Sistema Cromático (Marca no Workspace + Paridade Semântica Light/Dark · `v2.4.1`)
+- **Fim do Monobloco Cinza (Dark) e do Tudo-Branco (Light):** traga tons profundos e claros da **cor oficial da marca** da Sidebar para dentro do workspace (cabeçalhos `--surface-brand-header`, painéis focais `--surface-brand-panel`, abas ativas `--primary` com `--on-primary`, `--rim-highlight` e sombras calibradas por tema). Preto e cinza ficam contidos em detalhes secundários.
+  - **Dark Mode (`DA-DARK-FLAT-MONOLITH` & `DA-DARK-MONOCHROME`):** planos `Z0–Z4` em ardósia azulada calibrada (`S = 24%–35%`, ex.: `#090E16 → #101620 → #17202E → #1F2B3E → #283750`) com degrau nítido `Z2/Z1 >= 1.08:1` e `border-subtle/Z2 >= 1.25:1` (`#2C3E58`).
+  - **Light Mode (`DA-LIGHT-WASHED-OUT >= 1.85:1`):** canvas aterrado (`Z0 #C6D6EA`, `Z1 #D9E5F3` com `Z1/Z2 >= 1.18:1`, `Z2 #FFFFFF`, `Z3 #ECF3FB`) com **bordas nítidas** (`border-subtle >= 1.85:1` contra `Z2`, ideal `2.0–2.4:1`, ex.: `#93ABC7`) + âncora forte `--surface-brand-dark` na Sidebar/Card-Rei e variações claras estruturais `--surface-brand-header` / `--surface-tint-soft`.
+- **Paridade Semântica Obrigatória (`DA-SEMANTIC-HUE-PARITY`):** cada estado mantém a **mesma família de cor no Light e no Dark** usando pares separados para sólidos (`--{role}` + `--on-{role}`) e para badges/alertas (`--{role}-surface` / `--{role}-border` / `--{role}-text`):
+  - **Erro / Falha (`danger`):** **vermelho real** nos dois modos (`#B91C1C` / `#DC2626` sólido + `#FFFFFF`; `--danger-text: #FF6E6E`) — **BLOQUEIA rosa pastel (`#FDA4AF`) no Dark!**
+  - **Sucesso (`success`):** **verde esmeralda real** nos dois modos (`#15803D` sólido + `#FFFFFF`; `--success-text: #4ADE80`) — nunca verde-água neon com letra preta.
+  - **Atenção (`warning`):** **âmbar real** (`#B45309` / `#F59E0B`) e **Marca/Ativo (`primary`):** **azul coeso da marca** (`#14427A` / `#2563EB` + `#FFFFFF`).
+- **Paleta Categórica Harmônica (`--chart-1` a `--chart-6`):** 6 cores distintas validadas por `audit_contrast.py --strict` em Light e Dark.
 
 ### 5. Sistema de Profundidade & 5 Planos (`Z0 → Z4`)
 Documente explicitamente os 5 planos físicos da interface nos dois temas:
@@ -71,7 +69,9 @@ Registre só o que for usado. Cada linha traz categoria, licença, uso e caminho
 - **Mobile Nativo:** SwiftUI, Jetpack Compose Material 3, Flutter M3, `@gorhom/bottom-sheet`, FlashList, Zeego, Burnt.
 - **Galerias (referência de fluxo, nunca copiar código):** Mobbin, Refero, Godly, Page Flows, Screenlane, Banani.
 
-*Nota de sincronia (`v2.2.0`): sempre que atualizar `tokens.css` após a Onda 0.5, re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css --out-dir .` — o script sincroniza automaticamente os hexes das tabelas do Markdown contra o `tokens.css` atual!*
+*Regra Anti-Drift da Bíblia & Fonte Única de Tokens (`v2.4.1`):*
+- **`tokens.json` é a fonte única:** nunca edite uma cópia bifurcada de `tokens.css` dentro de `src/` deixando `design/tokens.css` desatualizado (ou vice-versa) — compile sempre de `tokens.json` para o arquivo importado tanto pelo app quanto pela vitrine.
+- **Em refinamentos (Modo 3) ou correções estruturais (Fase 4.5):** nunca apague o domínio nem os fluxos aprovados da `DESIGN-BIBLE.md`, mas **SEMPRE atualize cirurgicamente o texto das seções afetadas** (ex.: Seção 3.5 Resize In-Place/orçamentos, Seção 4 cores/paridade, Seção 8/9 componentes), anote a mudança no Histórico de Revisões e re-execute `render_design_bible.py DESIGN-BIBLE.md --tokens tokens.css --out-dir .` — o script agora detecta automaticamente a ordem das colunas (`Light|Dark` vs `Dark|Light`) pelo cabeçalho da tabela, sincroniza os hexes sem trocar colunas e regenera `DESIGN-BIBLE.html` e `DESIGN-BIBLE.pdf`!
 
 ### 9. Biblioteca de Componentes & Matriz de Estados
 Defina regras exatas de:

@@ -785,16 +785,19 @@ class V24UpgradeTests(unittest.TestCase):
                 rep = json.loads((qa_out / "probe-report.json").read_text(encoding="utf-8"))
                 self.assertTrue(rep["passed"])
 
-                # 3. Testa capture_and_audit.mjs com entrega.html whitelisted + --smoke-interact
+                # 3. Testa capture_and_audit.mjs com entrega.html whitelisted + --smoke-interact + --base-url no servidor unificado
                 audit_out = base / "audit-out"
                 aud = subprocess.run(
-                    ["node", str(SCRIPTS / "capture_and_audit.mjs"), "--manifest", str(mpath), "--out", str(audit_out), "--viewports", "desktop", "--themes", "dark", "--concurrency", "2", "--smoke-interact", "--strict"],
+                    ["node", str(SCRIPTS / "capture_and_audit.mjs"), "--manifest", str(mpath), "--base-url", f"http://127.0.0.1:{port}", "--out", str(audit_out), "--viewports", "desktop", "--themes", "dark", "--concurrency", "2", "--smoke-interact", "--strict"],
                     capture_output=True,
                     text=True,
                 )
                 self.assertEqual(aud.returncode, 0, aud.stdout + aud.stderr)
                 self.assertTrue((audit_out / "fila-desktop-dark-interact.png").exists())
                 self.assertTrue((audit_out / "entrega-desktop-dark.png").exists())
+                aud_rep = json.loads((audit_out / "audit-report.json").read_text(encoding="utf-8"))
+                entrega_row = next(r for r in aud_rep if r["target"] == "entrega")
+                self.assertIn(f"127.0.0.1:{port}/entrega.html", entrega_row["url"])
             finally:
                 srv.terminate()
                 try:
@@ -805,6 +808,31 @@ class V24UpgradeTests(unittest.TestCase):
                     srv.stdout.close()
                 if srv.stderr:
                     srv.stderr.close()
+
+    def test_v241_bible_sync_respects_light_dark_column_header_for_dark_semantic_tokens(self):
+        # Antes da v2.4.1, --danger (#B91C1C Light vs #DC2626 Dark) e --primary (#14427A Light vs #2563EB Dark)
+        # tinham soma RGB < 380 nos dois modos e invertiam colunas Light|Dark!
+        md = (
+            "| Token | Light | Dark |\n"
+            "|---|---|---|\n"
+            "| `--danger` | `#AA0000` | `#FDA4AF` |\n"
+            "| `--primary` | `#0F2942` | `#6EB5FF` |\n"
+            "\n"
+            "| Token | Escuro | Claro |\n"
+            "|---|---|---|\n"
+            "| `--danger` | `#FDA4AF` | `#AA0000` |\n"
+        )
+        synced, changed = sync_markdown_token_tables(
+            md,
+            tokens_light={"--danger": "#B91C1C", "--primary": "#14427A"},
+            tokens_dark={"--danger": "#DC2626", "--primary": "#2563EB"},
+        )
+        self.assertIn("--danger", changed)
+        self.assertIn("--primary", changed)
+        lines = synced.splitlines()
+        self.assertEqual(lines[2], "| `--danger` | `#B91C1C` | `#DC2626` |")
+        self.assertEqual(lines[3], "| `--primary` | `#14427A` | `#2563EB` |")
+        self.assertEqual(lines[7], "| `--danger` | `#DC2626` | `#B91C1C` |")
 
 
 if __name__ == "__main__":

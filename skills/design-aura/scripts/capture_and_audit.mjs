@@ -115,7 +115,16 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
         const candidate = path.join(d, name);
         if (fs.existsSync(candidate) && !seen.has(candidate)) {
           seen.add(candidate);
-          entries.push({ target: candidate, platform: 'vitrine', isVitrine: true, clickSelector: '' });
+          // v2.4.1: se --base-url (ex.: serve_entrega.mjs) foi informado, audita a vitrine no servidor unificado
+          // evitando 404 falso em iframes SPA (/app/*) que nao existem num servidor estatico secundario
+          const target = normBase ? `${normBase}/${name}` : candidate;
+          entries.push({
+            target,
+            labelOverride: path.basename(name, '.html'),
+            platform: 'vitrine',
+            isVitrine: true,
+            clickSelector: '',
+          });
           break;
         }
       }
