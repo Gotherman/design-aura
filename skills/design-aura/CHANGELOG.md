@@ -2,6 +2,19 @@
 
 Use este arquivo no modo Upgrade: compare o selo da Bíblia do projeto com a versão atual e aplique os deltas que se aplicam.
 
+## 3.1.1 — Correções da auditoria da 3.1.0
+- **Leitura do projeto:** o scanner lê primeiro o planejamento, depois o código e as telas do produto, e por último no máximo 10 artefatos de design de rodadas anteriores. Pastas `audit-*`, `qa-*` e capturas ficam fora; marcação, CSS e nomes de classe são descartados. Antes, numa remodelação, ele lia os relatórios de auditoria antigos e nunca chegava a `src/`.
+- **Necessidades:** as 18 mais fortes recebem candidatos e as demais saem em "Também detectadas" (`--max-needs`). Palavras-chave ambíguas corrigidas ("agente", "bot", "aria", "fonte", "tema", "erro", "status", "rastreio").
+- **Um motor por família:** quando uma peça cobre duas ou mais necessidades de gráficos, tabelas, agenda ou overlays, ela vira a primeira opção de todas.
+- **Base de componentes:** categorias derivadas das necessidades (`--category` acha tudo), comando de instalação em todas as peças adotáveis e `installs` por stack (nomes conferidos no npm e no pub.dev). Licenças conferidas ao vivo em 220 entradas, com `stale` para repositórios parados; Swapy virou armadilha (GPL-3.0); Paper Shaders e HeroUI Native confirmados como Apache-2.0. Saiu o campo `license_ok` gravado, que contradizia o calculado. Textos com acentuação.
+- **Estúdio → tokens → componentes:** o board grava `direcao-N.json`, e `generate_tokens.py --direction` e `discover_oss_components.py --direction` leem esse arquivo. Antes, o SKILL.md pedia um `escolhida.json` que nenhum script gerava, e passar o arquivo de tokens travava a busca.
+- **Motor de cor:** marca preta, branca ou cinza vira tinta (sem matiz inventada nos neutros e sem `#000000` cru). Marca clara mantém o preenchimento com texto escuro, e o traço usa `--primary-strong`. Novo `--focus-ring` (3:1). A semente aceita `rgb()`, `hsl()`, `oklch()` e nomes CSS, com erro claro. A densidade agora muda a escala de espaço, `--control-h`, `--row-h` e o texto base, e o board mostra a diferença.
+- **Bíblia:** o template ganhou a seção de profundidade que o `--check` exigia, e o `--check` passa a recusar seção vazia (antes, só títulos passavam). Os valores de exemplo dos orçamentos seguem `rules.json`.
+- **`aura_check.py`:** portão que não rodou aparece como pendente e falha o `--strict`, salvo com `--partial`. O relatório da captura anterior é apagado antes de cada rodada.
+- **Contraste em tempo real:** compõe fundos translúcidos, lê cores em `oklch`/`color()` e as paradas de gradiente. Texto que reprova só na parada extrema vira REVIEW, e logotipo fica isento. Nas telas reais testadas, os emblemas em gradiente deixaram de dar HIGH falso, e chips translúcidos abaixo de 4,5:1 passaram a ser pegos.
+- **Corpus de calibração:** painel denso com gradientes e selos translúcidos, tela mobile e um caso ruim de texto claro sobre gradiente claro.
+- Chrome, Chromium ou Edge encontrados também no Windows e no cache do Playwright. Página 404 não gera mais sinais de composição. `assertReachable` falha como `DA-REACHABLE`. Guia 10 com acentuação.
+
 ## 3.1.0 — Catálogo vivo e verificação ampliada
 - Base de componentes pré-categorizada em `data/catalog/` (24 categorias, mais de 110 necessidades, cerca de 360 entradas) com stacks, plataformas, modos, estilo, licença e acabamento. Um projeto usa várias bibliotecas: uma peça por necessidade, todas re-tematizadas.
 - `discover_oss_components.py` detecta necessidades com radical e sinônimos PT/EN, devolve até três candidatos por necessidade de qualquer biblioteca, ajusta o ranking à direção (`--direction`, `--shape`, `--density`, `--motion`, `--skin`) e avalia necessidades de site no modo Persuade.

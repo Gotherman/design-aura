@@ -21,7 +21,7 @@ import path from 'node:path';
 import http from 'node:http';
 import { spawn } from 'node:child_process';
 
-import { resolveViewport, validateViewports } from './audit_viewports.mjs';
+import { resolveViewport, validateViewports, findBrowser } from './audit_viewports.mjs';
 
 // Registro unico de regras: a camada de cada regra limita a severidade (heuristica nunca bloqueia).
 const RULES = (() => {
@@ -251,20 +251,6 @@ function parseArgs(argv) {
   return args;
 }
 
-function findBrowser() {
-  const candidates = [
-    process.env.CHROME_PATH,
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-    '/snap/bin/chromium',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  ].filter(Boolean);
-  for (const c of candidates) {
-    if (fs.existsSync(c)) return c;
-  }
-  return null;
-}
 
 function startStaticServer(rootDir) {
   return new Promise((resolve, reject) => {
@@ -404,14 +390,71 @@ const DOM_AUDIT_FN = `(() => {
     if (!m) return null;
     return [Number(m[1]), Number(m[2]), Number(m[3]), m[4] !== undefined ? Number(m[4]) : 1];
   }
-  function resolveBg(el) {
+  // Normaliza qualquer cor CSS (rgb, oklch, color(srgb), color-mix resolvido) via canvas 1x1.
+  const colorCtx = (() => { try { const c = document.createElement('canvas'); c.width = c.height = 1; return c.getContext('2d', { willReadFrequently: true }); } catch (e) { return null; } })();
+  const colorCache = new Map();
+  function colorOf(str) {
+    if (!str || str === 'transparent' || str === 'none') return null;
+    if (colorCache.has(str)) return colorCache.get(str);
+    let out = parseRgb(str);
+    if (!out && colorCtx) {
+      colorCtx.clearRect(0, 0, 1, 1);
+      colorCtx.fillStyle = 'rgba(1, 2, 3, 0)';
+      colorCtx.fillStyle = str;
+      if (colorCtx.fillStyle !== 'rgba(1, 2, 3, 0)') {
+        colorCtx.fillRect(0, 0, 1, 1);
+        const d = colorCtx.getImageData(0, 0, 1, 1).data;
+        out = [d[0], d[1], d[2], d[3] / 255];
+      }
+    }
+    colorCache.set(str, out);
+    return out;
+  }
+  const GRADIENT_COLOR_RE = /(rgba?\\([^)]*\\)|color\\([^)]*\\)|oklch\\([^)]*\\)|oklab\\([^)]*\\)|lab\\([^)]*\\)|lch\\([^)]*\\)|hsla?\\([^)]*\\)|#[0-9a-fA-F]{3,8}\\b)/g;
+  function pageCanvas() {
+    const scheme = getComputedStyle(docEl).colorScheme || '';
+    return (/dark/.test(scheme) && !/light/.test(scheme)) ? [18, 18, 18, 1] : [255, 255, 255, 1];
+  }
+  function blend(top, bottom) {
+    const a = top[3];
+    return [top[0] * a + bottom[0] * (1 - a), top[1] * a + bottom[1] * (1 - a), top[2] * a + bottom[2] * (1 - a), 1];
+  }
+  // Fundos reais atras do elemento: compoe camadas semitransparentes e, em gradiente, devolve um fundo por
+  // parada de cor (o contraste vale contra a pior). null = imagem atras do texto, nao da para julgar.
+  function resolveBgs(el) {
+    const layers = [];
     let cur = el;
-    while (cur) {
-      const bg = parseRgb(getComputedStyle(cur).backgroundColor);
-      if (bg && bg[3] > 0.85) return bg;
+    while (cur && cur.nodeType === 1) {
+      const cs = getComputedStyle(cur);
+      const bi = cs.backgroundImage;
+      let opaque = false;
+      if (bi && bi !== 'none') {
+        if (/url\\(/.test(bi)) return null;
+        const stops = (bi.match(GRADIENT_COLOR_RE) || []).map(colorOf).filter(Boolean);
+        if (stops.length) {
+          layers.push(stops);
+          opaque = stops.every((c) => c[3] >= 0.99);
+        }
+      }
+      const c = colorOf(cs.backgroundColor);
+      if (!opaque && c && c[3] > 0) {
+        layers.push([c]);
+        opaque = c[3] >= 0.99;
+      }
+      if (opaque) break;
       cur = cur.parentElement;
     }
-    return [15, 26, 38, 1];
+    let cands = [pageCanvas()];
+    for (let i = layers.length - 1; i >= 0; i--) {
+      const next = [];
+      for (const b of cands) for (const t of layers[i]) next.push(blend(t, b));
+      cands = next.slice(0, 8);
+    }
+    return cands;
+  }
+  function resolveBg(el) {
+    const all = resolveBgs(el);
+    return all && all.length ? all[0] : pageCanvas();
   }
   function lum(rgb) {
     const [r, g, b] = rgb.slice(0, 3).map((v) => {
@@ -484,6 +527,8 @@ const DOM_AUDIT_FN = `(() => {
   // 6. Amostra de contraste real computado (inclui emblemas/monogramas/badges em div/span)
   let contrastFails = 0;
   const contrastSamples = [];
+  let gradientEdge = 0;
+  const gradientSamples = [];
   const primaryTextEls = Array.from(document.querySelectorAll('h1,h2,h3,p,a,button,td,th')).slice(0, 60);
   const emblemBadgeEls = Array.from(document.querySelectorAll('[class*="emblem"],[class*="monogram"],[class*="badge"],[class*="chip"],[class*="pill"],[class*="avatar"],[class*="logo"]')).filter((el) => {
     if (el.children.length > 1) return false;
@@ -496,21 +541,40 @@ const DOM_AUDIT_FN = `(() => {
     if (r.width === 0 || r.height === 0 || !(el.textContent || '').trim()) continue;
     const st = getComputedStyle(el);
     if (parseFloat(st.opacity || '1') < 0.5) continue;
-    const fg = parseRgb(st.color);
-    const bg = resolveBg(el);
-    if (!fg || !bg || fg[3] < 0.8) continue;
-    const l1 = lum(fg), l2 = lum(bg);
-    const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    // Texto de logotipo ou marca nao tem exigencia de contraste (WCAG 1.4.3).
+    const cls = (typeof el.className === 'string' ? el.className : '') + ' ' + ((el.parentElement && typeof el.parentElement.className === 'string') ? el.parentElement.className : '');
+    if (/(^|[\\s_-])(logo|wordmark|brand-mark|logotipo)([\\s_-]|$)/i.test(cls)) continue;
+    const fg = colorOf(st.color);
+    const bgs = resolveBgs(el);
+    if (!fg || !bgs || !bgs.length || fg[3] < 0.8) continue;
+    const ratioOf = (bg) => { const l1 = lum(fg), l2 = lum(bg); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+    let ratio = 99;
+    for (const bg of bgs) ratio = Math.min(ratio, ratioOf(bg));
+    // Gradiente: se so a parada extrema reprova e o meio passa, e caso de olhar a captura (REVIEW), nao falha.
+    let meanRatio = ratio;
+    if (bgs.length > 1) {
+      const avg = [0, 1, 2].map((k) => bgs.reduce((acc, b) => acc + b[k], 0) / bgs.length).concat([1]);
+      meanRatio = ratioOf(avg);
+    }
     const fs = parseFloat(st.fontSize || '14');
     const fw = parseInt(st.fontWeight || '400', 10);
     const minReq = (fs >= 24 || (fs >= 18.66 && fw >= 700)) ? 3.0 : 4.5;
-    if (ratio < minReq) {
+    if (ratio < minReq && meanRatio >= minReq) {
+      gradientEdge++;
+      if (gradientSamples.length < 2) {
+        const cls = (typeof el.className === 'string' && el.className.trim()) ? '.' + el.className.trim().split(/\\s+/)[0] : el.tagName.toLowerCase();
+        gradientSamples.push(cls + ' "' + (el.textContent || '').trim().slice(0, 20) + '" (' + ratio.toFixed(2) + ':1 na parada extrema, ' + meanRatio.toFixed(2) + ':1 no meio)');
+      }
+    } else if (ratio < minReq) {
       contrastFails++;
       if (contrastSamples.length < 2) {
         const cls = (typeof el.className === 'string' && el.className.trim()) ? '.' + el.className.trim().split(/\\s+/)[0] : el.tagName.toLowerCase();
         contrastSamples.push(cls + ' "' + (el.textContent || '').trim().slice(0, 20) + '" (' + ratio.toFixed(2) + ':1)');
       }
     }
+  }
+  if (gradientEdge > 0) {
+    issues.push({ severity: 'REVIEW', rule: 'DA-B3-01', detail: gradientEdge + ' texto(s) sobre gradiente reprovam só na parada extrema: ' + gradientSamples.join(', ') + '. Confira na captura se alguma letra fica sobre a parte fraca.' });
   }
   if (contrastFails > 0) {
     issues.push({ severity: 'HIGH', rule: 'DA-B3-01', detail: contrastFails + ' elementos amostrados com contraste abaixo do minimo WCAG AA: ' + contrastSamples.join(', ') });
@@ -751,10 +815,10 @@ const DOM_AUDIT_FN = `(() => {
         let elevated = 0;
         for (const el of containers.slice(0, 40)) {
           const st = getComputedStyle(el);
-          const bg = parseRgb(st.backgroundColor);
+          const bg = colorOf(st.backgroundColor);
           const hasBgDelta = bg && bg[3] > 0.5 && Math.abs(lum(bg) - bodyLum) >= 0.012;
           const bw = parseFloat(st.borderTopWidth || '0') + parseFloat(st.borderLeftWidth || '0');
-          const bc = parseRgb(st.borderTopColor);
+          const bc = colorOf(st.borderTopColor);
           const hasBorder = bw >= 1 && bc && bc[3] > 0.08;
           const hasShadow = st.boxShadow && st.boxShadow !== 'none';
           if (hasBgDelta || hasBorder || hasShadow) elevated++;
@@ -1291,7 +1355,11 @@ async function main() {
         returnByValue: true,
       });
       const domData = evalRes?.result?.value;
-      const issues = [...(domData?.issues || [])];
+      let docPath = '';
+      try { docPath = new URL(target.url).pathname; } catch { docPath = ''; }
+      const mainDoc404 = docPath && failedAssets.some((fa) => fa.endsWith(': ' + docPath));
+      // Pagina que nao existe nao recebe sinais de composicao: o problema e o 404.
+      const issues = mainDoc404 ? [] : [...(domData?.issues || [])];
       if (!domData) {
         issues.push({ severity: 'BLOCK', rule: 'DA-AUDIT-COVERAGE', detail: 'Auditoria do DOM sem resultado.' });
       }

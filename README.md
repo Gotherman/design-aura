@@ -1,4 +1,4 @@
-# Design Aura (`design-aura` · `v3.1.0`)
+# Design Aura (`design-aura` · `v3.1.1`)
 
 Skill de direção visual e construção de interfaces bonitas, sofisticadas e sem cara de IA para **apps mobile** (iOS, Android, React Native/Expo, Flutter, PWA), **apps desktop** (Electron, Tauri, nativo), **sistemas web** (SaaS, ERPs, painéis; HTML estático ou SPA React/Vite/Next) e **sites**.
 
@@ -20,7 +20,7 @@ Skill de direção visual e construção de interfaces bonitas, sofisticadas e s
 
 ## Componentes open source
 
-Base pré-categorizada em `skills/design-aura/data/catalog/`: 24 categorias, mais de 110 necessidades e cerca de 360 entradas (kits, primitivos, gráficos, tabelas, agenda, editores, mobile, ícones, fontes, motion, efeitos, seções de site, ferramentas de cor e galerias de referência), cada uma com stack, plataforma, modo, estilo, acabamento e situação de licença conferida. Um projeto usa várias bibliotecas, uma peça por necessidade, todas re-tematizadas pelos tokens.
+Base pré-categorizada em `skills/design-aura/data/catalog/`: 23 categorias, 110 necessidades e cerca de 360 entradas (kits, primitivos, gráficos, tabelas, agenda, editores, mobile, ícones, fontes, motion, efeitos, seções de site, ferramentas de cor e galerias de referência), cada uma com stack, plataforma, modo, estilo, acabamento, comando de instalação por stack, situação de licença e data da última conferência ao vivo (cerca de 220 entradas conferidas no GitHub e no npm; as demais são referências e galerias). Um projeto usa várias bibliotecas: uma peça por necessidade, um motor por família (gráficos, tabelas, agenda, overlays), todas re-tematizadas pelos tokens.
 
 ## Instalação
 
@@ -51,7 +51,7 @@ Instalação manual: copie `skills/design-aura` (e `skills/designaura` para o co
 | `capture_and_audit.mjs` | Captura e auditoria no Chromium (larguras, temas, pós-clique, peso, movimento, linha de base) |
 | `run_workflow_probe.mjs` | Jornadas E2E (cliques, teclado real, reduced motion, assertivas) |
 | `build_figma_canvas.py` + `serve_entrega.mjs` | Vitrine e servidor de link único |
-| `refresh_catalog.py` | Licença e atividade da base de componentes |
+| `refresh_catalog.py` | Licença e atividade da base de componentes (`--mark-checked` grava a data e marca peças paradas) |
 
 Requisitos: Python 3, Node 20+ e Chromium/Chrome. Sem npm install nem pip install.
 

@@ -1046,9 +1046,10 @@ class V3BibleAndRegistryTests(unittest.TestCase):
     def test_bible_check_passes_complete_bible(self):
         from render_design_bible import check_bible
 
-        md = ("# Biblia\n> **Design Aura:** `v3.1.0`\n## Contrato de plataforma\nok\n## Direção\nok\n## Cor\nok\n## Tipografia\nok\n"
-              "## Espaço e forma\nok\n## Profundidade\nok\n## Orçamentos\nok\n## Componentes\nok\n## Telas\n`fila`\n## Motion\nok\n"
-              "## Conteúdo e dados fictícios\nok\n## Leis do projeto\nok\n## Portões\nok\n## Histórico\nok\n")
+        body = "decisão registrada com o motivo e o efeito esperado na tela"
+        sections = ["Contrato de plataforma", "Direção", "Cor", "Tipografia", "Espaço e forma", "Profundidade", "Orçamentos",
+                    "Componentes", "Telas", "Motion", "Conteúdo e dados fictícios", "Leis do projeto", "Portões", "Histórico"]
+        md = "# Biblia\n> **Design Aura:** `v3.1.1`\n" + "".join(f"## {name}\n{body}\n" for name in sections) + "`fila`\n"
         manifest = {"screens": [{"id": "fila", "archetype": "lista", "primaryAction": {"label": "Aprovar"}, "states": ["populado"]}]}
         self.assertEqual(check_bible(md, manifest, {"--primary-surface": "#eee", "--chart-1": "#111", "--danger": "#b00"}), [])
 
@@ -1072,10 +1073,16 @@ class V3BibleAndRegistryTests(unittest.TestCase):
 
     def test_aura_check_runs_all_gates(self):
         with tempfile.TemporaryDirectory() as tmp:
-            res = run_py("aura_check.py", ["--tokens", str(ROOT / "assets" / "tokens.example.json"), "--project", str(FIXTURES / "good"), "--out", tmp, "--strict"])
+            args = ["--tokens", str(ROOT / "assets" / "tokens.example.json"), "--project", str(FIXTURES / "good"), "--out", tmp, "--strict"]
+            res = run_py("aura_check.py", args + ["--partial"])
             self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
             data = json.loads((Path(tmp) / "aura-check.json").read_text(encoding="utf-8"))
             self.assertEqual({g["gate"] for g in data["gates"]}, {"contraste", "linter"})
+            self.assertEqual({g["gate"] for g in data["skipped"]}, {"navegador", "biblia", "sincronia"})
+            # sem --partial, portao que nao rodou deixa a verificacao pendente e o --strict falha
+            res = run_py("aura_check.py", args)
+            self.assertEqual(res.returncode, 1, res.stdout)
+            self.assertIn("não rodaram", res.stdout)
 
 
 class V3CatalogTests(unittest.TestCase):
@@ -1129,6 +1136,161 @@ class V3CatalogTests(unittest.TestCase):
             self.assertFalse(re.findall(r"`?v2\.\d\.\d`?", body), f.name)
             self.assertLess(len(re.findall(r"\b(?:PROIBIDO|OBRIGATÓRIO|NUNCA|SEMPRE)\b", body)), 3, f.name)
         self.assertLessEqual(len((ROOT / "SKILL.md").read_text(encoding="utf-8").splitlines()), 200)
+
+
+class V311Tests(unittest.TestCase):
+    """Correcoes da 3.1.1: leitura do projeto, direcao, Biblia, aura_check, contraste real e motor de cor."""
+
+    def test_scanner_reads_plan_and_code_before_old_design_and_skips_audits(self):
+        from discover_oss_components import collect_project_text
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "docs").mkdir()
+            (root / "docs" / "plano-produto.md").write_text("Agenda de consultas e kanban do funil comercial.", encoding="utf-8")
+            (root / "src" / "pages").mkdir(parents=True)
+            (root / "src" / "pages" / "Agenda.tsx").write_text('export const A = () => <div className="sidebar topbar">Agenda</div>;', encoding="utf-8")
+            (root / "design" / "audit-final").mkdir(parents=True)
+            (root / "design" / "audit-final" / "audit-report.json").write_text('{"x": "sidebar sidebar sidebar"}', encoding="utf-8")
+            (root / "design" / "qa-v2").mkdir(parents=True)
+            (root / "design" / "qa-v2" / "probe-report.json").write_text("{}", encoding="utf-8")
+            (root / "design" / "telas").mkdir(parents=True)
+            (root / "design" / "telas" / "a.html").write_text('<style>.sidebar{font-size:12px}</style><aside class="sidebar">Fila</aside>', encoding="utf-8")
+            text, names = collect_project_text(root)
+        self.assertEqual(names[0], "docs/plano-produto.md")
+        self.assertLess(names.index("src/pages/Agenda.tsx"), names.index("design/telas/a.html"))
+        self.assertFalse([n for n in names if "audit" in n or "qa-" in n])
+        self.assertNotIn("sidebar", text.lower())
+        self.assertNotIn("font-size", text)
+
+    def test_scan_lists_extra_needs_and_consolidates_one_chart_engine(self):
+        blueprint = ("Painel financeiro com grafico de serie temporal do fluxo de caixa, cascata da DRE, ranking por categoria em barras, "
+                     "tabela de lancamentos, agenda de pagamentos, kanban de cobranca, upload de comprovante, mascara de CNPJ, "
+                     "toast com desfazer, modal de confirmacao, busca com autocomplete, seletor de data, importacao de CSV, "
+                     "PDF de contrato, chat de atendimento, mapa de entregas, avatar do usuario, tour de primeiro acesso, editor de texto")
+        rep = scan_project_categories(blueprint_text=blueprint, stack="react", platform="all", mode="operate", max_needs=8)
+        self.assertEqual(len(rep["needs"]), 8)
+        self.assertTrue(rep["more_needs"])
+        charts = next((c for c in rep["categories"] if c["id"] == "charts"), None)
+        self.assertIsNotNone(charts)
+        firsts = {n["picks"][0]["id"] for n in charts["needs"] if n["picks"] and n["id"] != "geo-map"}
+        self.assertEqual(len(firsts), 1, firsts)
+        self.assertIn("engine", charts)
+
+    def test_category_includes_items_by_need_and_installs_follow_stack(self):
+        from discover_oss_components import install_for, load_catalog
+
+        items = load_catalog()
+        nav = [i for i in items if "navigation" in i["categories"]]
+        self.assertGreaterEqual(len(nav), 15)
+        by_id = {i["id"]: i for i in items}
+        self.assertIn("@heroicons/react", install_for(by_id["heroicons"], "react"))
+        self.assertNotIn("@heroicons/react", install_for(by_id["heroicons"], "html"))
+        self.assertIn("lucide-vue-next", install_for(by_id["lucide-icons"], "nuxt"))
+        self.assertEqual(by_id["swapy"]["license_status"], "trap")
+        adoptable = [i for i in items if i["kind"] in ("library", "registry") and i["license_status"] in ("ok", "attribution", "free-license")]
+        self.assertFalse([i["id"] for i in adoptable if not i.get("install")])
+        for f in (ROOT / "data" / "catalog").glob("*.json"):
+            self.assertNotIn('"license_ok"', f.read_text(encoding="utf-8"), f.name)
+
+    def test_direction_file_feeds_tokens_and_scanner(self):
+        from discover_oss_components import load_direction
+
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("render_direction_board.py", [str(ROOT / "assets" / "direction-board.example.json"), "--out", tmp])
+            self.assertEqual(res.returncode, 0, res.stderr)
+            d2 = Path(tmp) / "direcao-2.json"
+            self.assertTrue(d2.exists())
+            spec = json.loads(d2.read_text(encoding="utf-8"))
+            self.assertEqual(load_direction(str(d2))["density"], spec["density"])
+            self.assertEqual(load_direction(str(Path(tmp) / "direcao-2.tokens.json"))["shape"], spec["shape"])  # sem quebrar
+            out = Path(tmp) / "t"
+            res = run_py("generate_tokens.py", ["--direction", str(d2), "--emit-json", str(out / "tokens.json"), "--out", str(out), "--format", "css", "--check-contrast"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            meta = json.loads((out / "tokens.json").read_text(encoding="utf-8"))["meta"]
+            self.assertEqual((meta["seed"], meta["shape"], meta["density"]), (spec["seed"].upper(), spec["shape"], spec["density"]))
+            res = run_py("generate_tokens.py", ["--seed", "azul marinho", "--out", str(out)])
+            self.assertEqual(res.returncode, 2)
+            self.assertIn("Cor nao reconhecida", res.stderr)
+
+    def test_color_engine_handles_achromatic_and_light_brands(self):
+        from color_engine import build_tokens, hex_to_oklch, parse_color, wcag
+
+        self.assertEqual(parse_color("rebeccapurple"), "#663399")
+        self.assertEqual(parse_color("rgb(31, 77, 58)"), "#1F4D3A")
+        self.assertEqual(parse_color("#abc"), "#AABBCC")
+        self.assertEqual(parse_color("oklch(37% 0.06 160)"), parse_color("oklch(0.37 0.06 160)"))
+        for seed in ("#000000", "#FFFFFF", "#808080"):
+            data = build_tokens(seed)
+            self.assertTrue(data["report"]["notes"])
+            for theme in ("light", "dark"):
+                t = data["semantic"][theme]
+                self.assertNotIn(t["primary"], ("#000000", "#FFFFFF"))
+                for key in ("border-subtle", "text-muted", "surface-z1", "surface-brand-dark"):
+                    self.assertLess(hex_to_oklch(t[key])[1], 0.005, (seed, theme, key))
+                self.assertGreaterEqual(wcag(t["on-primary"], t["primary"]), 4.5)
+        yellow = build_tokens("#FFD60A")["semantic"]["light"]
+        self.assertEqual(yellow["primary"], "#FFD60A")
+        self.assertGreaterEqual(wcag(yellow["on-primary"], yellow["primary"]), 4.5)
+        for key in ("primary-strong", "focus-ring"):
+            self.assertGreaterEqual(wcag(yellow[key], yellow["surface-z2"]), 3.0, key)
+            self.assertGreaterEqual(wcag(yellow[key], yellow["surface-z1"]), 3.0, key)
+        compact, regular = build_tokens("#1F4D3A", density="compact"), build_tokens("#1F4D3A", density="regular")
+        self.assertNotEqual(compact["spacing"], regular["spacing"])
+        self.assertLess(int(compact["sizing"]["control-h"][:-2]), int(regular["sizing"]["control-h"][:-2]))
+        self.assertEqual(compact["sizing"]["touch-min"], "44px")
+
+    def test_bible_check_rejects_empty_sections_and_template_has_all_sections(self):
+        from render_design_bible import check_bible
+
+        empty = "# Bíblia de Direção Visual\n**Design Aura:** `v3.1.1`\n" + "".join(
+            f"## {n}\n" for n in ("Contrato de plataforma", "Cor", "Tipografia", "Planos", "Orçamento", "Componentes", "Telas", "Motion",
+                                  "Conteúdo", "Leis do projeto", "Portões", "Histórico"))
+        errors = check_bible(empty, None, None)
+        self.assertIn("Seção ausente: Direção escolhida.", errors)  # o titulo do documento nao conta
+        self.assertIn("Seção ausente: Espaço e forma.", errors)     # "plataforma" nao vale como "forma"
+        self.assertTrue(any(e.startswith("Seção vazia: Cor") for e in errors))
+        template = (ROOT / "assets" / "design-bible-template.md").read_text(encoding="utf-8")
+        self.assertFalse([e for e in check_bible(template, None, None) if e.startswith("Seção ausente")])
+
+    def test_aura_check_never_reuses_a_stale_capture_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            stale = Path(tmp) / "out" / "captures"
+            stale.mkdir(parents=True)
+            (stale / "audit-report.json").write_text('[{"target": "antigo.html", "issues": []}]', encoding="utf-8")
+            manifest = Path(tmp) / "m.json"
+            manifest.write_text(json.dumps({"screens": [{"id": "x", "file": "a.html", "afterClickSelector": "#b"}]}), encoding="utf-8")
+            res = run_py("aura_check.py", ["--manifest", str(manifest), "--out", str(Path(tmp) / "out"), "--partial", "--strict"])
+            self.assertEqual(res.returncode, 1, res.stdout)
+            self.assertIn("DA-AUDIT-COVERAGE", res.stdout)
+
+    def test_runtime_contrast_reads_gradients_and_new_good_fixtures_pass(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dense = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "painel-denso-gradiente.html"), "--out", str(Path(tmp) / "d"),
+                                                       "--viewports", "desktop,mobile", "--all-viewports", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(dense.returncode, 0, dense.stdout + dense.stderr)
+            mobile = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "mobile-lista.html"), "--out", str(Path(tmp) / "m"),
+                                                        "--viewports", "mobile,mobile-360x800", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(mobile.returncode, 0, mobile.stdout + mobile.stderr)
+            bad = run_node("capture_and_audit.mjs", [str(FIXTURES / "bad" / "contraste-gradiente.html"), "--out", str(Path(tmp) / "b"),
+                                                     "--viewports", "desktop", "--themes", "light", "--quiet", "--strict"])
+            self.assertEqual(bad.returncode, 1, bad.stdout)
+            issues = json.loads((Path(tmp) / "b" / "audit-report.json").read_text(encoding="utf-8"))[0]["issues"]
+            self.assertTrue(any(i["rule"] == "DA-B3-01" and i["severity"] == "HIGH" for i in issues), issues)
+
+    def test_docs_counts_match_the_component_base(self):
+        import re
+        from discover_oss_components import load_taxonomy
+
+        tax = load_taxonomy()
+        n_cats, n_needs = len(tax["categories"]), sum(len(c["needs"]) for c in tax["categories"])
+        for f in (ROOT / "SKILL.md", ROOT / "references" / "09-pesquisa-componentes-oss.md", ROOT.parents[1] / "README.md"):
+            text = f.read_text(encoding="utf-8")
+            cats = re.findall(r"(\d+) categorias", text)
+            self.assertTrue(cats, f.name)
+            self.assertTrue(all(int(c) == n_cats for c in cats), (f.name, cats, n_cats))
+            needs = re.findall(r"(\d+) necessidades", text)
+            self.assertTrue(all(int(n) == n_needs for n in needs), (f.name, needs, n_needs))
 
 
 if __name__ == "__main__":

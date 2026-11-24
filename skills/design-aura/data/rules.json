@@ -1,5 +1,5 @@
 {
-  "version": "3.1.0",
+  "version": "3.1.1",
   "layers": {
     "invariant": "Ofício objetivo e universal. Pode bloquear (BLOCK) ou exigir correção (HIGH). Vale para qualquer projeto.",
     "tell": "Sinal forte de interface genérica com evidência no código. Vai até HIGH: corrige ou registra a exceção com motivo.",

@@ -561,8 +561,8 @@ REQUIRED_SECTIONS = [
     ("Direção escolhida", r"dire[cç][aã]o"),
     ("Cor", r"\bcor\b|paleta|crom"),
     ("Tipografia", r"tipograf"),
-    ("Espaço e forma", r"espa[cç]o|escala espacial|forma"),
-    ("Profundidade", r"profundidade|planos"),
+    ("Espaço e forma", r"espa[cç]o|escala espacial|\bforma\b"),
+    ("Profundidade", r"profundidade|\bplanos\b"),
     ("Orçamentos do projeto", r"or[cç]amento"),
     ("Componentes", r"componente"),
     ("Telas", r"telas|mapa de telas"),
@@ -572,6 +572,36 @@ REQUIRED_SECTIONS = [
     ("Verificação", r"port[oõ]es|verifica[cç][aã]o"),
     ("Histórico", r"hist[oó]rico"),
 ]
+MIN_SECTION_CHARS = 40  # texto real abaixo do titulo, sem placeholders, marcacao de tabela ou subtitulos
+
+
+def bible_sections(md: str) -> list[tuple[str, str]]:
+    """Titulos de nivel 2 a 4 (o titulo do documento e as Partes ficam de fora) e o texto de cada um,
+    incluindo subtitulos, ate o proximo titulo de mesmo nivel ou acima."""
+    lines = md.splitlines()
+    heads, in_code = [], False
+    for i, line in enumerate(lines):
+        if line.strip().startswith("```"):
+            in_code = not in_code
+            continue
+        m = None if in_code else re.match(r"^(#{2,4})\s+(.+?)\s*$", line)
+        if m:
+            heads.append((i, len(m.group(1)), m.group(2)))
+    out = []
+    for k, (i, level, text) in enumerate(heads):
+        end = next((j for j, lvl, _ in heads[k + 1:] if lvl <= level), len(lines))
+        out.append((text.lower(), "\n".join(lines[i + 1:end])))
+    return out
+
+
+def section_substance(body: str) -> int:
+    body = re.sub(r"(?s)<!--.*?-->", " ", body)
+    body = PLACEHOLDER.sub(" ", body)
+    body = re.sub(r"(?m)^#{1,6}\s.*$", " ", body)
+    body = re.sub(r"[|*`>_:#·\-\s]+", " ", body)
+    return len(body.strip())
+
+
 PLACEHOLDER = re.compile(r"\{\{[^}]+\}\}|:\*\*\s*\.\.\.\s*$|:\s*\.\.\.\s*$|_a fixar_|_descrever_", re.M)
 
 
@@ -639,10 +669,13 @@ def check_bible(md: str, manifest: dict | None, tokens_light: dict[str, str] | N
     errors = []
     if not re.search(r"\*\*Design Aura:\*\*\s*`v\d+\.\d+\.\d+`", md):
         errors.append("Selo '**Design Aura:** `vX.Y.Z`' ausente no topo.")
-    headings = "\n".join(line.lower() for line in md.splitlines() if line.startswith("#"))
+    sections = bible_sections(md)
     for name, pattern in REQUIRED_SECTIONS:
-        if not re.search(pattern, headings):
+        found = [body for title, body in sections if re.search(pattern, title)]
+        if not found:
             errors.append(f"Seção ausente: {name}.")
+        elif max(section_substance(b) for b in found) < MIN_SECTION_CHARS:
+            errors.append(f"Seção vazia: {name} (escreva a decisão, não só o título).")
     for m in PLACEHOLDER.finditer(md):
         line = md[: m.start()].count("\n") + 1
         errors.append(f"Linha {line}: decisão em aberto ({m.group(0).strip()[:40]}).")

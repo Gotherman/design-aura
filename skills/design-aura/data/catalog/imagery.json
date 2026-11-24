@@ -30,11 +30,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Icones 3D livres.",
+  "install": "baixar do site",
+  "summary": "Ícones 3D livres.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "boring-avatars",
@@ -45,7 +44,7 @@
   "repo": "https://github.com/boringdesigners/boring-avatars",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -78,10 +77,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install boring-avatars",
-  "summary": "Avatares SVG geometricos deterministicos sincronizados com a paleta de cores da marca (substitui fotos quebradas)",
-  "a11y": "Sempre mantenha aspect-ratio: 1/1 e iniciais acessiveis",
-  "notes": "",
-  "license_ok": true
+  "summary": "Avatares SVG geométricos determinísticos sincronizados com a paleta de cores da marca (substitui fotos quebradas)",
+  "a11y": "Sempre mantenha aspect-ratio: 1/1 e iniciais acessíveis",
+  "notes": ""
  },
  {
   "id": "dicebear",
@@ -90,9 +88,9 @@
   "use": "dependency",
   "url": "https://www.dicebear.com",
   "repo": "",
-  "license": "MIT (codigo); estilos com licencas proprias",
+  "license": "MIT (código); estilos com licenças próprias",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "all"
   ],
@@ -115,11 +113,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @dicebear/core @dicebear/collection",
   "summary": "Avatares gerados por semente.",
   "a11y": "",
-  "notes": "Confira a licenca do estilo escolhido.",
-  "license_ok": false
+  "notes": "Confira a licença do estilo escolhido."
  },
  {
   "id": "haikei",
@@ -156,8 +153,7 @@
   "install": "",
   "summary": "Gerador de fundos SVG (ondas, blobs, grain).",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "humaaans",
@@ -191,11 +187,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Pessoas combinaveis em estilo plano.",
+  "install": "baixar do site",
+  "summary": "Pessoas combináveis em estilo plano.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "open-peeps",
@@ -230,11 +225,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Pessoas desenhadas a mao combinaveis.",
+  "install": "baixar do site",
+  "summary": "Pessoas desenhadas a mao combináveis.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "pexels",
@@ -268,11 +262,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Fotos e videos gratuitos.",
+  "install": "baixar do site (licença Pexels)",
+  "summary": "Fotos e vídeos gratuitos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "undraw",
@@ -308,11 +301,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Ilustracoes com cor ajustavel.",
+  "install": "baixar o SVG do site (licença unDraw)",
+  "summary": "Ilustrações com cor ajustável.",
   "a11y": "",
-  "notes": "Estilo muito reconhecivel; use com parcimonia.",
-  "license_ok": false
+  "notes": "Estilo muito reconhecível; use com parcimonia."
  },
  {
   "id": "unsplash",
@@ -346,11 +338,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "baixar do site (licença Unsplash)",
   "summary": "Fotografia gratuita.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "heropatterns",
@@ -384,12 +375,11 @@
   "style": {},
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Padroes SVG repetiveis.",
+  "install": "copiar o SVG/CSS do site",
+  "summary": "Padrões SVG repetíveis.",
   "a11y": "",
   "notes": "",
-  "attribution": "Hero Patterns por Steve Schoger (CC BY 4.0)",
-  "license_ok": true
+  "attribution": "Hero Patterns por Steve Schoger (CC BY 4.0)"
  },
  {
   "id": "storyset",
@@ -398,7 +388,7 @@
   "use": "dependency",
   "url": "https://storyset.com",
   "repo": "",
-  "license": "gratuita com atribuicao (Freepik)",
+  "license": "gratuita com atribuição (Freepik)",
   "license_status": "attribution",
   "license_checked_at": null,
   "stacks": [
@@ -423,11 +413,10 @@
   "style": {},
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Ilustracoes animaveis; exige atribuicao.",
+  "install": "baixar do site (atribuição)",
+  "summary": "Ilustrações animáveis; exige atribuição.",
   "a11y": "",
   "notes": "",
-  "attribution": "Ilustracoes por Storyset/Freepik",
-  "license_ok": true
+  "attribution": "Ilustrações por Storyset/Freepik"
  }
 ]

@@ -76,7 +76,7 @@ Reprovam como sinal forte (corrija ou justifique):
 
 ## 9. Verificação
 
-- Capturas em pelo menos 1440 px, 1024 px e 390 px, Light e Dark se houver os dois.
+- Capturas em pelo menos 1440 px, 1024 px e 390 px, Light e Dark se houver os dois: `aura_check.py ... --mode persuade --viewports desktop,1024x768,mobile`.
 - Página inteira além da dobra: o ritmo e os vazios aparecem na captura completa.
 - Jornada: chegar, entender, agir (clicar na chamada, preencher o formulário, ver a confirmação), também só com teclado.
 - Crítico visual com a rubrica de [07](07-auditoria-e-veredito.md), olhando também narrativa e direção de arte.

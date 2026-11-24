@@ -8,7 +8,7 @@ description: >-
   verificação visual e funcional, mesmo que o pedido não diga "design".
 license: MIT
 metadata:
-  version: "3.1.0"
+  version: "3.1.1"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -73,7 +73,7 @@ Monte 2 ou 3 direções realmente diferentes (cor e harmonia, tipografia, forma,
 
 ```bash
 python3 <skill_dir>/scripts/design_intel.py "<domínio e objetivo>" --stack <stack>      # hipóteses de partida
-python3 <skill_dir>/scripts/render_direction_board.py direcoes.json --out design/direcao  # direction-board.html + tokens por direção
+python3 <skill_dir>/scripts/render_direction_board.py direcoes.json --out design/direcao  # direction-board.html + direcao-N.json + tokens
 ```
 
 O método de cada eixo está em [06](references/06-sistema-visual.md) e o roteiro do estúdio em [02](references/02-biblia-de-design.md). **Portão 1A:** mostre o board e peça a escolha (uma direção, uma mistura de eixos ou outra rodada). "Segue a recomendada" vale como escolha.
@@ -82,13 +82,13 @@ O método de cada eixo está em [06](references/06-sistema-visual.md) e o roteir
 Com a direção escolhida:
 
 ```bash
-python3 <skill_dir>/scripts/discover_oss_components.py --scan <repo-ou-plano> --stack <stack> --platform <plataforma> --mode <modo> [--direction design/direcao/escolhida.json]
-python3 <skill_dir>/scripts/generate_tokens.py --seed "<cor>" --accent "<cor>" --depth-style <estilo> --shape <forma> --density <densidade> --emit-json design/tokens.json --out design/ --format all --check-contrast
+python3 <skill_dir>/scripts/discover_oss_components.py --scan <repo-ou-plano> --stack <stack> --platform <plataforma> --mode <modo> --direction design/direcao/direcao-<N>.json
+python3 <skill_dir>/scripts/generate_tokens.py --direction design/direcao/direcao-<N>.json --emit-json design/tokens.json --out design/ --format all --check-contrast
 python3 <skill_dir>/scripts/render_design_bible.py design/DESIGN-BIBLE.md --tokens design/tokens.css --manifest design/screen-manifest.json --check
 python3 <skill_dir>/scripts/render_design_bible.py design/DESIGN-BIBLE.md --tokens design/tokens.css --manifest design/screen-manifest.json --out-dir design
 ```
 
-Use [o template](assets/design-bible-template.md): Parte A para aprovar, Parte B para construir, Parte C para verificar. A Bíblia só chega ao **Portão 1** com `--check` limpo. Entregue o PDF e o resumo; não construa telas antes da aprovação.
+O `direcao-N.json` é a direção escolhida no Portão 1A; ajustes pedidos pela pessoa entram nele antes destes comandos. Use [o template](assets/design-bible-template.md): Parte A para aprovar, Parte B para construir, Parte C para verificar. A Bíblia só chega ao **Portão 1** com `--check` limpo (seções presentes e preenchidas, sem decisão em aberto). Entregue o PDF e o resumo; não construa telas antes da aprovação.
 
 ### F2.5 — Telas-Mãe
 Construa a fundação compartilhada (tokens, `shell.css`, `shell.js`, `SHELL-CONTRACT.md` curto) e uma Tela-Mãe por arquétipo dominante (até três) mais uma mobile, com os estados que importam: populado, aberto ou pós-ação, vazio e erro. Audite e passe o crítico visual antes de mostrar. **Portão 2:** aprovação das capturas. A Tela-Mãe trava a linguagem (tokens, shell, gramática de componentes, acabamento); a estrutura interna de cada outra tela sai da tarefa dela.
@@ -105,7 +105,7 @@ python3 <skill_dir>/scripts/aura_check.py --manifest design/screen-manifest.json
 python3 <skill_dir>/scripts/build_figma_canvas.py design/screen-manifest.json --tokens design/tokens.css --thumbs design/audit/captures --out design/telas --verify-files
 ```
 
-Em SPA, rode o build antes de auditar. A vitrine (`entrega.html`, `fluxo.html`, `preview.html`, `index.html`) e o servidor de link único estão em [08](references/08-canvas-figma-manifest.md).
+Em SPA, rode o build antes de auditar. Em sites, acrescente `--mode persuade --viewports desktop,1024x768,mobile`. Portão que não rodou deixa o veredito pendente; num ajuste pontual, declare `--partial` com o motivo. A vitrine (`entrega.html`, `fluxo.html`, `preview.html`, `index.html`) e o servidor de link único estão em [08](references/08-canvas-figma-manifest.md).
 
 ### F4.5 — QA funcional e crítica visual
 Testers somente leitura percorrem as jornadas com `run_workflow_probe.mjs`, incluindo um trecho só por teclado e casos extremos de dados. Um crítico visual com contexto limpo compara as capturas com a Parte A da Bíblia usando a rubrica de [07](references/07-auditoria-e-veredito.md). O orquestrador tria pela causa, corrige ou despacha correções e pede reteste. No máximo dois ciclos; o que restar vira pendência explícita.
@@ -125,7 +125,7 @@ Nunca invente dados de negócio, diferenciais ou métricas. Dados de demonstraç
 
 ## Componentes open source
 
-A base em `data/catalog/` é ampla e pré-categorizada (24 categorias, mais de 110 necessidades, cerca de 360 peças, referências e armadilhas de licença). Um projeto pode usar várias bibliotecas: escolha **uma peça por necessidade**, re-tematize tudo pelos tokens e mantenha uma família de ícones e um sistema de motion. Licença conferida na versão fixada, registrada na Bíblia. Método em [09](references/09-pesquisa-componentes-oss.md).
+A base em `data/catalog/` é ampla e pré-categorizada (23 categorias, 110 necessidades, cerca de 360 peças, referências e armadilhas de licença). Um projeto pode usar várias bibliotecas: escolha **uma peça por necessidade** e **um motor por família** (gráficos, tabelas, agenda, overlays), re-tematize tudo pelos tokens e mantenha uma família de ícones e um sistema de motion. A base registra a data da última conferência de licença; confira de novo na versão fixada e registre na Bíblia. Método em [09](references/09-pesquisa-componentes-oss.md).
 
 ## Mapa
 

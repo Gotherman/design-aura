@@ -28,11 +28,13 @@
       "text-muted": "#4C6056",
       "primary": "#1F4D3A",
       "on-primary": "#FFFFFF",
+      "primary-strong": "#1F4D3A",
       "primary-surface": "#E3F1EA",
       "primary-border": "#99BEAC",
       "primary-text": "#436756",
       "accent": "#E4A33A",
       "on-accent": "#101114",
+      "focus-ring": "#BF8100",
       "accent-surface": "#FDEAD1",
       "accent-border": "#DCAA61",
       "accent-text": "#7E5400",
@@ -84,11 +86,13 @@
       "text-muted": "#A8BDB3",
       "primary": "#51806B",
       "on-primary": "#FFFFFF",
+      "primary-strong": "#51806B",
       "primary-surface": "#19231E",
       "primary-border": "#355747",
       "primary-text": "#A4CCB8",
       "accent": "#E4A33A",
       "on-accent": "#101114",
+      "focus-ring": "#E4A33A",
       "accent-surface": "#2B1E09",
       "accent-border": "#6A4600",
       "accent-text": "#ECB668",
@@ -129,9 +133,9 @@
     }
   },
   "typography": {
-    "font-display": "'Schibsted Grotesk', system-ui, sans-serif",
-    "font-ui": "'Schibsted Grotesk', system-ui, sans-serif",
-    "font-mono": "'IBM Plex Mono', ui-monospace, monospace",
+    "font-display": "system-ui, sans-serif",
+    "font-ui": "system-ui, sans-serif",
+    "font-mono": "ui-monospace, monospace",
     "text-base": "16px",
     "measure-body": "68ch",
     "tracking-display": "-0.02em"
@@ -147,6 +151,11 @@
     "10": "40px",
     "12": "48px",
     "16": "64px"
+  },
+  "sizing": {
+    "control-h": "38px",
+    "row-h": "44px",
+    "touch-min": "44px"
   },
   "radii": {
     "control-sm": "6px",
@@ -165,5 +174,30 @@
     "page-android": "250ms",
     "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
     "press-scale": "0.97"
+  },
+  "report": {
+    "seed": "#1F4D3A",
+    "accent": "#C98A12",
+    "harmony": "complementar",
+    "depth_style": "hairline",
+    "checks": {
+      "light": {
+        "chart_min_distance": 0.1293,
+        "chart_min_distance_deuteranopia": 0.0853,
+        "chart_min_distance_protanopia": 0.0685,
+        "text_muted_on_canvas": 6.28,
+        "border_subtle_on_card": 1.37,
+        "canvas_vs_card": 1.07
+      },
+      "dark": {
+        "chart_min_distance": 0.1303,
+        "chart_min_distance_deuteranopia": 0.0859,
+        "chart_min_distance_protanopia": 0.0679,
+        "text_muted_on_canvas": 9.61,
+        "border_subtle_on_card": 1.5,
+        "canvas_vs_card": 1.06
+      }
+    },
+    "notes": []
   }
 }

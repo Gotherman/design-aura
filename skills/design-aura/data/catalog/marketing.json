@@ -38,11 +38,10 @@
   },
   "flashy": true,
   "craft": 3,
-  "install": "",
-  "summary": "Blocos de marketing. So em Persuade, e um bloco re-tematizado, nao a pagina inteira.",
+  "install": "copiar via shadcn CLI conforme a página do componente",
+  "summary": "Blocos de marketing. Só em Persuade, e um bloco re-tematizado, não a página inteira.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "tailwind-plus",
@@ -86,10 +85,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Catalogo pago. Nao e open source, mesmo quando a pagina publica mostra preview",
-  "a11y": "So olhar a estrutura se a equipe tiver licenca",
-  "notes": "",
-  "license_ok": false
+  "summary": "Catálogo pago. Não é open source, mesmo quando a página pública mostra preview",
+  "a11y": "Só olhar a estrutura se a equipe tiver licença",
+  "notes": ""
  },
  {
   "id": "cult-ui",
@@ -100,7 +98,7 @@
   "repo": "https://github.com/nolly-studio/cult-ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -131,10 +129,9 @@
   "flashy": true,
   "craft": 2,
   "install": "npx shadcn@latest add @cult-ui/shift-card",
-  "summary": "Composicoes animadas MIT. Confirme o LICENSE no repo antes de copiar",
+  "summary": "Composições animadas MIT. Confirme o LICENSE no repo antes de copiar",
   "a11y": "Somente Persuade, e ainda assim um gesto por tela",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "eldora-ui",
@@ -170,11 +167,10 @@
   },
   "flashy": true,
   "craft": 2,
-  "install": "",
+  "install": "copiar via shadcn CLI conforme a página do componente",
   "summary": "Componentes animados para landing.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "hyperui",
@@ -185,7 +181,7 @@
   "repo": "https://github.com/markmead/hyperui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "html"
@@ -224,8 +220,7 @@
   "install": "copiar o markup da pagina do componente",
   "summary": "Blocos Tailwind v4 de marketing e comercio, sem pacote",
   "a11y": "Reescreva textos e tokens; o HTML copiado ainda precisa de label e foco",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "kokonut-ui",
@@ -236,7 +231,7 @@
   "repo": "https://github.com/kokonut-labs/kokonutui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -269,9 +264,8 @@
   "craft": 2,
   "install": "npx shadcn@latest add @kokonutui/particle-button",
   "summary": "Pecas MIT de produto com Motion. Kokonut Pro e pago",
-  "a11y": "Nao instale o botao de particulas num fluxo operacional",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Não instale o botão de particulas num fluxo operacional",
+  "notes": ""
  },
  {
   "id": "launch-ui",
@@ -310,11 +304,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Secoes de landing sobre shadcn.",
+  "install": "copiar via shadcn CLI conforme a página do componente",
+  "summary": "Seções de landing sobre shadcn.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "page-ui",
@@ -353,11 +346,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Componentes de landing copiaveis.",
+  "install": "copiar via shadcn CLI conforme a página do componente",
+  "summary": "Componentes de landing copiáveis.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "uiverse",
@@ -393,10 +385,9 @@
   },
   "flashy": true,
   "craft": 1,
-  "install": "",
+  "install": "copiar o código da página do componente",
   "summary": "Elementos da comunidade em HTML/CSS.",
   "a11y": "",
-  "notes": "Qualidade varia; avalie peca a peca.",
-  "license_ok": false
+  "notes": "Qualidade varia; avalie peca a peca."
  }
 ]

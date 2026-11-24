@@ -13,7 +13,7 @@ Cada regra tem uma camada em `data/rules.json`, e a camada limita a severidade:
 | Acabamento | MEDIUM | raios, escala de espaço, números tabulares | Polimento |
 | Composição | REVIEW | vazio, tela rasa, eco de selos, barras empilhadas, dado duplicado, alinhamento | Abrir a captura; corrigir pela causa ou dispensar com motivo |
 
-`--strict` falha com BLOCK ou HIGH. Os limites de composição são orçamentos do projeto: `project.budgets` (ou `screens[].budgets`) no manifesto, com padrões por modo (`operate`, `read`, `persuade`) em `data/rules.json`. Em sites e páginas de leitura, os detectores que só fazem sentido em app (tela rasa, links como menu, planos planos) ficam desligados.
+`--strict` falha com BLOCK ou HIGH. O contraste em tempo real compõe fundos translúcidos e lê as paradas de cor de gradientes: texto que reprova só na parada extrema, mas passa no meio do gradiente, sai como REVIEW; texto de logotipo (`logo`, `wordmark`) não tem exigência de contraste. Os limites de composição são orçamentos do projeto: `project.budgets` (ou `screens[].budgets`) no manifesto, com padrões por modo (`operate`, `read`, `persuade`) em `data/rules.json`. Em sites e páginas de leitura, os detectores que só fazem sentido em app (tela rasa, links como menu, planos planos) ficam desligados.
 
 ## 2. Um comando para os portões
 
@@ -30,7 +30,7 @@ Ele roda, conforme os caminhos informados:
 - completude da Bíblia (com zonas do manifesto);
 - sincronia entre Bíblia, shell e tokens.
 
-O resultado consolidado fica em `aura-check.json`. Os scripts também rodam isolados (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs`, `render_design_bible.py --check`).
+O resultado consolidado fica em `aura-check.json`. Portão sem a entrada correspondente aparece como "não rodou" e, com `--strict`, falha a verificação: sem ele o veredito é **pendente de verificação**. Num ajuste pontual que de fato dispensa algum portão, declare `--partial` e escreva o motivo no relatório. O relatório da captura anterior é apagado antes de cada rodada, então um navegador que não abriu nunca devolve resultado velho. Os scripts também rodam isolados (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs`, `render_design_bible.py --check`).
 
 ### Cobertura declarada
 - `screens[].viewports` define larguras por tela (`"desktop"`, `"1920x1080"`, `"mobile-360x800"`); `project.vitrineViewports` cobre a vitrine.
@@ -52,7 +52,7 @@ Ações disponíveis:
 - teclado real: `key`, `tabTo`, `assertFocused`;
 - ambiente: `setTheme`, `setReducedMotion`;
 - espera: `wait`, `waitFor`;
-- resultado: `assertVisible`, `assertText` (com `equals` para valor exato), `assertReachable` (ação visível e não encoberta);
+- resultado: `assertVisible`, `assertHidden`, `assertCount` (quantidade de itens), `assertText` (com `equals` para valor exato), `assertReachable` (ação visível e não encoberta; falha como `DA-REACHABLE`);
 - layout pós-ação: `assertNoOverflow`, `assertNoClip`;
 - evidência: `screenshot`.
 

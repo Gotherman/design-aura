@@ -4,15 +4,16 @@ Interface sofisticada não nasce de uma biblioteca famosa. Nasce de escolher, pa
 
 ## 1. Como a base é organizada
 
-- `data/taxonomy.json`: 24 categorias e mais de 110 necessidades, cada necessidade com palavras-chave em português e inglês.
+- `data/taxonomy.json`: 23 categorias e 110 necessidades, cada necessidade com palavras-chave em português e inglês. A categoria de cada necessidade entra automaticamente nas categorias da peça, então `--category` acha tudo o que resolve aquela família.
 - `data/catalog/<categoria>.json`: cerca de 360 entradas. Cada uma traz:
   - **uso**: dependência, código copiado via registry, primitivo de plataforma, ferramenta ou referência;
   - **stacks e plataformas**: html, react, vue, svelte, solid, angular, rn, flutter, ios, android, electron, tauri;
   - **modos**: operate, read, persuade; `flashy` marca peças de impacto que só entram em Persuade;
   - **estilo**: como re-tematizar (`headless`, `tokens`, `tailwind`, `themeable`, `native`) e o tipo de motion (`none`, `subtle`, `expressive`);
-  - **licença**: `license_status` (`ok`, `attribution`, `free-license`, `platform`, `verify`, `trap`, `study-only`, `reference`) e `license_checked_at`;
+  - **licença**: `license_status` (`ok`, `attribution`, `free-license`, `platform`, `verify`, `trap`, `study-only`, `reference`) e `license_checked_at` (data da conferência ao vivo no GitHub e no npm);
+  - **manutenção**: `stale` marca repositório parado há mais de 18 meses ou arquivado; a peça perde posição no ranking e sai sinalizada;
   - **acabamento**: `craft` de 1 a 3, a qualidade de acabamento observada;
-  - **resumo, instalação e notas**: o que a peça resolve, como entra e as ressalvas (partes pagas, atribuição, manutenção).
+  - **resumo, instalação e notas**: o que a peça resolve, como entra (`install`, e `installs` por stack quando o pacote muda: `@heroicons/react` no React, SVG copiado no HTML) e as ressalvas (partes pagas, atribuição, manutenção).
 
 Categorias: fundações e kits, navegação, tabelas, gráficos, KPIs, formulários, agenda, arrastar e kanban, overlays e feedback, editores e documentos, conversa e IA, canvas e diagramas, desktop, mobile, ícones, tipografia, imagem, motion, efeitos, seções de site, acesso e configurações, cor e tokens, referências.
 
@@ -24,7 +25,7 @@ python3 <skill_dir>/scripts/discover_oss_components.py --category charts --stack
 ## 2. Escolha em quatro passos
 
 ### Passo 1 — Necessidades
-Escreva a necessidade como verbo e contexto, não como "componente bonito": "agendar consultas por profissional com conflito de horário", "comparar 300 linhas e editar uma célula", "abrir um sheet arrastável com o polegar". O scanner lê o planejamento e o repositório e propõe as necessidades; o orquestrador corrige a lista.
+Escreva a necessidade como verbo e contexto, não como "componente bonito": "agendar consultas por profissional com conflito de horário", "comparar 300 linhas e editar uma célula", "abrir um sheet arrastável com o polegar". O scanner lê o planejamento e o repositório e propõe as necessidades; o orquestrador corrige a lista. Ele lê primeiro o planejamento, depois o código e as telas do produto, e por último os artefatos de design de rodadas anteriores (no máximo 10). Relatórios de auditoria e QA ficam fora, e marcação, CSS e nomes de classe são descartados, para que o vocabulário do design antigo não vire necessidade. As necessidades mais fortes (18 por padrão, `--max-needs` muda o corte) recebem candidatos; as demais saem listadas em "Também detectadas".
 
 ```bash
 python3 <skill_dir>/scripts/discover_oss_components.py --scan <repo-ou-plano> --stack <stack> --platform <plataforma> --mode <modo>
@@ -35,9 +36,10 @@ python3 <skill_dir>/scripts/discover_oss_components.py --need "agenda por profis
 Para cada necessidade, o script devolve até três candidatos de qualquer biblioteca, ranqueados por:
 - aderência à necessidade e à stack exata;
 - acabamento;
-- compatibilidade com a direção escolhida (`--direction design/direcao/escolhida.json` ou `--shape`, `--density`, `--motion`, `--skin`).
+- compatibilidade com a direção escolhida (`--direction design/direcao/direcao-<N>.json` ou `--shape`, `--density`, `--motion`, `--skin`);
+- manutenção: peças `stale` perdem posição.
 
-Peças chamativas perdem pontos fora de direções expressivas. Necessidades de site e de efeito são avaliadas no modo Persuade mesmo dentro de um sistema. A saída traz também referências para estudar, peças promissoras com licença a conferir e os padrões visuais de `recipes.json`.
+Quando uma peça cobre duas ou mais necessidades da mesma família (gráficos, tabelas, agenda, overlays), ela passa a ser a primeira opção de todas e a saída indica o motor único da família. Peças chamativas perdem pontos fora de direções expressivas. Necessidades de site e de efeito são avaliadas no modo Persuade mesmo dentro de um sistema. A saída traz também referências para estudar, peças promissoras com licença a conferir e os padrões visuais de `recipes.json`.
 
 ### Passo 3 — Compatibilidade
 Antes de adotar, confirme:

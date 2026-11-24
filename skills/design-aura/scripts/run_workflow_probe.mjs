@@ -15,7 +15,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 
-import { resolveViewport } from './audit_viewports.mjs';
+import { resolveViewport, findBrowser } from './audit_viewports.mjs';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -51,20 +51,6 @@ function parseArgs(argv) {
   return args;
 }
 
-function findBrowser() {
-  const candidates = [
-    process.env.CHROME_PATH,
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-    '/snap/bin/chromium',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  ].filter(Boolean);
-  for (const c of candidates) {
-    if (fs.existsSync(c)) return c;
-  }
-  return null;
-}
 
 function startStaticServer(rootDir) {
   return new Promise((resolve, reject) => {
@@ -403,7 +389,7 @@ async function runStep(cdp, step, ctx) {
         returnByValue: true,
       });
       const issue = res?.result?.value;
-      if (issue !== '') throw new Error(`${step.selector}: ${issue || 'Não foi possível verificar o controle'}`);
+      if (issue !== '') throw new Error(`DA-REACHABLE: ${step.selector}: ${issue || 'Não foi possível verificar o controle'}`);
       out.detail = `Controle alcançável: ${step.selector}`;
     } else if (act === 'assertText') {
       const sel = step.selector || 'body';

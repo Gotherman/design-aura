@@ -35,7 +35,7 @@ Escolha um trecho que represente o produto: a barra do app, um título com subt�
 python3 <skill_dir>/scripts/render_direction_board.py direcoes.json --out design/direcao
 ```
 
-Sai `direction-board.html` (cada direção em Light e Dark) e `direcao-N.tokens.json/.css` de cada uma, já calibrados pelo motor de cor (contraste e paridade semântica verificados).
+Sai `direction-board.html` (cada direção em Light e Dark), `direcao-N.json` (a direção em si) e `direcao-N.tokens.json/.css` de cada uma, já calibrados pelo motor de cor (contraste e paridade semântica verificados). A densidade aparece no board: compacta e arejada mudam espaço, altura de controle e de linha. Depois da escolha, o `direcao-N.json` alimenta os próximos comandos (`generate_tokens.py --direction` e `discover_oss_components.py --direction`), sem transcrever semente, forma ou densidade à mão.
 
 ### 4. Portão 1A
 Mostre o board e peça uma escolha: uma direção, uma mistura de eixos ("a cor da 1 com a forma da 2") ou outra rodada. Registre a escolha e o motivo na Parte A. Se a pessoa autorizou seguir direto, use a recomendada e diga qual foi.

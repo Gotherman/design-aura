@@ -6,12 +6,12 @@ description: >-
   genericos de design.
 disable-model-invocation: true
 metadata:
-  version: "3.1.0"
+  version: "3.1.1"
 ---
 
 # /designaura
 
-A pessoa pediu para começar a Design Aura (`v3.1.0`) neste projeto. Não pergunte se deve começar.
+A pessoa pediu para começar a Design Aura (`v3.1.1`) neste projeto. Não pergunte se deve começar.
 
 1. Abra o `SKILL.md` da skill **design-aura** instalada ao lado deste comando e siga o processo dele. Ele é a única fonte do fluxo, da entrevista e dos portões.
 2. Comece pela F0: leia o repositório e o planejamento, identifique o modo pelo pedido (criar, remodelar, polir, ajuste pontual ou upgrade) e o selo `**Design Aura:** vX.Y.Z` da Bíblia, se existir.

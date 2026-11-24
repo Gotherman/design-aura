@@ -6,7 +6,7 @@
   "use": "tool",
   "url": "https://www.fontshare.com",
   "repo": "",
-  "license": "ITF Free Font License (gratuita, nao OFL)",
+  "license": "ITF Free Font License (gratuita, não OFL)",
   "license_status": "free-license",
   "license_checked_at": null,
   "stacks": [
@@ -31,11 +31,10 @@
   "style": {},
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "baixar de https://www.fontshare.com (ITF FFL)",
   "summary": "Satoshi, General Sans, Switzer, Cabinet Grotesk, Clash Display e outras.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "fontsource",
@@ -73,8 +72,7 @@
   "install": "npm install @fontsource-variable/<familia>",
   "summary": "Fontes auto-hospedadas via npm.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "google-fonts",
@@ -108,11 +106,10 @@
   "style": {},
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Fontes livres; confira a licenca de cada familia.",
+  "install": "Google Fonts ou npm install @fontsource/<família>",
+  "summary": "Fontes livres; confira a licença de cada família.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "utopia",
@@ -148,10 +145,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Escalas fluidas de tipo e espaco com clamp().",
+  "summary": "Escalas fluidas de tipo e espaço com clamp().",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "collletttivo",
@@ -184,11 +180,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "baixar do site (OFL)",
   "summary": "Coletivo de fontes livres com personalidade.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "velvetyne",
@@ -221,10 +216,9 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "baixar do site (OFL)",
   "summary": "Fontes livres expressivas para Persuade.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  }
 ]

@@ -8,7 +8,7 @@
   "repo": "https://github.com/mathuo/dockview",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "electron",
@@ -41,10 +41,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install dockview-react",
-  "summary": "Painéis e abas arrastaveis no estilo IDE",
-  "a11y": "Garanta atalho de teclado alem do drag",
-  "notes": "",
-  "license_ok": true
+  "summary": "Painéis e abas arrastáveis no estilo IDE",
+  "a11y": "Garanta atalho de teclado além do drag",
+  "notes": ""
  },
  {
   "id": "react-resizable-panels",
@@ -55,7 +54,7 @@
   "repo": "https://github.com/bvaughn/react-resizable-panels",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "electron",
@@ -88,10 +87,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install react-resizable-panels",
-  "summary": "Divisao redimensionavel de master-detail sem animar o drag",
+  "summary": "Divisao redimensionável de master-detail sem animar o drag",
   "a11y": "Exponha teclado para o separador",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "tauri-window-api",
@@ -102,7 +100,7 @@
   "repo": "",
   "license": "MIT/Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "tauri"
   ],
@@ -125,11 +123,10 @@
   "style": {},
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npm install @tauri-apps/api",
   "summary": "App desktop leve com titlebar nativa customizada, atalhos globais e menu de bandeja",
   "a11y": "Respeita acessibilidade nativa de macOS, Windows e Linux",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "xterm",
@@ -140,7 +137,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -166,11 +163,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npm install @xterm/xterm",
   "summary": "Terminal no navegador.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "allotment",
@@ -181,7 +177,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -206,11 +202,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install allotment",
   "summary": "Paineis divididos no estilo VS Code.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "electron-frameless",
@@ -244,11 +239,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Integracao nativa de traffic lights macOS, Window Controls Overlay e tema do SO",
+  "install": "API do Electron: BrowserWindow com titleBarStyle/titleBarOverlay",
+  "summary": "Integração nativa de traffic lights macOS, Window Controls Overlay e tema do SÓ",
   "a11y": "Menus nativos e atalhos globais registrados no OS",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "flexlayout",
@@ -259,7 +253,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -284,11 +278,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Layout com abas acoplaveis.",
+  "install": "npm install flexlayout-react",
+  "summary": "Layout com abas acopláveis.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "split-js",
@@ -299,7 +292,7 @@
   "repo": "https://github.com/nathancahill/split",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -333,10 +326,10 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install split.js",
-  "summary": "Divisores de painel redimensionaveis (~2 KB, zero dependencias) em HTML/JS puro para workbenches desktop e simuladores",
+  "summary": "Divisores de painel redimensionáveis (~2 KB, zero dependências) em HTML/JS puro para workbenches desktop e simuladores",
   "a11y": "Adicione role='separator' e tabindex='0' no gutter",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "wails",
@@ -370,11 +363,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
   "summary": "Apps desktop com Go + web.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "golden-layout",
@@ -385,7 +377,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -410,10 +402,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Paineis acoplaveis sem framework.",
+  "install": "npm install golden-layout",
+  "summary": "Paineis acopláveis sem framework.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  }
 ]

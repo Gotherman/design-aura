@@ -33,11 +33,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npx ai-elements@latest",
   "summary": "Componentes de IA (mensagem, raciocinio, fontes) via registry shadcn.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "assistant-ui",
@@ -48,7 +47,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -74,11 +73,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npm install @assistant-ui/react",
   "summary": "Componentes de chat de IA com streaming e anexos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "prompt-kit",
@@ -89,10 +87,9 @@
   "repo": "https://github.com/ibelick/prompt-kit",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
-   "react",
-   "html"
+   "react"
   ],
   "platforms": [
    "system",
@@ -127,10 +124,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npx shadcn@latest add https://prompt-kit.com/r/prompt-input",
-  "summary": "Componentes copiaveis de alta precisao para simuladores de bot, compositores de mensagem, citacoes de regras e steps de raciocinio",
+  "summary": "Componentes copiáveis de alta precisao para simuladores de bot, compositores de mensagem, citações de regras e steps de raciocinio",
   "a11y": "Baseado em shadcn/ui com foco e atalhos Enter / Shift+Enter corretos",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "chatscope",
@@ -141,7 +137,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -166,10 +162,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
+  "install": "npm install @chatscope/chat-ui-kit-react @chatscope/chat-ui-kit-styles",
   "summary": "Kit de chat completo.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  }
 ]

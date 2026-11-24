@@ -1,6 +1,6 @@
 {
-  "version": "3.1.0",
-  "notes": "Taxonomia da base de componentes. Palavras-chave normalizadas (minusculas, sem acento). Palavra simples com 4+ letras casa como prefixo de palavra; com '=' no fim casa so a palavra exata; expressao com espaco casa como trecho entre limites de palavra.",
+  "version": "3.1.1",
+  "notes": "Taxonomia da base de componentes. Palavras-chave normalizadas (minusculas, sem acento). Palavra simples com 4+ letras casa como prefixo de palavra; com '=' no fim casa só a palavra exata; expressao com espaço casa como trecho entre limites de palavra.",
   "categories": [
     {
       "id": "foundations",
@@ -13,9 +13,9 @@
             "headless",
             "primitiv",
             "unstyled",
-            "acessib",
-            "accessib",
-            "aria"
+            "sem estilo",
+            "radix",
+            "react aria"
           ]
         },
         {
@@ -285,8 +285,12 @@
             "maps=",
             "geograf",
             "roteiriz",
-            "rastre",
-            "localiz",
+            "rastreamento de veiculo",
+            "rastreamento em tempo real",
+            "rastreio de frota",
+            "rastreio de entrega",
+            "localizacao em tempo real",
+            "geolocaliz",
             "frota",
             "gps="
           ]
@@ -339,12 +343,13 @@
           "id": "status-tracker",
           "name": "Faixa de status e saúde (tracker, uptime)",
           "keywords": [
-            "status",
+            "status page",
+            "pagina de status",
             "uptime",
             "health check",
             "disponibilidade",
-            "tracker",
-            "historico de status"
+            "historico de status",
+            "tracker"
           ]
         },
         {
@@ -716,6 +721,8 @@
           "name": "Chat e inbox de atendimento",
           "keywords": [
             "chat=",
+            "chatbot",
+            "bot=",
             "conversa",
             "mensage",
             "inbox",
@@ -732,12 +739,18 @@
           "keywords": [
             "ia=",
             "ai=",
-            "assistente",
+            "assistente de ia",
+            "assistente virtual",
             "copilot",
+            "copiloto",
             "prompt",
             "llm=",
-            "agente",
-            "bot="
+            "agente de ia",
+            "agentes de ia",
+            "agente ia",
+            "gpt=",
+            "chatgpt",
+            "inteligencia artificial"
           ]
         }
       ]
@@ -824,10 +837,9 @@
             "tauri",
             "desktop app",
             "app desktop",
-            "janela",
+            "aplicativo desktop",
             "windows",
             "macos",
-            "linux",
             "instalavel"
           ]
         },
@@ -935,7 +947,7 @@
           "name": "Estilo e tokens no mobile",
           "keywords": [
             "nativewind",
-            "stylesheet",
+            "stylesheet create",
             "tema mobile",
             "tokens mobile",
             "dark mode mobile"
@@ -1015,11 +1027,14 @@
           "id": "font-source",
           "name": "Fontes gratuitas",
           "keywords": [
-            "fonte",
-            "font",
+            "fonte tipografica",
+            "fontes tipograficas",
             "tipografia",
             "typeface",
-            "familia tipografica"
+            "familia tipografica",
+            "google fonts",
+            "webfont",
+            "font family"
           ]
         },
         {
@@ -1329,9 +1344,10 @@
           "keywords": [
             "estado vazio",
             "empty state",
-            "erro",
-            "404",
-            "sem resultado"
+            "sem resultado",
+            "pagina de erro",
+            "tela de erro",
+            "404="
           ]
         }
       ]
@@ -1380,8 +1396,9 @@
           "keywords": [
             "editor de tema",
             "theme editor",
-            "tema",
-            "dark mode"
+            "theme builder",
+            "personalizar tema",
+            "personalizacao de tema"
           ]
         }
       ]

@@ -41,10 +41,9 @@
   "flashy": true,
   "craft": 3,
   "install": "",
-  "summary": "Estudar microinteracao real e filtrar pelo guia 10. O que estiver atras do plano pago nao entra como fonte",
-  "a11y": "Reduced motion continua obrigatorio mesmo quando a referencia e exuberante",
-  "notes": "",
-  "license_ok": false
+  "summary": "Estudar microinteração real e filtrar pelo guia 10. O que estiver atrás do plano pago não entra como fonte",
+  "a11y": "Reduced motion continua obrigatório mesmo quando a referência e exuberante",
+  "notes": ""
  },
  {
   "id": "apple-hig",
@@ -53,7 +52,7 @@
   "use": "reference",
   "url": "https://developer.apple.com/design/human-interface-guidelines",
   "repo": "",
-  "license": "documentacao",
+  "license": "documentação",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -89,10 +88,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Anatomia de iOS, iPadOS e macOS. Use os controles do sistema. Nao porte Liquid Glass para web ou Android",
-  "a11y": "Dynamic Type, VoiceOver e Reduce Motion sao parte do guia",
-  "notes": "",
-  "license_ok": false
+  "summary": "Anatomia de iOS, iPadOS e macOS. Use os controles do sistema. Não porte Liquid Glass para web ou Android",
+  "a11y": "Dynamic Type, VoiceOver e Reduce Motion são parte do guia",
+  "notes": ""
  },
  {
   "id": "aria-apg",
@@ -137,10 +135,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Padrao de teclado e semantica. O componente implementa o padrao; o APG nao e uma biblioteca",
-  "a11y": "Fonte primaria para foco, nome e teclado",
-  "notes": "",
-  "license_ok": false
+  "summary": "Padrão de teclado e semântica. O componente implementa o padrão; o APG não é uma biblioteca",
+  "a11y": "Fonte primária para foco, nome e teclado",
+  "notes": ""
  },
  {
   "id": "bluesky",
@@ -183,10 +180,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar feed e tab bar em React Native. Nao copie o produto.",
+  "summary": "Estudar feed e tab bar em React Native. Não copie o produto.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "cal-com",
@@ -230,10 +226,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar agenda e fluxo desktop/mobile. Nao copie o codigo AGPL para o projeto.",
+  "summary": "Estudar agenda e fluxo desktop/mobile. Não copie o código AGPL para o projeto.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "component-gallery",
@@ -275,10 +270,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Indice de padroes e de quais design systems os implementam. Nao tem codigo para copiar",
-  "a11y": "Use so para achar o nome certo do padrao",
-  "notes": "",
-  "license_ok": false
+  "summary": "Índice de padrões e de quais design systems os implementam. Não tem código para copiar",
+  "a11y": "Use só para achar o nome certo do padrão",
+  "notes": ""
  },
  {
   "id": "dub",
@@ -320,19 +314,18 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar hierarquia de dashboard. Nao clone o app nem a paleta.",
+  "summary": "Estudar hierarquia de dashboard. Não clone o app nem a paleta.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "emil-kowalski",
-  "name": "Emil Kowalski (animacoes e skills)",
+  "name": "Emil Kowalski (animações e skills)",
   "kind": "official",
   "use": "reference",
   "url": "https://emilkowal.ski",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -359,10 +352,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Motion e microinteracao com criterio.",
+  "summary": "Motion e microinteração com criterio.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "primer",
@@ -371,7 +363,7 @@
   "use": "reference",
   "url": "https://primer.style",
   "repo": "https://github.com/primer/react",
-  "license": "referencia",
+  "license": "referência",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -400,10 +392,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar sistema web denso e responsivo. Dependencia so se o produto ja e uma superficie GitHub",
-  "a11y": "O codigo e aberto; so vira dependencia se a superficie ja e GitHub. Confirme o LICENSE no commit",
-  "notes": "",
-  "license_ok": false
+  "summary": "Estudar sistema web denso e responsivo. Dependência só se o produto já e uma superficie GitHub",
+  "a11y": "O código e aberto; só vira dependência se a superficie já e GitHub. Confirme o LICENSE no commit",
+  "notes": ""
  },
  {
   "id": "godly",
@@ -440,10 +431,9 @@
   "flashy": true,
   "craft": 3,
   "install": "",
-  "summary": "Landings premiadas. Util para um signature move, toxico como receita de sistema",
+  "summary": "Landings premiadas. Útil para um signature move, tóxico como receita de sistema",
   "a11y": "Ignore WebGL e scroll hijack em produto operacional",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "gov-uk-frontend",
@@ -452,7 +442,7 @@
   "use": "reference",
   "url": "https://design-system.service.gov.uk",
   "repo": "",
-  "license": "MIT (codigo) / OGL (conteudo)",
+  "license": "MIT (código) / OGL (conteúdo)",
   "license_status": "ok",
   "license_checked_at": null,
   "stacks": [
@@ -482,10 +472,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Padroes de formulario, erro e conteudo extremamente claros; otimo para anti-poluicao.",
+  "summary": "Padrões de formulário, erro e conteúdo extremamente claros; ótimo para anti-poluição.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "ice-cubes",
@@ -524,10 +513,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar SwiftUI atual. Liquid Glass fica no app Apple, nao no web.",
+  "summary": "Estudar SwiftUI atual. Liquid Glass fica no app Apple, não no web.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "impeccable",
@@ -536,7 +524,7 @@
   "use": "reference",
   "url": "https://impeccable.style/slop/",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -562,10 +550,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Catalogo de sinais de interface generica.",
+  "summary": "Catálogo de sinais de interface genérica.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "inclusive-components",
@@ -574,7 +561,7 @@
   "use": "reference",
   "url": "https://inclusive-components.design",
   "repo": "",
-  "license": "conteudo do site",
+  "license": "conteúdo do site",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -606,10 +593,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Arquitetura inclusiva de componentes web, um padrao por vez",
-  "a11y": "Preferir o padrao do artigo a um widget generico",
-  "notes": "",
-  "license_ok": false
+  "summary": "Arquitetura inclusiva de componentes web, um padrão por vez",
+  "a11y": "Preferir o padrão do artigo a um widget genérico",
+  "notes": ""
  },
  {
   "id": "m3-guidelines",
@@ -618,7 +604,7 @@
   "use": "reference",
   "url": "https://m3.material.io",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -646,8 +632,7 @@
   "install": "",
   "summary": "Anatomia e motion do Material 3 e 3 Expressive.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "fluent-2",
@@ -656,7 +641,7 @@
   "use": "reference",
   "url": "https://fluent2.microsoft.design",
   "repo": "",
-  "license": "documentacao",
+  "license": "documentação",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -687,10 +672,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Anatomia de Windows e de desktop denso. Nao e um kit para colar num ERP web",
+  "summary": "Anatomia de Windows e de desktop denso. Não é um kit para colar num ERP web",
   "a11y": "Foco, teclado e densidade estao no guia",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "midday",
@@ -731,10 +715,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar tabela financeira e dark mode. Confirme a licenca antes de qualquer copia.",
+  "summary": "Estudar tabela financeira e dark mode. Confirme a licença antes de qualquer copia.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "mobbin",
@@ -781,9 +764,8 @@
   "craft": 3,
   "install": "",
   "summary": "Fluxos reais de apps. Serve para estudar hierarquia, nunca para copiar tela",
-  "a11y": "Captura nao revela foco, leitor de tela nem licenca",
-  "notes": "",
-  "license_ok": false
+  "a11y": "Captura não revela foco, leitor de tela nem licença",
+  "notes": ""
  },
  {
   "id": "netnewswire",
@@ -824,10 +806,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar coluna tripla no HIG. Nao porte essa janela para a web.",
+  "summary": "Estudar coluna tripla no HIG. Não porte essa janela para a web.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "nngroup",
@@ -836,7 +817,7 @@
   "use": "reference",
   "url": "https://www.nngroup.com/articles",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -862,10 +843,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Pesquisa de usabilidade e heuristicas.",
+  "summary": "Pesquisa de usabilidade e heurísticas.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "rauno-interfaces",
@@ -874,7 +854,7 @@
   "use": "reference",
   "url": "https://interfaces.rauno.me",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -903,8 +883,7 @@
   "install": "",
   "summary": "Detalhes de oficio em interfaces.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "refactoring-ui",
@@ -913,7 +892,7 @@
   "use": "reference",
   "url": "https://www.refactoringui.com",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -939,10 +918,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Hierarquia, espaco e cor para devs (livro pago; use os conceitos).",
+  "summary": "Hierarquia, espaço e cor para devs (livro pago; use os conceitos).",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "refero",
@@ -983,10 +961,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Referencias de produto web por tipo de tela",
-  "a11y": "So composicao. O codigo continua vindo de uma lib com licenca",
-  "notes": "",
-  "license_ok": false
+  "summary": "Referências de produto web por tipo de tela",
+  "a11y": "Só composição. O código continua vindo de uma lib com licença",
+  "notes": ""
  },
  {
   "id": "polaris",
@@ -995,7 +972,7 @@
   "use": "reference",
   "url": "https://polaris.shopify.com",
   "repo": "https://github.com/Shopify/polaris",
-  "license": "referencia",
+  "license": "referência",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1029,8 +1006,7 @@
   "install": "",
   "summary": "Estudar painel administrativo e fluxo desktop/mobile. Instalar Polaris quando o app e de fato Shopify",
   "a11y": "App Shopify herda o shell da plataforma em vez de reinventar sidebar",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "signal",
@@ -1074,10 +1050,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar lista de conversa com padrao nativo separado por sistema. GPL: nao copie o codigo.",
+  "summary": "Estudar lista de conversa com padrão nativo separado por sistema. GPL: não copie o código.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "siteinspire",
@@ -1114,10 +1089,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Curadoria de sites. Serve para leitura e persuasao, nao para a estrutura de um sistema.",
+  "summary": "Curadoria de sites. Serve para leitura e persuasao, não para a estrutura de um sistema.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "stripe-checkout",
@@ -1126,7 +1100,7 @@
   "use": "reference",
   "url": "https://docs.stripe.com/payments/checkout",
   "repo": "",
-  "license": "documentacao",
+  "license": "documentação",
   "license_status": "study-only",
   "license_checked_at": null,
   "stacks": [
@@ -1156,10 +1130,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar a friccao do pagamento. Nao redesenhe o Checkout hospedado sem necessidade.",
+  "summary": "Estudar a fricção do pagamento. Não redesenhe o Checkout hospedado sem necessidade.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "supabase-studio",
@@ -1201,8 +1174,7 @@
   "install": "",
   "summary": "Estudar tabela densa de dados no navegador.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "twenty",
@@ -1242,10 +1214,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar views de CRM. A composicao ainda sai do fluxo deste projeto.",
+  "summary": "Estudar views de CRM. A composição ainda sai do fluxo deste projeto.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "geist",
@@ -1254,7 +1225,7 @@
   "use": "reference",
   "url": "https://vercel.com/geist",
   "repo": "",
-  "license": "referencia",
+  "license": "referência",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1284,10 +1255,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar tipo, dark mode e shell de web app. Nao adotar a pele da Vercel como identidade do produto",
+  "summary": "Estudar tipo, dark mode e shell de web app. Não adotar a pele da Vercel como identidade do produto",
   "a11y": "Contraste do tema ainda passa pelo audit_contrast.py",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "vercel-wig",
@@ -1296,7 +1266,7 @@
   "use": "reference",
   "url": "https://vercel.com/design/guidelines",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1322,10 +1292,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Lista viva de decisoes de interface (teclado, foco, formularios, layout, conteudo).",
+  "summary": "Lista viva de decisões de interface (teclado, foco, formulários, layout, conteúdo).",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "wcag-22",
@@ -1334,7 +1303,7 @@
   "use": "reference",
   "url": "https://www.w3.org/WAI/WCAG22/quickref",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1362,8 +1331,7 @@
   "install": "",
   "summary": "Criterios de acessibilidade.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "zed",
@@ -1402,10 +1370,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Estudar paineis e tipografia de editor nativo. GPL: nao copie o codigo.",
+  "summary": "Estudar paineis e tipografia de editor nativo. GPL: não copie o código.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "21st-dev",
@@ -1442,10 +1409,9 @@
   "flashy": true,
   "craft": 2,
   "install": "",
-  "summary": "Vitrine da comunidade. Cada peca tem dono e licenca diferentes",
-  "a11y": "Nao trate o site como registry MIT",
-  "notes": "",
-  "license_ok": false
+  "summary": "Vitrine da comunidade. Cada peca tem dono e licença diferentes",
+  "a11y": "Não trate o site como registry MIT",
+  "notes": ""
  },
  {
   "id": "appflowy",
@@ -1488,8 +1454,7 @@
   "install": "",
   "summary": "Estudar o mesmo produto em desktop e mobile sem espremer o layout.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "appwrite-console",
@@ -1526,10 +1491,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar navegacao lateral de console. Nao adote o visual inteiro.",
+  "summary": "Estudar navegação lateral de console. Não adote o visual inteiro.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "awwwards",
@@ -1538,7 +1502,7 @@
   "use": "reference",
   "url": "https://www.awwwards.com",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1567,8 +1531,7 @@
   "install": "",
   "summary": "Sites premiados; cuidado com excesso de efeito.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "banani",
@@ -1611,10 +1574,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Telas reais de apps, sem paywall. Estudar o fluxo. Nao exportar o HTML que a IA do site gera",
-  "a11y": "Captura nao mostra foco nem leitor de tela",
-  "notes": "",
-  "license_ok": false
+  "summary": "Telas reais de apps, sem paywall. Estudar o fluxo. Não exportar o HTML que a IA do site gera",
+  "a11y": "Captura não mostra foco nem leitor de tela",
+  "notes": ""
  },
  {
   "id": "bitwarden",
@@ -1657,10 +1619,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar formulario e lista no celular. GPL: nao copie o codigo.",
+  "summary": "Estudar formulário e lista no celular. GPL: não copie o código.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "breezy",
@@ -1699,10 +1660,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar Material 3 no celular. Nao copie o tema do clima para outro dominio.",
+  "summary": "Estudar Material 3 no celular. Não copie o tema do clima para outro dominio.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "calltoinspiration",
@@ -1743,10 +1703,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar um estado especifico (vazio, login, erro). Nao monte a tela como colagem desses recortes.",
+  "summary": "Estudar um estado específico (vazio, login, erro). Não monte a tela como colagem desses recortes.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "dark-design",
@@ -1784,10 +1743,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar dark mode de produtos reais. A paleta do projeto continua sendo a da marca e dos neutros proprios.",
+  "summary": "Estudar dark mode de produtos reais. A paleta do projeto continua sendo a da marca e dos neutros próprios.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "design-systems-surf",
@@ -1796,7 +1754,7 @@
   "use": "reference",
   "url": "https://designsystems.surf",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1822,10 +1780,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Indice de design systems publicos.",
+  "summary": "Índice de design systems públicos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "directus",
@@ -1864,10 +1821,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar master-detail de painel. A licenca mudou ao longo do tempo: confirme no commit.",
+  "summary": "Estudar master-detail de painel. A licença mudou ao longo do tempo: confirme no commit.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "documenso",
@@ -1907,10 +1863,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar fluxo em passos. Nao copie o codigo AGPL.",
+  "summary": "Estudar fluxo em passos. Não copie o código AGPL.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "every-layout",
@@ -1919,7 +1874,7 @@
   "use": "reference",
   "url": "https://every-layout.dev",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -1947,8 +1902,7 @@
   "install": "",
   "summary": "Primitivos de layout intrinseco (conceitos).",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "evidence",
@@ -1986,10 +1940,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar relatorio com ritmo editorial, nao dashboard de cards iguais.",
+  "summary": "Estudar relatório com ritmo editorial, não dashboard de cards iguais.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "formbricks",
@@ -2030,10 +1983,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar editor ao lado do preview. Nao copie o codigo AGPL.",
+  "summary": "Estudar editor ao lado do preview. Não copie o código AGPL.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "grafana",
@@ -2073,10 +2025,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar painel de telemetria. AGPL: nao copie o codigo.",
+  "summary": "Estudar painel de telemetria. AGPL: não copie o código.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "hoppscotch",
@@ -2115,10 +2066,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar layout de varios paineis. O app e MIT, mas nao se instala como kit de UI.",
+  "summary": "Estudar layout de vários paineis. O app e MIT, mas não se instala como kit de UI.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "httpster",
@@ -2127,7 +2077,7 @@
   "use": "reference",
   "url": "https://httpster.net",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -2155,8 +2105,7 @@
   "install": "",
   "summary": "Sites com tipografia forte.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "infisical",
@@ -2194,10 +2143,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar hierarquia de dado tecnico. Confirme a licenca antes de copiar.",
+  "summary": "Estudar hierarquia de dado técnico. Confirme a licença antes de copiar.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "land-book",
@@ -2206,7 +2154,7 @@
   "use": "reference",
   "url": "https://land-book.com",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -2234,8 +2182,7 @@
   "install": "",
   "summary": "Galeria de landings e sites.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "lapa",
@@ -2271,10 +2218,9 @@
   "flashy": true,
   "craft": 2,
   "install": "",
-  "summary": "Galeria de landing e preco. Estude a ordem da prova. Nao copie o layout.",
+  "summary": "Galeria de landing e preço. Estude a ordem da prova. Não copie o layout.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "laws-of-ux",
@@ -2283,7 +2229,7 @@
   "use": "reference",
   "url": "https://lawsofux.com",
   "repo": "",
-  "license": "conteudo do site",
+  "license": "conteúdo do site",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -2318,10 +2264,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Leis cognitivas para justificar hierarquia e alcance. Nao e catalogo de componentes",
+  "summary": "Leis cognitivas para justificar hierarquia e alcance. Não é catálogo de componentes",
   "a11y": "Fitts explica o terco inferior no mobile e o alvo grande no desktop",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "localsend",
@@ -2360,10 +2305,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar uma tarefa so, clara, adaptada a cada tela.",
+  "summary": "Estudar uma tarefa só, clara, adaptada a cada tela.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "metabase",
@@ -2403,10 +2347,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar como uma pergunta vira um grafico legivel.",
+  "summary": "Estudar como uma pergunta vira um gráfico legível.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "minimal-gallery",
@@ -2415,7 +2358,7 @@
   "use": "reference",
   "url": "https://minimal.gallery",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -2443,8 +2386,7 @@
   "install": "",
   "summary": "Sites minimalistas bem resolvidos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "navbar-gallery",
@@ -2483,10 +2425,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Comparar barras de navegacao. Escolha a que cabe no shell desta plataforma, nao a mais cheia.",
+  "summary": "Comparar barras de navegação. Escolha a que cabe no shell desta plataforma, não a mais cheia.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "nicelydone",
@@ -2495,7 +2436,7 @@
   "use": "reference",
   "url": "https://nicelydone.club",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -2523,8 +2464,7 @@
   "install": "",
   "summary": "Fluxos de produtos reais.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "one-page-love",
@@ -2533,7 +2473,7 @@
   "use": "reference",
   "url": "https://onepagelove.com",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -2559,10 +2499,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Sites de uma pagina.",
+  "summary": "Sites de uma página.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "openstatus",
@@ -2601,10 +2540,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar pagina de status e grafico sem ruido.",
+  "summary": "Estudar página de status e gráfico sem ruido.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "organic-maps",
@@ -2645,14 +2583,13 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar mapa em tela cheia com poucos controles. Nao instale o app como kit.",
+  "summary": "Estudar mapa em tela cheia com poucos controles. Não instale o app como kit.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "govbr-ds",
-  "name": "Padrao Digital de Governo (gov.br DS)",
+  "name": "Padrão Digital de Governo (gov.br DS)",
   "kind": "anatomy",
   "use": "reference",
   "url": "https://www.gov.br/ds",
@@ -2684,10 +2621,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Design system do governo brasileiro; referencia para govtech.",
+  "summary": "Design system do governo brasileiro; referência para govtech.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "pageflows",
@@ -2729,10 +2665,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Videos de fluxo real, sobretudo mobile",
-  "a11y": "Observe a ordem das decisoes, nao a animacao decorativa",
-  "notes": "",
-  "license_ok": false
+  "summary": "Vídeos de fluxo real, sobretudo mobile",
+  "a11y": "Observe a ordem das decisões, não a animação decorativa",
+  "notes": ""
  },
  {
   "id": "paywallscreens",
@@ -2773,10 +2708,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Telas reais de paywall. Estude hierarquia de plano. Nao copie a tela de outro app.",
+  "summary": "Telas reais de paywall. Estude hierarquia de plano. Não copie a tela de outro app.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "penpot",
@@ -2818,8 +2752,7 @@
   "install": "",
   "summary": "Estudar chrome complexo: barra, inspetor e canvas.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "plane",
@@ -2860,10 +2793,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar sidebar densa de gestao de projeto. Nao copie o codigo AGPL.",
+  "summary": "Estudar sidebar densa de gestao de projeto. Não copie o código AGPL.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "plausible",
@@ -2902,10 +2834,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar painel de uma tela so. Nao copie o codigo AGPL.",
+  "summary": "Estudar painel de uma tela só. Não copie o código AGPL.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "polar",
@@ -2945,10 +2876,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar checkout e assinatura. Nao copie a tela sem ler a licenca.",
+  "summary": "Estudar checkout e assinatura. Não copie a tela sem ler a licença.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "posthog",
@@ -2988,10 +2918,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar densidade de analytics. Nao herde a cara do PostHog.",
+  "summary": "Estudar densidade de analytics. Não herde a cara do PostHog.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "read-you",
@@ -3030,10 +2959,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar Compose e Material 3. Expressive nao entra em Operate web.",
+  "summary": "Estudar Compose e Material 3. Expressive não entra em Operate web.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "saas-interface",
@@ -3042,7 +2970,7 @@
   "use": "reference",
   "url": "https://saasinterface.com",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -3070,8 +2998,7 @@
   "install": "",
   "summary": "Telas de apps SaaS.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "saasframe",
@@ -3080,7 +3007,7 @@
   "use": "reference",
   "url": "https://www.saasframe.io",
   "repo": "",
-  "license": "galeria / conteudo",
+  "license": "galeria / conteúdo",
   "license_status": "reference",
   "license_checked_at": null,
   "stacks": [
@@ -3107,10 +3034,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Paginas e telas de SaaS.",
+  "summary": "Páginas e telas de SaaS.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "saaspo",
@@ -3146,10 +3072,9 @@
   "flashy": true,
   "craft": 2,
   "install": "",
-  "summary": "Galeria de landing de SaaS. Referencia de ordem, nao de codigo.",
+  "summary": "Galeria de landing de SaaS. Referência de ordem, não de código.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "screenlane",
@@ -3191,9 +3116,8 @@
   "craft": 2,
   "install": "",
   "summary": "Telas mobile por categoria",
-  "a11y": "Referencia de layout apenas",
-  "notes": "",
-  "license_ok": false
+  "a11y": "Referência de layout apenas",
+  "notes": ""
  },
  {
   "id": "taxonomy",
@@ -3231,10 +3155,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Exemplo de landing com app. Nao use o repositorio como casca do produto do cliente.",
+  "summary": "Exemplo de landing com app. Não use o repositório como casca do produto do cliente.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "uswds",
@@ -3243,7 +3166,7 @@
   "use": "reference",
   "url": "https://designsystem.digital.gov",
   "repo": "",
-  "license": "dominio publico / CC0 (conferir)",
+  "license": "dominio público / CC0 (conferir)",
   "license_status": "verify",
   "license_checked_at": null,
   "stacks": [
@@ -3270,10 +3193,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Formularios e componentes acessiveis de governo.",
+  "summary": "Formulários e componentes acessíveis de governo.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "umami",
@@ -3314,10 +3236,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Estudar dashboard de metrica sem poluicao. Nao clone o produto.",
+  "summary": "Estudar dashboard de métrica sem poluição. Não clone o produto.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "yaak",
@@ -3357,8 +3278,7 @@
   "install": "",
   "summary": "Estudar cliente desktop em Tauri com cara de app nativo.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "pixlpin",
@@ -3395,9 +3315,8 @@
   "flashy": true,
   "craft": 1,
   "install": "",
-  "summary": "Pecas de campanha, poster e motion. Nao e anatomia de app operacional nem de sistema",
-  "a11y": "Nao usar como padrao de estrutura",
-  "notes": "",
-  "license_ok": false
+  "summary": "Pecas de campanha, poster e motion. Não é anatomia de app operacional nem de sistema",
+  "a11y": "Não usar como padrão de estrutura",
+  "notes": ""
  }
 ]

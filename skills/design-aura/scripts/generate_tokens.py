@@ -199,6 +199,7 @@ def build_css(data: dict) -> str:
     semantic = data.get("semantic", {})
     typo = data.get("typography", {})
     spacing = data.get("spacing", {})
+    sizing = data.get("sizing", {})
     radii = data.get("radii", {})
     motion = data.get("motion", {})
 
@@ -225,6 +226,7 @@ def build_css(data: dict) -> str:
         emit_css_vars(base_theme_vars),
         emit_css_vars(typo),
         emit_css_vars(spacing_vars),
+        emit_css_vars(sizing),
         emit_css_vars(radii_vars),
         emit_css_vars(motion_vars),
         f"  --da-depth-style: {depth_style};",
@@ -262,7 +264,7 @@ def build_css(data: dict) -> str:
         "}",
         "",
         ":focus-visible {",
-        "  outline: 2px solid var(--accent);",
+        "  outline: 2px solid var(--focus-ring, var(--accent));",
         "  outline-offset: 2px;",
         "}",
         "",
@@ -525,33 +527,58 @@ def main():
     parser.add_argument("--out", default="tokens.css", help="Arquivo ou pasta de saida")
     parser.add_argument("--format", default="css", choices=["css", "tailwind", "ts", "swift", "kotlin", "dart", "dtcg", "all"], help="Formato de exportacao")
     parser.add_argument("--check-contrast", action="store_true", help="Valida WCAG e APCA apos gerar o CSS")
-    parser.add_argument("--seed", help="Cor principal da marca (hex). Gera o tokens.json inteiro pelo motor OKLCH")
-    parser.add_argument("--accent", help="Cor de acento (hex). Sem ela, o acento sai da harmonia escolhida")
-    parser.add_argument("--harmony", default="complementar", choices=["complementar", "analoga", "dividida", "triade", "mono"])
-    parser.add_argument("--depth-style", default="hairline", choices=["hairline", "soft", "tonal", "tactile"])
-    parser.add_argument("--neutral-tint", type=float, default=0.012, help="Croma dos neutros tingidos pela marca (0 a 0.03)")
-    parser.add_argument("--shape", default="soft", choices=["sharp", "soft", "round"], help="Linguagem de forma (raios)")
-    parser.add_argument("--density", default="regular", choices=["compact", "regular", "airy"])
-    parser.add_argument("--default-theme", default="light", choices=["light", "dark"])
-    parser.add_argument("--brand", default="Projeto")
+    parser.add_argument("--direction", help="direcao-N.json do Estudio de Direcao: semente, acento, harmonia, profundidade, forma, "
+                                                "densidade, tema e fontes. Opcoes explicitas abaixo sobrescrevem a direcao")
+    parser.add_argument("--seed", help="Cor principal da marca (#hex, rgb(), hsl(), oklch() ou nome CSS)")
+    parser.add_argument("--accent", help="Cor de acento. Sem ela, o acento sai da harmonia escolhida")
+    parser.add_argument("--harmony", choices=["complementar", "analoga", "dividida", "triade", "mono"])
+    parser.add_argument("--depth-style", choices=["hairline", "soft", "tonal", "tactile"])
+    parser.add_argument("--neutral-tint", type=float, help="Croma dos neutros tingidos pela marca (0 a 0.03; padrao 0.012)")
+    parser.add_argument("--shape", choices=["sharp", "soft", "round"], help="Linguagem de forma (raios)")
+    parser.add_argument("--density", choices=["compact", "regular", "airy"])
+    parser.add_argument("--default-theme", choices=["light", "dark"])
+    parser.add_argument("--brand")
     parser.add_argument("--font-display", default="")
     parser.add_argument("--font-ui", default="")
     parser.add_argument("--font-mono", default="")
     parser.add_argument("--emit-json", help="Onde gravar o tokens.json gerado por --seed (padrao: ao lado de --out)")
     args = parser.parse_args()
 
-    if not args.input and not args.seed:
-        parser.error("informe um tokens.json ou --seed")
+    direction = {}
+    if args.direction:
+        direction = json.loads(Path(args.direction).read_text(encoding="utf-8"))
+    pick = lambda flag, key, default: flag if flag not in (None, "") else (direction.get(key) or default)  # noqa: E731
+    seed = pick(args.seed, "seed", None)
+    if not args.input and not seed:
+        parser.error("informe um tokens.json, --seed ou --direction")
 
     try:
-        if args.seed:
-            from color_engine import build_tokens  # noqa: E402
+        if seed:
+            from color_engine import build_tokens, parse_color  # noqa: E402
 
-            fonts = {k: v for k, v in (("display", args.font_display), ("ui", args.font_ui), ("mono", args.font_mono)) if v}
-            data = build_tokens(args.seed, args.accent, args.harmony, args.depth_style, args.neutral_tint, args.brand,
-                                args.default_theme, fonts, args.density)
-            data["radii"] = SHAPE_RADII[args.shape]
-            data["meta"]["shape"] = args.shape
+            dfonts = direction.get("fonts") or {}
+            fonts = {k: v for k, v in (("display", args.font_display or dfonts.get("display", "")),
+                                       ("ui", args.font_ui or dfonts.get("ui", "")),
+                                       ("mono", args.font_mono or dfonts.get("mono", ""))) if v}
+            accent = pick(args.accent, "accent", None)
+            shape = pick(args.shape, "shape", "soft")
+            density = pick(args.density, "density", "regular")
+            for label, value in (("--seed", seed), ("--accent", accent)):
+                if value:
+                    try:
+                        parse_color(value)
+                    except ValueError as exc:
+                        parser.error(f"{label}: {exc}")
+            data = build_tokens(seed, accent, pick(args.harmony, "harmony", "complementar"), pick(args.depth_style, "depth_style", "hairline"),
+                                args.neutral_tint if args.neutral_tint is not None else float(direction.get("neutral_tint", 0.012)),
+                                pick(args.brand, "project", "Projeto"), pick(args.default_theme, "default_theme", "light"), fonts, density)
+            data["radii"] = SHAPE_RADII.get(shape, SHAPE_RADII["soft"])
+            data["meta"]["shape"] = shape
+            for key in ("name", "motion", "skin"):
+                if direction.get(key):
+                    data["meta"]["direction" if key == "name" else key] = direction[key]
+            for note in data["report"].get("notes", []):
+                print(f"[nota] {note}")
             out_path = Path(args.out)
             json_path = Path(args.emit_json) if args.emit_json else (out_path if out_path.suffix == "" else out_path.parent) / "tokens.json"
             json_path.parent.mkdir(parents=True, exist_ok=True)

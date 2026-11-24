@@ -41,7 +41,7 @@ def github_slug(entry: dict) -> str | None:
 
 
 def npm_name(entry: dict) -> str | None:
-    m = re.search(r"npm install (@?[a-z0-9._/-]+)", entry.get("install") or "")
+    m = re.search(r"(?:npm install|npx expo install)(?: -D)? (?!https?:)(@?[a-z0-9][a-z0-9._/-]*)", entry.get("install") or "")
     return m.group(1) if m else None
 
 
@@ -87,7 +87,12 @@ def check(entry: dict) -> dict:
             if age > 540:
                 flags.append(f"sem atividade ha {age} dias")
     out["flags"] = flags
-    out["confirmed"] = bool(out["sources"]) and not flags and any(s.get("license") for s in out["sources"])
+    # Licenca confirmada e atividade sao coisas separadas: um projeto parado continua com a licenca conferida,
+    # mas sai marcado como stale e perde posicao no ranking.
+    license_flags = [f for f in flags if f.startswith("licenca")]
+    out["archived"] = any(s.get("archived") for s in out["sources"])
+    out["stale"] = out["archived"] or any(f.startswith("sem atividade") for f in flags)
+    out["confirmed"] = bool(out["sources"]) and not license_flags and any(s.get("license") for s in out["sources"])
     return out
 
 
@@ -115,6 +120,10 @@ def main():
             results.append(res)
             if args.mark_checked and res["confirmed"]:
                 entry["license_checked_at"] = today
+                if res["stale"]:
+                    entry["stale"] = True
+                else:
+                    entry.pop("stale", None)
                 changed = True
         if changed:
             path.write_text(json.dumps(entries, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

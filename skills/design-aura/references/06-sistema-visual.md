@@ -6,14 +6,19 @@ Este guia é o método de cada eixo da direção. Ele não traz uma paleta, uma 
 
 ### Gere a paleta pela semente
 ```bash
+python3 <skill_dir>/scripts/generate_tokens.py --direction design/direcao/direcao-<N>.json --emit-json design/tokens.json --out design/ --format all --check-contrast
+# ou, sem o estúdio:
 python3 <skill_dir>/scripts/generate_tokens.py --seed "#<marca>" [--accent "#<acento>"] --harmony <complementar|analoga|dividida|triade|mono> \
   --depth-style <hairline|soft|tonal|tactile> --shape <sharp|soft|round> --density <compact|regular|airy> --emit-json design/tokens.json --out design/ --format all --check-contrast
 ```
+A semente aceita `#hex`, `rgb()`, `hsl()`, `oklch()` ou nome CSS.
 O motor trabalha em OKLCH e entrega:
 - **Escalas de 12 degraus** para marca, acento e neutro, cada degrau com função: 1–2 fundos, 3–5 elementos (repouso, hover, ativo), 6–8 bordas, 9–10 sólido, 11–12 texto.
 - **Neutros tingidos pela matiz da marca** (croma ~0,005–0,02). É o que dá coesão sem monobloco cinza: o cinza "pertence" à marca.
 - **Semânticas com família fixa e energia da marca.** Erro fica em vermelho, sucesso em verde e atenção em âmbar nos dois temas; a luminosidade e o croma acompanham a marca, e a matiz se aproxima dela no máximo 6°. Assim o vermelho é vermelho de verdade sem parecer a paleta padrão do Tailwind.
-- **Sólidos com texto legível.** Cada cor sólida é ajustada o mínimo possível (escurecer com texto branco ou clarear com texto escuro) até passar WCAG 4,5:1 e APCA |Lc| 60. Uma cor viva da marca não vira marrom para caber texto branco.
+- **Sólidos com texto legível.** Cada cor sólida é ajustada o mínimo possível (escurecer com texto branco ou clarear com texto escuro) até passar WCAG 4,5:1 e APCA |Lc| 60. Uma cor viva da marca não vira marrom para caber texto branco: amarelo continua amarelo, com texto escuro.
+- **Preenchimento, traço e foco são tokens diferentes.** `--primary` é o preenchimento (botão, seleção forte). Traço, indicador ativo e ícone sobre a tela usam `--primary-strong` (3:1 contra a tela); texto em cor de marca usa `--primary-text` (4,5:1). O anel de foco usa `--focus-ring`, que também passa de 3:1. Com marca escura os três coincidem; com marca clara, não.
+- **Marca preta, branca ou cinza** vira tinta: quase preto no Light, quase branco no Dark, neutros sem matiz e um acento que a direção precisa escolher. O motor não inventa uma matiz para uma cor que não tem.
 - **Dark derivado das mesmas escalas**, com elevação mais clara a cada plano.
 - **Gráficos** com seis cores de luminosidade parecida, separadas também para deuteranopia e protanopia.
 
@@ -45,7 +50,7 @@ Números tabulares, nomes longos, valores monetários e acentos do português (�
 ## 3. Espaço e forma
 
 - **Tokens por papel:** `inset` (padding), `stack` (vertical), `inline` (horizontal), `section`, todos sobre 4/8 px. Ajustes ópticos de 2 px dentro de controles são normais.
-- **Densidade:** compacta, equilibrada ou arejada, decidida na direção. Ela muda o espaçamento, não a hierarquia.
+- **Densidade:** compacta, equilibrada ou arejada, decidida na direção. Ela muda a escala de espaço, `--control-h`, `--row-h` e o texto base (15, 16 ou 17 px), não a hierarquia. `--touch-min` continua 44 px (48 dp no Android) em qualquer densidade.
 - **Proximidade:** o espaço interno de um grupo é no máximo metade do espaço entre grupos. Mais espaço acima de um título do que abaixo.
 - **Grade:** colunas, gutters e margens por breakpoint; largura máxima de conteúdo; container queries em componentes que mudam de forma.
 - **Linhas de alinhamento:** poucas bordas esquerdas distintas por tela dão calma. O auditor conta e sinaliza excesso como REVIEW.

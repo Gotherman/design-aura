@@ -8,7 +8,7 @@
   "repo": "https://github.com/cosscom/ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -46,10 +46,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npx shadcn@latest add https://coss.com/ui/r/input.json",
-  "summary": "Inputs, seletores e microinteracoes de produto. O repositorio antigo origin-space/originui aponta para ca",
+  "summary": "Inputs, seletores e microinterações de produto. O repositório antigo origin-space/originui aponta para ca",
   "a11y": "Confirme o LICENSE no commit copiado; o snapshot legado Origin fica em apps/origin",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "imask-js",
@@ -60,7 +59,7 @@
   "repo": "https://github.com/uNmAnNeR/imaskjs",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -100,10 +99,10 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install imask",
-  "summary": "Mascaras de digitacao precisas em vanilla JS ou React para CNPJ, CPF, valores em R$, linha digitavel de boleto, CEP e datas",
-  "a11y": "Mantem posicao do cursor e colagem limpa",
+  "summary": "Mascaras de digitação precisas em vanilla JS ou React para CNPJ, CPF, valores em R$, linha digitável de boleto, CEP e datas",
+  "a11y": "Mantem posição do cursor e colagem limpa",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "input-otp",
@@ -114,7 +113,7 @@
   "repo": "https://github.com/guilhermerodz/input-otp",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -150,10 +149,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install input-otp",
-  "summary": "Campo 2FA/OTP de 6 digitos com colagem automatica, foco continuo e zero friccao",
-  "a11y": "Usa um unico <input> real oculto sob os slots visuais para compatibilidade total com leitores de tela e autofill do SO",
-  "notes": "",
-  "license_ok": true
+  "summary": "Campo 2FA/OTP de 6 digitos com colagem automática, foco continuo e zero fricção",
+  "a11y": "Usa um único <input> real oculto sob os slots visuais para compatibilidade total com leitores de tela e autofill do SÓ",
+  "notes": ""
  },
  {
   "id": "react-day-picker",
@@ -164,7 +162,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -190,11 +188,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Seletor de data e periodo acessivel (base do shadcn).",
+  "install": "npm install react-day-picker",
+  "summary": "Seletor de data e período acessível (base do shadcn).",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "react-hook-form",
@@ -205,7 +202,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -230,11 +227,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Estado e validacao de formularios com pouco render.",
+  "install": "npm install react-hook-form",
+  "summary": "Estado e validação de formulários com pouco render.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "uppy",
@@ -245,7 +241,7 @@
   "repo": "https://github.com/transloadit/uppy",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -282,10 +278,14 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @uppy/core @uppy/dashboard",
-  "summary": "Importador de arquivos com arrasto, barra de progresso, previa de PDF/planilha e recuperacao de falha",
-  "a11y": "Botoes navegaveis por teclado e status anunciado via aria-live",
+  "summary": "Importador de arquivos com arrasto, barra de progresso, prévia de PDF/planilha e recuperação de falha",
+  "a11y": "Botões navegáveis por teclado e status anunciado via aria-live",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @uppy/react @uppy/core @uppy/dashboard",
+   "vue": "npm install @uppy/vue @uppy/core @uppy/dashboard",
+   "svelte": "npm install @uppy/svelte @uppy/core @uppy/dashboard"
+  }
  },
  {
   "id": "cally",
@@ -296,7 +296,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -321,11 +321,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Calendario de selecao como Web Component.",
+  "install": "npm install cally",
+  "summary": "Calendário de seleção como Web Component.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "downshift",
@@ -336,7 +335,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -361,11 +360,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install downshift",
   "summary": "Combobox e autocomplete headless.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "filepond",
@@ -376,7 +374,7 @@
   "repo": "https://github.com/pqina/filepond",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -411,10 +409,14 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install filepond",
-  "summary": "Dropzone elegante com validacao de formato/tamanho e animacao fluida de upload",
-  "a11y": "Totalmente operavel via Tab/Enter/Space",
+  "summary": "Dropzone elegante com validação de formato/tamanho e animação fluida de upload",
+  "a11y": "Totalmente operável via Tab/Enter/Space",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install react-filepond filepond",
+   "vue": "npm install vue-filepond filepond",
+   "svelte": "npm install svelte-filepond filepond"
+  }
  },
  {
   "id": "flatpickr",
@@ -425,7 +427,7 @@
   "repo": "https://github.com/flatpickr/flatpickr",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -461,10 +463,10 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install flatpickr",
-  "summary": "Seletor de data e intervalo de datas leve e sem dependencias para HTML/JS, com localizacao pt-BR",
+  "summary": "Seletor de data e intervalo de datas leve e sem dependências para HTML/JS, com localização pt-BR",
   "a11y": "Re-estilize o popup em --surface-z4 com --border-strong",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "maskito",
@@ -475,7 +477,7 @@
   "repo": "",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -503,11 +505,15 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @maskito/core @maskito/kit",
   "summary": "Mascaras robustas (moeda, data, documento).",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @maskito/core @maskito/kit @maskito/react",
+   "vue": "npm install @maskito/core @maskito/kit @maskito/vue",
+   "angular": "npm install @maskito/core @maskito/kit @maskito/angular"
+  }
  },
  {
   "id": "react-colorful",
@@ -518,7 +524,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -543,11 +549,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Seletor de cor minimo e acessivel.",
+  "install": "npm install react-colorful",
+  "summary": "Seletor de cor mínimo e acessível.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "tanstack-form",
@@ -558,7 +563,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "vue",
@@ -587,11 +592,17 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Formularios tipados multi-framework.",
+  "install": "npm install @tanstack/react-form",
+  "summary": "Formulários tipados multi-framework.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @tanstack/react-form",
+   "vue": "npm install @tanstack/vue-form",
+   "svelte": "npm install @tanstack/svelte-form",
+   "solid": "npm install @tanstack/solid-form",
+   "angular": "npm install @tanstack/angular-form"
+  }
  },
  {
   "id": "tom-select",
@@ -602,7 +613,7 @@
   "repo": "https://github.com/orchidjs/tom-select",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -636,10 +647,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install tom-select",
-  "summary": "Combobox com busca instantanea, selecao de multiplas tags e navegacao por teclado em HTML/JS puro",
+  "summary": "Combobox com busca instantânea, seleção de multiplas tags e navegação por teclado em HTML/JS puro",
   "a11y": "Atributos ARIA combobox e listbox integrados",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "vanilla-calendar-pro",
@@ -650,7 +660,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -675,11 +685,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Seletor de data sem dependencias.",
+  "install": "npm install vanilla-calendar-pro",
+  "summary": "Seletor de data sem dependências.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "air-datepicker",
@@ -690,7 +699,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -715,11 +724,11 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
+  "install": "npm install air-datepicker",
   "summary": "Seletor de data leve.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "choices-js",
@@ -730,7 +739,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -755,11 +764,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Select e tags sem dependencias.",
+  "install": "npm install choices.js",
+  "summary": "Select e tags sem dependências.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "nouislider",
@@ -770,7 +778,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -795,10 +803,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Slider de faixa sem dependencias.",
+  "install": "npm install nouislider",
+  "summary": "Slider de faixa sem dependências.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  }
 ]

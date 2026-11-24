@@ -5,10 +5,10 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://shaders.paper.design",
-  "repo": "",
-  "license": "conferir",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "repo": "https://github.com/paper-design/shaders",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "html"
@@ -32,11 +32,13 @@
   },
   "flashy": true,
   "craft": 3,
-  "install": "",
+  "install": "npm install @paper-design/shaders",
   "summary": "Shaders de fundo leves e refinados.",
   "a11y": "",
   "notes": "",
-  "license_ok": false
+  "installs": {
+   "react": "npm install @paper-design/shaders-react"
+  }
  },
  {
   "id": "r3f",
@@ -47,7 +49,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -71,11 +73,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npm install three @react-three/fiber",
   "summary": "three.js declarativo em React.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "threejs",
@@ -86,7 +87,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -111,11 +112,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npm install three",
   "summary": "3D na web.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "aceternity",
@@ -157,10 +157,9 @@
   "flashy": true,
   "craft": 2,
   "install": "",
-  "summary": "Visual famoso e licenca propria. Nao e MIT: da para usar em produto final sob a licenca deles, e proibido redistribuir o fonte",
-  "a11y": "Nao copiar para a skill, para um template ou para outro registry",
-  "notes": "",
-  "license_ok": false
+  "summary": "Visual famoso e licença própria. Não é MIT: da para usar em produto final sob a licença deles, e proibido redistribuir o fonte",
+  "a11y": "Não copiar para a skill, para um template ou para outro registry",
+  "notes": ""
  },
  {
   "id": "magic-ui",
@@ -171,7 +170,7 @@
   "repo": "https://github.com/magicuidesign/magicui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -204,10 +203,9 @@
   "flashy": true,
   "craft": 2,
   "install": "npx shadcn@latest add @magicui/marquee",
-  "summary": "Pecas de impacto para landing. O catalogo Pro e pago e fica de fora",
+  "summary": "Pecas de impacto para landing. O catálogo Pro e pago e fica de fora",
   "a11y": "Vetado em modo Operate. Reduza a um signature move",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "ogl",
@@ -218,7 +216,7 @@
   "repo": "",
   "license": "Unlicense",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -242,11 +240,11 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "WebGL minimo para shaders leves.",
+  "install": "npm install ogl",
+  "summary": "WebGL mínimo para shaders leves.",
   "a11y": "",
   "notes": "",
-  "license_ok": false
+  "stale": true
  },
  {
   "id": "react-bits",
@@ -257,7 +255,7 @@
   "repo": "https://github.com/DavidHDev/react-bits",
   "license": "MIT + Commons Clause",
   "license_status": "trap",
-  "license_checked_at": "2026-11-23",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -288,10 +286,9 @@
   "flashy": true,
   "craft": 2,
   "install": "",
-  "summary": "Pode entrar num app. Nao pode ser revendido nem republicado como componente. Falha no portao MIT/Apache/BSD/ISC",
+  "summary": "Pode entrar num app. Não pode ser revendido nem republicado como componente. Falha no portao MIT/Apache/BSD/ISC",
   "a11y": "Commons Clause bloqueia o uso como registry da skill",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "shadergradient",
@@ -302,7 +299,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -325,11 +322,10 @@
   },
   "flashy": true,
   "craft": 2,
-  "install": "",
+  "install": "npm install @shadergradient/react",
   "summary": "Gradientes animados em shader.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "skiper-ui",
@@ -365,11 +361,10 @@
   },
   "flashy": true,
   "craft": 2,
-  "install": "",
+  "install": "copiar o código da página do componente",
   "summary": "Pecas animadas de impacto.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "tsparticles",
@@ -380,7 +375,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -405,11 +400,14 @@
   },
   "flashy": true,
   "craft": 1,
-  "install": "",
-  "summary": "Particulas configuraveis.",
+  "install": "npm install @tsparticles/engine @tsparticles/slim",
+  "summary": "Particulas configuráveis.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @tsparticles/react @tsparticles/slim",
+   "vue": "npm install @tsparticles/vue3 @tsparticles/slim"
+  }
  },
  {
   "id": "vanta",
@@ -420,7 +418,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -443,10 +441,10 @@
   },
   "flashy": true,
   "craft": 1,
-  "install": "",
+  "install": "npm install vanta three",
   "summary": "Fundos 3D animados.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  }
 ]

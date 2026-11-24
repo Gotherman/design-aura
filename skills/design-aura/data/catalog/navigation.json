@@ -8,7 +8,7 @@
   "repo": "https://github.com/pacocoursey/cmdk",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -41,8 +41,7 @@
   "install": "npm install cmdk",
   "summary": "Palette Cmd/Ctrl+K em desktop e sistemas",
   "a11y": "Setas, Enter e Escape precisam permanecer ligados",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "tinykeys",
@@ -53,7 +52,7 @@
   "repo": "https://github.com/jamiebuilds/tinykeys",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -93,8 +92,7 @@
   "install": "npm install tinykeys",
   "summary": "Gerenciador de atalhos de teclado de 600 bytes (suporta '$mod+KeyK', '[', 'Escape', e sequencias 'g p' / 'g f' estilo Linear/GitHub)",
   "a11y": "Ignore eventos disparados quando o foco estiver dentro de <input>, <textarea> ou <select>",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "kbar",
@@ -105,7 +103,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -130,11 +128,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Paleta de comandos com acoes aninhadas.",
+  "install": "npm install kbar",
+  "summary": "Paleta de comandos com ações aninhadas.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "ninja-keys",
@@ -145,7 +142,7 @@
   "repo": "ssleptsov/ninja-keys",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -181,9 +178,9 @@
   "craft": 2,
   "install": "npm install ninja-keys",
   "summary": "Command Palette Cmd+K / Ctrl+K como Web Component nativo para HTML puro, sem precisar de React",
-  "a11y": "Navegacao integral por setas, Enter e Esc; re-tematize as variaveis CSS --ninja-* com tokens.css",
+  "a11y": "Navegação integral por setas, Enter e Esc; re-tematize as variáveis CSS --ninja-* com tokens.css",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "react-hotkeys-hook",
@@ -194,7 +191,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -217,11 +214,10 @@
   "style": {},
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install react-hotkeys-hook",
   "summary": "Atalhos de teclado em hooks React.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "hotkeys-js",
@@ -232,7 +228,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -255,10 +251,9 @@
   "style": {},
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Atalhos de teclado sem dependencias.",
+  "install": "npm install hotkeys-js",
+  "summary": "Atalhos de teclado sem dependências.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  }
 ]

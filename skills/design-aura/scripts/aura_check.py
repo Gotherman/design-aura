@@ -8,7 +8,9 @@
 Roda, conforme os caminhos informados: contraste dos tokens, linter estatico, captura e auditoria no
 navegador, completude da Biblia (com zonas do manifesto) e sincronia Biblia/shell/tokens. Grava
 aura-check.json com o resultado de cada portao e imprime um resumo unico.
-BLOCK e HIGH falham em --strict; REVIEW vai para a inspecao visual.
+BLOCK e HIGH falham em --strict; REVIEW vai para a inspecao visual. Portao que nao rodou aparece como
+pendente e tambem falha em --strict, salvo com --partial (verificacao parcial declarada, por exemplo num
+ajuste pontual).
 """
 import argparse
 import json
@@ -20,7 +22,10 @@ SCRIPTS = Path(__file__).resolve().parent
 
 
 def run(cmd: list[str]) -> tuple[int, str]:
-    proc = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+    except FileNotFoundError as exc:  # node ou python ausente
+        return 127, f"Nao foi possivel executar {cmd[0]}: {exc}"
     return proc.returncode, (proc.stdout + proc.stderr).strip()
 
 
@@ -49,11 +54,23 @@ def main():
     ap.add_argument("--smoke-interact", action="store_true")
     ap.add_argument("--depth-style", default="")
     ap.add_argument("--strict", action="store_true")
+    ap.add_argument("--partial", action="store_true", help="Declara verificacao parcial: portoes nao executados nao falham o --strict")
     args = ap.parse_args()
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     gates = []
+    skipped = []
+    if not args.tokens:
+        skipped.append({"gate": "contraste", "why": "sem --tokens"})
+    if not args.project:
+        skipped.append({"gate": "linter", "why": "sem --project"})
+    if not args.manifest:
+        skipped.append({"gate": "navegador", "why": "sem --manifest"})
+    if not args.bible:
+        skipped.append({"gate": "biblia", "why": "sem --bible"})
+    if not (args.bible and args.tokens):
+        skipped.append({"gate": "sincronia", "why": "precisa de --bible e --tokens"})
 
     if args.tokens:
         cmd = [sys.executable, str(SCRIPTS / "audit_contrast.py"), args.tokens, "--format", "json"]
@@ -86,8 +103,10 @@ def main():
             cmd += ["--baseline", args.baseline]
         if args.smoke_interact:
             cmd += ["--smoke-interact"]
-        code, text = run(cmd)
         report_path = out / "captures" / "audit-report.json"
+        if report_path.exists():
+            report_path.unlink()  # nunca reaproveitar o relatorio de uma rodada anterior
+        code, text = run(cmd)
         findings, rows = [], []
         if report_path.exists():
             rows = json.loads(report_path.read_text(encoding="utf-8"))
@@ -95,7 +114,9 @@ def main():
                 for issue in row.get("issues", []):
                     findings.append({**issue, "where": f"{row.get('target')} · {row.get('viewport')} · {row.get('theme')}", "screenshot": row.get("screenshot")})
         else:
-            findings.append({"severity": "BLOCK", "rule": "DA-AUDIT-COVERAGE", "detail": text[-600:]})
+            err = next((ln.strip() for ln in text.splitlines() if "Error" in ln or "Erro" in ln), text[-300:])
+            findings.append({"severity": "BLOCK", "rule": "DA-AUDIT-COVERAGE",
+                             "detail": f"A captura nao gerou relatorio (codigo {code}): {err[:300]}"})
         gates.append({"gate": "navegador", "counts": count(findings), "details": findings, "captures": len(rows)})
 
     if args.bible:
@@ -118,7 +139,8 @@ def main():
                           "details": [{"severity": "HIGH", "message": d} for d in drift]})
 
     total = {k: sum(g["counts"].get(k, 0) for g in gates) for k in ("BLOCK", "HIGH", "REVIEW", "MEDIUM")}
-    (out / "aura-check.json").write_text(json.dumps({"total": total, "gates": gates}, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out / "aura-check.json").write_text(json.dumps({"total": total, "gates": gates, "skipped": skipped, "partial": args.partial},
+                                                    ensure_ascii=False, indent=2), encoding="utf-8")
 
     print("# Design Aura — verificação consolidada")
     print("| Portão | BLOCK | HIGH | REVIEW | MEDIUM |")
@@ -139,8 +161,14 @@ def main():
         print(f"\n## REVIEW ({len(reviews)}): abrir a captura e confirmar ou dispensar com motivo")
         for d in reviews[:12]:
             print(f"- {d.get('rule', '')}: {d.get('detail') or d.get('message') or d.get('reason', '')}{' (' + d['where'] + ')' if d.get('where') else ''}")
+    if skipped:
+        print(f"\n## Portões que não rodaram ({len(skipped)}){' · verificação parcial declarada' if args.partial else ''}")
+        for s in skipped:
+            print(f"- {s['gate']}: {s['why']}")
+        if not args.partial:
+            print("Sem estes portões o veredito é 'pendente de verificação'. Rode-os ou declare --partial com o motivo.")
     print(f"\nRelatório: {out / 'aura-check.json'}")
-    if args.strict and (total["BLOCK"] or total["HIGH"]):
+    if args.strict and (total["BLOCK"] or total["HIGH"] or (skipped and not args.partial)):
         sys.exit(1)
 
 

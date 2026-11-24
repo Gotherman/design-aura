@@ -35,8 +35,7 @@
   "install": "",
   "summary": "Conversoes OKLCH, gamut e contraste.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "dtcg-spec",
@@ -45,7 +44,7 @@
   "use": "reference",
   "url": "https://www.designtokens.org/tr/2025.10/",
   "repo": "",
-  "license": "especificacao aberta",
+  "license": "especificação aberta",
   "license_status": "reference",
   "license_checked_at": "2026-11-23",
   "stacks": [
@@ -71,10 +70,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Formato padrao de tokens ($value, $type) estavel desde out/2025.",
+  "summary": "Formato padrão de tokens ($value, $type) estável desde out/2025.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "harmony",
@@ -112,8 +110,7 @@
   "install": "",
   "summary": "Paletas OKLCH com croma e contraste APCA consistentes entre matizes.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "leonardo",
@@ -151,8 +148,7 @@
   "install": "",
   "summary": "Paletas geradas por contraste alvo.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "radix-colors",
@@ -188,10 +184,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Escalas de 12 degraus com funcao (fundo, hover, borda, solido, texto).",
+  "summary": "Escalas de 12 degraus com função (fundo, hover, borda, sólido, texto).",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "style-dictionary",
@@ -226,10 +221,9 @@
   "flashy": false,
   "craft": 3,
   "install": "",
-  "summary": "Exporta tokens para varias plataformas (suporta DTCG).",
+  "summary": "Exporta tokens para várias plataformas (suporta DTCG).",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "apcach",
@@ -267,8 +261,7 @@
   "install": "",
   "summary": "Compoe cores com contraste APCA alvo.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "culori",
@@ -305,8 +298,7 @@
   "install": "",
   "summary": "Biblioteca de cor completa e leve.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "oklch-picker",
@@ -343,8 +335,7 @@
   "install": "",
   "summary": "Seletor e conversor OKLCH.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "realtime-colors",
@@ -382,8 +373,7 @@
   "install": "",
   "summary": "Ve a paleta aplicada num site antes de decidir.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "terrazzo",
@@ -420,8 +410,7 @@
   "install": "",
   "summary": "Pipeline de tokens DTCG.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "tokens-studio",
@@ -457,10 +446,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Liga tokens JSON a variaveis do Figma.",
+  "summary": "Liga tokens JSON a variáveis do Figma.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "tweakcn",
@@ -497,7 +485,6 @@
   "install": "",
   "summary": "Editor visual de tema para shadcn.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  }
 ]

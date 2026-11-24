@@ -16,7 +16,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
-from color_engine import build_tokens, hex_to_oklch, wcag  # noqa: E402
+from color_engine import build_tokens, hex_to_oklch, parse_color, wcag  # noqa: E402
 from generate_tokens import SHAPE_RADII, build_css, elevation_lines  # noqa: E402
 
 TONES = {"ok": "success", "atencao": "warning", "falha": "danger", "info": "info", "neutro": "primary"}
@@ -31,6 +31,7 @@ def scoped_vars(tokens: dict, theme: str) -> str:
     lines += [f"--radius-{k}: {v};" for k, v in tokens["radii"].items()]
     lines += [f"--{k}: {v};" for k, v in tokens["typography"].items()]
     lines += [f"--space-{k}: {v};" for k, v in tokens["spacing"].items()]
+    lines += [f"--{k}: {v};" for k, v in tokens.get("sizing", {}).items()]
     lines += [ln.strip() for ln in elevation_lines(tokens["meta"]["depth_style"], theme)]
     return " ".join(lines)
 
@@ -73,27 +74,27 @@ BOARD_CSS = """
 .frame{border-radius:14px;overflow:hidden;border:1px solid #2a2a30}
 .frame .tag{font:600 11px system-ui;letter-spacing:.04em;text-transform:uppercase;color:#8e8e96;padding:8px 12px;background:#141417}
 .app{background:var(--surface-z1);color:var(--text-body);font-family:var(--font-ui);font-size:var(--text-base)}
-.appbar{display:flex;align-items:center;gap:24px;padding:12px 20px;background:var(--surface-z2);border-bottom:1px solid var(--border-subtle)}
+.appbar{display:flex;align-items:center;gap:var(--space-6);padding:var(--space-3) var(--space-5);background:var(--surface-z2);border-bottom:1px solid var(--border-subtle)}
 .brand{font-family:var(--font-display);color:var(--text-strong);letter-spacing:var(--tracking-display)}
-.appbar nav{display:flex;gap:4px} .nav-item{padding:6px 10px;border-radius:var(--radius-control-md);color:var(--text-muted)}
+.appbar nav{display:flex;gap:var(--space-1)} .nav-item{padding:var(--space-2) var(--space-3);border-radius:var(--radius-control-md);color:var(--text-muted)}
 .nav-item.is-active{background:var(--primary-surface);color:var(--primary-text);font-weight:600}
-.content{padding:20px} .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px}
+.content{padding:var(--space-5)} .head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-4);margin-bottom:var(--space-4)}
 h3{margin:0;font-family:var(--font-display);font-size:22px;color:var(--text-strong);letter-spacing:var(--tracking-display);text-wrap:balance}
-.sub{margin:2px 0 0;color:var(--text-muted)} .actions{display:flex;gap:8px}
-.btn{min-height:36px;padding:0 14px;border-radius:var(--radius-control-md);font:600 13px var(--font-ui);border:1px solid transparent;cursor:pointer}
+.sub{margin:2px 0 0;color:var(--text-muted)} .actions{display:flex;gap:var(--space-2)}
+.btn{min-height:var(--control-h, 36px);padding:0 var(--space-4);border-radius:var(--radius-control-md);font:600 13px var(--font-ui);border:1px solid transparent;cursor:pointer}
 .btn.primary{background:var(--primary);color:var(--on-primary)} .btn.ghost{background:transparent;color:var(--text-body);border-color:var(--border-subtle)}
-.grid{display:grid;grid-template-columns:240px 1fr;gap:12px}
+.grid{display:grid;grid-template-columns:240px 1fr;gap:var(--space-3)}
 .card{background:var(--surface-z2);border:1px solid var(--border-subtle);border-radius:var(--radius-card-md);box-shadow:var(--shadow-z1), var(--rim-highlight)}
-.kpi{padding:16px;display:flex;flex-direction:column;gap:2px} .label{color:var(--text-muted);font-size:12px}
+.kpi{padding:var(--space-4);display:flex;flex-direction:column;gap:2px} .label{color:var(--text-muted);font-size:12px}
 .value{font-family:var(--font-display);font-size:28px;color:var(--text-strong);font-weight:650} .delta{color:var(--success-text);font-size:12px;font-weight:600}
 .bars{display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:10px} .bars i{flex:1;border-radius:3px 3px 0 0;display:block}
-.list{padding:4px 0} .row{display:grid;grid-template-columns:1fr auto 96px;align-items:center;gap:12px;padding:9px 16px;border-bottom:1px solid var(--border-subtle)}
+.list{padding:4px 0} .row{display:grid;grid-template-columns:1fr auto 96px;align-items:center;gap:var(--space-3);min-height:var(--row-h, 44px);padding:var(--space-1) var(--space-4);border-bottom:1px solid var(--border-subtle)}
 .row:last-child{border-bottom:0} .row-main{display:flex;flex-direction:column;min-width:0} .row-name{color:var(--text-strong);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row-meta{color:var(--text-muted);font-size:12px} .row-val{text-align:right;color:var(--text-strong)}
 .badge{font-size:12px;font-weight:600;padding:2px 8px;border-radius:var(--radius-control-sm);background:var(--tone-s);border:1px solid var(--tone-b);color:var(--tone-t);white-space:nowrap}
 .num{font-variant-numeric:tabular-nums}
-.form{margin-top:12px} .form label{display:grid;gap:4px;color:var(--text-muted);font-size:12px;max-width:360px}
-.form input{min-height:36px;border-radius:var(--radius-control-md);border:1px solid var(--border-strong);background:var(--surface-z0);color:var(--text-strong);padding:0 10px;font:inherit}
+.form{margin-top:var(--space-3)} .form label{display:grid;gap:4px;color:var(--text-muted);font-size:12px;max-width:360px}
+.form input{min-height:var(--control-h, 36px);border-radius:var(--radius-control-md);border:1px solid var(--border-strong);background:var(--surface-z0);color:var(--text-strong);padding:0 10px;font:inherit}
 @media (max-width:1100px){.pair{grid-template-columns:1fr}.dir-meta{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
 """
 
@@ -110,6 +111,9 @@ def render(spec: dict, out_dir: Path) -> Path:
         tokens["radii"] = SHAPE_RADII.get(d.get("shape", "soft"), SHAPE_RADII["soft"])
         tokens["meta"].update({"shape": d.get("shape", "soft"), "direction": d.get("name", f"Direcao {i}")})
         slug = f"direcao-{i}"
+        # A direcao em si (para generate_tokens.py --direction e discover_oss_components.py --direction)
+        (out_dir / f"{slug}.json").write_text(json.dumps({**d, "project": spec.get("project", "Projeto"), "index": i},
+                                                         ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         (out_dir / f"{slug}.tokens.json").write_text(json.dumps(tokens, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         (out_dir / f"{slug}.tokens.css").write_text(build_css(tokens), encoding="utf-8")
         if fonts.get("url"):
@@ -118,7 +122,7 @@ def render(spec: dict, out_dir: Path) -> Path:
         swatches = "".join(f'<i title="{k}" style="background:{sem_l[k]}"></i>' for k in
                            ("surface-z1", "surface-z2", "border-subtle", "text-muted", "text-strong", "primary", "accent", "success", "warning", "danger", "chart-2", "chart-3"))
         refuse = "".join(f"<li>{esc(r)}</li>" for r in d.get("refuses", []))
-        hue = round(hex_to_oklch(tokens["meta"]["seed"])[2])
+        hue = round(hex_to_oklch(parse_color(tokens["meta"]["seed"]))[2])
         frames = "".join(
             f'<div class="frame"><div class="tag">{theme_label}</div><div class="app" style="{esc(scoped_vars(tokens, theme))}">{fragment(frag)}</div></div>'
             for theme, theme_label in (("light", "Light"), ("dark", "Dark")))
@@ -155,8 +159,12 @@ def divergence(spec: dict) -> list[str]:
     dirs = spec["directions"]
     for a in range(len(dirs)):
         for b in range(a + 1, len(dirs)):
-            ha, hb = hex_to_oklch(dirs[a]["seed"])[2], hex_to_oklch(dirs[b]["seed"])[2]
-            hue_gap = abs(((ha - hb + 540) % 360) - 180)
+            la, ca, ha = hex_to_oklch(parse_color(dirs[a]["seed"]))
+            lb, cb, hb = hex_to_oklch(parse_color(dirs[b]["seed"]))
+            if ca < 0.03 or cb < 0.03:  # semente sem matiz: compara luminosidade e croma, nao o angulo
+                hue_gap = 0.0 if (ca < 0.03 and cb < 0.03 and abs(la - lb) < 0.25) else 90.0
+            else:
+                hue_gap = abs(((ha - hb + 540) % 360) - 180)
             same = [k for k in ("depth_style", "shape", "density") if dirs[a].get(k) == dirs[b].get(k)]
             same_font = dirs[a].get("fonts", {}).get("ui") == dirs[b].get("fonts", {}).get("ui")
             if hue_gap < 25 and len(same) >= 2 and same_font:

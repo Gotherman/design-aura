@@ -1,6 +1,6 @@
 # Bíblia de Direção Visual — {{PROJETO}}
 
-> **Versão do projeto:** {{VERSAO}} · **Design Aura:** `v3.1.0` · **Superfícies:** {{SUPERFICIES}} · **Modo:** {{Operate | Read | Persuade}}
+> **Versão do projeto:** {{VERSAO}} · **Design Aura:** `v3.1.1` · **Superfícies:** {{SUPERFICIES}} · **Modo:** {{Operate | Read | Persuade}}
 
 Como usar: a Parte A é para aprovar, a Parte B é para construir, a Parte C é para verificar. Troque todo `{{...}}` e todo `...` por decisões. `render_design_bible.py --check` aponta o que ficou em aberto.
 
@@ -68,7 +68,9 @@ Botões, badge por estado, linha selecionada, campo, cartão e toast nos dois te
 | `--text-strong` | `{{hex}}` | `{{hex}}` |
 | `--text-muted` | `{{hex}}` | `{{hex}}` |
 | `--primary` | `{{hex}}` | `{{hex}}` |
+| `--primary-strong` | `{{hex}}` | `{{hex}}` |
 | `--accent` | `{{hex}}` | `{{hex}}` |
+| `--focus-ring` | `{{hex}}` | `{{hex}}` |
 | `--danger` | `{{hex}}` | `{{hex}}` |
 | `--success` | `{{hex}}` | `{{hex}}` |
 | `--warning` | `{{hex}}` | `{{hex}}` |
@@ -76,18 +78,20 @@ Botões, badge por estado, linha selecionada, campo, cartão e toast nos dois te
 ## B3. Orçamentos do projeto
 | Orçamento | Valor | Motivo |
 |---|---|---|
-| Barras no topo desktop | {{2}} / {{200px}} | {{...}} |
-| Topo mobile antes da lista | {{40%}} / {{320px}} | {{...}} |
-| Abas irmãs visíveis | {{5}} | {{...}} |
+| Barras no topo desktop | {{2}} / {{225px}} | {{...}} |
+| Topo mobile antes da lista | {{42%}} / {{340px}} | {{...}} |
+| Abas irmãs visíveis | {{6}} | {{...}} |
 | Vazio aceitável na área de trabalho | {{70%}} | {{...}} |
 | Peso da página | {{3000 KB}} | {{...}} |
 
-Os mesmos valores estão em `project.budgets` no manifesto.
+Os valores sugeridos são os padrões do modo Operate em `data/rules.json` (Read e Persuade têm os seus). Mude o que o projeto pedir, com o motivo, e repita os mesmos valores em `project.budgets` no manifesto.
 
-## B4. Espaço e forma
-- **Escala:** {{4, 8, 12, 16, 20, 24, 32, 40, 48, 64}} · **Proximidade:** dentro do grupo ≤ metade do espaço entre grupos
+## B4. Espaço, forma e profundidade
+- **Escala:** {{4, 8, 12, 16, 20, 24, 32, 40, 48, 64}} · **Controle/linha:** {{38px / 44px}} · **Proximidade:** dentro do grupo ≤ metade do espaço entre grupos
 - **Raios concêntricos:** {{contêiner 16 + padding 8 → interno 8}}
 - **Grade:** {{colunas, gutters, largura máxima}}
+- **Profundidade:** estilo {{hairline | soft | tonal | tactile}} · planos usados: {{z0 poço, z1 tela, z2 cartão, z3 popover, z4 modal}}
+- **Como os planos se separam:** {{borda, sombra, tom ou combinação}} · **Superfície de marca:** {{onde entra, no máximo uma por tela}}
 
 ## B5. Anatomia executável
 CSS dos componentes base usando só `var(--token)`: botão primário, secundário, fantasma e destrutivo; campo com label, erro e foco; linha de tabela com hover e seleção; item de navegação ativo; badge por estado; toast; drawer; vazio.

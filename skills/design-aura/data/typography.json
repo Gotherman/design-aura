@@ -12,9 +12,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Precisao suica executiva",
+    "mood": "Precisao suíça executiva",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700;800&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "precisa-neutra",
     "license": "OFL-1.1"
   },
@@ -33,7 +33,7 @@
     ],
     "mood": "Neutro funcional de altissima legibilidade em tabelas densas",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "precisa-neutra",
     "license": "OFL-1.1"
   },
@@ -51,8 +51,8 @@
     ],
     "mood": "Engenharia corporativa, rigor financeiro e telemetria industrial",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "tecnica-corporativa",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "técnica-corporativa",
     "license": "OFL-1.1"
   },
   {
@@ -70,7 +70,7 @@
     ],
     "mood": "Editorial operacional de alta precisao com calor humano",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "humanista-calorosa",
     "license": "OFL-1.1"
   },
@@ -86,10 +86,10 @@
       "system",
       "desktop"
     ],
-    "mood": "Tecnico geometrico para logistica, IoT e paineis operacionais",
+    "mood": "Técnico geométrico para logística, IoT e paineis operacionais",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-tecnica",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-técnica",
     "license": "OFL-1.1"
   },
   {
@@ -105,10 +105,10 @@
       "mobile",
       "desktop"
     ],
-    "mood": "Limpo, amigavel e direto para varejo, CRM e apps de servico",
+    "mood": "Limpo, amigável e direto para varejo, CRM e apps de serviço",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-amigavel",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-amigável",
     "license": "OFL-1.1"
   },
   {
@@ -125,8 +125,8 @@
     ],
     "mood": "Fintech moderna e produtos executivos com numerais abertos",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-amigavel",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-amigável",
     "license": "OFL-1.1"
   },
   {
@@ -141,9 +141,9 @@
       "system",
       "desktop"
     ],
-    "mood": "Autoridade editorial, saude, educacao e documentacao longa",
+    "mood": "Autoridade editorial, saúde, educação e documentação longa",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -159,9 +159,9 @@
       "system",
       "desktop"
     ],
-    "mood": "Juridico, editorial refinado e relatorios executivos",
+    "mood": "Jurídico, editorial refinado e relatórios executivos",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -177,9 +177,9 @@
       "system",
       "mobile"
     ],
-    "mood": "Arquitetura editorial e marcas com assinatura organica",
+    "mood": "Arquitetura editorial e marcas com assinatura orgânica",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -195,9 +195,9 @@
       "system",
       "desktop"
     ],
-    "mood": "Personalidade expressiva em titulos mantendo UI neutra e veloz",
+    "mood": "Personalidade expressiva em títulos mantendo UI neutra e veloz",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-expressiva",
     "license": "OFL-1.1"
   },
@@ -216,9 +216,9 @@
     ],
     "mood": "Fidelidade total Apple HIG com Dynamic Type",
     "google_fonts_url": "",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "nativa-plataforma",
-    "license": "licenca do sistema"
+    "license": "licença do sistema"
   },
   {
     "id": "android-roboto-m3",
@@ -234,9 +234,9 @@
     ],
     "mood": "Fidelidade total Android Material 3 em sp e escala M3",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@500;600;700&family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "nativa-plataforma",
-    "license": "licenca do sistema"
+    "license": "licença do sistema"
   },
   {
     "id": "windows-segoe-native",
@@ -251,9 +251,9 @@
     ],
     "mood": "Nativo Windows 11 Fluent / WinUI 3 / Desktop Electron",
     "google_fonts_url": "",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "nativa-plataforma",
-    "license": "licenca do sistema"
+    "license": "licença do sistema"
   },
   {
     "id": "outfit-jakarta-mono",
@@ -267,10 +267,10 @@
       "mobile",
       "system"
     ],
-    "mood": "Geometrico limpo para apps de consumo e SaaS modernos",
+    "mood": "Geométrico limpo para apps de consumo e SaaS modernos",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-amigavel",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-amigável",
     "license": "OFL-1.1"
   },
   {
@@ -286,9 +286,9 @@
       "mobile",
       "desktop"
     ],
-    "mood": "Claro, amigavel e extremamente legivel em tamanhos 13-15px",
+    "mood": "Claro, amigável e extremamente legível em tamanhos 13-15px",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "humanista-calorosa",
     "license": "OFL-1.1"
   },
@@ -306,8 +306,8 @@
     ],
     "mood": "Estruturado, nitido e moderno para produtos B2B e plataformas",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-tecnica",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-técnica",
     "license": "OFL-1.1"
   },
   {
@@ -322,9 +322,9 @@
       "system",
       "desktop"
     ],
-    "mood": "Clareza institucional para GovTech, portais publicos e compliance",
+    "mood": "Clareza institucional para GovTech, portais públicos e compliance",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "institucional-clara",
     "license": "OFL-1.1"
   },
@@ -341,9 +341,9 @@
       "mobile",
       "desktop"
     ],
-    "mood": "Acessibilidade maxima em saude, campo e leitura critica",
+    "mood": "Acessibilidade máxima em saúde, campo e leitura crítica",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "institucional-clara",
     "license": "OFL-1.1"
   },
@@ -361,7 +361,7 @@
     ],
     "mood": "Equilibrio entre calor editorial e UI operacional limpa",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -377,9 +377,9 @@
       "desktop",
       "system"
     ],
-    "mood": "Presenca industrial solida para logistica, obras e manufatura",
+    "mood": "Presença industrial sólida para logística, obras e manufatura",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-industrial",
     "license": "OFL-1.1"
   },
@@ -395,9 +395,9 @@
       "mobile",
       "system"
     ],
-    "mood": "Amigavel sem perder firmeza para atendimento, RH e educacao",
+    "mood": "Amigável sem perder firmeza para atendimento, RH e educação",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Nunito+Sans:wght@400;500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "humanista-calorosa",
     "license": "OFL-1.1"
   },
@@ -413,10 +413,10 @@
       "mobile",
       "system"
     ],
-    "mood": "Toque geometrico suave para PDV, varejo e mobile cross-platform",
+    "mood": "Toque geométrico suave para PDV, varejo e mobile cross-platform",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Rubik:wght@500;600;700&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-amigavel",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-amigável",
     "license": "OFL-1.1"
   },
   {
@@ -431,9 +431,9 @@
       "desktop",
       "system"
     ],
-    "mood": "Alta densidade de cabecalho estilo painel de despacho e telemetria",
+    "mood": "Alta densidade de cabeçalho estilo painel de despacho e telemetria",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-industrial",
     "license": "OFL-1.1"
   },
@@ -450,9 +450,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Grotesca de jornal com firmeza para produtos de informacao e operacao",
+    "mood": "Grotesca de jornal com firmeza para produtos de informação e operação",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&family=IBM+Plex+Mono:wght@400;500",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-expressiva",
     "license": "OFL-1.1"
   },
@@ -471,7 +471,7 @@
     ],
     "mood": "Neutra com desenho mais quente que a Inter, boa em densidade",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "precisa-neutra",
     "license": "OFL-1.1"
   },
@@ -488,10 +488,10 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Geometrica clara com cirilico/latino completo e numerais abertos",
+    "mood": "Geométrica clara com cirílico/latino completo e numerais abertos",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Onest:wght@400..800&family=Martian+Mono:wght@400;500",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-amigavel",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-amigável",
     "license": "OFL-1.1"
   },
   {
@@ -507,9 +507,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Variaveis com largura ajustavel; titulos condensados e UI legivel",
+    "mood": "Variáveis com largura ajustável; títulos condensados e UI legível",
     "google_fonts_url": "",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-industrial",
     "license": "OFL-1.1"
   },
@@ -526,9 +526,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Display com personalidade e texto neutro da mesma familia",
+    "mood": "Display com personalidade e texto neutro da mesma família",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400..800&family=Funnel+Sans:wght@400..800",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-expressiva",
     "license": "OFL-1.1"
   },
@@ -547,15 +547,15 @@
     ],
     "mood": "Grotesca contemporanea, compacta em tabelas",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400..800",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "precisa-neutra",
     "license": "OFL-1.1"
   },
   {
     "id": "geologica-mono",
     "name": "Geologica + Geist Mono",
-    "display": "'Geologica', system-ui, sans-serif",
-    "ui": "'Geologica', system-ui, sans-serif",
+    "display": "'Geológica', system-ui, sans-serif",
+    "ui": "'Geológica', system-ui, sans-serif",
     "mono": "'Geist Mono', monospace",
     "tracking_display": "-0.02em",
     "body_measure": "66ch",
@@ -564,10 +564,10 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Geometrica com eixos de suavidade; boa para dados e mapas",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Geologica:wght@400..800",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-tecnica",
+    "mood": "Geométrica com eixos de suavidade; boa para dados e mapas",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Geológica:wght@400..800",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-técnica",
     "license": "OFL-1.1"
   },
   {
@@ -583,9 +583,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Serifa elegante so em titulos de site; UI em sans",
+    "mood": "Serifa elegante só em títulos de site; UI em sans",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Instrument+Sans:wght@400..700",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -602,9 +602,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Leitura longa confortavel com UI amigavel",
+    "mood": "Leitura longa confortável com UI amigável",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Figtree:wght@400..700",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -621,9 +621,9 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Serifa calorosa para marcas de servico e hospitalidade",
+    "mood": "Serifa calorosa para marcas de serviço e hospitalidade",
     "google_fonts_url": "https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:wght@400..700",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
     "license": "OFL-1.1"
   },
@@ -640,11 +640,11 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Geometricas modernas muito usadas em produto; gratuitas via Fontshare",
+    "mood": "Geométricas modernas muito usadas em produto; gratuitas via Fontshare",
     "google_fonts_url": "https://www.fontshare.com",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
-    "personality": "geometrica-amigavel",
-    "license": "ITF Free Font License (gratuita, nao OFL)"
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
+    "personality": "geométrica-amigável",
+    "license": "ITF Free Font License (gratuita, não OFL)"
   },
   {
     "id": "switzer-supreme",
@@ -659,11 +659,11 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Neo-grotesca suica com display de contraste",
+    "mood": "Neo-grotesca suíça com display de contraste",
     "google_fonts_url": "https://www.fontshare.com",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "precisa-neutra",
-    "license": "ITF Free Font License (gratuita, nao OFL)"
+    "license": "ITF Free Font License (gratuita, não OFL)"
   },
   {
     "id": "clash-cabinet",
@@ -677,11 +677,11 @@
       "system",
       "desktop"
     ],
-    "mood": "Display marcante para sites e campanhas; nao use em sistemas densos",
+    "mood": "Display marcante para sites e campanhas; não use em sistemas densos",
     "google_fonts_url": "https://www.fontshare.com",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "grotesca-expressiva",
-    "license": "ITF Free Font License (gratuita, nao OFL)"
+    "license": "ITF Free Font License (gratuita, não OFL)"
   },
   {
     "id": "gambetta-switzer",
@@ -696,10 +696,10 @@
       "desktop",
       "mobile"
     ],
-    "mood": "Serifa contemporanea para editorial e relatorios",
+    "mood": "Serifa contemporanea para editorial e relatórios",
     "google_fonts_url": "https://www.fontshare.com",
-    "numeric_rule": "Numeros de dados na fonte da interface com tabular-nums; mono so para codigos tecnicos, IDs e atalhos.",
+    "numeric_rule": "Números de dados na fonte da interface com tabular-nums; mono só para códigos técnicos, IDs e atalhos.",
     "personality": "editorial-serifada",
-    "license": "ITF Free Font License (gratuita, nao OFL)"
+    "license": "ITF Free Font License (gratuita, não OFL)"
   }
 ]

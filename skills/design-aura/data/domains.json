@@ -26,32 +26,32 @@
       "schibsted-plex",
       "hanken-commit"
     ],
-    "layout_archetype": "Revelacao Progressiva Anti-Poluicao (Lista Limpa -> Detalhe Focado na mesma pagina com <- Voltar a lista/Esc e Anterior/Proxima) + Paineis Analiticos Dedicados (Combo Cashflow com HUD vivo e Sankey/Cascata DRE)",
+    "layout_archetype": "Revelação Progressiva Anti-Poluição (Lista Limpa -> Detalhe Focado na mesma página com <- Voltar a lista/Esc e Anterior/Próxima) + Paineis Analíticos Dedicados (Combo Cashflow com HUD vivo e Sankey/Cascata DRE)",
     "signature_moves": [
       "Trilho visual de cobertura de caixa e vencimento",
       "Horizontes temporais: Atrasado / Hoje / Proximos"
     ],
     "anti_patterns": [
-      "70% de painel vazio em tela de aprovacao",
+      "70% de painel vazio em tela de aprovação",
       "Monocromia azul onde atrasado e normal tem o mesmo peso",
-      "Numeros alinhados a esquerda sem tabular-nums"
+      "Números alinhados a esquerda sem tabular-nums"
     ],
     "color_ideas": [
       {
         "seed": "#0E2D4C",
         "accent": "#D94E14",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#1F4D3A",
         "accent": "#C98A12",
         "harmony": "analoga quente",
-        "why": "Verde profundo e ambar fogem do azul padrao de ERP e ligam a estabilidade e dinheiro."
+        "why": "Verde profundo e ambar fogem do azul padrão de ERP e ligam a estabilidade e dinheiro."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "saas-b2b-operacional",
@@ -92,17 +92,17 @@
         "seed": "#182433",
         "accent": "#0D66D0",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#134E4A",
         "accent": "#E0613A",
         "harmony": "complementar",
-        "why": "Petroleo com coral da identidade propria sem cair no azul generico."
+        "why": "Petroleo com coral da identidade própria sem cair no azul genérico."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "fintech-mobile",
@@ -130,13 +130,13 @@
       "manrope-tabular",
       "satoshi-general"
     ],
-    "layout_archetype": "Tab Bar 4 secoes + Sheet de confirmacao biométrica na zona do polegar",
+    "layout_archetype": "Tab Bar 4 seções + Sheet de confirmação biométrica na zona do polegar",
     "signature_moves": [
-      "Cartao de resumo com saldo protegivel por toque",
+      "Cartão de resumo com saldo protegível por toque",
       "Comprovante estruturado estilo recibo de alta legibilidade"
     ],
     "anti_patterns": [
-      "Acao de transferir escondida no topo fora do alcance do polegar",
+      "Ação de transferir escondida no topo fora do alcance do polegar",
       "Gradientes neon cripto roxo-ciano"
     ],
     "color_ideas": [
@@ -144,7 +144,7 @@
         "seed": "#0A3A2E",
         "accent": "#0F7A5D",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#1B1F3B",
@@ -154,7 +154,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "saude-clinica",
@@ -182,13 +182,13 @@
       "figtree-mono",
       "onest-martian"
     ],
-    "layout_archetype": "Timeline cronologica de atendimento + painel lateral de alergias/alertas clinicos",
+    "layout_archetype": "Timeline cronológica de atendimento + painel lateral de alergias/alertas clínicos",
     "signature_moves": [
-      "Faixa fixa de alertas clinicos criticos no topo do prontuario",
-      "Linha do tempo de consultas e exames escaneavel"
+      "Faixa fixa de alertas clínicos críticos no topo do prontuário",
+      "Linha do tempo de consultas e exames escaneável"
     ],
     "anti_patterns": [
-      "Textos cinza claro ilegiveis em ambientes hospitalares muito iluminados",
+      "Textos cinza claro ilegíveis em ambientes hospitalares muito iluminados",
       "Cor vermelha decorativa competindo com alergias/urgencias"
     ],
     "color_ideas": [
@@ -196,7 +196,7 @@
         "seed": "#124E5B",
         "accent": "#0D7C8C",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#3F6B5C",
@@ -206,7 +206,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "logistica-frota",
@@ -232,33 +232,33 @@
     "typography_ids": [
       "archivo-inter-mono",
       "barlow-ibm-mono",
-      "geologica-mono"
+      "geológica-mono"
     ],
     "layout_archetype": "Mapa/Rota vivo (60%) + Fila de manifestos e ocorrencias (40%) + App Motorista thumb-friendly",
     "signature_moves": [
       "Marcador de progresso de viagem com checkpoints e ETA",
-      "Cartao de ocorrencia de parada com acao em 1 toque"
+      "Cartão de ocorrência de parada com ação em 1 toque"
     ],
     "anti_patterns": [
       "Alvos pequenos no app do motorista em movimento",
-      "Badges de status sem cor semantica ligada a atraso real"
+      "Badges de status sem cor semântica ligada a atraso real"
     ],
     "color_ideas": [
       {
         "seed": "#162A3E",
         "accent": "#C94A16",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#2B2F36",
         "accent": "#F2A900",
-        "harmony": "acento unico",
-        "why": "Grafite com amarelo de sinalizacao viaria."
+        "harmony": "acento único",
+        "why": "Grafite com amarelo de sinalização viária."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "devtools-desktop-ide",
@@ -286,31 +286,31 @@
       "host-grotesk",
       "inter-jetbrains"
     ],
-    "layout_archetype": "Workbench multi-pane redimensionavel com arvore de projeto, editor/inspetor e painel inferior",
+    "layout_archetype": "Workbench multi-pane redimensionável com arvore de projeto, editor/inspetor e painel inferior",
     "signature_moves": [
       "Titlebar integrada com breadcrumbs e status de ambiente",
       "Palette de comandos e atalhos descobertos"
     ],
     "anti_patterns": [
       "Falta de suporte a teclado e atalhos",
-      "Scroll horizontal invisivel em logs ou payloads"
+      "Scroll horizontal invisível em logs ou payloads"
     ],
     "color_ideas": [
       {
         "seed": "#1F2937",
         "accent": "#1A56DB",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#16181D",
         "accent": "#7AA2F7",
-        "harmony": "monocromatica com acento",
-        "why": "Neutros quase pretos e um acento frio reservado a foco e selecao."
+        "harmony": "monocromática com acento",
+        "why": "Neutros quase pretos e um acento frio reservado a foco e seleção."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "produtividade-linear",
@@ -339,29 +339,29 @@
     ],
     "layout_archetype": "Lista agrupada / Board com filtros persistentes e inspector lateral de tarefa",
     "signature_moves": [
-      "Edicao inline instantanea com atalhos de tecla unica",
+      "Edição inline instantânea com atalhos de tecla única",
       "Barra de filtro em linha sem abrir modais"
     ],
     "anti_patterns": [
-      "Cardite com 12 badges coloridos em cada cartao",
-      "Carregamentos bloqueantes para cada alteracao de status"
+      "Cardite com 12 badges coloridos em cada cartão",
+      "Carregamentos bloqueantes para cada alteração de status"
     ],
     "color_ideas": [
       {
         "seed": "#1F242D",
         "accent": "#B54708",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#2A2A33",
         "accent": "#E5484D",
-        "harmony": "acento unico",
+        "harmony": "acento único",
         "why": "Neutros calmos e um vermelho-coral de marca usado com parcimonia."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "pdv-varejo",
@@ -389,31 +389,31 @@
       "dm-sans-mono",
       "onest-martian"
     ],
-    "layout_archetype": "Grade de catalogo rapido a esquerda + Cupom/Resumo de venda fixo a direita",
+    "layout_archetype": "Grade de catálogo rápido a esquerda + Cupom/Resumo de venda fixo a direita",
     "signature_moves": [
-      "Botoes de pagamento com atalhos F1-F4 e toque minimo 52px",
-      "Totalizacao tabular sempre visivel no topo do cupom"
+      "Botões de pagamento com atalhos F1-F4 e toque mínimo 52px",
+      "Totalização tabular sempre visível no topo do cupom"
     ],
     "anti_patterns": [
-      "Alvos de toque pequenos para operacao em balcao",
-      "Multiplas confirmacoes lentas durante fila de clientes"
+      "Alvos de toque pequenos para operação em balcão",
+      "Multiplas confirmações lentas durante fila de clientes"
     ],
     "color_ideas": [
       {
         "seed": "#1B2E26",
         "accent": "#C2410C",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#3B1F5C",
         "accent": "#FFB020",
         "harmony": "complementar",
-        "why": "Berinjela e ambar: varejo vivo e legivel no balcao."
+        "why": "Berinjela e ambar: varejo vivo e legível no balcão."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "govtech-licitacoes",
@@ -441,21 +441,21 @@
       "ibm-plex-suite",
       "atkinson-legibility"
     ],
-    "layout_archetype": "Radar em Lista Limpa -> Detalhe Focado do Edital na mesma pagina + Funil Kanban 4 etapas arrastavel + Cofre de Certidoes com Matriz Cruzada",
+    "layout_archetype": "Radar em Lista Limpa -> Detalhe Focado do Edital na mesma página + Funil Kanban 4 etapas arrastável + Cofre de Certidoes com Matriz Cruzada",
     "signature_moves": [
-      "Termometro de aderencia (0-100) cruzado com certidoes vencidas",
-      "Timeline de marcos do edital ate empenho"
+      "Termômetro de aderência (0-100) cruzado com certidoes vencidas",
+      "Timeline de marcos do edital até empenho"
     ],
     "anti_patterns": [
-      "Esconder certidao vencida no fim da pagina",
-      "Copiar tabelas burocraticas do governo sem triagem por urgencia"
+      "Esconder certidao vencida no fim da página",
+      "Copiar tabelas burocráticas do governo sem triagem por urgência"
     ],
     "color_ideas": [
       {
         "seed": "#102C49",
         "accent": "#D64812",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#1C3D2E",
@@ -465,7 +465,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "observabilidade-sre",
@@ -491,33 +491,33 @@
     "typography_ids": [
       "ibm-plex-suite",
       "geist-mono-clean",
-      "geologica-mono"
+      "geológica-mono"
     ],
-    "layout_archetype": "Faixa de saude de servicos + grafico temporal com marcacao de inicio de incidente + log stream",
+    "layout_archetype": "Faixa de saúde de serviços + gráfico temporal com marcação de inicio de incidente + log stream",
     "signature_moves": [
-      "Mapa linear de saude de APIs com marcacao de degrau de latencia",
-      "Botao testar agora com feedback deterministico"
+      "Mapa linear de saúde de APIs com marcação de degrau de latência",
+      "Botão testar agora com feedback determinístico"
     ],
     "anti_patterns": [
       "Bolinha verde piscando falsa sem leitura real de endpoint",
-      "Graficos com excesso de grades e legendas separadas"
+      "Gráficos com excesso de grades e legendas separadas"
     ],
     "color_ideas": [
       {
         "seed": "#1B2638",
         "accent": "#0E7490",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#0F172A",
         "accent": "#22C55E",
-        "harmony": "acento semantico",
-        "why": "Base escura neutra; a cor vive nos estados dos servicos."
+        "harmony": "acento semântico",
+        "why": "Base escura neutra; a cor vive nos estados dos serviços."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "atendimento-inbox",
@@ -548,28 +548,28 @@
     "layout_archetype": "3 colunas reais: Fila por SLA a esquerda + Conversa/Bot no centro + Contexto do cliente/pedidos a direita",
     "signature_moves": [
       "Contador regressivo de SLA em tabular-nums na fila",
-      "Modo escalonamento supervisor com intervencao sem perder historico"
+      "Modo escalonamento supervisor com intervenção sem perder histórico"
     ],
     "anti_patterns": [
-      "Esconder dados do cliente atras de 4 cliques durante ligacao",
-      "Bolhas de chat sem diferenciacao clara entre bot e humano"
+      "Esconder dados do cliente atrás de 4 cliques durante ligação",
+      "Bolhas de chat sem diferenciação clara entre bot e humano"
     ],
     "color_ideas": [
       {
         "seed": "#13354A",
         "accent": "#0F7653",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#3A2E5C",
         "accent": "#2FB6A3",
         "harmony": "complementar dividida",
-        "why": "Ameixa e verde-agua diferenciam humano e automacao."
+        "why": "Ameixa e verde-água diferenciam humano e automação."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "crm-comercial",
@@ -596,30 +596,30 @@
       "satoshi-general",
       "hanken-commit"
     ],
-    "layout_archetype": "Alternancia instantanea Kanban / Tabela ponderada + Gaveta lateral da conta com historico",
+    "layout_archetype": "Alternância instantânea Kanban / Tabela ponderada + Gaveta lateral da conta com histórico",
     "signature_moves": [
       "Indicador de dias parados na etapa sem movimento",
-      "Proximo passo obrigatorio visivel em cada negociacao"
+      "Próximo passo obrigatório visível em cada negociação"
     ],
     "anti_patterns": [
-      "Kanban cheio de tags irrelevantes onde nao se le valor nem proxima acao"
+      "Kanban cheio de tags irrelevantes onde não se le valor nem próxima ação"
     ],
     "color_ideas": [
       {
         "seed": "#1C293D",
         "accent": "#B93815",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#5A2A27",
         "accent": "#E8A33D",
         "harmony": "analoga quente",
-        "why": "Vinho e mel transmitem relacao e valor."
+        "why": "Vinho e mel transmitem relação e valor."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "educacao-lms",
@@ -646,20 +646,20 @@
       "source-sans-serif",
       "nunito-sans-mono"
     ],
-    "layout_archetype": "Area de leitura/video limpa (65-75ch) + trilha modular retratil",
+    "layout_archetype": "Área de leitura/vídeo limpa (65-75ch) + trilha modular retratil",
     "signature_moves": [
       "Retomar exatamente do minuto/paragrafo onde parou",
-      "Sumario de progresso continuo sem gamificacao infantil"
+      "Sumário de progresso continuo sem gamificação infantil"
     ],
     "anti_patterns": [
-      "Explosao de confetes, rankings e badges falsos em cursos tecnicos"
+      "Explosao de confetes, rankings e badges falsos em cursos técnicos"
     ],
     "color_ideas": [
       {
         "seed": "#1E3A5F",
         "accent": "#B45309",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#2E3A59",
@@ -669,7 +669,7 @@
       }
     ],
     "depth_hint": "suave",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "imobiliario-proptech",
@@ -694,30 +694,30 @@
       "hanken-commit",
       "onest-martian"
     ],
-    "layout_archetype": "Grade limpa com filtros persistentes + ficha do imovel/contrato com repasses em tabular-nums",
+    "layout_archetype": "Grade limpa com filtros persistentes + ficha do imóvel/contrato com repasses em tabular-nums",
     "signature_moves": [
       "Linha do tempo de vistoria e reajuste IGPM/IPCA",
-      "Grade de repasse locador x locatario crystal-clear"
+      "Grade de repasse locador x locatário crystal-clear"
     ],
     "anti_patterns": [
-      "Fotos distorcidas sem object-cover ou sem proporcao travada"
+      "Fotos distorcidas sem object-cover ou sem proporção travada"
     ],
     "color_ideas": [
       {
         "seed": "#213830",
         "accent": "#A84A24",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#33403A",
         "accent": "#C9A66B",
         "harmony": "analoga",
-        "why": "Verde-oliva e areia remetem a materiais de construcao."
+        "why": "Verde-oliva e areia remetem a materiais de construção."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "estudio-criativo-desktop",
@@ -745,27 +745,27 @@
     ],
     "layout_archetype": "Canvas neutro dominante no centro + barra de ferramentas fina + inspetor contextual a direita",
     "signature_moves": [
-      "Superficies neutras calibradas para nao contaminar a percepcao de cor da midia"
+      "Superficies neutras calibradas para não contaminar a percepção de cor da mídia"
     ],
     "anti_patterns": [
-      "Interface colorida competindo com o trabalho visual do usuario no canvas"
+      "Interface colorida competindo com o trabalho visual do usuário no canvas"
     ],
     "color_ideas": [
       {
         "seed": "#1F242D",
         "accent": "#D9480F",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#1E1E1E",
         "accent": "#8B8B8B",
         "harmony": "neutra",
-        "why": "Interface neutra para nao contaminar a percepcao de cor da midia."
+        "why": "Interface neutra para não contaminar a percepção de cor da mídia."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "agro-campo-mobile",
@@ -792,21 +792,21 @@
       "atkinson-legibility",
       "archivo-inter-mono"
     ],
-    "layout_archetype": "Light-first de altissimo contraste sob luz solar + sincronizacao offline explicita",
+    "layout_archetype": "Light-first de altissimo contraste sob luz solar + sincronização offline explicita",
     "signature_moves": [
-      "Indicador real de fila offline pendente de sincronizacao",
-      "Botoes grandes 48dp+ operaveis com luva/sol"
+      "Indicador real de fila offline pendente de sincronização",
+      "Botões grandes 48dp+ operáveis com luva/sol"
     ],
     "anti_patterns": [
-      "Dark mode obrigatorio sob sol forte",
-      "Textos finos cinza claro ilegiveis fora de escritorio"
+      "Dark mode obrigatório sob sol forte",
+      "Textos finos cinza claro ilegíveis fora de escritório"
     ],
     "color_ideas": [
       {
         "seed": "#1B3B24",
         "accent": "#B8470B",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#2F5D2A",
@@ -816,7 +816,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "rh-dp",
@@ -842,20 +842,20 @@
       "nunito-sans-mono",
       "hanken-commit"
     ],
-    "layout_archetype": "Checklist de admissao/fechamento em etapas + visao individual do colaborador",
+    "layout_archetype": "Checklist de admissao/fechamento em etapas + visão individual do colaborador",
     "signature_moves": [
-      "Painel de bloqueios de fechamento por competencia",
+      "Painel de bloqueios de fechamento por competência",
       "Autoatendimento mobile limpo para espelho de ponto"
     ],
     "anti_patterns": [
-      "Expor dados pessoais sensiveis em listas publicas sem mascara"
+      "Expor dados pessoais sensíveis em listas públicas sem mascara"
     ],
     "color_ideas": [
       {
         "seed": "#232F46",
         "accent": "#0E6B64",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#3B3F6B",
@@ -865,7 +865,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "juridico-contratos",
@@ -893,7 +893,7 @@
     "layout_archetype": "Leitura comparativa lado a lado + fila de prazos fatais ordenada por vencimento",
     "signature_moves": [
       "Contagem regressiva de prazo fatal com contraste carmim apenas quando urgente",
-      "Diff de clausulas legivel"
+      "Diff de clausulas legível"
     ],
     "anti_patterns": [
       "Largura de linha de 140 caracteres em leitura de pecas"
@@ -903,17 +903,17 @@
         "seed": "#1B2A38",
         "accent": "#9F2D20",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#2C2A29",
         "accent": "#8C2F39",
-        "harmony": "acento unico",
+        "harmony": "acento único",
         "why": "Tinta quase preta e carmim reservado a prazos fatais."
       }
     ],
     "depth_hint": "suave",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "turismo-viagens-corporativas",
@@ -942,18 +942,18 @@
     ],
     "layout_archetype": "Boarding Pass cards + Painel de emissões, faturas e eventos",
     "signature_moves": [
-      "Cartao de embarque escaneavel em 1.5s",
+      "Cartão de embarque escaneável em 1.5s",
       "Arco de progresso da etapa de viagem/evento"
     ],
     "anti_patterns": [
-      "Desenhos infantis de avioezinhos ou templates de agencia generica"
+      "Desenhos infantis de avioezinhos ou templates de agência genérica"
     ],
     "color_ideas": [
       {
         "seed": "#0E2D4D",
         "accent": "#DE4B14",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#0F3B57",
@@ -963,7 +963,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "energia-iot-industrial",
@@ -987,11 +987,11 @@
     "typography_ids": [
       "barlow-ibm-mono",
       "ibm-plex-suite",
-      "geologica-mono"
+      "geológica-mono"
     ],
     "layout_archetype": "Painel de unidades + Matriz de alarmes ativos + series temporais comparativas",
     "signature_moves": [
-      "Rótulo direto nas curvas de consumo/geracao",
+      "Rótulo direto nas curvas de consumo/geração",
       "Alarme com timestamp exato e protocolo de reconhecimento"
     ],
     "anti_patterns": [
@@ -1003,17 +1003,17 @@
         "seed": "#162A36",
         "accent": "#C24E0E",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#1D2B2A",
         "accent": "#F5B700",
-        "harmony": "acento unico",
+        "harmony": "acento único",
         "why": "Grafite esverdeado e amarelo de alerta industrial."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "marketplace-b2b",
@@ -1038,9 +1038,9 @@
       "dm-sans-mono",
       "hanken-commit"
     ],
-    "layout_archetype": "Comparativo tabular de cotacoes lado a lado + Carrinho de pedido de compra persistente",
+    "layout_archetype": "Comparativo tabular de cotações lado a lado + Carrinho de pedido de compra persistente",
     "signature_moves": [
-      "Matriz comparativa de preco, prazo e frete destacando menor custo total"
+      "Matriz comparativa de preço, prazo e frete destacando menor custo total"
     ],
     "anti_patterns": [
       "Cards de e-commerce B2C gigantes quando o comprador precisa comparar 12 SKUs"
@@ -1050,17 +1050,17 @@
         "seed": "#1A3248",
         "accent": "#C44512",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#22313F",
         "accent": "#00A389",
         "harmony": "analoga fria",
-        "why": "Ardosia e verde de transacao concluida."
+        "why": "Ardosia e verde de transação concluida."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "app-executivo-socios",
@@ -1088,31 +1088,31 @@
       "satoshi-general",
       "manrope-tabular"
     ],
-    "layout_archetype": "Pulso em 10 segundos no topo + 3 decisoes pendentes acionaveis via Bottom Sheet + Dock 4 abas",
+    "layout_archetype": "Pulso em 10 segundos no topo + 3 decisões pendentes acionáveis via Bottom Sheet + Dock 4 abas",
     "signature_moves": [
       "Simulador de impacto em caixa antes de aprovar em 1 toque",
-      "Desfazer imediato apos aprovacao"
+      "Desfazer imediato após aprovação"
     ],
     "anti_patterns": [
-      "Dashboards com 14 graficos minusculos no celular",
-      "Exigir desktop para aprovar uma fatura critica"
+      "Dashboards com 14 gráficos minusculos no celular",
+      "Exigir desktop para aprovar uma fatura crítica"
     ],
     "color_ideas": [
       {
         "seed": "#0E2B48",
         "accent": "#D94B14",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#1B1B1F",
         "accent": "#C8A96A",
-        "harmony": "acento unico",
-        "why": "Preto quente e dourado discreto para decisao executiva."
+        "harmony": "acento único",
+        "why": "Preto quente e dourado discreto para decisão executiva."
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "gestao-obras-engenharia",
@@ -1138,20 +1138,20 @@
       "mona-hubot",
       "ibm-plex-suite"
     ],
-    "layout_archetype": "Cronograma fisico-financeiro + Diario fotografico com registro de campo mobile",
+    "layout_archetype": "Cronograma físico-financeiro + Diário fotográfico com registro de campo mobile",
     "signature_moves": [
       "Comparativo Previsto vs Realizado alinhado por etapa",
-      "Galeria de vistoria com metadados de data e responsavel"
+      "Galeria de vistoria com metadados de data e responsável"
     ],
     "anti_patterns": [
-      "Graficos de Gantt ilegiveis sem zoom ou filtro por frente"
+      "Gráficos de Gantt ilegíveis sem zoom ou filtro por frente"
     ],
     "color_ideas": [
       {
         "seed": "#1E2D3B",
         "accent": "#C24A0B",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#3D3A36",
@@ -1161,7 +1161,7 @@
       }
     ],
     "depth_hint": "linha fina ou tonal",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "landing-produto-editorial",
@@ -1188,9 +1188,9 @@
       "clash-cabinet",
       "fraunces-dm"
     ],
-    "layout_archetype": "Narrativa orientada por prova real (captura do produto em acao) + especificacao direta",
+    "layout_archetype": "Narrativa orientada por prova real (captura do produto em ação) + especificação direta",
     "signature_moves": [
-      "Demonstracao interativa ao vivo acima da dobra em vez de slogan abstrato"
+      "Demonstração interativa ao vivo acima da dobra em vez de slogan abstrato"
     ],
     "anti_patterns": [
       "Template hero + 6 logos falsos + 3 cards com sparkles + depoimentos inventados"
@@ -1200,16 +1200,16 @@
         "seed": "#18222D",
         "accent": "#BD3F14",
         "harmony": "estrutura + acento",
-        "why": "Combinacao classica do setor; use se a marca nao tiver cor propria."
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       },
       {
         "seed": "#111111",
         "accent": "#FF5B2E",
-        "harmony": "acento unico",
+        "harmony": "acento único",
         "why": "Tipografia forte em preto com um acento vivo de marca."
       }
     ],
-    "depth_hint": "suave ou tatil",
-    "note": "Hipotese de catalogo. A cor da marca, o fluxo real do projeto e a direcao escolhida prevalecem."
+    "depth_hint": "suave ou tátil",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   }
 ]

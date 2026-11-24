@@ -8,7 +8,7 @@
   "repo": "https://github.com/chakra-ui/ark",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "vue",
@@ -45,10 +45,15 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @ark-ui/react",
-  "summary": "Headless multi-framework quando o projeto nao e so React",
+  "summary": "Headless multi-framework quando o projeto não é só React",
   "a11y": "Maquina de estado Zag.js; confira a porta da stack",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @ark-ui/react",
+   "vue": "npm install @ark-ui/vue",
+   "solid": "npm install @ark-ui/solid",
+   "svelte": "npm install @ark-ui/svelte"
+  }
  },
  {
   "id": "base-ui",
@@ -59,7 +64,7 @@
   "repo": "https://github.com/mui/base-ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -99,10 +104,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @base-ui/react",
-  "summary": "Primitivos sem estilo para um design system proprio",
-  "a11y": "Foco, typeahead e dismiss sao responsabilidade da lib",
-  "notes": "1.0 estavel desde dez/2025 (pacote @base-ui/react).",
-  "license_ok": true
+  "summary": "Primitivos sem estilo para um design system próprio",
+  "a11y": "Foco, typeahead e dismiss são responsabilidade da lib",
+  "notes": "1.0 estável desde dez/2025 (pacote @base-ui/react)."
  },
  {
   "id": "bits-ui",
@@ -113,7 +117,7 @@
   "repo": "https://github.com/huntabyte/bits-ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "svelte"
   ],
@@ -146,10 +150,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install bits-ui",
-  "summary": "Headless Svelte para um visual proprio",
+  "summary": "Headless Svelte para um visual próprio",
   "a11y": "Foco e dismiss vem da lib",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "mantine",
@@ -160,7 +163,7 @@
   "repo": "https://github.com/mantinedev/mantine",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -197,10 +200,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @mantine/core @mantine/hooks",
-  "summary": "Kit de aplicacao completo quando o time nao quer montar primitivos",
-  "a11y": "Dates e modais sao fortes; ainda assim re-tema cores e raios",
-  "notes": "",
-  "license_ok": true
+  "summary": "Kit de aplicação completo quando o time não quer montar primitivos",
+  "a11y": "Dates e modais são fortes; ainda assim re-tema cores e raios",
+  "notes": ""
  },
  {
   "id": "nuxt-ui",
@@ -211,7 +213,7 @@
   "repo": "https://github.com/nuxt/ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue"
   ],
@@ -244,10 +246,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @nuxt/ui",
-  "summary": "Kit de aplicacao Nuxt quando o projeto ja e Nuxt",
+  "summary": "Kit de aplicação Nuxt quando o projeto já e Nuxt",
   "a11y": "Re-tema antes de misturar blocos de marketing",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "radix-themes",
@@ -258,7 +259,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -283,11 +284,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npm install @radix-ui/themes",
   "summary": "Kit pronto sobre Radix com escalas de cor de 12 degraus.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "radix-primitives",
@@ -298,7 +298,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -327,11 +327,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Componentes copiaveis sob tokens semanticos proprios em React + Tailwind",
-  "a11y": "Atalhos de teclado e focus trap validados em producao",
-  "notes": "",
-  "license_ok": true
+  "install": "npm install radix-ui",
+  "summary": "Componentes copiáveis sob tokens semânticos próprios em React + Tailwind",
+  "a11y": "Atalhos de teclado e focus trap validados em produção",
+  "notes": ""
  },
  {
   "id": "react-aria",
@@ -342,7 +341,7 @@
   "repo": "https://github.com/adobe/react-spectrum",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -381,9 +380,8 @@
   "craft": 3,
   "install": "npm install react-aria-components",
   "summary": "Datas, grids e combobox com leitor de tela e RTL",
-  "a11y": "Padrao mais completo para calendario e selecao complexa",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Padrão mais completo para calendário e seleção complexa",
+  "notes": ""
  },
  {
   "id": "reka-ui",
@@ -394,7 +392,7 @@
   "repo": "https://github.com/unovue/reka-ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue"
   ],
@@ -427,10 +425,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install reka-ui",
-  "summary": "Primitivos Vue acessiveis, sucessores do Radix Vue",
+  "summary": "Primitivos Vue acessíveis, sucessores do Radix Vue",
   "a11y": "Mesma expectativa de teclado dos primitivos Radix",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "shadcn-svelte",
@@ -466,11 +463,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "npx shadcn-svelte@latest init",
   "summary": "Port do shadcn/ui para Svelte sobre Bits UI.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "shadcn-vue",
@@ -510,8 +506,7 @@
   "install": "npx shadcn-vue@latest add button",
   "summary": "Port do shadcn/ui para Vue sobre Reka UI.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "shadcn-ui",
@@ -522,7 +517,7 @@
   "repo": "https://github.com/shadcn-ui/ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -562,10 +557,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npx shadcn@latest create  |  npx shadcn@latest add button dialog",
-  "summary": "Primitivos copiaveis, acessiveis, para re-tematizar com os tokens do projeto",
-  "a11y": "Base UI, Radix ou React Aria por baixo; teclado e foco ja encaminhados",
-  "notes": "'shadcn create' oferece estilos visuais (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea) e bases Radix, Base UI ou React Aria. O estilo e decisao da direcao, nao padrao. O Registry Directory lista registries abertos.",
-  "license_ok": true
+  "summary": "Primitivos copiáveis, acessíveis, para re-tematizar com os tokens do projeto",
+  "a11y": "Base UI, Radix ou React Aria por baixo; teclado e foco já encaminhados",
+  "notes": "'shadcn create' oferece estilos visuais (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea) e bases Radix, Base UI ou React Aria. O estilo e decisão da direção, não padrão. O Registry Directory lista registries abertos."
  },
  {
   "id": "untitled-ui-react",
@@ -576,7 +570,7 @@
   "repo": "https://github.com/untitleduico/react",
   "license": "MIT (somente a parte livre)",
   "license_status": "ok",
-  "license_checked_at": "2026-11-23",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -607,11 +601,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Componentes de aplicacao maduros (tabelas, abas, datas, graficos, navegacao) sobre React Aria.",
+  "install": "copiar os componentes gratuitos do repositório (MIT)",
+  "summary": "Componentes de aplicação maduros (tabelas, abas, datas, gráficos, navegação) sobre React Aria.",
   "a11y": "",
-  "notes": "Paginas e componentes PRO tem licenca paga; use so os livres.",
-  "license_ok": true
+  "notes": "Páginas e componentes PRO tem licença paga; use só os livres."
  },
  {
   "id": "web-awesome",
@@ -622,7 +615,7 @@
   "repo": "https://github.com/shoelace-style/webawesome",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": "2026-11-23",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -655,8 +648,7 @@
   "install": "npm install @awesome.me/webawesome",
   "summary": "Web Components prontos para HTML sem framework; sucessor do Shoelace.",
   "a11y": "",
-  "notes": "A versao Pro e paga; a free cobre os componentes do Shoelace e mais.",
-  "license_ok": true
+  "notes": "A versão Pro e paga; a free cobre os componentes do Shoelace e mais."
  },
  {
   "id": "angular-material",
@@ -693,11 +685,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "ng add @angular/material",
   "summary": "Kit Material e CDK de comportamento para Angular.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "ant-design",
@@ -708,7 +699,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -736,11 +727,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install antd",
   "summary": "Kit enterprise completo.",
   "a11y": "",
-  "notes": "Visual muito reconhecivel; re-tematize pelos tokens.",
-  "license_ok": true
+  "notes": "Visual muito reconhecível; re-tematize pelos tokens."
  },
  {
   "id": "ariakit",
@@ -751,7 +741,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -778,10 +768,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install @ariakit/react",
-  "summary": "Primitivos acessiveis com combobox e menus muito bem resolvidos.",
+  "summary": "Primitivos acessíveis com combobox e menus muito bem resolvidos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "basecoat",
@@ -792,7 +781,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -818,11 +807,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install basecoat-css",
   "summary": "Visual do shadcn em HTML + Tailwind, sem React.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "blueprint",
@@ -833,7 +821,7 @@
   "repo": "",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -859,11 +847,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @blueprintjs/core",
   "summary": "Kit da Palantir para apps desktop densos de dados.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "carbon",
@@ -874,7 +861,7 @@
   "repo": "",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "html"
@@ -902,11 +889,13 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Sistema da IBM: tabelas, formularios e densidade enterprise.",
+  "install": "npm install @carbon/web-components",
+  "summary": "Sistema da IBM: tabelas, formulários e densidade enterprise.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @carbon/react"
+  }
  },
  {
   "id": "chakra-ui",
@@ -917,7 +906,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -942,11 +931,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Kit com tokens semanticos e recipes; reescrito sobre Ark/Zag.",
+  "install": "npm install @chakra-ui/react @emotion/react",
+  "summary": "Kit com tokens semânticos e recipes; reescrito sobre Ark/Zag.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "daisyui",
@@ -957,7 +945,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -986,11 +974,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install -D daisyui",
   "summary": "Classes de componentes para Tailwind com temas.",
   "a11y": "",
-  "notes": "Temas prontos deixam a cara generica; re-tematize pelos tokens.",
-  "license_ok": true
+  "notes": "Temas prontos deixam a cara genérica; re-tematize pelos tokens."
  },
  {
   "id": "fluent-ui-react",
@@ -1001,7 +988,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -1025,11 +1012,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @fluentui/react-components",
   "summary": "Componentes Fluent 2 para apps Windows e corporativos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "headless-ui",
@@ -1040,7 +1026,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "vue"
@@ -1072,7 +1058,10 @@
   "summary": "Primitivos sem estilo da Tailwind Labs (menu, listbox, dialog, tabs).",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @headlessui/react",
+   "vue": "npm install @headlessui/vue"
+  }
  },
  {
   "id": "heroui",
@@ -1083,7 +1072,7 @@
   "repo": "https://github.com/heroui-inc/heroui",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -1114,10 +1103,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install @heroui/react",
-  "summary": "Kit React estilizado. So vale se o projeto aceitar a linguagem visual dele por inteiro",
-  "a11y": "Nao misture HeroUI cru com outro kit na mesma superficie",
-  "notes": "",
-  "license_ok": true
+  "summary": "Kit React estilizado. Só vale se o projeto aceitar a linguagem visual dele por inteiro",
+  "a11y": "Não misture HeroUI cru com outro kit na mesma superficie",
+  "notes": ""
  },
  {
   "id": "kobalte",
@@ -1128,7 +1116,7 @@
   "repo": "https://github.com/kobaltedev/kobalte",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "solid"
   ],
@@ -1160,10 +1148,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install @kobalte/core",
-  "summary": "Primitivos Solid acessiveis",
-  "a11y": "Nao porte visual de React sem rever o foco",
-  "notes": "",
-  "license_ok": true
+  "summary": "Primitivos Solid acessíveis",
+  "a11y": "Não porte visual de React sem rever o foco",
+  "notes": ""
  },
  {
   "id": "material-web",
@@ -1174,7 +1161,7 @@
   "repo": "",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -1199,11 +1186,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @material/web",
   "summary": "Web Components do Material 3.",
   "a11y": "",
-  "notes": "Manutencao reduzida; confirme antes de adotar.",
-  "license_ok": true
+  "notes": "Manutenção reduzida; confirme antes de adotar."
  },
  {
   "id": "melt-ui",
@@ -1214,7 +1200,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "svelte"
   ],
@@ -1239,11 +1225,11 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @melt-ui/svelte",
   "summary": "Primitivos sem estilo para Svelte.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "mui-material",
@@ -1254,7 +1240,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -1279,11 +1265,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @mui/material @emotion/react @emotion/styled",
   "summary": "Kit Material maduro para React.",
   "a11y": "",
-  "notes": "MUI X Pro/Premium e pago.",
-  "license_ok": true
+  "notes": "MUI X Pro/Premium e pago."
  },
  {
   "id": "naive-ui",
@@ -1294,7 +1279,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue"
   ],
@@ -1319,11 +1304,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install naive-ui",
   "summary": "Kit Vue com temas tipados.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "open-props",
@@ -1334,7 +1318,7 @@
   "repo": "https://github.com/argyleink/open-props",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -1372,10 +1356,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install open-props",
-  "summary": "Curvas de easing fisicas, sombras em camadas e escalas CSS modulares prontas para combinar com tokens.css",
+  "summary": "Curvas de easing físicas, sombras em camadas e escalas CSS modulares prontas para combinar com tokens.css",
   "a11y": "Zero JS runtime",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "park-ui",
@@ -1413,11 +1396,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "copiar via CLI do Park UI conforme a página do componente",
   "summary": "Componentes estilizados sobre Ark UI com Panda CSS ou Tailwind.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "preline",
@@ -1428,7 +1410,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -1456,11 +1438,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install preline",
   "summary": "Componentes e blocos em HTML + Tailwind com plugins JS.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "primevue",
@@ -1468,10 +1449,10 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://primevue.org",
-  "repo": "",
+  "repo": "https://github.com/primefaces/primevue",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue",
    "react"
@@ -1500,11 +1481,14 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install primevue @primeuix/themes",
   "summary": "Kit amplo com modo unstyled e tabelas ricas.",
   "a11y": "",
-  "notes": "Temas e blocos premium sao pagos.",
-  "license_ok": true
+  "notes": "Temas e blocos premium são pagos.",
+  "installs": {
+   "vue": "npm install primevue @primeuix/themes",
+   "react": "npm install primereact"
+  }
  },
  {
   "id": "quasar",
@@ -1515,7 +1499,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue"
   ],
@@ -1542,11 +1526,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install quasar @quasar/extras",
   "summary": "Vue para web, desktop e mobile hibrido.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "reui",
@@ -1584,11 +1567,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "copiar via shadcn CLI conforme a página do componente",
   "summary": "Componentes e blocos de app sobre shadcn.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "semi-design",
@@ -1599,7 +1581,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -1624,11 +1606,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @douyinfe/semi-ui",
   "summary": "Kit com bom tratamento de tema e dark mode.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "spartan-ng",
@@ -1639,7 +1620,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "angular"
   ],
@@ -1665,11 +1646,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install -D @spartan-ng/cli",
   "summary": "Equivalente ao shadcn para Angular.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "spectrum-ui",
@@ -1708,11 +1688,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Componentes animados e acessiveis via shadcn CLI.",
+  "install": "copiar via shadcn CLI conforme a página do componente",
+  "summary": "Componentes animados e acessíveis via shadcn CLI.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "vuetify",
@@ -1723,7 +1702,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue"
   ],
@@ -1748,11 +1727,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install vuetify",
   "summary": "Material para Vue.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "zag-js",
@@ -1763,7 +1741,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "vue",
@@ -1791,11 +1769,16 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @zag-js/react @zag-js/dialog",
   "summary": "Maquinas de estado de componentes, base do Ark UI; serve a qualquer framework.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @zag-js/react @zag-js/dialog",
+   "vue": "npm install @zag-js/vue @zag-js/dialog",
+   "svelte": "npm install @zag-js/svelte @zag-js/dialog",
+   "solid": "npm install @zag-js/solid @zag-js/dialog"
+  }
  },
  {
   "id": "arco-design",
@@ -1806,7 +1789,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "vue"
@@ -1832,11 +1815,14 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
+  "install": "npm install @arco-design/web-react",
   "summary": "Kit enterprise da ByteDance.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @arco-design/web-react",
+   "vue": "npm install @arco-design/web-vue"
+  }
  },
  {
   "id": "element-plus",
@@ -1847,7 +1833,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "vue"
   ],
@@ -1872,11 +1858,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
+  "install": "npm install element-plus",
   "summary": "Kit Vue enterprise.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "flowbite",
@@ -1887,7 +1872,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -1915,11 +1900,15 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Componentes Tailwind com JS de interacao.",
+  "install": "npm install flowbite",
+  "summary": "Componentes Tailwind com JS de interação.",
   "a11y": "",
-  "notes": "Blocos Pro sao pagos.",
-  "license_ok": true
+  "notes": "Blocos Pro são pagos.",
+  "installs": {
+   "react": "npm install flowbite-react",
+   "vue": "npm install flowbite-vue",
+   "svelte": "npm install flowbite-svelte"
+  }
  },
  {
   "id": "pico-css",
@@ -1930,7 +1919,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -1954,10 +1943,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "CSS semantico quase sem classes; bom para prototipos de leitura.",
+  "install": "npm install @picocss/pico",
+  "summary": "CSS semântico quase sem classes; bom para protótipos de leitura.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  }
 ]

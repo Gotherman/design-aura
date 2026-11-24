@@ -8,7 +8,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -35,11 +35,15 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Transicao numerica suave em tabular-nums para saldos, metricas e simuladores financeiros",
-  "a11y": "Usa role e aria-label acessivel enquanto anima digitos sem reflow",
+  "install": "npm install number-flow",
+  "summary": "Transição numérica suave em tabular-nums para saldos, métricas e simuladores financeiros",
+  "a11y": "Usa role e aria-label acessível enquanto anima digitos sem reflow",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @number-flow/react",
+   "vue": "npm install @number-flow/vue",
+   "svelte": "npm install @number-flow/svelte"
+  }
  },
  {
   "id": "tremor-raw",
@@ -52,8 +56,7 @@
   "license_status": "ok",
   "license_checked_at": null,
   "stacks": [
-   "react",
-   "html"
+   "react"
   ],
   "platforms": [
    "system",
@@ -93,10 +96,9 @@
   "flashy": false,
   "craft": 3,
   "install": "copiar primitivos MIT/Apache-2.0 de https://tremor.so/docs",
-  "summary": "Os melhores micro-componentes analiticos open-source: BarList (ranking com barra proporcional), Tracker (30 blocos de SLA/status), CategoryBar (De cada R$ 100) e ComboChart",
-  "a11y": "Construido sobre Radix/Recharts com excelente contraste e semantica tabular",
-  "notes": "Confirme a licenca e o repositorio atuais (o projeto passou para a Vercel em 2025).",
-  "license_ok": true
+  "summary": "Os melhores micro-componentes analíticos open-source: BarList (ranking com barra proporcional), Tracker (30 blocos de SLA/status), CategoryBar (De cada R$ 100) e ComboChart",
+  "a11y": "Construido sobre Radix/Recharts com excelente contraste e semântica tabular",
+  "notes": "Confirme a licença e o repositório atuais (o projeto passou para a Vercel em 2025)."
  },
  {
   "id": "countup-js",
@@ -107,7 +109,7 @@
   "repo": "https://github.com/inorganik/countUp.js",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -145,9 +147,8 @@
   "flashy": false,
   "craft": 1,
   "install": "npm install countup.js",
-  "summary": "Transicao numerica suave em HTML/JS puro ao trocar filtro de socio, banco ou competencia (com formatacao pt-BR R$)",
-  "a11y": "Use duracao curta (<= 350ms) e desative sob prefers-reduced-motion",
-  "notes": "",
-  "license_ok": true
+  "summary": "Transição numérica suave em HTML/JS puro ao trocar filtro de socio, banco ou competência (com formatação pt-BR R$)",
+  "a11y": "Use duração curta (<= 350ms) e desative sob prefers-reduced-motion",
+  "notes": ""
  }
 ]

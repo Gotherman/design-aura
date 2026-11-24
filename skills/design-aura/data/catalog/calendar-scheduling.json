@@ -8,7 +8,7 @@
   "repo": "https://github.com/schedule-x/schedule-x",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -45,10 +45,14 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @schedule-x/calendar",
-  "summary": "Calendario moderno com Dark Mode nativo para agendas operacionais e reservas",
-  "a11y": "Suporte completo a teclado e fuso horario",
-  "notes": "Plugins premium sao pagos; o nucleo e MIT.",
-  "license_ok": true
+  "summary": "Calendário moderno com Dark Mode nativo para agendas operacionais e reservas",
+  "a11y": "Suporte completo a teclado e fuso horário",
+  "notes": "Plugins premium são pagos; o núcleo e MIT.",
+  "installs": {
+   "react": "npm install @schedule-x/react @schedule-x/calendar @schedule-x/theme-default",
+   "vue": "npm install @schedule-x/vue @schedule-x/calendar @schedule-x/theme-default",
+   "svelte": "npm install @schedule-x/svelte @schedule-x/calendar @schedule-x/theme-default"
+  }
  },
  {
   "id": "event-calendar",
@@ -59,7 +63,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "svelte",
@@ -87,11 +91,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Calendario estilo FullCalendar com views de recurso livres.",
+  "install": "npm install @event-calendar/core",
+  "summary": "Calendário estilo FullCalendar com views de recurso livres.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "frappe-gantt",
@@ -102,7 +105,7 @@
   "repo": "https://github.com/frappe/gantt",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -139,10 +142,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install frappe-gantt",
-  "summary": "Gantt em SVG para HTML/JS puro: fases, etapas e dependencias.",
-  "a11y": "Estilize barras e linhas de dependencia usando os tokens --chart-1..5",
-  "notes": "",
-  "license_ok": true
+  "summary": "Gantt em SVG para HTML/JS puro: fases, etapas e dependências.",
+  "a11y": "Estilize barras e linhas de dependência usando os tokens --chart-1..5",
+  "notes": ""
  },
  {
   "id": "fullcalendar-core",
@@ -153,7 +155,7 @@
   "repo": "https://github.com/fullcalendar/fullcalendar",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -191,10 +193,13 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/timegrid",
-  "summary": "Grade mensal, semanal e diaria interativa para agendas, vencimentos e reservas.",
-  "a11y": "Navegacao por teclado nas celulas e eventos com cores semanticas",
-  "notes": "Views por recurso (timeline/resource) sao Premium e pagas.",
-  "license_ok": true
+  "summary": "Grade mensal, semanal e diária interativa para agendas, vencimentos e reservas.",
+  "a11y": "Navegação por teclado nas celulas e eventos com cores semânticas",
+  "notes": "Views por recurso (timeline/resource) são Premium e pagas.",
+  "installs": {
+   "react": "npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/timegrid",
+   "vue": "npm install @fullcalendar/vue3 @fullcalendar/daygrid @fullcalendar/timegrid"
+  }
  },
  {
   "id": "svar-gantt",
@@ -205,7 +210,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "svelte",
@@ -232,11 +237,14 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Gantt interativo com dependencias.",
+  "install": "npm install @svar-ui/react-gantt",
+  "summary": "Gantt interativo com dependências.",
   "a11y": "",
   "notes": "",
-  "license_ok": false
+  "installs": {
+   "react": "npm install @svar-ui/react-gantt",
+   "svelte": "npm install @svar-ui/svelte-gantt"
+  }
  },
  {
   "id": "toast-ui-calendar",
@@ -247,7 +255,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -274,11 +282,15 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Calendario completo com arrastar eventos.",
+  "install": "npm install @toast-ui/calendar",
+  "summary": "Calendário completo com arrastar eventos.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @toast-ui/react-calendar",
+   "vue": "npm install @toast-ui/vue-calendar"
+  },
+  "stale": true
  },
  {
   "id": "react-big-calendar",
@@ -289,7 +301,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -314,11 +326,10 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
-  "summary": "Calendario mes/semana/dia para React.",
+  "install": "npm install react-big-calendar",
+  "summary": "Calendário mes/semana/dia para React.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "vis-timeline",
@@ -329,7 +340,7 @@
   "repo": "",
   "license": "Apache-2.0 / MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -355,10 +366,9 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
+  "install": "npm install vis-timeline vis-data",
   "summary": "Linha do tempo interativa com grupos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  }
 ]

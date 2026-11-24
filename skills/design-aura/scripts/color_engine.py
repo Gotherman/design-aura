@@ -14,6 +14,7 @@ O resultado passa pelo mesmo pipeline (generate_tokens.py -> tokens.css -> audit
 from __future__ import annotations
 
 import math
+import re
 
 # ------------------------------------------------------------------ conversoes
 
@@ -92,6 +93,203 @@ def oklch_to_hex(L: float, C: float, H: float) -> str:
     a, b = best[1] * math.cos(math.radians(H)), best[1] * math.sin(math.radians(H))
     lin = oklab_to_linear_rgb(best[0], a, b)
     return rgb_to_hex(tuple(_linear_to_srgb(max(0.0, min(1.0, c))) for c in lin))  # type: ignore[arg-type]
+
+
+CSS_NAMED = {
+    "aliceblue": "#F0F8FF",
+    "antiquewhite": "#FAEBD7",
+    "aqua": "#00FFFF",
+    "aquamarine": "#7FFFD4",
+    "azure": "#F0FFFF",
+    "beige": "#F5F5DC",
+    "bisque": "#FFE4C4",
+    "black": "#000000",
+    "blanchedalmond": "#FFEBCD",
+    "blue": "#0000FF",
+    "blueviolet": "#8A2BE2",
+    "brown": "#A52A2A",
+    "burlywood": "#DEB887",
+    "cadetblue": "#5F9EA0",
+    "chartreuse": "#7FFF00",
+    "chocolate": "#D2691E",
+    "coral": "#FF7F50",
+    "cornflowerblue": "#6495ED",
+    "cornsilk": "#FFF8DC",
+    "crimson": "#DC143C",
+    "cyan": "#00FFFF",
+    "darkblue": "#00008B",
+    "darkcyan": "#008B8B",
+    "darkgoldenrod": "#B8860B",
+    "darkgray": "#A9A9A9",
+    "darkgreen": "#006400",
+    "darkgrey": "#A9A9A9",
+    "darkkhaki": "#BDB76B",
+    "darkmagenta": "#8B008B",
+    "darkolivegreen": "#556B2F",
+    "darkorange": "#FF8C00",
+    "darkorchid": "#9932CC",
+    "darkred": "#8B0000",
+    "darksalmon": "#E9967A",
+    "darkseagreen": "#8FBC8F",
+    "darkslateblue": "#483D8B",
+    "darkslategray": "#2F4F4F",
+    "darkslategrey": "#2F4F4F",
+    "darkturquoise": "#00CED1",
+    "darkviolet": "#9400D3",
+    "deeppink": "#FF1493",
+    "deepskyblue": "#00BFFF",
+    "dimgray": "#696969",
+    "dimgrey": "#696969",
+    "dodgerblue": "#1E90FF",
+    "firebrick": "#B22222",
+    "floralwhite": "#FFFAF0",
+    "forestgreen": "#228B22",
+    "fuchsia": "#FF00FF",
+    "gainsboro": "#DCDCDC",
+    "ghostwhite": "#F8F8FF",
+    "gold": "#FFD700",
+    "goldenrod": "#DAA520",
+    "gray": "#808080",
+    "green": "#008000",
+    "greenyellow": "#ADFF2F",
+    "grey": "#808080",
+    "honeydew": "#F0FFF0",
+    "hotpink": "#FF69B4",
+    "indianred": "#CD5C5C",
+    "indigo": "#4B0082",
+    "ivory": "#FFFFF0",
+    "khaki": "#F0E68C",
+    "lavender": "#E6E6FA",
+    "lavenderblush": "#FFF0F5",
+    "lawngreen": "#7CFC00",
+    "lemonchiffon": "#FFFACD",
+    "lightblue": "#ADD8E6",
+    "lightcoral": "#F08080",
+    "lightcyan": "#E0FFFF",
+    "lightgoldenrodyellow": "#FAFAD2",
+    "lightgray": "#D3D3D3",
+    "lightgreen": "#90EE90",
+    "lightgrey": "#D3D3D3",
+    "lightpink": "#FFB6C1",
+    "lightsalmon": "#FFA07A",
+    "lightseagreen": "#20B2AA",
+    "lightskyblue": "#87CEFA",
+    "lightslategray": "#778899",
+    "lightslategrey": "#778899",
+    "lightsteelblue": "#B0C4DE",
+    "lightyellow": "#FFFFE0",
+    "lime": "#00FF00",
+    "limegreen": "#32CD32",
+    "linen": "#FAF0E6",
+    "magenta": "#FF00FF",
+    "maroon": "#800000",
+    "mediumaquamarine": "#66CDAA",
+    "mediumblue": "#0000CD",
+    "mediumorchid": "#BA55D3",
+    "mediumpurple": "#9370DB",
+    "mediumseagreen": "#3CB371",
+    "mediumslateblue": "#7B68EE",
+    "mediumspringgreen": "#00FA9A",
+    "mediumturquoise": "#48D1CC",
+    "mediumvioletred": "#C71585",
+    "midnightblue": "#191970",
+    "mintcream": "#F5FFFA",
+    "mistyrose": "#FFE4E1",
+    "moccasin": "#FFE4B5",
+    "navajowhite": "#FFDEAD",
+    "navy": "#000080",
+    "oldlace": "#FDF5E6",
+    "olive": "#808000",
+    "olivedrab": "#6B8E23",
+    "orange": "#FFA500",
+    "orangered": "#FF4500",
+    "orchid": "#DA70D6",
+    "palegoldenrod": "#EEE8AA",
+    "palegreen": "#98FB98",
+    "paleturquoise": "#AFEEEE",
+    "palevioletred": "#DB7093",
+    "papayawhip": "#FFEFD5",
+    "peachpuff": "#FFDAB9",
+    "peru": "#CD853F",
+    "pink": "#FFC0CB",
+    "plum": "#DDA0DD",
+    "powderblue": "#B0E0E6",
+    "purple": "#800080",
+    "rebeccapurple": "#663399",
+    "red": "#FF0000",
+    "rosybrown": "#BC8F8F",
+    "royalblue": "#4169E1",
+    "saddlebrown": "#8B4513",
+    "salmon": "#FA8072",
+    "sandybrown": "#F4A460",
+    "seagreen": "#2E8B57",
+    "seashell": "#FFF5EE",
+    "sienna": "#A0522D",
+    "silver": "#C0C0C0",
+    "skyblue": "#87CEEB",
+    "slateblue": "#6A5ACD",
+    "slategray": "#708090",
+    "slategrey": "#708090",
+    "snow": "#FFFAFA",
+    "springgreen": "#00FF7F",
+    "steelblue": "#4682B4",
+    "tan": "#D2B48C",
+    "teal": "#008080",
+    "thistle": "#D8BFD8",
+    "tomato": "#FF6347",
+    "turquoise": "#40E0D0",
+    "violet": "#EE82EE",
+    "wheat": "#F5DEB3",
+    "white": "#FFFFFF",
+    "whitesmoke": "#F5F5F5",
+    "yellow": "#FFFF00",
+    "yellowgreen": "#9ACD32",
+}
+
+
+def _num(token: str, scale: float = 1.0) -> float:
+    token = token.strip()
+    if token.endswith("%"):
+        return float(token[:-1]) / 100 * scale
+    return float(token)
+
+
+def parse_color(value: str) -> str:
+    """Aceita #rgb, #rrggbb(aa), rgb()/rgba(), hsl(), oklch() e nomes CSS. Devolve #RRGGBB.
+
+    Erro claro quando o formato nao e reconhecido, em vez de quebrar mais adiante."""
+    raw = str(value or "").strip()
+    low = raw.lower()
+    if low in CSS_NAMED:
+        return CSS_NAMED[low]
+    m = re.fullmatch(r"#?([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})", low)
+    if m:
+        h = m.group(1)
+        if len(h) in (3, 4):
+            h = "".join(ch * 2 for ch in h[:3])
+        return "#" + h[:6].upper()
+    m = re.fullmatch(r"(rgba?|hsla?|oklch)\(\s*([^)]*)\)", low)
+    if m:
+        fn, args = m.group(1), [a for a in re.split(r"[\s,/]+", m.group(2).strip()) if a]
+        try:
+            if fn.startswith("rgb") and len(args) >= 3:
+                return rgb_to_hex(tuple(max(0.0, min(1.0, _num(a, 255) / 255 if a.endswith("%") else float(a) / 255)) for a in args[:3]))  # type: ignore[arg-type]
+            if fn.startswith("hsl") and len(args) >= 3:
+                h = float(args[0].replace("deg", "")) % 360
+                sat, lig = _num(args[1] if args[1].endswith("%") else args[1] + "%"), _num(args[2] if args[2].endswith("%") else args[2] + "%")
+                c = (1 - abs(2 * lig - 1)) * sat
+                x = c * (1 - abs((h / 60) % 2 - 1))
+                r, g, b = [(c, x, 0), (x, c, 0), (0, c, x), (0, x, c), (x, 0, c), (c, 0, x)][int(h // 60) % 6]
+                mm = lig - c / 2
+                return rgb_to_hex((r + mm, g + mm, b + mm))
+            if fn == "oklch" and len(args) >= 3:
+                L = _num(args[0]) if args[0].endswith("%") else float(args[0])
+                L = L / 100 if L > 1.0 else L
+                C = _num(args[1], 0.4) if args[1].endswith("%") else float(args[1])
+                return oklch_to_hex(L, C, float(args[2].replace("deg", "")))
+        except ValueError:
+            pass
+    raise ValueError(f"Cor nao reconhecida: '{value}'. Use #RRGGBB, rgb(), hsl(), oklch(L C H) ou um nome CSS.")
 
 
 # ------------------------------------------------------------------ contraste
@@ -205,6 +403,8 @@ HARMONIES = {
 
 def derive_accent(seed_hex: str, harmony: str) -> str:
     L, C, H = hex_to_oklch(seed_hex)
+    if C < ACHROMATIC_C:
+        return oklch_to_hex(0.64, 0.17, ACHROMATIC_ACCENT_HUE)
     shift = HARMONIES.get(harmony, 180)
     if shift == 0:
         return oklch_to_hex(min(0.72, L + 0.18), max(C, 0.16) * 1.15, H)
@@ -212,16 +412,19 @@ def derive_accent(seed_hex: str, harmony: str) -> str:
 
 
 SEMANTIC_HUES = {"danger": 27.0, "success": 150.0, "warning": 72.0, "info": 245.0}
+ACHROMATIC_C = 0.03          # abaixo disso a "matiz" da semente e ruido (preto, branco, cinza)
+ACHROMATIC_ACCENT_HUE = 35.0  # acento padrao de marca monocromatica; a direcao deve informar o seu
 
 
 def semantic_seed(role: str, brand_hex: str, theme: str) -> tuple[float, float, float]:
     _, bc, bh = hex_to_oklch(brand_hex)
     hue = SEMANTIC_HUES[role]
-    if role == "info" and (200 <= bh <= 275):
+    if role == "info" and bc > ACHROMATIC_C and (200 <= bh <= 275):
         hue = bh  # marca azulada: info usa a propria marca
-    # puxa a matiz ate 6 graus na direcao da marca, sem sair da familia
-    delta = ((bh - hue + 540) % 360) - 180
-    hue = (hue + max(-6.0, min(6.0, delta * 0.08))) % 360
+    # puxa a matiz ate 6 graus na direcao da marca, sem sair da familia (so se a marca tiver matiz)
+    if bc > ACHROMATIC_C:
+        delta = ((bh - hue + 540) % 360) - 180
+        hue = (hue + max(-6.0, min(6.0, delta * 0.08))) % 360
     chroma = max(0.11, min(0.19, bc * 1.05 if bc > 0.04 else 0.15))
     if role == "warning":
         chroma = max(chroma, 0.14)
@@ -283,20 +486,45 @@ SURFACES = {
 }
 
 
+# Densidade muda a escala de espaco, a altura de controle e de linha e o texto base.
+DENSITY = {
+    "compact": {"space": ("4px", "6px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px"),
+                "sizing": {"control-h": "32px", "row-h": "36px", "touch-min": "44px"}, "text-base": "15px"},
+    "regular": {"space": ("4px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px", "64px"),
+                "sizing": {"control-h": "38px", "row-h": "44px", "touch-min": "44px"}, "text-base": "16px"},
+    "airy": {"space": ("4px", "8px", "12px", "16px", "24px", "32px", "40px", "48px", "64px", "96px"),
+             "sizing": {"control-h": "44px", "row-h": "52px", "touch-min": "48px"}, "text-base": "17px"},
+}
+
+
+def _hardest_bg(a: str, b: str, theme: str) -> str:
+    """O fundo mais exigente para um traco: no Light o traco e escuro, entao o fundo mais escuro;
+    no Dark o traco e claro, entao o fundo mais claro."""
+    la, lb = relative_luminance(a), relative_luminance(b)
+    if theme == "light":
+        return a if la <= lb else b
+    return a if la >= lb else b
+
+
 def build_tokens(seed: str, accent: str | None = None, harmony: str = "complementar", depth_style: str = "hairline",
                  neutral_tint: float = 0.012, brand: str = "Projeto", default_theme: str = "light",
                  fonts: dict | None = None, density: str = "regular") -> dict:
-    seed = seed.upper()
-    accent = (accent or derive_accent(seed, harmony)).upper()
+    seed = parse_color(seed)
+    accent = parse_color(accent) if accent else derive_accent(seed, harmony)
     _, sc, sh = hex_to_oklch(seed)
+    achromatic = sc < ACHROMATIC_C
     style = depth_style if depth_style in SURFACES else "hairline"
 
     semantic: dict[str, dict[str, str]] = {}
-    report = {"seed": seed, "accent": accent, "harmony": harmony, "depth_style": style, "checks": {}}
+    report = {"seed": seed, "accent": accent, "harmony": harmony, "depth_style": style, "checks": {}, "notes": []}
+    if achromatic:
+        report["notes"].append("Semente acromática (preto, branco ou cinza): neutros sem tinta, primária em tinta "
+                               "(quase preto no Light, quase branco no Dark). Defina o acento na direção.")
+    chart_seed = accent if achromatic else seed
     for theme in ("light", "dark"):
         t: dict[str, str] = {}
         z = SURFACES[style][theme]
-        tint = neutral_tint if theme == "light" else neutral_tint * 1.5
+        tint = 0.0 if achromatic else (neutral_tint if theme == "light" else neutral_tint * 1.5)
         for i, key in enumerate(("surface-z0", "surface-z1", "surface-z2", "surface-z3", "surface-z4")):
             L = z[i]
             t[key] = "#FFFFFF" if L >= 0.999 else oklch_to_hex(L, tint, sh)
@@ -316,17 +544,25 @@ def build_tokens(seed: str, accent: str | None = None, harmony: str = "complemen
 
         brand_ramp = ramp(seed, theme)
         accent_ramp = ramp(accent, theme)
-        primary, on_primary = fit_solid(brand_ramp[8] if theme == "dark" else seed)
-        if theme == "light" and wcag(primary, canvas) < 3.0:
-            primary, on_primary = fit_solid(ensure_contrast(*hex_to_oklch(primary), canvas, 3.0, -1, 0.0))
+        if achromatic:
+            # Marca monocromatica vira tinta: nunca #000000 cru nem um cinza medio apagado.
+            primary = oklch_to_hex(0.24, 0.0, 0.0) if theme == "light" else oklch_to_hex(0.93, 0.0, 0.0)
+            on_primary = best_on(primary)
+        else:
+            # Preserva a cor da marca como preenchimento (amarelo continua amarelo, com texto escuro).
+            primary, on_primary = fit_solid(brand_ramp[8] if theme == "dark" else seed)
         t["primary"] = primary
         t["on-primary"] = on_primary
+        # Traco, indicador ativo e icone sobre a tela usam primary-strong (>= 3:1 contra canvas e card).
+        away = -1 if theme == "light" else +1
+        t["primary-strong"] = ensure_contrast(*hex_to_oklch(primary), _hardest_bg(canvas, card, theme), 3.0, away, 0.0)
         t["primary-surface"] = brand_ramp[2]
         t["primary-border"] = brand_ramp[6]
         t["primary-text"] = ensure_contrast(*hex_to_oklch(brand_ramp[10]), card, 4.6, -1 if theme == "light" else +1)
         acc, on_acc = fit_solid(accent_ramp[8] if theme == "dark" else accent)
         t["accent"] = acc
         t["on-accent"] = on_acc
+        t["focus-ring"] = ensure_contrast(*hex_to_oklch(acc), _hardest_bg(canvas, card, theme), 3.0, away, 0.0)
         t["accent-surface"] = accent_ramp[2]
         t["accent-border"] = accent_ramp[6]
         t["accent-text"] = ensure_contrast(*hex_to_oklch(accent_ramp[10]), card, 4.6, -1 if theme == "light" else +1)
@@ -347,15 +583,16 @@ def build_tokens(seed: str, accent: str | None = None, harmony: str = "complemen
                 t[f"{role}-text"] = ensure_contrast(0.80, C * 0.9, H, t[f"{role}-surface"], 4.8, +1)
 
         # zonas da marca (uso decidido pela direcao; tokens existem para quem precisar)
-        t["surface-brand-dark"] = oklch_to_hex(0.26 if theme == "light" else 0.24, max(0.04, sc * 0.55), sh)
-        t["surface-brand-dark-2"] = oklch_to_hex(0.32 if theme == "light" else 0.29, max(0.05, sc * 0.6), sh)
+        bc = 0.0 if achromatic else 1.0
+        t["surface-brand-dark"] = oklch_to_hex(0.26 if theme == "light" else 0.24, bc * max(0.04, sc * 0.55), sh)
+        t["surface-brand-dark-2"] = oklch_to_hex(0.32 if theme == "light" else 0.29, bc * max(0.05, sc * 0.6), sh)
         t["on-brand-dark"] = "#F8FAFC"
         t["on-brand-dark-muted"] = ensure_contrast(0.84, 0.03, sh, t["surface-brand-dark"], 4.6, +1)
-        t["surface-brand-header"] = brand_ramp[1] if theme == "light" else oklch_to_hex(0.25, max(0.03, sc * 0.35), sh)
-        t["surface-brand-panel"] = brand_ramp[0] if theme == "light" else oklch_to_hex(0.22, max(0.025, sc * 0.3), sh)
+        t["surface-brand-header"] = brand_ramp[1] if theme == "light" else oklch_to_hex(0.25, bc * max(0.03, sc * 0.35), sh)
+        t["surface-brand-panel"] = brand_ramp[0] if theme == "light" else oklch_to_hex(0.22, bc * max(0.025, sc * 0.3), sh)
         t["surface-tint-soft"] = brand_ramp[1] if theme == "light" else brand_ramp[2]
         t["border-tint"] = brand_ramp[5]
-        for i, col in enumerate(chart_palette(seed, theme), 1):
+        for i, col in enumerate(chart_palette(chart_seed, theme), 1):
             t[f"chart-{i}"] = col
         semantic[theme] = t
         charts = [t[f"chart-{i}"] for i in range(1, 7)]
@@ -369,10 +606,8 @@ def build_tokens(seed: str, accent: str | None = None, harmony: str = "complemen
         }
 
     fonts = fonts or {}
-    density_scale = {"compact": ("4px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px", "64px"),
-                     "regular": ("4px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px", "64px"),
-                     "airy": ("4px", "8px", "12px", "16px", "24px", "32px", "40px", "48px", "64px", "96px")}[density if density in {"compact", "regular", "airy"} else "regular"]
-    spacing = dict(zip(("1", "2", "3", "4", "5", "6", "8", "10", "12", "16"), density_scale))
+    density = density if density in DENSITY else "regular"
+    spacing = dict(zip(("1", "2", "3", "4", "5", "6", "8", "10", "12", "16"), DENSITY[density]["space"]))
     return {
         "$schema": "design-aura/tokens@3",
         "meta": {"brand": brand, "version": "1.0", "defaultTheme": default_theme, "depth_style": style,
@@ -383,11 +618,12 @@ def build_tokens(seed: str, accent: str | None = None, harmony: str = "complemen
             "font-display": fonts.get("display", "system-ui, sans-serif"),
             "font-ui": fonts.get("ui", "system-ui, sans-serif"),
             "font-mono": fonts.get("mono", "ui-monospace, monospace"),
-            "text-base": "15px" if density == "compact" else "16px",
+            "text-base": DENSITY[density]["text-base"],
             "measure-body": "68ch",
             "tracking-display": "-0.02em",
         },
         "spacing": spacing,
+        "sizing": dict(DENSITY[density]["sizing"]),
         "radii": {"control-sm": "6px", "control-md": "8px", "card-sm": "10px", "card-md": "12px", "card-lg": "16px", "pill": "999px"},
         "motion": {"duration-fast": "120ms", "duration-enter": "220ms", "duration-exit": "140ms", "page-desktop": "200ms",
                    "page-ios": "350ms", "page-android": "250ms", "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)", "press-scale": "0.97"},

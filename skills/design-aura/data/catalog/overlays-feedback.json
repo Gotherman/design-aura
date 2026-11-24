@@ -8,7 +8,7 @@
   "repo": "floating-ui/floating-ui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -51,7 +51,10 @@
   "summary": "Posicionamento inteligente sem corte de viewport para popovers, menus contextuais, tooltips e seletores em HTML/JS ou React",
   "a11y": "Sempre gerencie foco, aria-expanded e fechamento por Esc junto do posicionamento",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @floating-ui/react",
+   "vue": "npm install @floating-ui/vue"
+  }
  },
  {
   "id": "html-native-overlays",
@@ -60,7 +63,7 @@
   "use": "platform",
   "url": "https://developer.mozilla.org/docs/Web/API/Popover_API",
   "repo": "",
-  "license": "padrao web",
+  "license": "padrão web",
   "license_status": "platform",
   "license_checked_at": null,
   "stacks": [
@@ -89,11 +92,10 @@
   "style": {},
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Use antes de instalar algo em prototipos estaticos: dialog modal, popover e disclosure nativos.",
+  "install": "nativo do navegador, sem instalação (<dialog> e popover)",
+  "summary": "Use antes de instalar algo em protótipos estáticos: dialog modal, popover e disclosure nativos.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "sonner",
@@ -104,7 +106,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -131,11 +133,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Toasts empilhaveis com botao de Desfazer imediato apos acoes criticas",
+  "install": "npm install sonner",
+  "summary": "Toasts empilháveis com botão de Desfazer imediato após ações críticas",
   "a11y": "aria-live polite/assertive com pausa no hover e foco",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "vaul",
@@ -146,7 +147,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -174,11 +175,11 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Bottom sheet tatil com fisica de arrasto estilo iOS para mobile web e PWA",
+  "install": "npm install vaul",
+  "summary": "Bottom sheet tátil com física de arrasto estilo iOS para mobile web e PWA",
   "a11y": "Dialog trap e fechamento por Esc/arrasto com snap points",
   "notes": "Confirme se o projeto segue mantido antes de adotar.",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "driver-js",
@@ -189,7 +190,7 @@
   "repo": "https://github.com/kamranahmedse/driver.js",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -230,8 +231,7 @@
   "install": "npm install driver.js",
   "summary": "Destaque de elementos e tour guiado (~5 KB, vanilla JS) para explicar novas rotinas operacionais ou destacar campos pendentes",
   "a11y": "Gerencia trap de foco e fechamento por Esc",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "shepherd-js",
@@ -267,10 +267,9 @@
   "flashy": false,
   "craft": 2,
   "install": "",
-  "summary": "Tour guiado; licenca mudou para AGPL + comercial.",
+  "summary": "Tour guiado; licença mudou para AGPL + comercial.",
   "a11y": "",
-  "notes": "Confirme a versao: as atuais nao sao permissivas.",
-  "license_ok": false
+  "notes": "Confirme a versão: as atuais não são permissivas."
  },
  {
   "id": "intro-js",
@@ -306,10 +305,9 @@
   "flashy": false,
   "craft": 1,
   "install": "",
-  "summary": "Tour guiado com licenca AGPL + comercial.",
+  "summary": "Tour guiado com licença AGPL + comercial.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "notyf",
@@ -320,7 +318,7 @@
   "repo": "https://github.com/caroso1222/notyf",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -354,10 +352,10 @@
   "flashy": false,
   "craft": 1,
   "install": "npm install notyf",
-  "summary": "Toasts leves (~3 KB, zero dependencias) em HTML/JS puro com aria-live, facilmente combinados com botao Desfazer",
-  "a11y": "Anuncio a11y automatico via role='alert' / aria-live='polite'",
+  "summary": "Toasts leves (~3 KB, zero dependências) em HTML/JS puro com aria-live, facilmente combinados com botão Desfazer",
+  "a11y": "Anuncio a11y automático via role='alert' / aria-live='polite'",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "react-joyride",
@@ -368,7 +366,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -394,10 +392,9 @@
   },
   "flashy": false,
   "craft": 1,
-  "install": "",
+  "install": "npm install react-joyride",
   "summary": "Tour guiado para React.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  }
 ]

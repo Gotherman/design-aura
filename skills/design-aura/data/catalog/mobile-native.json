@@ -8,7 +8,7 @@
   "repo": "https://github.com/gorhom/react-native-bottom-sheet",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -42,10 +42,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npm install @gorhom/bottom-sheet",
-  "summary": "Sheet arrastavel com snap points no app nativo",
-  "a11y": "Ofereca fechar por botao, nao so pelo gesto",
-  "notes": "",
-  "license_ok": true
+  "summary": "Sheet arrastável com snap points no app nativo",
+  "a11y": "Ofereca fechar por botão, não só pelo gesto",
+  "notes": ""
  },
  {
   "id": "expo-ui",
@@ -56,7 +55,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": "2026-11-23",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -84,11 +83,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "SwiftUI no iOS e Jetpack Compose no Android a partir do React Native; estavel no SDK 56.",
+  "install": "npx expo install @expo/ui",
+  "summary": "SwiftUI no iOS e Jetpack Compose no Android a partir do React Native; estável no SDK 56.",
   "a11y": "",
-  "notes": "E um conjunto de primitivos, nao um design system: os tokens do projeto continuam mandando.",
-  "license_ok": true
+  "notes": "E um conjunto de primitivos, não um design system: os tokens do projeto continuam mandando."
  },
  {
   "id": "flashlist",
@@ -99,7 +97,7 @@
   "repo": "https://github.com/Shopify/flash-list",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -132,9 +130,8 @@
   "craft": 3,
   "install": "npm install @shopify/flash-list",
   "summary": "Listas longas sem perder o scroll nativo",
-  "a11y": "Nao anime a entrada de cada linha",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Não anime a entrada de cada linha",
+  "notes": ""
  },
  {
   "id": "flutter-m3-adaptive",
@@ -174,11 +171,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
+  "install": "do Flutter: Material 3 com NavigationBar/NavigationRail",
   "summary": "Widgets adaptativos por plataforma com ColorScheme.fromSeed e SafeArea",
   "a11y": "Semantics tree completa e suporte a fontScale",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "material3",
@@ -189,7 +185,7 @@
   "repo": "https://github.com/material-components/material-components-android",
   "license": "Apache-2.0",
   "license_status": "platform",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "android"
   ],
@@ -228,9 +224,8 @@
   "craft": 3,
   "install": "androidx.compose.material3:material3",
   "summary": "Componentes e motion do sistema Android. Prefira isto a um kit web portado",
-  "a11y": "TalkBack, 48dp e predictive back sao do sistema",
-  "notes": "",
-  "license_ok": true
+  "a11y": "TalkBack, 48dp e predictive back são do sistema",
+  "notes": ""
  },
  {
   "id": "rn-reanimated",
@@ -241,7 +236,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -270,11 +265,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Animacoes interrompiveis na UI thread e gestos nativos sem travar JS bridge",
+  "install": "npx expo install react-native-reanimated",
+  "summary": "Animações interrompíveis na UI thread e gestos nativos sem travar JS bridge",
   "a11y": "Suporta useReducedMotion() nativo do sistema",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "rn-reusables",
@@ -285,7 +279,7 @@
   "repo": "https://github.com/founded-labs/react-native-reusables",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -321,9 +315,8 @@
   "craft": 3,
   "install": "npx @react-native-reusables/cli@latest add button",
   "summary": "shadcn para React Native com NativeWind",
-  "a11y": "Alvo de toque 44 no iOS e 48 no Android continua obrigatorio",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Alvo de toque 44 no iOS e 48 no Android continua obrigatório",
+  "notes": ""
  },
  {
   "id": "rn-skia",
@@ -334,7 +327,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -362,11 +355,10 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Desenho 2D de alto desempenho (graficos, efeitos).",
+  "install": "npx expo install @shopify/react-native-skia",
+  "summary": "Desenho 2D de alto desempenho (gráficos, efeitos).",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "swiftui",
@@ -419,10 +411,9 @@
   "flashy": false,
   "craft": 3,
   "install": "framework do SDK",
-  "summary": "Controles e transicoes do iOS/macOS. Nao e um pacote para copiar",
+  "summary": "Controles e transições do iOS/macOS. Não é um pacote para copiar",
   "a11y": "Use os componentes do sistema e Reduce Motion",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "zeego",
@@ -433,7 +424,7 @@
   "repo": "https://github.com/nandorojo/zeego",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -465,9 +456,9 @@
   "craft": 3,
   "install": "npm install zeego",
   "summary": "Menus nativos de iOS e Android em vez de um popover web",
-  "a11y": "Usa o menu do sistema; nao reestilize o popup nativo",
+  "a11y": "Usa o menu do sistema; não reestilize o popup nativo",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "burnt-toasts",
@@ -478,7 +469,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -506,11 +497,11 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npx expo install burnt",
   "summary": "HUDs e toasts nativos com haptic feedback em React Native",
-  "a11y": "Anuncios acessiveis respeitando Reduce Motion",
+  "a11y": "Anuncios acessíveis respeitando Reduce Motion",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "compose-unstyled",
@@ -519,9 +510,9 @@
   "use": "dependency",
   "url": "https://github.com/composablehorizons/compose-unstyled",
   "repo": "https://github.com/composablehorizons/compose-unstyled",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "android"
   ],
@@ -554,9 +545,8 @@
   "craft": 2,
   "install": "implementation do modulo publicado no README",
   "summary": "Primitivos Compose sem o visual Material, quando a marca pede outra superficie",
-  "a11y": "Confirme a licenca no commit e mantenha predictive back",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Confirme a licença no commit e mantenha predictive back",
+  "notes": ""
  },
  {
   "id": "expo-symbols",
@@ -567,7 +557,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -596,11 +586,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npx expo install expo-symbols",
   "summary": "SF Symbols nativos no iOS e insets seguros em iPhone/Android sem corte",
   "a11y": "Escala automaticamente com Dynamic Type e window insets",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "flutter-animate",
@@ -638,11 +627,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Animacoes encadeadas em Flutter.",
+  "install": "flutter pub add flutter_animate",
+  "summary": "Animações encadeadas em Flutter.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "forui",
@@ -653,7 +641,7 @@
   "repo": "https://github.com/forus-labs/forui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "flutter"
   ],
@@ -686,9 +674,8 @@
   "craft": 2,
   "install": "flutter pub add forui",
   "summary": "Kit Flutter no espirito shadcn. Confirme o LICENSE no pubspec",
-  "a11y": "Mapeie tokens para o ThemeData, nao pinte widget por widget",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Mapeie tokens para o ThemeData, não pinte widget por widget",
+  "notes": ""
  },
  {
   "id": "framework7",
@@ -699,7 +686,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -729,11 +716,15 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install framework7",
   "summary": "Apps hibridos e PWA com visual iOS/Material.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install framework7 framework7-react",
+   "vue": "npm install framework7 framework7-vue",
+   "svelte": "npm install framework7 framework7-svelte"
+  }
  },
  {
   "id": "gluestack",
@@ -776,10 +767,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npx gluestack-ui init",
-  "summary": "Componentes copiaveis para Expo com NativeWind",
-  "a11y": "Nao copie o tema padrao; mapeie para a Biblia",
-  "notes": "",
-  "license_ok": true
+  "summary": "Componentes copiáveis para Expo com NativeWind",
+  "a11y": "Não copie o tema padrão; mapeie para a Biblia",
+  "notes": ""
  },
  {
   "id": "haze",
@@ -790,7 +780,7 @@
   "repo": "",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "android"
   ],
@@ -815,11 +805,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "Gradle: implementation(\"dev.chrisbanes.haze:haze:<versão>\")",
   "summary": "Desfoque de fundo para Compose.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "heroui-native",
@@ -827,10 +816,10 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://www.heroui.com",
-  "repo": "",
-  "license": "conferir",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "repo": "https://github.com/heroui-inc/heroui-native",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -856,11 +845,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install heroui-native",
   "summary": "Kit HeroUI para React Native.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "ionic",
@@ -871,7 +859,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -902,11 +890,15 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @ionic/core",
   "summary": "Componentes mobile com estilo iOS e Material para PWA e hibridos.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "installs": {
+   "react": "npm install @ionic/react @ionic/react-router",
+   "vue": "npm install @ionic/vue @ionic/vue-router",
+   "angular": "npm install @ionic/angular"
+  }
  },
  {
   "id": "konsta-ui",
@@ -917,7 +909,7 @@
   "repo": "https://github.com/konstaui/konsta",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -957,10 +949,9 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install konsta",
-  "summary": "Componentes mobile pixel-perfect (Tab Bar, Segmented Control, Action Sheet, Inset Lists) para PWAs e prototipos executivos",
+  "summary": "Componentes mobile pixel-perfect (Tab Bar, Segmented Control, Action Sheet, Inset Lists) para PWAs e protótipos executivos",
   "a11y": "Alvos >= 44px e safe-area-inset integrados",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "legend-list",
@@ -971,7 +962,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "verify",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -997,11 +988,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install @legendapp/list",
   "summary": "Lista virtualizada de alto desempenho.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": ""
  },
  {
   "id": "moti",
@@ -1012,7 +1002,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -1039,11 +1029,11 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Animacoes declarativas sobre Reanimated.",
+  "install": "npx expo install moti",
+  "summary": "Animações declarativas sobre Reanimated.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "nativewind",
@@ -1054,7 +1044,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -1080,11 +1070,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install nativewind",
   "summary": "Tailwind no React Native.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "pow-swiftui",
@@ -1095,7 +1084,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "ios"
   ],
@@ -1121,11 +1110,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Efeitos e transicoes para SwiftUI.",
+  "install": "Swift Package: https://github.com/EmergeTools/Pow",
+  "summary": "Efeitos e transições para SwiftUI.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "rn-paper",
@@ -1136,7 +1124,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -1162,11 +1150,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
+  "install": "npm install react-native-paper",
   "summary": "Material 3 para React Native.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "shadcn-flutter",
@@ -1210,10 +1197,9 @@
   "flashy": false,
   "craft": 2,
   "install": "flutter pub add shadcn_ui",
-  "summary": "Port Flutter de componentes shadcn, licenca MIT no pub.dev",
+  "summary": "Port Flutter de componentes shadcn, licença MIT no pub.dev",
   "a11y": "Semantics de Flutter continuam obrigatorios",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "tamagui",
@@ -1224,7 +1210,7 @@
   "repo": "https://github.com/tamagui/tamagui",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react",
    "rn"
@@ -1261,8 +1247,7 @@
   "install": "npm install tamagui",
   "summary": "Estilo compartilhado web e nativo quando o produto e os dois",
   "a11y": "Sheets nativos ainda pedem o gesto da plataforma",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "unistyles",
@@ -1273,7 +1258,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "rn"
   ],
@@ -1299,11 +1284,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Temas e estilos performaticos para RN.",
+  "install": "npm install react-native-unistyles",
+  "summary": "Temas e estilos performáticos para RN.",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "vortex",
@@ -1314,7 +1298,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "ios"
   ],
@@ -1340,11 +1324,10 @@
   },
   "flashy": true,
   "craft": 2,
-  "install": "",
+  "install": "Swift Package: https://github.com/twostraws/Vortex",
   "summary": "Particulas em SwiftUI (confete, chuva, faiscas).",
   "a11y": "",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "swiftuix",
@@ -1355,7 +1338,7 @@
   "repo": "https://github.com/SwiftUIX/SwiftUIX",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "ios"
   ],
@@ -1385,9 +1368,8 @@
   "flashy": false,
   "craft": 1,
   "install": "dependencia Swift Package",
-  "summary": "Extensoes SwiftUI quando o SDK nao cobre um controle",
-  "a11y": "Nao substitua NavigationStack por um container caseiro",
-  "notes": "",
-  "license_ok": true
+  "summary": "Extensoes SwiftUI quando o SDK não cobre um controle",
+  "a11y": "Não substitua NavigationStack por um container caseiro",
+  "notes": ""
  }
 ]

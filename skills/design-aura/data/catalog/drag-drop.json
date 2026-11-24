@@ -8,7 +8,7 @@
   "repo": "https://github.com/atlassian/pragmatic-drag-and-drop",
   "license": "Apache-2.0",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -47,9 +47,8 @@
   "craft": 3,
   "install": "npm install @atlaskit/pragmatic-drag-and-drop",
   "summary": "Motor de drag-and-drop ultraleve (~4 KB) da Atlassian (Trello/Jira) para quadros Kanban, listas e arvores em qualquer framework ou HTML",
-  "a11y": "Inclua sempre botoes de avancar/voltar etapa para operacao 100% por teclado",
-  "notes": "",
-  "license_ok": true
+  "a11y": "Inclua sempre botões de avancar/voltar etapa para operação 100% por teclado",
+  "notes": ""
  },
  {
   "id": "dnd-kit",
@@ -60,7 +59,7 @@
   "repo": "",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -88,11 +87,11 @@
   },
   "flashy": false,
   "craft": 3,
-  "install": "",
-  "summary": "Arrastar e soltar acessivel e modular.",
+  "install": "npm install @dnd-kit/core @dnd-kit/sortable",
+  "summary": "Arrastar e soltar acessível e modular.",
   "a11y": "",
   "notes": "",
-  "license_ok": true
+  "stale": true
  },
  {
   "id": "kibo-ui",
@@ -103,7 +102,7 @@
   "repo": "https://github.com/shadcnblocks/kibo",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -143,10 +142,9 @@
   "flashy": false,
   "craft": 3,
   "install": "npx shadcn@latest add @kibo-ui/gantt",
-  "summary": "Widgets densos de operacao: Gantt, Kanban, arvore de arquivos, dropzone",
+  "summary": "Widgets densos de operação: Gantt, Kanban, arvore de arquivos, dropzone",
   "a11y": "Compoe primitivos shadcn; revise foco em drag-and-drop",
-  "notes": "",
-  "license_ok": true
+  "notes": ""
  },
  {
   "id": "sortablejs",
@@ -157,7 +155,7 @@
   "repo": "SortableJS/Sortable",
   "license": "MIT",
   "license_status": "ok",
-  "license_checked_at": null,
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "react",
@@ -197,21 +195,20 @@
   "flashy": false,
   "craft": 2,
   "install": "npm install sortablejs",
-  "summary": "Arraste fluido de cards entre colunas de funil/Kanban e reordenacao de filas em HTML puro, touch e desktop",
-  "a11y": "Combine sempre com acao alternativa por teclado ou menu contextual para mover etapa sem mouse",
-  "notes": "",
-  "license_ok": true
+  "summary": "Arraste fluido de cards entre colunas de funil/Kanban e reordenação de filas em HTML puro, touch e desktop",
+  "a11y": "Combine sempre com ação alternativa por teclado ou menu contextual para mover etapa sem mouse",
+  "notes": ""
  },
  {
   "id": "swapy",
   "name": "Swapy",
-  "kind": "library",
+  "kind": "license-trap",
   "use": "dependency",
   "url": "https://swapy.tahazsh.com",
-  "repo": "",
-  "license": "MIT",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "repo": "https://github.com/TahaSh/swapy",
+  "license": "GPL-3.0",
+  "license_status": "trap",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html",
    "all"
@@ -238,10 +235,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "",
-  "summary": "Troca de posicao de cards em layouts.",
+  "install": "npm install swapy",
+  "summary": "Troca de posição de cards em layouts.",
   "a11y": "",
-  "notes": "",
-  "license_ok": false
+  "notes": "A partir da 1.0 o pacote e o repositório são GPL-3.0 (copyleft). Só use se o projeto inteiro puder ser GPL; para ordenar cartões, prefira dnd-kit, SortableJS ou Pragmatic drag and drop.",
+  "stale": true
  }
 ]

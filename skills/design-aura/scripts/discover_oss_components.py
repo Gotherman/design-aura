@@ -19,7 +19,9 @@ Modos de uso:
 5. Pesquisa ao vivo (GitHub/npm, so licenca permissiva): --online
 """
 import argparse
+import html as htmlmod
 import json
+import re
 import sys
 import urllib.parse
 import urllib.request
@@ -81,17 +83,25 @@ def need_index(taxonomy: dict | None = None) -> dict:
 
 
 def load_catalog() -> list[dict]:
+    need_cats = {nid: n["category"] for nid, n in need_index().items()}
     items = []
     for path in sorted(CATALOG_DIR.glob("*.json")):
         for raw in json.loads(path.read_text(encoding="utf-8")):
-            items.append(normalize_item(raw, path.name))
+            items.append(normalize_item(raw, path.name, need_cats))
     return items
 
 
-def normalize_item(raw: dict, source: str) -> dict:
+def normalize_item(raw: dict, source: str, need_cats: dict | None = None) -> dict:
     status = raw.get("license_status") or ("ok" if raw.get("license") in PERMISSIVE else "verify")
     item = dict(raw)
+    # A categoria de cada necessidade entra nas categorias da peca, para --category e as contagens acharem tudo.
+    cats = list(raw.get("categories") or [])
+    for nid in raw.get("needs") or []:
+        cat = (need_cats or {}).get(nid)
+        if cat and cat not in cats:
+            cats.append(cat)
     item.update({
+        "categories": cats,
         "stack": raw.get("stacks") or ["all"],
         "usage": {"copy": "registry", "dependency": "dependency", "platform": "platform", "reference": "reference", "tool": "tool"}.get(raw.get("use"), "dependency"),
         "license_ok": status in USABLE_STATUS,
@@ -188,11 +198,23 @@ def detect_needs(text: str, min_score: int | None = None, taxonomy: dict | None 
 
 # ---------------------------------------------------------------- ranking
 
+STYLE_KEYS = ("shape", "density", "motion", "skin", "depth_style")
+
+
 def load_direction(path: str | None, shape: str = "", density: str = "", motion: str = "", skin: str = "") -> dict:
-    direction = {}
+    """Le a direcao escolhida. Aceita o direcao-N.json do Estudio, o tokens.json gerado (campo meta)
+    ou um objeto com campo style. So valores de texto entram; o resto do arquivo e ignorado."""
+    direction: dict = {}
     if path:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
-        direction = data.get("style") or data
+        sources = [data.get("style"), data, data.get("meta")] if isinstance(data, dict) else []
+        for src in sources:
+            if not isinstance(src, dict):
+                continue
+            for key in STYLE_KEYS:
+                val = src.get(key)
+                if isinstance(val, str) and val and key not in direction:
+                    direction[key] = val
     for key, val in (("shape", shape), ("density", density), ("motion", motion), ("skin", skin)):
         if val:
             direction[key] = val
@@ -205,12 +227,12 @@ def style_bonus(item: dict, direction: dict) -> float:
     style = item.get("style") or {}
     bonus = 0.0
     want_motion = direction.get("motion")
-    if want_motion and style.get("motion"):
+    if isinstance(want_motion, str) and isinstance(style.get("motion"), str):
         order = {"none": 0, "subtle": 1, "expressive": 2}
         gap = abs(order.get(style["motion"], 1) - order.get(want_motion, 1))
         bonus += 0.6 if gap == 0 else (-0.8 if gap == 2 else 0)
     want_skin = direction.get("skin")
-    if want_skin and style.get("skin"):
+    if isinstance(want_skin, str) and isinstance(style.get("skin"), str):
         if style["skin"] == want_skin:
             bonus += 0.6
         elif style["skin"] in {"headless", "tokens"}:
@@ -244,6 +266,8 @@ def rank(items: list[dict], query: str, need_ids: list[str], direction: dict, to
             score += 0.8
         if it.get("license_status") == "attribution":
             score -= 0.2
+        if it.get("stale"):
+            score -= 0.8  # repositorio parado ou arquivado (refresh_catalog.py)
         scored.append((score, it))
     scored.sort(key=lambda p: -p[0])
     return [it for _, it in scored[:top]]
@@ -282,39 +306,129 @@ def search_local(need: str, stack: str, platform: str, mode: str, top: int, dire
 
 # ---------------------------------------------------------------- leitura do projeto
 
-IGNORE_DIRS = {".git", "node_modules", "vendor", "dist", "build", ".next", "__pycache__", "audit", "telas-anteriores", "coverage"}
-SCAN_EXTS = {".md", ".txt", ".json", ".js", ".ts", ".tsx", ".jsx", ".vue", ".svelte", ".html"}
+IGNORE_DIRS = {".git", "node_modules", "vendor", "dist", "build", "out", ".next", ".nuxt", ".svelte-kit", ".turbo",
+               ".vercel", "__pycache__", "coverage", "telas-anteriores", "storybook-static"}
+# Saidas geradas por rodadas anteriores (auditorias, QA, capturas): descrevem o design antigo, nao o negocio.
+GENERATED_DIR = re.compile(r"^(audit|qa|captures?|baseline|screenshots?|test-results|playwright-report)([-_.].*)?$", re.I)
+GENERATED_FILE = re.compile(r"(^|[-_.])(report|scenario|results?)\.json$|^aura-check\.json$|^(package-lock\.json|pnpm-lock\.yaml|yarn\.lock)$"
+                            r"|\.min\.(js|css)$|\.map$|^tokens(\.[a-z0-9]+)*\.json$|\.tokens\.json$|\.(spec|test)\.[jt]sx?$", re.I)
+PLAN_NAME = ("readme", "leiame", "concepc", "plan", "prd", "spec", "especific", "escopo", "requisit", "rotas", "routes",
+             "briefing", "roadmap", "proposta")
+SCREEN_DIRS = {"pages", "screens", "routes", "views", "app", "features", "modules", "telas", "src"}
+SCAN_EXTS = {".md", ".txt", ".json", ".js", ".ts", ".tsx", ".jsx", ".vue", ".svelte", ".html", ".htm"}
 
 
-def collect_project_text(scan_path: Path, max_files: int = 45, max_bytes_per_file: int = 18000) -> tuple[str, list[str]]:
+def clean_text(text: str, suffix: str) -> str:
+    """Tira marcacao, CSS e nomes de classe, que falam do design antigo e nao das tarefas."""
+    if suffix in {".html", ".htm", ".vue", ".svelte"}:
+        text = re.sub(r"(?is)<(style|svg)\b.*?</\1\s*>", " ", text)
+        text = re.sub(r"(?s)<!--.*?-->", " ", text)
+        text = re.sub(r"<[^>]{0,2000}>", " ", text)
+        text = htmlmod.unescape(text)
+    if suffix in {".js", ".ts", ".jsx", ".tsx", ".vue", ".svelte"}:
+        text = re.sub(r"(?m)^\s*(import|export \* from)\b.*$", " ", text)
+        text = re.sub(r"class(Name)?=(\"[^\"]*\"|'[^']*'|\{`[^`]*`\})", " ", text)
+    return text
+
+
+def project_bucket(rel: Path) -> int | None:
+    """0 planejamento, 1 outros documentos, 2 codigo e telas do produto, 3 artefatos de design de rodadas anteriores."""
+    parts = [x.lower() for x in rel.parts]
+    low = parts[-1]
+    if GENERATED_FILE.search(low) or any(GENERATED_DIR.match(x) for x in parts[:-1]):
+        return None
+    words = [w for w in re.split(r"[^a-z0-9]+", low) if w]
+    if any(w.startswith(k) for w in words[:-1] or words for k in PLAN_NAME):
+        return 0
+    in_design = "design" in parts[:-1] or low.startswith(("design-bible", "shell-contract", "direction-board"))
+    if in_design:
+        return 3
+    return 1 if rel.suffix.lower() in {".md", ".txt"} else 2
+
+
+def collect_project_text(scan_path: Path, max_files: int = 70, max_chars: int = 650_000,
+                         max_design_files: int = 10) -> tuple[str, list[str]]:
     if not scan_path.exists():
         raise FileNotFoundError(f"Caminho para --scan nao encontrado: {scan_path}")
     if scan_path.is_file():
-        return scan_path.read_text(encoding="utf-8", errors="ignore")[:60000], [scan_path.name]
-    priority, other = [], []
-    for p in sorted(scan_path.rglob("*")):
+        return clean_text(scan_path.read_text(encoding="utf-8", errors="ignore"), scan_path.suffix.lower())[:80000], [scan_path.name]
+    buckets: dict[int, list[Path]] = {0: [], 1: [], 2: [], 3: []}
+    for p in scan_path.rglob("*"):
         if not p.is_file() or p.suffix.lower() not in SCAN_EXTS:
             continue
-        if any(part in IGNORE_DIRS or part.startswith(".") for part in p.relative_to(scan_path).parts):
+        rel = p.relative_to(scan_path)
+        if any(part in IGNORE_DIRS or part.startswith(".") for part in rel.parts):
             continue
-        if p.name in {"package-lock.json", "pnpm-lock.yaml", "yarn.lock"}:
-            continue
-        low = p.name.lower()
-        bucket = priority if any(k in low for k in ("readme", "leiame", "concepcao", "plan", "prd", "spec", "escopo", "requisit", "rotas", "routes")) else other
-        bucket.append(p)
-    chunks, names = [], []
-    for f in (priority + other)[:max_files]:
-        try:
-            chunks.append(f.read_text(encoding="utf-8", errors="ignore")[:max_bytes_per_file])
+        bucket = project_bucket(rel)
+        if bucket is not None:
+            buckets[bucket].append(p)
+
+    def order(path: Path) -> tuple:
+        rel = path.relative_to(scan_path)
+        screens_first = 0 if SCREEN_DIRS & {x.lower() for x in rel.parts[:-1]} else 1
+        return (screens_first, len(rel.parts), str(rel).lower())
+
+    chunks, names, total, design_used = [], [], 0, 0
+    for bucket in (0, 1, 2, 3):
+        per_file = 40000 if bucket == 0 else 18000
+        for f in sorted(buckets[bucket], key=order):
+            if len(names) >= max_files or total >= max_chars:
+                break
+            if bucket == 3 and design_used >= max_design_files:
+                break
+            try:
+                text = clean_text(f.read_text(encoding="utf-8", errors="ignore"), f.suffix.lower())[:per_file]
+            except OSError:
+                continue
+            if not text.strip():
+                continue
+            chunks.append(text)
             names.append(str(f.relative_to(scan_path)))
-        except OSError:
-            continue
+            total += len(text)
+            design_used += bucket == 3
     return "\n".join(chunks), names
+
+
+FAMILIES = {"charts": "gráficos", "data-tables": "tabelas e grades", "calendar-scheduling": "agenda e calendário",
+            "overlays-feedback": "overlays"}
+FAMILY_EXCLUDE = {"geo-map", "toast", "tour"}  # mapas, toasts e tours costumam vir de pecas proprias
+
+
+def consolidate_families(cats: dict, ranked: dict, top: int) -> None:
+    """Prefere um motor por familia: se uma peca cobre duas ou mais necessidades da mesma familia,
+    ela passa a ser a primeira opcao de cada uma (um sistema de eixos, tooltips e temas)."""
+    for cat_id, label in FAMILIES.items():
+        entry = cats.get(cat_id)
+        if not entry:
+            continue
+        fam = [n for n in entry["needs"] if n["id"] not in FAMILY_EXCLUDE and ranked.get(n["id"])]
+        if len(fam) < 2:
+            continue
+        candidates: dict[str, dict] = {}
+        for n in fam:
+            for pos, it in enumerate(ranked[n["id"]]):
+                c = candidates.setdefault(it["id"], {"item": it, "covers": [], "pos": []})
+                c["covers"].append(n["id"])
+                c["pos"].append(pos)
+        best = max(candidates.values(), key=lambda c: (len(c["covers"]), -sum(c["pos"]) / len(c["pos"])))
+        if len(best["covers"]) < 2:
+            continue
+        item = best["item"]
+        for n in fam:
+            if n["id"] in best["covers"]:
+                n["picks"] = [item] + [p for p in n["picks"] if p["id"] != item["id"]][: top - 1]
+                n["shared_engine"] = item["name"]
+        entry["engine"] = {"name": item["name"], "family": label, "covers": best["covers"]}
+        entry["adopt_oss"] = []
+        for n in entry["needs"]:
+            for it in n["picks"]:
+                if it not in entry["adopt_oss"]:
+                    entry["adopt_oss"].append(it)
 
 
 def scan_project_categories(scan_path: str | Path | None = None, blueprint_text: str = "", category_filter: str = "",
                             stack: str = "all", platform: str = "all", mode: str = "operate", top_per_cat: int = 3,
-                            direction: dict | None = None, max_needs: int = 16) -> dict:
+                            direction: dict | None = None, max_needs: int = 18) -> dict:
     taxonomy = load_taxonomy()
     catalog = load_catalog()
     direction = direction or {}
@@ -331,14 +445,17 @@ def scan_project_categories(scan_path: str | Path | None = None, blueprint_text:
         needs = [n for n in needs if n["category"] == category_filter] + [
             {"id": n["id"], "name": n["name"], "category": n["category"], "category_name": n["category_name"], "score": 0, "matched": []}
             for n in cat_needs if n["id"] not in known]
+    more_needs = needs[max_needs:]
     needs = needs[:max_needs]
 
     cats: dict[str, dict] = {}
+    ranked: dict[str, list] = {}
     for need in needs:
         # Secoes de site e efeitos expressivos pertencem ao modo Persuade, mesmo num sistema Operate.
         need_mode = "persuade" if need["category"] in PERSUADE_CATEGORIES and mode in {"operate", "read"} else mode
         pool = [it for it in catalog if need["id"] in (it.get("needs") or []) and can_adopt(it, stack, platform, need_mode)]
-        picks = rank(pool, need["name"], [need["id"]], direction, top_per_cat, stack, text_weight=0.3)
+        ranked[need["id"]] = rank(pool, need["name"], [need["id"]], direction, len(pool), stack, text_weight=0.3)
+        picks = ranked[need["id"]][:top_per_cat]
         need = {**need, "mode": need_mode}
         refs = [it for it in catalog if is_reference(it) and need["id"] in (it.get("needs") or [])][:2]
         entry = cats.setdefault(need["category"], {"id": need["category"], "name": need["category_name"], "needs": [],
@@ -348,6 +465,7 @@ def scan_project_categories(scan_path: str | Path | None = None, blueprint_text:
         for it in picks:
             if it not in entry["adopt_oss"]:
                 entry["adopt_oss"].append(it)
+    consolidate_families(cats, ranked, top_per_cat)
     for entry in cats.values():
         entry["studio_recipes"] = recipes_for([n["id"] for n in entry["needs"]], top=4)
     ordered = sorted(cats.values(), key=lambda c: -c["score"])
@@ -357,6 +475,7 @@ def scan_project_categories(scan_path: str | Path | None = None, blueprint_text:
         "scanned_files_sample": files[:12],
         "filters": {"stack": stack, "platform": platform, "mode": mode, "category": category_filter or "auto", "direction": direction},
         "needs": [{k: v for k, v in n.items()} for n in needs],
+        "more_needs": [{k: n[k] for k in ("id", "name", "category", "score", "matched")} for n in more_needs],
         "categories": ordered,
     }
 
@@ -374,18 +493,35 @@ def license_tag(it: dict) -> str:
     return it.get("license", "")
 
 
-def pick_line(it: dict) -> str:
+INSTALL_FAMILY = {"next": "react", "nuxt": "vue", "expo": "rn", "swiftui": "ios", "compose": "android", "tailwind": "html"}
+
+
+def install_for(it: dict, stack: str = "all") -> str:
+    """Comando de instalacao da stack pedida (campo installs), senao o padrao da peca."""
+    per = it.get("installs") or {}
+    fam = INSTALL_FAMILY.get(stack, stack)
+    if fam in per:
+        return per[fam]
+    if fam in {"electron", "tauri"}:
+        return per.get("react") or it.get("install", "")
+    return it.get("install", "")
+
+
+def pick_line(it: dict, stack: str = "all") -> str:
     use = {"registry": "copiar", "dependency": "dependência", "platform": "plataforma", "tool": "ferramenta"}.get(it["usage"], it["usage"])
     stacks = ",".join(it.get("stack", []))
-    inst = f" · `{it['install']}`" if it.get("install") else ""
+    cmd = install_for(it, stack)
+    inst = f" · `{cmd}`" if cmd else ""
     note = f" — {it['notes']}" if it.get("notes") else ""
-    return f"**{it['name']}** ({use} · {license_tag(it)} · {stacks} · {it.get('url', '')}){inst}: {it.get('use_case', '')}{note}"
+    stale = " · sem atividade recente" if it.get("stale") else ""
+    return f"**{it['name']}** ({use} · {license_tag(it)}{stale} · {stacks} · {it.get('url', '')}){inst}: {it.get('use_case', '')}{note}"
 
 
 COHERENCE = [
     "Várias bibliotecas no mesmo projeto são normais; a regra é **uma peça por necessidade**.",
     "Re-tematize toda peça pelos tokens da Bíblia (cor, raio, tipo, sombra). Nenhuma traz a paleta da demo.",
     "Uma família de ícones e um sistema de motion por projeto, mesmo quando as peças vêm de bibliotecas diferentes.",
+    "Um motor por família (gráficos, tabelas, agenda, overlays): duas bibliotecas de gráfico na mesma tela dão dois sistemas de eixo, tooltip e tema.",
     "Antes de copiar ou instalar, confirme a licença na versão fixada e registre-a na Bíblia.",
 ]
 
@@ -397,30 +533,40 @@ def format_scan_markdown(report: dict) -> str:
         f"- Stack `{f['stack']}` · plataforma `{f['platform']}` · modo `{f['mode']}` · necessidades detectadas: {len(report['needs'])}",
     ]
     if report.get("scan_path"):
-        lines.append(f"- Lido: `{report['scan_path']}` ({report['scanned_files_count']} arquivos)")
+        lines.append(f"- Lido: `{report['scan_path']}` ({report['scanned_files_count']} arquivos; planejamento e código primeiro, "
+                     "artefatos de design de rodadas anteriores por último, auditorias e QA fora)")
     if f.get("direction"):
         lines.append(f"- Ranking ajustado à direção: `{json.dumps(f['direction'], ensure_ascii=False)}`")
     lines.append("- Isto é uma lista de candidatos. A escolha final e o motivo vão para a Bíblia.")
     lines.append("")
-    rows = []
+    rows, seen_rows = [], set()
     for cat in report["categories"]:
         lines.append(f"## {cat['name']} (`{cat['id']}`)")
+        if cat.get("engine"):
+            eng = cat["engine"]
+            lines.append(f"- Motor único de {eng['family']}: **{eng['name']}** cobre {len(eng['covers'])} necessidades ({', '.join(eng['covers'])}).")
         for need in cat["needs"]:
             why = f" — citado como: {', '.join(need['matched'])}" if need.get("matched") else ""
             if need.get("mode") and need["mode"] != f["mode"]:
                 why += f" (avaliado no modo `{need['mode']}`)"
             lines.append(f"- **{need['name']}** (`{need['id']}`){why}")
             for i, it in enumerate(need["picks"]):
-                lines.append(f"  {i + 1}. {pick_line(it)}")
-                if i == 0:
+                lines.append(f"  {i + 1}. {pick_line(it, f['stack'])}")
+                if i == 0 and (need["id"], it["id"]) not in seen_rows:
+                    seen_rows.add((need["id"], it["id"]))
                     rows.append((need["name"], it))
             if not need["picks"]:
-                lines.append("  - Nenhuma peça para esta stack/plataforma/modo. Rode com `--online` ou amplie `--stack`.")
+                lines.append("  - Nenhuma peça na base para estes filtros: construa com os tokens no shell e na Tela-Mãe, ou rode com `--online`.")
             for ref in need.get("references", []):
                 lines.append(f"  - Referência para estudar: {ref['name']} ({ref.get('url', '')})")
         for rec in cat.get("studio_recipes", []):
             opts = " · ".join(o["name"] for o in rec["options"])
             lines.append(f"- Padrão `{rec['id']}` — {rec['problem']} Opções: {opts}.")
+        lines.append("")
+    if report.get("more_needs"):
+        lines.append("## Também detectadas (peça com `--need` ou aumente `--max-needs`)")
+        for n in report["more_needs"][:40]:
+            lines.append(f"- {n['name']} (`{n['id']}`) · citado como: {', '.join(n['matched'][:4])}")
         lines.append("")
     lines.append("## Coerência")
     lines.extend(f"- {c}" for c in COHERENCE)
@@ -428,7 +574,7 @@ def format_scan_markdown(report: dict) -> str:
                   "| Necessidade | Peça | Uso | Licença | Versão fixada | Caminho | Adaptação aos tokens |",
                   "|---|---|---|---|---|---|---|"])
     for need_name, it in rows[:30]:
-        lines.append(f"| {need_name} | {it['name']} | {it['usage']} | {license_tag(it)} | _a fixar_ | {it.get('install') or it.get('url', '')} | _descrever_ |")
+        lines.append(f"| {need_name} | {it['name']} | {it['usage']} | {license_tag(it)} | _a fixar_ | {install_for(it, f['stack']) or it.get('url', '')} | _descrever_ |")
     return "\n".join(lines)
 
 
@@ -436,10 +582,10 @@ def format_markdown(need: str, mode: str, stack: str, platform: str, local: dict
     lines = [f"# Componentes para: `{need}`",
              f"- Modo `{mode}` · stack `{stack}` · plataforma `{platform}` · necessidades: {', '.join(local['needs']) or 'busca livre'}", ""]
     lines.append("## Candidatos")
-    lines.extend(f"{i + 1}. {pick_line(it)}" for i, it in enumerate(local["adopt"])) if local["adopt"] else lines.append("- Nenhum candidato local para estes filtros.")
+    lines.extend(f"{i + 1}. {pick_line(it, stack)}" for i, it in enumerate(local["adopt"])) if local["adopt"] else lines.append("- Nenhum candidato local para estes filtros.")
     if local["verify"]:
         lines.append("\n## Promissores, licença a conferir")
-        lines.extend(f"- {pick_line(it)}" for it in local["verify"])
+        lines.extend(f"- {pick_line(it, stack)}" for it in local["verify"])
     if local["recipes"]:
         lines.append("\n## Padrões visuais relacionados")
         for rec in local["recipes"]:
@@ -473,7 +619,7 @@ def format_category(cat_id: str, stack: str, platform: str, mode: str) -> str:
         pool = [it for it in items if need["id"] in it.get("needs", [])]
         for it in sorted(pool, key=lambda x: -x.get("craft", 2)):
             flag = "" if can_adopt(it, stack, platform, mode) else " _(fora dos filtros ou só referência)_"
-            lines.append(f"- {pick_line(it)}{flag}")
+            lines.append(f"- {pick_line(it, stack)}{flag}")
         lines.append("")
     return "\n".join(lines)
 
@@ -552,7 +698,8 @@ def main():
     parser.add_argument("--platform", default="all", choices=["all", "desktop", "mobile", "system", "ios", "android"])
     parser.add_argument("--mode", default="operate", choices=["operate", "read", "persuade", "all"])
     parser.add_argument("--top", type=int, default=3, help="Candidatos por necessidade")
-    parser.add_argument("--direction", help="JSON da direcao escolhida (campo style: shape, density, motion, skin)")
+    parser.add_argument("--max-needs", type=int, default=18, help="Necessidades com candidatos; as demais saem listadas")
+    parser.add_argument("--direction", help="direcao-N.json do Estudio (ou tokens.json gerado): shape, density, motion, skin")
     parser.add_argument("--shape", default="", choices=["", "sharp", "soft", "round"])
     parser.add_argument("--density", default="", choices=["", "compact", "regular", "airy"])
     parser.add_argument("--motion", default="", choices=["", "none", "subtle", "expressive"])
@@ -575,7 +722,7 @@ def main():
             print(format_category(args.category, args.stack, args.platform, args.mode))
             return
         report = scan_project_categories(args.scan, args.blueprint, args.category, args.stack, args.platform, args.mode,
-                                         max(1, args.top), direction)
+                                         max(1, args.top), direction, max(1, args.max_needs))
         print(json.dumps(report, ensure_ascii=False, indent=2) if args.format == "json" else format_scan_markdown(report))
         return
 
