@@ -1,0 +1,224 @@
+[
+ {
+  "id": "fontshare",
+  "name": "Fontshare",
+  "kind": "font-source",
+  "use": "tool",
+  "url": "https://www.fontshare.com",
+  "repo": "",
+  "license": "ITF Free Font License (gratuita, não OFL)",
+  "license_status": "free-license",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "typography"
+  ],
+  "needs": [
+   "font-source"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "baixar de https://www.fontshare.com (ITF FFL)",
+  "summary": "Satoshi, General Sans, Switzer, Cabinet Grotesk, Clash Display e outras.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "fontsource",
+  "name": "Fontsource",
+  "kind": "font-source",
+  "use": "dependency",
+  "url": "https://fontsource.org",
+  "repo": "",
+  "license": "MIT (pacotes) / OFL (fontes)",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "typography"
+  ],
+  "needs": [
+   "font-tooling",
+   "font-source"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @fontsource-variable/<familia>",
+  "summary": "Fontes auto-hospedadas via npm.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "google-fonts",
+  "name": "Google Fonts",
+  "kind": "font-source",
+  "use": "tool",
+  "url": "https://fonts.google.com",
+  "repo": "",
+  "license": "OFL-1.1 (maioria)",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "typography"
+  ],
+  "needs": [
+   "font-source"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "Google Fonts ou npm install @fontsource/<família>",
+  "summary": "Fontes livres; confira a licença de cada família.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "utopia",
+  "name": "Utopia",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://utopia.fyi",
+  "repo": "",
+  "license": "gratuito",
+  "license_status": "free-license",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "typography",
+   "color-tokens"
+  ],
+  "needs": [
+   "font-tooling"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Escalas fluidas de tipo e espaço com clamp().",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "collletttivo",
+  "name": "Collletttivo",
+  "kind": "font-source",
+  "use": "tool",
+  "url": "https://www.collletttivo.it",
+  "repo": "",
+  "license": "OFL-1.1",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "typography"
+  ],
+  "needs": [
+   "font-source"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "baixar do site (OFL)",
+  "summary": "Coletivo de fontes livres com personalidade.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "velvetyne",
+  "name": "Velvetyne",
+  "kind": "font-source",
+  "use": "tool",
+  "url": "https://velvetyne.fr",
+  "repo": "",
+  "license": "OFL-1.1",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "typography"
+  ],
+  "needs": [
+   "font-source"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "baixar do site (OFL)",
+  "summary": "Fontes livres expressivas para Persuade.",
+  "a11y": "",
+  "notes": ""
+ }
+]

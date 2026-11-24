@@ -264,7 +264,8 @@ class DiscoverTests(unittest.TestCase):
 
         # 4. Zero colisao entre dominios Operate e tipografia serifada editorial
         domains = json.loads((ROOT / "data" / "domains.json").read_text(encoding="utf-8"))
-        serif_ids = {"source-sans-serif", "newsreader-instrument", "fraunces-dm", "lora-plusjakarta"}
+        serif_ids = {"source-sans-serif", "newsreader-instrument", "fraunces-dm", "lora-plusjakarta", "instrument-serif-sans",
+                     "literata-figtree", "young-serif-dm", "gambetta-switzer"}
         for dom in domains:
             if dom.get("surface_mode", "").lower() == "operate":
                 self.assertFalse(set(dom.get("typography_ids", [])) & serif_ids, dom["id"])
@@ -382,39 +383,25 @@ class V22UpgradeTests(unittest.TestCase):
         self.assertTrue(any("DA-LIGHT-WASHED-OUT" in lb for lb in labels), labels)
 
     def test_v22_categorical_project_scanner_and_icon_recipes(self):
-        # Escaneia um mini projeto simulando financeiro + licitacoes + whatsapp bot + mobile
+        # Plano financeiro + licitacoes + atendimento + mobile: o scanner acha as necessidades na base nova
         with tempfile.TemporaryDirectory() as tmp:
             proj = Path(tmp)
             (proj / "CONCEPCAO.md").write_text(
                 "Sistema ERP financeiro com contas a pagar, fluxo de caixa 45 dias, grafico DRE cascata, "
-                "radar de editais PNCP, funil kanban arrastavel, agenda de prazos .ics, inbox WhatsApp SLA 24h com bot e transbordo, "
+                "radar de editais, funil kanban arrastavel, agenda de prazos .ics, inbox WhatsApp SLA 24h com bot, "
                 "importacao PDF/OFX e app mobile executivo para socios.",
                 encoding="utf-8",
             )
             rep = scan_project_categories(scan_path=proj, stack="html", platform="all", mode="operate")
         cat_ids = {c["id"] for c in rep["categories"]}
-        for expected in (
-            "shell-navigation",
-            "icons-emblems-avatars",
-            "badges-chips-timers-status",
-            "charts-telemetry-financial",
-            "data-tables-lists-progressive",
-            "kanban-drag-drop-workflows",
-            "calendar-gantt-timelines",
-            "inbox-chat-omnichannel-ai",
-            "mobile-native-pwa-touch",
-        ):
+        for expected in ("charts", "data-tables", "drag-drop", "calendar-scheduling", "chat-ai", "mobile-native", "editors-documents"):
             self.assertIn(expected, cat_ids)
-
-        # Verifica presenca de bibliotecas sofisticadas e receitas de icones/badges
-        chart_cat = next(c for c in rep["categories"] if c["id"] == "charts-telemetry-financial")
+        chart_cat = next(c for c in rep["categories"] if c["id"] == "charts")
         chart_names = {it["name"] for it in chart_cat["adopt_oss"]}
         self.assertTrue(any("Lightweight Charts" in n or "ECharts" in n for n in chart_names), chart_names)
-
-        badge_cat = next(c for c in rep["categories"] if c["id"] == "badges-chips-timers-status")
-        recipe_ids = {r["id"] for r in badge_cat["studio_recipes"]}
-        self.assertIn("sla-progress-ring-pill", recipe_ids)
-        self.assertIn("halo-status-vector-chip", recipe_ids)
+        recipe_ids = {r["id"] for c in rep["categories"] for r in c["studio_recipes"]}
+        self.assertIn("prazo-consumido", recipe_ids)
+        self.assertIn("serie-temporal-densa", recipe_ids)
 
     def test_v22_lint_generic_icons_flat_chart_and_bible_hex_sync(self):
         # 1. Repeticao de ph-bank >= 5x dispara DA-ICON-GENERIC-REPEAT; yAxis min: 0 sem bar dispara DA-FLAT-CHART-AXIS
@@ -772,6 +759,9 @@ class V24UpgradeTests(unittest.TestCase):
                         {"action": "screenshot", "name": "apos-aprovacao"},
                     ],
                 }
+                scenario["viewport"] = "1920x1080"
+                scenario["steps"].insert(6, {"action": "assertReachable", "selector": "#btnApprove"})
+                scenario["steps"][7] = {"action": "assertText", "selector": "#toast", "equals": "Solicitação aprovada com sucesso"}
                 spath = base / "qa.json"
                 spath.write_text(json.dumps(scenario), encoding="utf-8")
                 qa_out = base / "qa-out"
@@ -784,6 +774,43 @@ class V24UpgradeTests(unittest.TestCase):
                 self.assertTrue((qa_out / "apos-aprovacao.png").exists())
                 rep = json.loads((qa_out / "probe-report.json").read_text(encoding="utf-8"))
                 self.assertTrue(rep["passed"])
+                self.assertEqual(rep["dimensions"], {"width": 1920, "height": 1080})
+
+                # A fixture reproduz overlay sobre a ação e valor do gráfico que ficou antigo.
+                fixture_path = design_dir / "tela-fila.html"
+                fixture = fixture_path.read_text(encoding="utf-8")
+                fixture_path.write_text(fixture.replace(
+                    '<p id="toast"></p>',
+                    '<p id="toast" style="position:absolute;inset:0;z-index:2;background:#17202E" hidden></p>'
+                    """<button id="dia" onclick="this.setAttribute('aria-pressed','true')">Dia 2</button>"""
+                    '<output id="total">7</output>',
+                ).replace(
+                    "document.getElementById('toast').textContent=",
+                    "document.getElementById('toast').hidden=false;document.getElementById('toast').textContent=",
+                ), encoding="utf-8")
+                bad_scenario = {
+                    "viewport": "mobile-360x800",
+                    "steps": [
+                        {"action": "goto", "url": "/design/tela-fila.html"},
+                        {"action": "click", "selector": "[data-da-open]"},
+                        {"action": "click", "selector": "#dia"},
+                        {"action": "assertText", "selector": "#total", "equals": "12"},
+                        {"action": "click", "selector": "#btnApprove"},
+                        {"action": "assertReachable", "selector": "#btnApprove"},
+                    ],
+                }
+                spath.write_text(json.dumps(bad_scenario), encoding="utf-8")
+                failure = subprocess.run(
+                    ["node", str(SCRIPTS / "run_workflow_probe.mjs"), "--scenario", str(spath), "--base-url", f"http://127.0.0.1:{port}", "--out", str(qa_out), "--strict"],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(failure.returncode, 1, failure.stdout + failure.stderr)
+                negative = json.loads((qa_out / "probe-report.json").read_text(encoding="utf-8"))
+                self.assertEqual(negative["dimensions"], {"width": 360, "height": 800})
+                failed = {step["action"]: step["detail"] for step in negative["steps"] if step["status"] == "FAIL"}
+                self.assertIn("obtido: \"7\"", failed["assertText"])
+                self.assertIn("encoberta por toast", failed["assertReachable"])
+                fixture_path.write_text(fixture, encoding="utf-8")
 
                 # 3. Testa capture_and_audit.mjs com entrega.html whitelisted + --smoke-interact + --base-url no servidor unificado
                 audit_out = base / "audit-out"
@@ -798,6 +825,31 @@ class V24UpgradeTests(unittest.TestCase):
                 aud_rep = json.loads((audit_out / "audit-report.json").read_text(encoding="utf-8"))
                 entrega_row = next(r for r in aud_rep if r["target"] == "entrega")
                 self.assertIn(f"127.0.0.1:{port}/entrega.html", entrega_row["url"])
+                # A small working form is valid at a deliberate reading width.
+                (design_dir / "preferencias.html").write_text(
+                    '<!doctype html><html lang="pt-BR"><head><title>Preferências</title>'
+                    '<style>body{background:#101a27;color:#ecf1f8;font:16px system-ui} main{max-width:38rem;margin:auto}'
+                    'form{display:grid;gap:16px} input,select,button{min-height:44px}</style></head><body>'
+                    '<main><h1>Preferências</h1><p>Configure seus avisos.</p><form>'
+                    '<label for="address">E-mail</label><input id="address" type="email">'
+                    '<label for="frequency">Frequência</label><select id="frequency"><option>Semanal</option></select>'
+                    '<button>Salvar</button></form></main></body></html>', encoding="utf-8",
+                )
+                manifest["screens"].append({"id": "preferencias", "file": "preferencias.html", "viewports": ["1920x1080"]})
+                manifest["screens"][0].update(viewports=["1920x1080"], afterClickSelector="#conf")
+                manifest["screens"].append({"id": "mobile-ausente", "viewports": ["mobile-360x800"]})
+                mpath.write_text(json.dumps(manifest), encoding="utf-8")
+                aud = subprocess.run(
+                    ["node", str(SCRIPTS / "capture_and_audit.mjs"), "--manifest", str(mpath), "--out", str(audit_out), "--themes", "dark", "--no-vitrine", "--strict"],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(aud.returncode, 1, aud.stdout + aud.stderr)
+                audited = {row["target"]: row for row in json.loads((audit_out / "audit-report.json").read_text(encoding="utf-8"))}
+                self.assertEqual(audited["fila"]["dimensions"]["width"], 1920)
+                self.assertEqual(audited["fila"]["states"]["postClick"], "captured")
+                self.assertFalse(audited["preferencias"]["issues"])
+                self.assertEqual(audited["mobile-ausente"]["viewport"], "mobile-360x800")
+                self.assertEqual(audited["mobile-ausente"]["issues"][0]["rule"], "DA-AUDIT-COVERAGE")
             finally:
                 srv.terminate()
                 try:
@@ -808,6 +860,26 @@ class V24UpgradeTests(unittest.TestCase):
                     srv.stdout.close()
                 if srv.stderr:
                     srv.stderr.close()
+
+    def test_check_sync_reports_shell_drift_without_writing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bible, shell, tokens, copy = (root / name for name in ("DESIGN-BIBLE.md", "SHELL-CONTRACT.md", "tokens.css", "app.css"))
+            current = "| Token | Light | Dark |\n|---|---|---|\n| `--edge` | `#86A2C7` | `#334C73` |\n"
+            stale = "Borda interna: `edge` Light `#91A9C6`\n"
+            css = ':root { --edge: #86A2C7; } [data-theme="dark"] { --edge: #334C73; }'
+            bible.write_text(current)
+            shell.write_text(stale)
+            tokens.write_text(css)
+            copy.write_text(css)
+            args = [str(bible), "--tokens", str(tokens), "--check-sync", "--shell", str(shell), "--compare-css", str(copy), "--out-dir", str(root)]
+            result = run_py("render_design_bible.py", args)
+            self.assertEqual(result.returncode, 1, result.stdout)
+            self.assertIn("SHELL-CONTRACT.md: tokens divergentes: --edge", result.stderr)
+            self.assertEqual(shell.read_text(), stale)
+            self.assertFalse((root / "DESIGN-BIBLE.html").exists())
+            shell.write_text(current)
+            self.assertEqual(run_py("render_design_bible.py", args).returncode, 0)
 
     def test_v241_bible_sync_respects_light_dark_column_header_for_dark_semantic_tokens(self):
         # Antes da v2.4.1, --danger (#B91C1C Light vs #DC2626 Dark) e --primary (#14427A Light vs #2563EB Dark)
@@ -846,6 +918,379 @@ class V24UpgradeTests(unittest.TestCase):
         self.assertIn(f"**Design Aura:** `v{ver}`", bible_tpl)
         self.assertIn(f"v{ver}", cmd_md)
         self.assertIn(f"v{ver}", readme)
+
+
+FIXTURES = ROOT / "tests" / "fixtures"
+LEAK_TERMS = ("brasitur", "grupo interativa", "seduc", "encarregad", "aviso da mesa", "em rota", "fatura aerea", "transbordo")
+
+
+def run_node(script: str, args: list[str]) -> subprocess.CompletedProcess:
+    return subprocess.run(["node", str(SCRIPTS / script), *args], capture_output=True, text=True)
+
+
+class V3CalibrationTests(unittest.TestCase):
+    """Telas boas nao bloqueiam; telas ruins sao pegas. Toda regra nova passa por aqui."""
+
+    def test_lint_good_fixtures_have_no_block_or_high(self):
+        for f in sorted((FIXTURES / "good").glob("*.html")):
+            findings = scan_file(f, f.parent)
+            bad = [x for x in findings if x["severity"] in ("BLOCK", "HIGH")]
+            self.assertFalse(bad, (f.name, bad))
+
+    def test_lint_bad_fixtures_are_caught_with_capped_severity(self):
+        stub = {(x["rule"], x["severity"]) for x in scan_file(FIXTURES / "bad" / "casca-rasa.html", FIXTURES / "bad")}
+        self.assertIn(("DA-B5-01", "BLOCK"), stub)
+        self.assertIn(("DA-B2-08A", "BLOCK"), stub)
+        self.assertIn(("DA-B2-08B", "REVIEW"), stub)
+        slop = scan_file(FIXTURES / "bad" / "slop-ia.html", FIXTURES / "bad")
+        rules = {x["rule"] for x in slop}
+        for rid in ("DA-B1-01", "DA-B1-03", "DA-B1-05", "DA-B1-06A", "DA-B5-02", "DA-B6-02A"):
+            self.assertIn(rid, rules)
+        self.assertFalse(any(x["severity"] == "BLOCK" for x in slop), "sinais de IA generica vao ate HIGH, nao bloqueiam")
+
+    def test_runtime_good_fixtures_pass_strict_and_bad_mobile_blocks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ops = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "app-claro-minimal.html"), str(FIXTURES / "good" / "tabela-operacional.html"),
+                                                     "--out", str(Path(tmp) / "op"), "--viewports", "desktop,mobile", "--all-viewports", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(ops.returncode, 0, ops.stdout + ops.stderr)
+            site = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "site-editorial.html"), "--mode", "persuade", "--out", str(Path(tmp) / "site"),
+                                                      "--viewports", "desktop,mobile", "--all-viewports", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(site.returncode, 0, site.stdout + site.stderr)
+            rows = json.loads((Path(tmp) / "site" / "audit-report.json").read_text(encoding="utf-8"))
+            self.assertFalse([i for r in rows for i in r["issues"]], "site editorial nao deve receber sinais de app")
+            bad = run_node("capture_and_audit.mjs", [str(FIXTURES / "bad" / "mobile-esmagado.html"), "--out", str(Path(tmp) / "bad"), "--viewports", "mobile", "--themes", "light", "--quiet", "--strict"])
+            self.assertEqual(bad.returncode, 1, bad.stdout)
+            issues = json.loads((Path(tmp) / "bad" / "audit-report.json").read_text(encoding="utf-8"))[0]["issues"]
+            self.assertTrue(any(i["rule"] == "DA-MOBILE-FLEX-CLIP" and i["severity"] == "BLOCK" for i in issues), issues)
+
+    def test_keyboard_journey_and_reduced_motion(self):
+        scenario = {"name": "teclado", "viewport": "desktop", "theme": "light", "steps": [
+            {"action": "goto", "url": "/app-claro-minimal.html"},
+            {"action": "tabTo", "selector": "#canal"},
+            {"action": "tabTo", "selector": "button"},
+            {"action": "setReducedMotion", "value": True},
+            {"action": "key", "key": "Enter"}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            sp = Path(tmp) / "s.json"
+            sp.write_text(json.dumps(scenario), encoding="utf-8")
+            res = run_node("run_workflow_probe.mjs", ["--scenario", str(sp), "--root", str(FIXTURES / "good"), "--out", str(Path(tmp) / "q"), "--strict"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            scenario["steps"].append({"action": "tabTo", "selector": "#inexistente", "maxTabs": 5})
+            sp.write_text(json.dumps(scenario), encoding="utf-8")
+            res = run_node("run_workflow_probe.mjs", ["--scenario", str(sp), "--root", str(FIXTURES / "good"), "--out", str(Path(tmp) / "q2"), "--strict"])
+            self.assertEqual(res.returncode, 1, res.stdout)
+            self.assertIn("DA-A11Y-KEYBOARD", res.stdout + res.stderr)
+
+
+class V3ColorAndDirectionTests(unittest.TestCase):
+    def test_seed_engine_passes_contrast_parity_and_cvd_for_many_brands(self):
+        from color_engine import build_tokens, hex_to_oklch, min_distance
+
+        seeds = [("#0F3B57", "#F08A4B", "hairline"), ("#1F4D3A", "#C98A12", "tactile"), ("#5A2A27", "#E8A33D", "soft"),
+                 ("#3F6B5C", "#C27C4C", "tonal"), ("#7C3AED", None, "hairline"), ("#E11D48", "#0EA5E9", "soft"), ("#F5C518", None, "tonal")]
+        with tempfile.TemporaryDirectory() as tmp:
+            for seed, accent, style in seeds:
+                data = build_tokens(seed, accent, "complementar", style)
+                path = Path(tmp) / f"{seed[1:]}.json"
+                path.write_text(json.dumps(data), encoding="utf-8")
+                rows = audit_file(path)
+                self.assertFalse([r for r in rows if r["severity"] != "PASS"], (seed, style, [r for r in rows if r["severity"] != "PASS"]))
+                for theme in ("light", "dark"):
+                    t = data["semantic"][theme]
+                    self.assertTrue(10 <= hex_to_oklch(t["danger"])[2] <= 45, (seed, theme, t["danger"]))
+                    self.assertTrue(125 <= hex_to_oklch(t["success"])[2] <= 175, (seed, theme, t["success"]))
+                    charts = [t[f"chart-{i}"] for i in range(1, 7)]
+                    self.assertGreater(min_distance(charts, "deuteranopia"), 0.04, (seed, theme))
+
+    def test_generate_tokens_seed_cli_writes_json_css_and_dtcg(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("generate_tokens.py", ["--seed", "#134E4A", "--accent", "#E0613A", "--depth-style", "soft", "--shape", "round",
+                                                "--out", tmp + "/", "--format", "all", "--check-contrast"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            css = (Path(tmp) / "tokens.css").read_text(encoding="utf-8")
+            self.assertIn("--da-depth-style: soft;", css)
+            self.assertIn("--radius-card-lg: 24px;", css)
+            dtcg = json.loads((Path(tmp) / "tokens.dtcg.json").read_text(encoding="utf-8"))
+            self.assertEqual(dtcg["light"]["color"]["primary"]["$type"], "color")
+            self.assertTrue((Path(tmp) / "tokens.json").exists())
+
+    def test_direction_board_renders_and_flags_similar_directions(self):
+        from render_direction_board import divergence, render
+
+        spec = json.loads((ROOT / "assets" / "direction-board.example.json").read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as tmp:
+            page = render(spec, Path(tmp))
+            html_text = page.read_text(encoding="utf-8")
+            self.assertEqual(html_text.count('class="direction"'), 3)
+            for i in (1, 2, 3):
+                self.assertTrue((Path(tmp) / f"direcao-{i}.tokens.css").exists())
+        self.assertEqual(divergence(spec), [])
+        twin = json.loads(json.dumps(spec))
+        twin["directions"][1].update({k: twin["directions"][0][k] for k in ("seed", "depth_style", "shape", "density", "fonts")})
+        self.assertTrue(divergence(twin))
+
+
+class V3BibleAndRegistryTests(unittest.TestCase):
+    def test_bible_check_flags_template_and_zone_overflow(self):
+        from render_design_bible import check_bible, check_zones
+
+        template = (ROOT / "assets" / "design-bible-template.md").read_text(encoding="utf-8")
+        self.assertTrue(any("decisão em aberto" in p for p in check_bible(template, None, None)))
+        manifest = {"project": {"minDesktopWidth": 1024}, "screens": [
+            {"id": "inbox", "platform": "desktop", "zones": [{"name": "Nav", "width": 224}, {"name": "Fila", "width": 300},
+                                                              {"name": "Conversa", "width": "1fr", "min": 300}, {"name": "Ficha", "width": 300}]}]}
+        self.assertTrue(check_zones(manifest))
+        manifest["screens"][0]["zones"].pop()
+        self.assertFalse(check_zones(manifest))
+
+    def test_bible_check_passes_complete_bible(self):
+        from render_design_bible import check_bible
+
+        body = "decisão registrada com o motivo e o efeito esperado na tela"
+        sections = ["Contrato de plataforma", "Direção", "Cor", "Tipografia", "Espaço e forma", "Profundidade", "Orçamentos",
+                    "Componentes", "Telas", "Motion", "Conteúdo e dados fictícios", "Leis do projeto", "Portões", "Histórico"]
+        md = "# Biblia\n> **Design Aura:** `v3.1.1`\n" + "".join(f"## {name}\n{body}\n" for name in sections) + "`fila`\n"
+        manifest = {"screens": [{"id": "fila", "archetype": "lista", "primaryAction": {"label": "Aprovar"}, "states": ["populado"]}]}
+        self.assertEqual(check_bible(md, manifest, {"--primary-surface": "#eee", "--chart-1": "#111", "--danger": "#b00"}), [])
+
+    def test_rules_registry_is_the_single_source(self):
+        import re
+        from rules_registry import cap, load_rules
+
+        reg = load_rules()
+        ids = set(reg["by_id"])
+        used = set()
+        for f in list(SCRIPTS.glob("*.py")) + list(SCRIPTS.glob("*.mjs")):
+            used |= set(re.findall(r"DA-[A-Z0-9]+(?:-[A-Z0-9]+)*", f.read_text(encoding="utf-8")))
+        used = {u for u in used if not u.endswith("-INTERACT") and u not in {"DA-B6-02"}}
+        self.assertFalse(used - ids, sorted(used - ids))
+        doc = (ROOT / "references" / "01-leis-inegociaveis.md").read_text(encoding="utf-8")
+        self.assertFalse([i for i in ids if f"`{i}`" not in doc])
+        self.assertEqual(cap("DA-DEAD-SPACE", "BLOCK")[0], "REVIEW")
+        self.assertEqual(cap("DA-B1-01", "BLOCK")[0], "HIGH")
+        self.assertEqual(cap("DA-B7-02", "HIGH")[0], "MEDIUM")
+        self.assertEqual(cap("DA-B3-01", "BLOCK")[0], "BLOCK")
+
+    def test_aura_check_runs_all_gates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            args = ["--tokens", str(ROOT / "assets" / "tokens.example.json"), "--project", str(FIXTURES / "good"), "--out", tmp, "--strict"]
+            res = run_py("aura_check.py", args + ["--partial"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            data = json.loads((Path(tmp) / "aura-check.json").read_text(encoding="utf-8"))
+            self.assertEqual({g["gate"] for g in data["gates"]}, {"contraste", "linter"})
+            self.assertEqual({g["gate"] for g in data["skipped"]}, {"navegador", "biblia", "sincronia"})
+            # sem --partial, portao que nao rodou deixa a verificacao pendente e o --strict falha
+            res = run_py("aura_check.py", args)
+            self.assertEqual(res.returncode, 1, res.stdout)
+            self.assertIn("não rodaram", res.stdout)
+
+
+class V3CatalogTests(unittest.TestCase):
+    def test_catalog_integrity_and_license_traps(self):
+        from discover_oss_components import load_catalog, load_taxonomy
+
+        tax = load_taxonomy()
+        cats = {c["id"] for c in tax["categories"]}
+        needs = {n["id"] for c in tax["categories"] for n in c["needs"]}
+        items = load_catalog()
+        self.assertGreater(len(items), 300)
+        self.assertEqual(len({i["id"] for i in items}), len(items))
+        for it in items:
+            self.assertTrue(set(it["categories"]) <= cats, it["id"])
+            self.assertTrue(set(it["needs"]) <= needs, it["id"])
+        self.assertEqual(needs - {n for it in items for n in it["needs"]}, set())
+        by_id = {i["id"]: i for i in items}
+        self.assertEqual(by_id["apexcharts"]["license_status"], "trap")
+        self.assertEqual(by_id["remix-icon"]["license_status"], "trap")
+        self.assertEqual(by_id["solar-icons-duotone"]["license_status"], "attribution")
+        chart = search_local("grafico de serie temporal financeiro", "html", "system", "operate", 8)
+        self.assertFalse(any(i["id"] == "apexcharts" for i in chart["adopt"]))
+
+    def test_scanner_reads_portuguese_needs_without_leaking_other_projects(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "CONCEPCAO.md").write_text(
+                "Clinica Veterinaria. Sistema web para recepcao agendar consultas, prontuario dos pets, estoque de vacinas, "
+                "financeiro simples e um site institucional com agendamento online. App mobile para tutores.", encoding="utf-8")
+            rep = scan_project_categories(scan_path=Path(tmp), stack="react", platform="all", mode="operate")
+        found = {n["id"] for n in rep["needs"]}
+        for need in ("calendar-view", "data-table", "hero", "mobile-kit", "timeline"):
+            self.assertIn(need, found)
+        hero = next(n for c in rep["categories"] for n in c["needs"] if n["id"] == "hero")
+        self.assertEqual(hero["mode"], "persuade")
+        self.assertTrue(hero["picks"])
+        text = json.dumps(rep, ensure_ascii=False).lower()
+        for term in LEAK_TERMS:
+            self.assertNotIn(term, text)
+
+    def test_skill_text_has_no_project_leaks_or_version_noise(self):
+        import re
+
+        files = [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md")), *sorted((ROOT / "data").rglob("*.json")),
+                 ROOT / "assets" / "design-bible-template.md", ROOT / "assets" / "screen-manifest.example.json"]
+        for f in files:
+            text = f.read_text(encoding="utf-8").lower()
+            for term in LEAK_TERMS:
+                self.assertNotIn(term, text, f"{f.name}: {term}")
+        for f in [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md"))]:
+            body = f.read_text(encoding="utf-8")
+            self.assertFalse(re.findall(r"`?v2\.\d\.\d`?", body), f.name)
+            self.assertLess(len(re.findall(r"\b(?:PROIBIDO|OBRIGATÓRIO|NUNCA|SEMPRE)\b", body)), 3, f.name)
+        self.assertLessEqual(len((ROOT / "SKILL.md").read_text(encoding="utf-8").splitlines()), 200)
+
+
+class V311Tests(unittest.TestCase):
+    """Correcoes da 3.1.1: leitura do projeto, direcao, Biblia, aura_check, contraste real e motor de cor."""
+
+    def test_scanner_reads_plan_and_code_before_old_design_and_skips_audits(self):
+        from discover_oss_components import collect_project_text
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "docs").mkdir()
+            (root / "docs" / "plano-produto.md").write_text("Agenda de consultas e kanban do funil comercial.", encoding="utf-8")
+            (root / "src" / "pages").mkdir(parents=True)
+            (root / "src" / "pages" / "Agenda.tsx").write_text('export const A = () => <div className="sidebar topbar">Agenda</div>;', encoding="utf-8")
+            (root / "design" / "audit-final").mkdir(parents=True)
+            (root / "design" / "audit-final" / "audit-report.json").write_text('{"x": "sidebar sidebar sidebar"}', encoding="utf-8")
+            (root / "design" / "qa-v2").mkdir(parents=True)
+            (root / "design" / "qa-v2" / "probe-report.json").write_text("{}", encoding="utf-8")
+            (root / "design" / "telas").mkdir(parents=True)
+            (root / "design" / "telas" / "a.html").write_text('<style>.sidebar{font-size:12px}</style><aside class="sidebar">Fila</aside>', encoding="utf-8")
+            text, names = collect_project_text(root)
+        self.assertEqual(names[0], "docs/plano-produto.md")
+        self.assertLess(names.index("src/pages/Agenda.tsx"), names.index("design/telas/a.html"))
+        self.assertFalse([n for n in names if "audit" in n or "qa-" in n])
+        self.assertNotIn("sidebar", text.lower())
+        self.assertNotIn("font-size", text)
+
+    def test_scan_lists_extra_needs_and_consolidates_one_chart_engine(self):
+        blueprint = ("Painel financeiro com grafico de serie temporal do fluxo de caixa, cascata da DRE, ranking por categoria em barras, "
+                     "tabela de lancamentos, agenda de pagamentos, kanban de cobranca, upload de comprovante, mascara de CNPJ, "
+                     "toast com desfazer, modal de confirmacao, busca com autocomplete, seletor de data, importacao de CSV, "
+                     "PDF de contrato, chat de atendimento, mapa de entregas, avatar do usuario, tour de primeiro acesso, editor de texto")
+        rep = scan_project_categories(blueprint_text=blueprint, stack="react", platform="all", mode="operate", max_needs=8)
+        self.assertEqual(len(rep["needs"]), 8)
+        self.assertTrue(rep["more_needs"])
+        charts = next((c for c in rep["categories"] if c["id"] == "charts"), None)
+        self.assertIsNotNone(charts)
+        firsts = {n["picks"][0]["id"] for n in charts["needs"] if n["picks"] and n["id"] != "geo-map"}
+        self.assertEqual(len(firsts), 1, firsts)
+        self.assertIn("engine", charts)
+
+    def test_category_includes_items_by_need_and_installs_follow_stack(self):
+        from discover_oss_components import install_for, load_catalog
+
+        items = load_catalog()
+        nav = [i for i in items if "navigation" in i["categories"]]
+        self.assertGreaterEqual(len(nav), 15)
+        by_id = {i["id"]: i for i in items}
+        self.assertIn("@heroicons/react", install_for(by_id["heroicons"], "react"))
+        self.assertNotIn("@heroicons/react", install_for(by_id["heroicons"], "html"))
+        self.assertIn("lucide-vue-next", install_for(by_id["lucide-icons"], "nuxt"))
+        self.assertEqual(by_id["swapy"]["license_status"], "trap")
+        adoptable = [i for i in items if i["kind"] in ("library", "registry") and i["license_status"] in ("ok", "attribution", "free-license")]
+        self.assertFalse([i["id"] for i in adoptable if not i.get("install")])
+        for f in (ROOT / "data" / "catalog").glob("*.json"):
+            self.assertNotIn('"license_ok"', f.read_text(encoding="utf-8"), f.name)
+
+    def test_direction_file_feeds_tokens_and_scanner(self):
+        from discover_oss_components import load_direction
+
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("render_direction_board.py", [str(ROOT / "assets" / "direction-board.example.json"), "--out", tmp])
+            self.assertEqual(res.returncode, 0, res.stderr)
+            d2 = Path(tmp) / "direcao-2.json"
+            self.assertTrue(d2.exists())
+            spec = json.loads(d2.read_text(encoding="utf-8"))
+            self.assertEqual(load_direction(str(d2))["density"], spec["density"])
+            self.assertEqual(load_direction(str(Path(tmp) / "direcao-2.tokens.json"))["shape"], spec["shape"])  # sem quebrar
+            out = Path(tmp) / "t"
+            res = run_py("generate_tokens.py", ["--direction", str(d2), "--emit-json", str(out / "tokens.json"), "--out", str(out), "--format", "css", "--check-contrast"])
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            meta = json.loads((out / "tokens.json").read_text(encoding="utf-8"))["meta"]
+            self.assertEqual((meta["seed"], meta["shape"], meta["density"]), (spec["seed"].upper(), spec["shape"], spec["density"]))
+            res = run_py("generate_tokens.py", ["--seed", "azul marinho", "--out", str(out)])
+            self.assertEqual(res.returncode, 2)
+            self.assertIn("Cor nao reconhecida", res.stderr)
+
+    def test_color_engine_handles_achromatic_and_light_brands(self):
+        from color_engine import build_tokens, hex_to_oklch, parse_color, wcag
+
+        self.assertEqual(parse_color("rebeccapurple"), "#663399")
+        self.assertEqual(parse_color("rgb(31, 77, 58)"), "#1F4D3A")
+        self.assertEqual(parse_color("#abc"), "#AABBCC")
+        self.assertEqual(parse_color("oklch(37% 0.06 160)"), parse_color("oklch(0.37 0.06 160)"))
+        for seed in ("#000000", "#FFFFFF", "#808080"):
+            data = build_tokens(seed)
+            self.assertTrue(data["report"]["notes"])
+            for theme in ("light", "dark"):
+                t = data["semantic"][theme]
+                self.assertNotIn(t["primary"], ("#000000", "#FFFFFF"))
+                for key in ("border-subtle", "text-muted", "surface-z1", "surface-brand-dark"):
+                    self.assertLess(hex_to_oklch(t[key])[1], 0.005, (seed, theme, key))
+                self.assertGreaterEqual(wcag(t["on-primary"], t["primary"]), 4.5)
+        yellow = build_tokens("#FFD60A")["semantic"]["light"]
+        self.assertEqual(yellow["primary"], "#FFD60A")
+        self.assertGreaterEqual(wcag(yellow["on-primary"], yellow["primary"]), 4.5)
+        for key in ("primary-strong", "focus-ring"):
+            self.assertGreaterEqual(wcag(yellow[key], yellow["surface-z2"]), 3.0, key)
+            self.assertGreaterEqual(wcag(yellow[key], yellow["surface-z1"]), 3.0, key)
+        compact, regular = build_tokens("#1F4D3A", density="compact"), build_tokens("#1F4D3A", density="regular")
+        self.assertNotEqual(compact["spacing"], regular["spacing"])
+        self.assertLess(int(compact["sizing"]["control-h"][:-2]), int(regular["sizing"]["control-h"][:-2]))
+        self.assertEqual(compact["sizing"]["touch-min"], "44px")
+
+    def test_bible_check_rejects_empty_sections_and_template_has_all_sections(self):
+        from render_design_bible import check_bible
+
+        empty = "# Bíblia de Direção Visual\n**Design Aura:** `v3.1.1`\n" + "".join(
+            f"## {n}\n" for n in ("Contrato de plataforma", "Cor", "Tipografia", "Planos", "Orçamento", "Componentes", "Telas", "Motion",
+                                  "Conteúdo", "Leis do projeto", "Portões", "Histórico"))
+        errors = check_bible(empty, None, None)
+        self.assertIn("Seção ausente: Direção escolhida.", errors)  # o titulo do documento nao conta
+        self.assertIn("Seção ausente: Espaço e forma.", errors)     # "plataforma" nao vale como "forma"
+        self.assertTrue(any(e.startswith("Seção vazia: Cor") for e in errors))
+        template = (ROOT / "assets" / "design-bible-template.md").read_text(encoding="utf-8")
+        self.assertFalse([e for e in check_bible(template, None, None) if e.startswith("Seção ausente")])
+
+    def test_aura_check_never_reuses_a_stale_capture_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            stale = Path(tmp) / "out" / "captures"
+            stale.mkdir(parents=True)
+            (stale / "audit-report.json").write_text('[{"target": "antigo.html", "issues": []}]', encoding="utf-8")
+            manifest = Path(tmp) / "m.json"
+            manifest.write_text(json.dumps({"screens": [{"id": "x", "file": "a.html", "afterClickSelector": "#b"}]}), encoding="utf-8")
+            res = run_py("aura_check.py", ["--manifest", str(manifest), "--out", str(Path(tmp) / "out"), "--partial", "--strict"])
+            self.assertEqual(res.returncode, 1, res.stdout)
+            self.assertIn("DA-AUDIT-COVERAGE", res.stdout)
+
+    def test_runtime_contrast_reads_gradients_and_new_good_fixtures_pass(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dense = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "painel-denso-gradiente.html"), "--out", str(Path(tmp) / "d"),
+                                                       "--viewports", "desktop,mobile", "--all-viewports", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(dense.returncode, 0, dense.stdout + dense.stderr)
+            mobile = run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "mobile-lista.html"), "--out", str(Path(tmp) / "m"),
+                                                        "--viewports", "mobile,mobile-360x800", "--themes", "dark,light", "--quiet", "--strict"])
+            self.assertEqual(mobile.returncode, 0, mobile.stdout + mobile.stderr)
+            bad = run_node("capture_and_audit.mjs", [str(FIXTURES / "bad" / "contraste-gradiente.html"), "--out", str(Path(tmp) / "b"),
+                                                     "--viewports", "desktop", "--themes", "light", "--quiet", "--strict"])
+            self.assertEqual(bad.returncode, 1, bad.stdout)
+            issues = json.loads((Path(tmp) / "b" / "audit-report.json").read_text(encoding="utf-8"))[0]["issues"]
+            self.assertTrue(any(i["rule"] == "DA-B3-01" and i["severity"] == "HIGH" for i in issues), issues)
+
+    def test_docs_counts_match_the_component_base(self):
+        import re
+        from discover_oss_components import load_taxonomy
+
+        tax = load_taxonomy()
+        n_cats, n_needs = len(tax["categories"]), sum(len(c["needs"]) for c in tax["categories"])
+        for f in (ROOT / "SKILL.md", ROOT / "references" / "09-pesquisa-componentes-oss.md", ROOT.parents[1] / "README.md"):
+            text = f.read_text(encoding="utf-8")
+            cats = re.findall(r"(\d+) categorias", text)
+            self.assertTrue(cats, f.name)
+            self.assertTrue(all(int(c) == n_cats for c in cats), (f.name, cats, n_cats))
+            needs = re.findall(r"(\d+) necessidades", text)
+            self.assertTrue(all(int(n) == n_needs for n in needs), (f.name, needs, n_needs))
 
 
 if __name__ == "__main__":

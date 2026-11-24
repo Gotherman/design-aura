@@ -1,0 +1,1479 @@
+{
+  "version": "3.1.1",
+  "notes": "Taxonomia da base de componentes. Palavras-chave normalizadas (minusculas, sem acento). Palavra simples com 4+ letras casa como prefixo de palavra; com '=' no fim casa só a palavra exata; expressao com espaço casa como trecho entre limites de palavra.",
+  "categories": [
+    {
+      "id": "foundations",
+      "name": "Fundações e kits de comportamento",
+      "needs": [
+        {
+          "id": "headless-primitives",
+          "name": "Primitivos sem estilo (comportamento e acessibilidade)",
+          "keywords": [
+            "headless",
+            "primitiv",
+            "unstyled",
+            "sem estilo",
+            "radix",
+            "react aria"
+          ]
+        },
+        {
+          "id": "styled-kit",
+          "name": "Kit de componentes com tema",
+          "keywords": [
+            "component library",
+            "kit de componentes",
+            "biblioteca de componentes",
+            "design system",
+            "ui kit"
+          ]
+        },
+        {
+          "id": "web-components",
+          "name": "Web Components para HTML sem framework",
+          "keywords": [
+            "web component",
+            "html puro",
+            "vanilla",
+            "sem framework",
+            "html estatico",
+            "prototipo html"
+          ]
+        },
+        {
+          "id": "css-framework",
+          "name": "Base CSS e tokens prontos",
+          "keywords": [
+            "css framework",
+            "classless",
+            "tailwind",
+            "utility",
+            "reset",
+            "css puro"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "name": "Navegação e shell",
+      "needs": [
+        {
+          "id": "app-shell",
+          "name": "Sidebar, topbar e layout do app",
+          "keywords": [
+            "sidebar",
+            "menu lateral",
+            "app shell",
+            "topbar",
+            "navbar",
+            "navegac",
+            "layout do app",
+            "dashboard shell",
+            "modulo",
+            "modulos="
+          ]
+        },
+        {
+          "id": "command-palette",
+          "name": "Paleta de comandos (Cmd/Ctrl+K)",
+          "keywords": [
+            "command palette",
+            "cmdk",
+            "ctrl+k",
+            "cmd+k",
+            "busca global",
+            "paleta de comando",
+            "spotlight search"
+          ]
+        },
+        {
+          "id": "keyboard-shortcuts",
+          "name": "Atalhos de teclado",
+          "keywords": [
+            "atalho",
+            "shortcut",
+            "teclado",
+            "keyboard",
+            "hotkey"
+          ]
+        },
+        {
+          "id": "tabs-segmented",
+          "name": "Abas e controle segmentado",
+          "keywords": [
+            "abas=",
+            "tabs=",
+            "segment",
+            "filtro rapido",
+            "sub-abas"
+          ]
+        },
+        {
+          "id": "pagination-breadcrumbs",
+          "name": "Paginação e breadcrumbs",
+          "keywords": [
+            "paginac",
+            "pagination",
+            "breadcrumb",
+            "trilha"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data-tables",
+      "name": "Tabelas, listas e grades",
+      "needs": [
+        {
+          "id": "data-table",
+          "name": "Tabela de dados com ordenação e filtros",
+          "keywords": [
+            "tabela",
+            "table",
+            "lista",
+            "listagem",
+            "cadastr",
+            "registro",
+            "estoque",
+            "inventari",
+            "pedido",
+            "cliente",
+            "fornecedor",
+            "produto",
+            "paciente",
+            "aluno",
+            "funcionari",
+            "colaborador",
+            "contas a pagar",
+            "contas a receber",
+            "lancament",
+            "extrato",
+            "fila",
+            "pendenc"
+          ]
+        },
+        {
+          "id": "data-grid",
+          "name": "Grade editável estilo planilha",
+          "keywords": [
+            "planilha",
+            "spreadsheet",
+            "grade editavel",
+            "edicao inline",
+            "inline edit",
+            "data grid",
+            "celula=",
+            "celulas="
+          ]
+        },
+        {
+          "id": "virtual-list",
+          "name": "Lista virtualizada (milhares de linhas)",
+          "keywords": [
+            "virtualiz",
+            "milhares",
+            "infinite scroll",
+            "rolagem infinita",
+            "lista longa",
+            "feed"
+          ]
+        },
+        {
+          "id": "tree-view",
+          "name": "Árvore hierárquica",
+          "keywords": [
+            "arvore",
+            "tree",
+            "hierarq",
+            "pastas",
+            "file tree",
+            "organograma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "charts",
+      "name": "Gráficos e visualização de dados",
+      "needs": [
+        {
+          "id": "timeseries",
+          "name": "Séries temporais e tendências",
+          "keywords": [
+            "grafico",
+            "chart",
+            "serie temporal",
+            "time series",
+            "tendencia",
+            "evoluc",
+            "historico de",
+            "fluxo de caixa",
+            "projec",
+            "telemetri",
+            "monitor",
+            "metric"
+          ]
+        },
+        {
+          "id": "financial",
+          "name": "Gráficos financeiros (candle, saldo, cascata)",
+          "keywords": [
+            "financeir",
+            "candle",
+            "cotac",
+            "saldo",
+            "cascata",
+            "waterfall",
+            "dre",
+            "receita",
+            "despesa",
+            "faturamento",
+            "cashflow"
+          ]
+        },
+        {
+          "id": "categorical",
+          "name": "Comparação por categoria (barras, ranking, pizza)",
+          "keywords": [
+            "grafico de barras",
+            "barras=",
+            "ranking",
+            "comparac",
+            "por categoria",
+            "pizza",
+            "donut",
+            "rosca",
+            "por setor",
+            "distribuic"
+          ]
+        },
+        {
+          "id": "distribution",
+          "name": "Distribuição e estatística",
+          "keywords": [
+            "histogram",
+            "boxplot",
+            "dispers",
+            "scatter",
+            "estatistic",
+            "correlac",
+            "heatmap",
+            "mapa de calor"
+          ]
+        },
+        {
+          "id": "flow-network",
+          "name": "Fluxos, Sankey e redes",
+          "keywords": [
+            "sankey",
+            "rede de",
+            "network",
+            "grafo",
+            "graph=",
+            "chord",
+            "funil de conversao"
+          ]
+        },
+        {
+          "id": "geo-map",
+          "name": "Mapas e geografia",
+          "keywords": [
+            "mapa=",
+            "mapas=",
+            "maps=",
+            "geograf",
+            "roteiriz",
+            "rastreamento de veiculo",
+            "rastreamento em tempo real",
+            "rastreio de frota",
+            "rastreio de entrega",
+            "localizacao em tempo real",
+            "geolocaliz",
+            "frota",
+            "gps="
+          ]
+        },
+        {
+          "id": "sparkline",
+          "name": "Micrográficos (sparkline, mini barras)",
+          "keywords": [
+            "sparkline",
+            "micrografico",
+            "mini grafico",
+            "tendencia curta"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kpi-metrics",
+      "name": "KPIs, números e status",
+      "needs": [
+        {
+          "id": "number-animation",
+          "name": "Números que mudam com transição",
+          "keywords": [
+            "numero animado",
+            "contagem animada",
+            "valor muda",
+            "kpi=",
+            "indicador"
+          ]
+        },
+        {
+          "id": "progress-meter",
+          "name": "Progresso, metas e medidores",
+          "keywords": [
+            "progresso",
+            "progress",
+            "metas=",
+            "meta de",
+            "gauge",
+            "medidor",
+            "percentual",
+            "cobertura",
+            "prazo",
+            "sla=",
+            "vencimento"
+          ]
+        },
+        {
+          "id": "status-tracker",
+          "name": "Faixa de status e saúde (tracker, uptime)",
+          "keywords": [
+            "status page",
+            "pagina de status",
+            "uptime",
+            "health check",
+            "disponibilidade",
+            "historico de status",
+            "tracker"
+          ]
+        },
+        {
+          "id": "kpi-card",
+          "name": "Cartões de KPI e resumo",
+          "keywords": [
+            "resumo",
+            "kpi",
+            "dashboard",
+            "painel",
+            "visao geral",
+            "overview",
+            "indicador"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forms",
+      "name": "Formulários e entradas",
+      "needs": [
+        {
+          "id": "input-mask",
+          "name": "Máscaras (CPF, CNPJ, moeda, telefone)",
+          "keywords": [
+            "mascara",
+            "mask=",
+            "cpf=",
+            "cnpj",
+            "telefone",
+            "moeda",
+            "cep=",
+            "boleto"
+          ]
+        },
+        {
+          "id": "date-picker",
+          "name": "Seletor de data e período",
+          "keywords": [
+            "data de",
+            "datas=",
+            "date picker",
+            "periodo",
+            "date range",
+            "vencimento",
+            "nascimento",
+            "calendario de selecao"
+          ]
+        },
+        {
+          "id": "select-combobox",
+          "name": "Select, combobox e autocomplete",
+          "keywords": [
+            "select",
+            "combobox",
+            "autocomplet",
+            "busca com sugest",
+            "multi-select",
+            "tags"
+          ]
+        },
+        {
+          "id": "file-upload",
+          "name": "Upload e dropzone",
+          "keywords": [
+            "upload",
+            "anexo",
+            "arquivo",
+            "dropzone",
+            "importar arquivo",
+            "comprovante",
+            "foto=",
+            "imagem"
+          ]
+        },
+        {
+          "id": "otp-input",
+          "name": "Código OTP e 2FA",
+          "keywords": [
+            "otp",
+            "2fa",
+            "codigo de verificacao",
+            "token de acesso",
+            "pin"
+          ]
+        },
+        {
+          "id": "slider-range",
+          "name": "Slider e faixa",
+          "keywords": [
+            "slider",
+            "faixa de valor"
+          ]
+        },
+        {
+          "id": "color-picker",
+          "name": "Seletor de cor",
+          "keywords": [
+            "seletor de cor",
+            "color picker",
+            "escolher cor"
+          ]
+        },
+        {
+          "id": "form-state",
+          "name": "Estado, validação e formulário longo",
+          "keywords": [
+            "formulari",
+            "validac",
+            "wizard",
+            "passo a passo",
+            "etapas=",
+            "cadastr"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calendar-scheduling",
+      "name": "Agenda, calendário e cronogramas",
+      "needs": [
+        {
+          "id": "calendar-view",
+          "name": "Calendário mês/semana/dia",
+          "keywords": [
+            "agend",
+            "calendari",
+            "calendar",
+            "consultas=",
+            "marcar consulta",
+            "reserva",
+            "booking",
+            "appointment",
+            "horari",
+            "evento",
+            "compromisso"
+          ]
+        },
+        {
+          "id": "scheduler",
+          "name": "Agenda por recurso (salas, profissionais, veículos)",
+          "keywords": [
+            "escala de",
+            "plantao",
+            "turnos=",
+            "scheduler",
+            "alocac",
+            "agenda por"
+          ]
+        },
+        {
+          "id": "gantt",
+          "name": "Gantt e cronograma",
+          "keywords": [
+            "gantt",
+            "cronograma",
+            "gestao de projetos",
+            "obras=",
+            "roadmap",
+            "marcos do"
+          ]
+        },
+        {
+          "id": "timeline",
+          "name": "Linha do tempo e histórico",
+          "keywords": [
+            "linha do tempo",
+            "timeline",
+            "historico",
+            "auditoria",
+            "trilha de",
+            "prontuari",
+            "log de atividade",
+            "eventos do"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drag-drop",
+      "name": "Arrastar, ordenar e kanban",
+      "needs": [
+        {
+          "id": "kanban",
+          "name": "Quadro kanban",
+          "keywords": [
+            "kanban",
+            "funil",
+            "board=",
+            "quadro=",
+            "colunas de etapa",
+            "crm="
+          ]
+        },
+        {
+          "id": "sortable",
+          "name": "Listas ordenáveis",
+          "keywords": [
+            "ordenar",
+            "reordenar",
+            "sortable",
+            "prioridade",
+            "arrast"
+          ]
+        },
+        {
+          "id": "drag-drop",
+          "name": "Arrastar e soltar genérico",
+          "keywords": [
+            "drag",
+            "arrast",
+            "soltar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overlays-feedback",
+      "name": "Overlays e feedback",
+      "needs": [
+        {
+          "id": "dialog",
+          "name": "Diálogo e confirmação",
+          "keywords": [
+            "modal",
+            "dialog",
+            "confirmac",
+            "alerta",
+            "excluir",
+            "destrut"
+          ]
+        },
+        {
+          "id": "drawer-sheet",
+          "name": "Drawer lateral e bottom sheet",
+          "keywords": [
+            "drawer",
+            "gaveta",
+            "sheet",
+            "painel lateral",
+            "inspector",
+            "detalhe lateral"
+          ]
+        },
+        {
+          "id": "toast",
+          "name": "Toast e notificação com desfazer",
+          "keywords": [
+            "toast",
+            "notificac",
+            "snackbar",
+            "desfazer",
+            "undo",
+            "feedback"
+          ]
+        },
+        {
+          "id": "popover-tooltip",
+          "name": "Popover, tooltip e menu ancorado",
+          "keywords": [
+            "popover",
+            "tooltip",
+            "dropdown",
+            "menu suspenso",
+            "dica=",
+            "dicas="
+          ]
+        },
+        {
+          "id": "tour",
+          "name": "Tour guiado e destaque",
+          "keywords": [
+            "tour",
+            "onboarding guiado",
+            "destaque",
+            "highlight",
+            "coachmark",
+            "primeiro acesso"
+          ]
+        },
+        {
+          "id": "context-menu",
+          "name": "Menu de contexto",
+          "keywords": [
+            "menu de contexto",
+            "context menu",
+            "clique direito",
+            "right click"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editors-documents",
+      "name": "Editores e documentos",
+      "needs": [
+        {
+          "id": "rich-text",
+          "name": "Editor de texto rico",
+          "keywords": [
+            "editor",
+            "rich text",
+            "texto rico",
+            "anotac",
+            "parecer",
+            "notas=",
+            "comentari",
+            "observac",
+            "documento editavel"
+          ]
+        },
+        {
+          "id": "code-editor",
+          "name": "Editor de código",
+          "keywords": [
+            "editor de codigo",
+            "code editor",
+            "sql=",
+            "query=",
+            "script="
+          ]
+        },
+        {
+          "id": "pdf-viewer",
+          "name": "Visualizador de PDF e documento",
+          "keywords": [
+            "pdf=",
+            "visualizador",
+            "documento",
+            "contrato",
+            "laudo",
+            "edital",
+            "certidao",
+            "fatura",
+            "nota fiscal"
+          ]
+        },
+        {
+          "id": "data-import",
+          "name": "Importação e exportação (CSV, planilha)",
+          "keywords": [
+            "csv",
+            "importac",
+            "exportac",
+            "planilha",
+            "excel",
+            "xlsx",
+            "ofx"
+          ]
+        },
+        {
+          "id": "markdown",
+          "name": "Markdown e conteúdo",
+          "keywords": [
+            "markdown",
+            "mdx",
+            "conteudo",
+            "documentac"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chat-ai",
+      "name": "Conversa, atendimento e IA",
+      "needs": [
+        {
+          "id": "chat-ui",
+          "name": "Chat e inbox de atendimento",
+          "keywords": [
+            "chat=",
+            "chatbot",
+            "bot=",
+            "conversa",
+            "mensage",
+            "inbox",
+            "atendimento",
+            "whatsapp",
+            "suporte",
+            "ticket",
+            "omnichannel"
+          ]
+        },
+        {
+          "id": "ai-elements",
+          "name": "Interface de IA (prompt, streaming, fontes)",
+          "keywords": [
+            "ia=",
+            "ai=",
+            "assistente de ia",
+            "assistente virtual",
+            "copilot",
+            "copiloto",
+            "prompt",
+            "llm=",
+            "agente de ia",
+            "agentes de ia",
+            "agente ia",
+            "gpt=",
+            "chatgpt",
+            "inteligencia artificial"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "canvas-diagrams",
+      "name": "Canvas, fluxos e diagramas",
+      "needs": [
+        {
+          "id": "node-editor",
+          "name": "Editor de nós e fluxos",
+          "keywords": [
+            "fluxograma",
+            "node editor",
+            "editor de fluxo",
+            "automac",
+            "workflow builder",
+            "construtor de fluxo"
+          ]
+        },
+        {
+          "id": "whiteboard",
+          "name": "Quadro branco e desenho",
+          "keywords": [
+            "whiteboard",
+            "quadro branco",
+            "desenho",
+            "sketch",
+            "canvas infinito"
+          ]
+        },
+        {
+          "id": "diagram",
+          "name": "Diagramas a partir de texto",
+          "keywords": [
+            "diagrama",
+            "mermaid",
+            "uml=",
+            "organograma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desktop-workbench",
+      "name": "Desktop e áreas de trabalho",
+      "needs": [
+        {
+          "id": "split-panes",
+          "name": "Painéis redimensionáveis",
+          "keywords": [
+            "split",
+            "painel redimension",
+            "resizable",
+            "master detail",
+            "duas colunas",
+            "inspector"
+          ]
+        },
+        {
+          "id": "docking",
+          "name": "Abas e painéis acopláveis (IDE)",
+          "keywords": [
+            "dock",
+            "ide",
+            "workbench",
+            "abas arrastaveis",
+            "multiplos paineis"
+          ]
+        },
+        {
+          "id": "terminal",
+          "name": "Terminal embutido",
+          "keywords": [
+            "terminal",
+            "log ao vivo"
+          ]
+        },
+        {
+          "id": "desktop-runtime",
+          "name": "Runtime de app desktop",
+          "keywords": [
+            "electron",
+            "tauri",
+            "desktop app",
+            "app desktop",
+            "aplicativo desktop",
+            "windows",
+            "macos",
+            "instalavel"
+          ]
+        },
+        {
+          "id": "window-chrome",
+          "name": "Barra de título e cromo da janela",
+          "keywords": [
+            "titlebar",
+            "barra de titulo",
+            "traffic lights",
+            "frameless",
+            "tray",
+            "bandeja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mobile-native",
+      "name": "Mobile nativo e cross-platform",
+      "needs": [
+        {
+          "id": "native-primitives",
+          "name": "Primitivos nativos (SwiftUI, Compose)",
+          "keywords": [
+            "ios",
+            "android",
+            "swiftui",
+            "compose",
+            "nativo",
+            "native",
+            "iphone"
+          ]
+        },
+        {
+          "id": "mobile-kit",
+          "name": "Kit de UI mobile (RN, Flutter, PWA)",
+          "keywords": [
+            "app mobile",
+            "aplicativo",
+            "celular",
+            "react native",
+            "expo",
+            "flutter",
+            "pwa",
+            "mobile"
+          ]
+        },
+        {
+          "id": "bottom-sheet",
+          "name": "Bottom sheet com gesto",
+          "keywords": [
+            "bottom sheet",
+            "sheet",
+            "folha inferior",
+            "detent",
+            "arrastar para fechar"
+          ]
+        },
+        {
+          "id": "mobile-list",
+          "name": "Listas longas performáticas",
+          "keywords": [
+            "lista longa",
+            "feed",
+            "flashlist",
+            "virtualiz",
+            "timeline de posts"
+          ]
+        },
+        {
+          "id": "mobile-menu",
+          "name": "Menus nativos e toasts",
+          "keywords": [
+            "menu nativo",
+            "context menu",
+            "toast nativo",
+            "action sheet"
+          ]
+        },
+        {
+          "id": "mobile-motion",
+          "name": "Gestos e animação mobile",
+          "keywords": [
+            "gesto",
+            "gesture",
+            "swipe",
+            "arrasto",
+            "animacao mobile",
+            "haptic",
+            "haptico"
+          ]
+        },
+        {
+          "id": "mobile-chart",
+          "name": "Gráficos mobile",
+          "keywords": [
+            "grafico mobile",
+            "chart mobile",
+            "grafico no app"
+          ]
+        },
+        {
+          "id": "mobile-styling",
+          "name": "Estilo e tokens no mobile",
+          "keywords": [
+            "nativewind",
+            "stylesheet create",
+            "tema mobile",
+            "tokens mobile",
+            "dark mode mobile"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "icons",
+      "name": "Ícones",
+      "needs": [
+        {
+          "id": "icons-outline",
+          "name": "Conjunto de ícones de traço",
+          "keywords": [
+            "icone",
+            "icon",
+            "outline",
+            "traco",
+            "linha"
+          ]
+        },
+        {
+          "id": "icons-duotone-filled",
+          "name": "Ícones preenchidos ou duotone",
+          "keywords": [
+            "duotone",
+            "preenchido",
+            "filled",
+            "solido",
+            "bold"
+          ]
+        },
+        {
+          "id": "icons-platform",
+          "name": "Ícones da plataforma (SF Symbols, Material, Fluent)",
+          "keywords": [
+            "sf symbols",
+            "material symbols",
+            "fluent icons",
+            "icone nativo"
+          ]
+        },
+        {
+          "id": "icons-brand",
+          "name": "Logos de marcas e serviços",
+          "keywords": [
+            "logo=",
+            "logos=",
+            "logotipo",
+            "marca=",
+            "marcas=",
+            "da marca",
+            "brand",
+            "bancos=",
+            "banco do",
+            "whatsapp",
+            "rede social"
+          ]
+        },
+        {
+          "id": "icons-engine",
+          "name": "Motor de ícones (vários conjuntos)",
+          "keywords": [
+            "iconify",
+            "varios conjuntos",
+            "icon engine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "typography",
+      "name": "Tipografia",
+      "needs": [
+        {
+          "id": "font-source",
+          "name": "Fontes gratuitas",
+          "keywords": [
+            "fonte tipografica",
+            "fontes tipograficas",
+            "tipografia",
+            "typeface",
+            "familia tipografica",
+            "google fonts",
+            "webfont",
+            "font family"
+          ]
+        },
+        {
+          "id": "font-tooling",
+          "name": "Auto-hospedagem e escalas tipográficas",
+          "keywords": [
+            "self-host",
+            "auto-hosped",
+            "escala tipografica",
+            "fluid type",
+            "font loading"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "imagery",
+      "name": "Ilustração, avatares e imagem",
+      "needs": [
+        {
+          "id": "illustration",
+          "name": "Ilustrações",
+          "keywords": [
+            "ilustrac",
+            "illustration",
+            "estado vazio",
+            "empty state",
+            "onboarding"
+          ]
+        },
+        {
+          "id": "avatar",
+          "name": "Avatares gerados",
+          "keywords": [
+            "avatar",
+            "perfil",
+            "foto de usuario",
+            "iniciais"
+          ]
+        },
+        {
+          "id": "3d-asset",
+          "name": "Ícones e objetos 3D",
+          "keywords": [
+            "3d=",
+            "objeto 3d"
+          ]
+        },
+        {
+          "id": "photo",
+          "name": "Fotografia livre",
+          "keywords": [
+            "fotografia",
+            "banco de imagens",
+            "stock photo",
+            "fotos="
+          ]
+        },
+        {
+          "id": "pattern-background",
+          "name": "Padrões e fundos SVG",
+          "keywords": [
+            "pattern",
+            "textura",
+            "fundo svg",
+            "background svg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "name": "Motion e animação",
+      "needs": [
+        {
+          "id": "animation-lib",
+          "name": "Biblioteca de animação",
+          "keywords": [
+            "animac",
+            "animation",
+            "motion",
+            "transic",
+            "microinterac"
+          ]
+        },
+        {
+          "id": "layout-animation",
+          "name": "Animação de lista e layout",
+          "keywords": [
+            "lista anima",
+            "reordenar anima",
+            "layout animation",
+            "auto animate",
+            "filtro anima"
+          ]
+        },
+        {
+          "id": "vector-animation",
+          "name": "Animação vetorial (Lottie, Rive)",
+          "keywords": [
+            "lottie",
+            "rive",
+            "animacao vetorial",
+            "mascote",
+            "aviao",
+            "carimbo",
+            "ilustracao animada"
+          ]
+        },
+        {
+          "id": "scroll-motion",
+          "name": "Motion por rolagem",
+          "keywords": [
+            "scrollytelling",
+            "parallax",
+            "animacao de rolagem",
+            "scroll-driven"
+          ]
+        },
+        {
+          "id": "text-motion",
+          "name": "Efeitos de texto",
+          "keywords": [
+            "texto anima",
+            "text effect",
+            "typewriter",
+            "reveal"
+          ]
+        },
+        {
+          "id": "page-transition",
+          "name": "Transição de página e rota",
+          "keywords": [
+            "transicao de pagina",
+            "view transition",
+            "troca de rota",
+            "shared element"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "effects",
+      "name": "Efeitos e fundos expressivos",
+      "needs": [
+        {
+          "id": "shader-gradient",
+          "name": "Gradientes e shaders",
+          "keywords": [
+            "shader",
+            "gradiente animado",
+            "mesh gradient",
+            "grain"
+          ]
+        },
+        {
+          "id": "particles-3d",
+          "name": "3D e partículas",
+          "keywords": [
+            "three",
+            "particula",
+            "particle",
+            "webgl",
+            "cena 3d"
+          ]
+        },
+        {
+          "id": "decorative-effects",
+          "name": "Bordas, brilho e destaques decorativos",
+          "keywords": [
+            "spotlight",
+            "border beam",
+            "glow",
+            "brilho",
+            "marquee",
+            "efeito"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "marketing",
+      "name": "Seções de site e landing",
+      "needs": [
+        {
+          "id": "hero",
+          "name": "Hero e abertura",
+          "keywords": [
+            "hero=",
+            "landing",
+            "pagina inicial",
+            "home do site",
+            "site institucional",
+            "site="
+          ]
+        },
+        {
+          "id": "feature-sections",
+          "name": "Seções de recursos e bento",
+          "keywords": [
+            "features",
+            "bento",
+            "beneficios",
+            "como funciona"
+          ]
+        },
+        {
+          "id": "pricing",
+          "name": "Preços e planos",
+          "keywords": [
+            "precos=",
+            "preco=",
+            "pricing",
+            "planos e precos",
+            "checkout",
+            "paywall"
+          ]
+        },
+        {
+          "id": "social-proof",
+          "name": "Prova social (depoimentos, logos, números)",
+          "keywords": [
+            "depoimento",
+            "testimonial",
+            "logos de clientes",
+            "prova social"
+          ]
+        },
+        {
+          "id": "cta-footer",
+          "name": "Chamada final e rodapé",
+          "keywords": [
+            "cta=",
+            "rodape",
+            "footer",
+            "contato",
+            "newsletter"
+          ]
+        },
+        {
+          "id": "site-navbar",
+          "name": "Navegação de site",
+          "keywords": [
+            "menu do site",
+            "navbar do site",
+            "mega menu",
+            "cabecalho do site"
+          ]
+        },
+        {
+          "id": "blog-docs",
+          "name": "Blog, artigos e documentação",
+          "keywords": [
+            "blog",
+            "artigo",
+            "noticia",
+            "documentac",
+            "docs",
+            "base de conhecimento"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "auth-settings",
+      "name": "Acesso, onboarding e configurações",
+      "needs": [
+        {
+          "id": "auth",
+          "name": "Login, cadastro e recuperação",
+          "keywords": [
+            "login",
+            "entrar",
+            "senha",
+            "autentic",
+            "cadastro de conta",
+            "sign in",
+            "acesso"
+          ]
+        },
+        {
+          "id": "settings",
+          "name": "Configurações e preferências",
+          "keywords": [
+            "configurac",
+            "preferenc",
+            "settings",
+            "perfil",
+            "permisso",
+            "minha conta",
+            "usuarios e papeis"
+          ]
+        },
+        {
+          "id": "onboarding",
+          "name": "Onboarding e primeiro uso",
+          "keywords": [
+            "onboarding",
+            "primeiro uso",
+            "boas-vindas",
+            "setup inicial"
+          ]
+        },
+        {
+          "id": "empty-state",
+          "name": "Estados vazios e erros",
+          "keywords": [
+            "estado vazio",
+            "empty state",
+            "sem resultado",
+            "pagina de erro",
+            "tela de erro",
+            "404="
+          ]
+        }
+      ]
+    },
+    {
+      "id": "color-tokens",
+      "name": "Cor, tokens e tema",
+      "needs": [
+        {
+          "id": "palette",
+          "name": "Gerar escalas e paletas",
+          "keywords": [
+            "paleta",
+            "palette",
+            "escala de cor",
+            "oklch",
+            "harmonia de cor",
+            "cor da marca"
+          ]
+        },
+        {
+          "id": "contrast",
+          "name": "Contraste e acessibilidade de cor",
+          "keywords": [
+            "contraste",
+            "contrast",
+            "apca",
+            "wcag",
+            "daltonismo"
+          ]
+        },
+        {
+          "id": "tokens-pipeline",
+          "name": "Pipeline de tokens",
+          "keywords": [
+            "design tokens",
+            "tokens de design",
+            "style dictionary",
+            "dtcg",
+            "figma variables"
+          ]
+        },
+        {
+          "id": "theme-editor",
+          "name": "Editor de tema",
+          "keywords": [
+            "editor de tema",
+            "theme editor",
+            "theme builder",
+            "personalizar tema",
+            "personalizacao de tema"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "name": "Referências, galerias e diretrizes",
+      "needs": [
+        {
+          "id": "product-screens",
+          "name": "Telas de produtos reais",
+          "keywords": [
+            "referencia",
+            "inspirac",
+            "telas reais",
+            "fluxo de usuario",
+            "user flow",
+            "benchmark"
+          ]
+        },
+        {
+          "id": "websites",
+          "name": "Galerias de sites",
+          "keywords": [
+            "galeria de sites",
+            "landing inspir",
+            "website inspir",
+            "site bonito"
+          ]
+        },
+        {
+          "id": "design-system-anatomy",
+          "name": "Anatomia de design systems",
+          "keywords": [
+            "design system",
+            "anatomia",
+            "guideline",
+            "diretriz",
+            "hig",
+            "material design",
+            "fluent"
+          ]
+        },
+        {
+          "id": "craft-guidelines",
+          "name": "Diretrizes de ofício e acessibilidade",
+          "keywords": [
+            "boas praticas",
+            "guidelines",
+            "wcag",
+            "acessibilidade",
+            "heuristic",
+            "leis de ux"
+          ]
+        },
+        {
+          "id": "oss-product",
+          "name": "Produtos open source para estudar",
+          "keywords": [
+            "open source",
+            "codigo aberto",
+            "produto real",
+            "estudar"
+          ]
+        },
+        {
+          "id": "motion-reference",
+          "name": "Referências de motion",
+          "keywords": [
+            "referencia de animacao",
+            "microinteraction",
+            "motion reference"
+          ]
+        }
+      ]
+    }
+  ]
+}

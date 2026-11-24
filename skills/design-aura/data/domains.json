@@ -21,54 +21,37 @@
     ],
     "surface_mode": "Operate",
     "density": "compact-structured",
-    "palette_light": {
-      "z0_well": "#DCD6CA",
-      "z1_canvas": "#E8E3D9",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#0E2D4C",
-      "accent_10": "#D94E14",
-      "text_strong": "#101B29",
-      "text_muted": "#465569",
-      "border": "#AEB8C4"
-    },
-    "palette_dark": {
-      "z0_well": "#080C12",
-      "z1_canvas": "#0E131D",
-      "z2_card": "#141C29",
-      "primary_30": "#4C9AFF",
-      "accent_10": "#FF783E",
-      "text_strong": "#F3F6FB",
-      "text_muted": "#9AA8BC",
-      "border": "#263347"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains",
-      "ibm-plex-suite"
+      "ibm-plex-suite",
+      "schibsted-plex",
+      "hanken-commit"
     ],
-    "layout_archetype": "Revelacao Progressiva Anti-Poluicao (Lista Limpa -> Detalhe Focado na mesma pagina com <- Voltar a lista/Esc e Anterior/Proxima) + Paineis Analiticos Dedicados (Combo Cashflow com HUD vivo e Sankey/Cascata DRE)",
+    "layout_archetype": "Revelação Progressiva Anti-Poluição (Lista Limpa -> Detalhe Focado na mesma página com <- Voltar a lista/Esc e Anterior/Próxima) + Paineis Analíticos Dedicados (Combo Cashflow com HUD vivo e Sankey/Cascata DRE)",
     "signature_moves": [
       "Trilho visual de cobertura de caixa e vencimento",
-      "Horizontes temporais: Atrasado / Hoje / Em Rota"
+      "Horizontes temporais: Atrasado / Hoje / Proximos"
     ],
     "anti_patterns": [
-      "70% de painel vazio em tela de aprovacao",
+      "70% de painel vazio em tela de aprovação",
       "Monocromia azul onde atrasado e normal tem o mesmo peso",
-      "Numeros alinhados a esquerda sem tabular-nums"
+      "Números alinhados a esquerda sem tabular-nums"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#0E2D4C",
+        "accent": "#D94E14",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#1F4D3A",
+        "accent": "#C98A12",
+        "harmony": "analoga quente",
+        "why": "Verde profundo e ambar fogem do azul padrão de ERP e ligam a estabilidade e dinheiro."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "saas-b2b-operacional",
@@ -90,29 +73,10 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#DCE3EC",
-      "z1_canvas": "#E6ECF3",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#182433",
-      "accent_10": "#0D66D0",
-      "text_strong": "#111827",
-      "text_muted": "#4B5563",
-      "border": "#B4C1D1"
-    },
-    "palette_dark": {
-      "z0_well": "#0B0E14",
-      "z1_canvas": "#11161F",
-      "z2_card": "#18202C",
-      "primary_30": "#5BA4F8",
-      "accent_10": "#3B82F6",
-      "text_strong": "#F1F5F9",
-      "text_muted": "#94A3B8",
-      "border": "#2A3548"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains"
+      "hanken-commit",
+      "onest-martian",
+      "switzer-supreme"
     ],
     "layout_archetype": "Master-Detail com Command Palette (Cmd+K) e Inspector lateral",
     "signature_moves": [
@@ -123,19 +87,22 @@
       "Modais empilhados para editar um campo",
       "Cards iguais em grid quando uma tabela densa resolve melhor"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#182433",
+        "accent": "#0D66D0",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#134E4A",
+        "accent": "#E0613A",
+        "harmony": "complementar",
+        "why": "Petroleo com coral da identidade própria sem cair no azul genérico."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "fintech-mobile",
@@ -158,52 +125,36 @@
     ],
     "surface_mode": "Operate",
     "density": "airy-focused",
-    "palette_light": {
-      "z0_well": "#DCE3EC",
-      "z1_canvas": "#E6ECF3",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#0A3A2E",
-      "accent_10": "#0F7A5D",
-      "text_strong": "#0F172A",
-      "text_muted": "#475569",
-      "border": "#B4C1D1"
-    },
-    "palette_dark": {
-      "z0_well": "#070D0C",
-      "z1_canvas": "#0C1514",
-      "z2_card": "#12201E",
-      "primary_30": "#34D399",
-      "accent_10": "#38BDF8",
-      "text_strong": "#F2FBF8",
-      "text_muted": "#98B5AD",
-      "border": "#213834"
-    },
     "typography_ids": [
       "ios-sf-native",
-      "manrope-tabular"
+      "manrope-tabular",
+      "satoshi-general"
     ],
-    "layout_archetype": "Tab Bar 4 secoes + Sheet de confirmacao biométrica na zona do polegar",
+    "layout_archetype": "Tab Bar 4 seções + Sheet de confirmação biométrica na zona do polegar",
     "signature_moves": [
-      "Cartao de resumo com saldo protegivel por toque",
+      "Cartão de resumo com saldo protegível por toque",
       "Comprovante estruturado estilo recibo de alta legibilidade"
     ],
     "anti_patterns": [
-      "Acao de transferir escondida no topo fora do alcance do polegar",
+      "Ação de transferir escondida no topo fora do alcance do polegar",
       "Gradientes neon cripto roxo-ciano"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#0A3A2E",
+        "accent": "#0F7A5D",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#1B1F3B",
+        "accent": "#9BC53D",
+        "harmony": "complementar dividida",
+        "why": "Tinta escura com lima: confianca e energia sem neon cripto."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "saude-clinica",
@@ -226,53 +177,36 @@
     ],
     "surface_mode": "Operate",
     "density": "calm-structured",
-    "palette_light": {
-      "z0_well": "#DCE5E6",
-      "z1_canvas": "#EBF1F2",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#124E5B",
-      "accent_10": "#0D7C8C",
-      "text_strong": "#0F2227",
-      "text_muted": "#425B62",
-      "border": "#B8C9CD"
-    },
-    "palette_dark": {
-      "z0_well": "#080E11",
-      "z1_canvas": "#0D161A",
-      "z2_card": "#142026",
-      "primary_30": "#2DD4BF",
-      "accent_10": "#38BDF8",
-      "text_strong": "#F2F9FA",
-      "text_muted": "#97B0B6",
-      "border": "#233740"
-    },
     "typography_ids": [
       "atkinson-legibility",
-      "jakarta-instrument-mono",
-      "inter-jetbrains"
+      "figtree-mono",
+      "onest-martian"
     ],
-    "layout_archetype": "Timeline cronologica de atendimento + painel lateral de alergias/alertas clinicos",
+    "layout_archetype": "Timeline cronológica de atendimento + painel lateral de alergias/alertas clínicos",
     "signature_moves": [
-      "Faixa fixa de alertas clinicos criticos no topo do prontuario",
-      "Linha do tempo de consultas e exames escaneavel"
+      "Faixa fixa de alertas clínicos críticos no topo do prontuário",
+      "Linha do tempo de consultas e exames escaneável"
     ],
     "anti_patterns": [
-      "Textos cinza claro ilegiveis em ambientes hospitalares muito iluminados",
+      "Textos cinza claro ilegíveis em ambientes hospitalares muito iluminados",
       "Cor vermelha decorativa competindo com alergias/urgencias"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#124E5B",
+        "accent": "#0D7C8C",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#3F6B5C",
+        "accent": "#C27C4C",
+        "harmony": "complementar suave",
+        "why": "Salvia e terracota acolhem sem o azul-hospital frio."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "logistica-frota",
@@ -295,52 +229,36 @@
     ],
     "surface_mode": "Operate",
     "density": "compact-high-contrast",
-    "palette_light": {
-      "z0_well": "#D9D6CE",
-      "z1_canvas": "#E6E3DC",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#162A3E",
-      "accent_10": "#C94A16",
-      "text_strong": "#101822",
-      "text_muted": "#475569",
-      "border": "#B2BCC8"
-    },
-    "palette_dark": {
-      "z0_well": "#090D13",
-      "z1_canvas": "#0F151E",
-      "z2_card": "#161E2B",
-      "primary_30": "#4DA3FF",
-      "accent_10": "#FB923C",
-      "text_strong": "#F3F6FA",
-      "text_muted": "#9BA8BA",
-      "border": "#273446"
-    },
     "typography_ids": [
-      "space-dm-mono",
-      "ibm-plex-suite"
+      "archivo-inter-mono",
+      "barlow-ibm-mono",
+      "geológica-mono"
     ],
     "layout_archetype": "Mapa/Rota vivo (60%) + Fila de manifestos e ocorrencias (40%) + App Motorista thumb-friendly",
     "signature_moves": [
       "Marcador de progresso de viagem com checkpoints e ETA",
-      "Cartao de ocorrencia de parada com acao em 1 toque"
+      "Cartão de ocorrência de parada com ação em 1 toque"
     ],
     "anti_patterns": [
       "Alvos pequenos no app do motorista em movimento",
-      "Badges de status sem cor semantica ligada a atraso real"
+      "Badges de status sem cor semântica ligada a atraso real"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#162A3E",
+        "accent": "#C94A16",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#2B2F36",
+        "accent": "#F2A900",
+        "harmony": "acento único",
+        "why": "Grafite com amarelo de sinalização viária."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "devtools-desktop-ide",
@@ -363,52 +281,36 @@
     ],
     "surface_mode": "Operate",
     "density": "dense-precision",
-    "palette_light": {
-      "z0_well": "#E2E4E9",
-      "z1_canvas": "#ECEEF2",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1F2937",
-      "accent_10": "#1A56DB",
-      "text_strong": "#111827",
-      "text_muted": "#4B5563",
-      "border": "#C5CCD6"
-    },
-    "palette_dark": {
-      "z0_well": "#0B0D12",
-      "z1_canvas": "#11141B",
-      "z2_card": "#181D27",
-      "primary_30": "#60A5FA",
-      "accent_10": "#3B82F6",
-      "text_strong": "#F3F4F6",
-      "text_muted": "#9CA3AF",
-      "border": "#293142"
-    },
     "typography_ids": [
       "geist-mono-clean",
+      "host-grotesk",
       "inter-jetbrains"
     ],
-    "layout_archetype": "Workbench multi-pane redimensionavel com arvore de projeto, editor/inspetor e painel inferior",
+    "layout_archetype": "Workbench multi-pane redimensionável com arvore de projeto, editor/inspetor e painel inferior",
     "signature_moves": [
       "Titlebar integrada com breadcrumbs e status de ambiente",
       "Palette de comandos e atalhos descobertos"
     ],
     "anti_patterns": [
       "Falta de suporte a teclado e atalhos",
-      "Scroll horizontal invisivel em logs ou payloads"
+      "Scroll horizontal invisível em logs ou payloads"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1F2937",
+        "accent": "#1A56DB",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#16181D",
+        "accent": "#7AA2F7",
+        "harmony": "monocromática com acento",
+        "why": "Neutros quase pretos e um acento frio reservado a foco e seleção."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "produtividade-linear",
@@ -430,52 +332,36 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#E5E5E0",
-      "z1_canvas": "#F2F1ED",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1F242D",
-      "accent_10": "#B54708",
-      "text_strong": "#14171D",
-      "text_muted": "#525866",
-      "border": "#C9CDD4"
-    },
-    "palette_dark": {
-      "z0_well": "#0D0F13",
-      "z1_canvas": "#13161C",
-      "z2_card": "#1B1F28",
-      "primary_30": "#94A3B8",
-      "accent_10": "#F59E0B",
-      "text_strong": "#F3F4F6",
-      "text_muted": "#9CA3AF",
-      "border": "#2C3240"
-    },
     "typography_ids": [
       "inter-jetbrains",
-      "geist-mono-clean"
+      "switzer-supreme",
+      "host-grotesk"
     ],
     "layout_archetype": "Lista agrupada / Board com filtros persistentes e inspector lateral de tarefa",
     "signature_moves": [
-      "Edicao inline instantanea com atalhos de tecla unica",
+      "Edição inline instantânea com atalhos de tecla única",
       "Barra de filtro em linha sem abrir modais"
     ],
     "anti_patterns": [
-      "Cardite com 12 badges coloridos em cada cartao",
-      "Carregamentos bloqueantes para cada alteracao de status"
+      "Cardite com 12 badges coloridos em cada cartão",
+      "Carregamentos bloqueantes para cada alteração de status"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1F242D",
+        "accent": "#B54708",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#2A2A33",
+        "accent": "#E5484D",
+        "harmony": "acento único",
+        "why": "Neutros calmos e um vermelho-coral de marca usado com parcimonia."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "pdv-varejo",
@@ -498,52 +384,36 @@
     ],
     "surface_mode": "Operate",
     "density": "touch-large",
-    "palette_light": {
-      "z0_well": "#DDD9D1",
-      "z1_canvas": "#ECE9E2",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1B2E26",
-      "accent_10": "#C2410C",
-      "text_strong": "#121815",
-      "text_muted": "#45524C",
-      "border": "#B8C0BC"
-    },
-    "palette_dark": {
-      "z0_well": "#0B110E",
-      "z1_canvas": "#111A16",
-      "z2_card": "#192620",
-      "primary_30": "#4FD19B",
-      "accent_10": "#F97316",
-      "text_strong": "#F2F7F4",
-      "text_muted": "#9BB2A7",
-      "border": "#2A3E35"
-    },
     "typography_ids": [
+      "rubik-dm-mono",
       "dm-sans-mono",
-      "jakarta-instrument-mono"
+      "onest-martian"
     ],
-    "layout_archetype": "Grade de catalogo rapido a esquerda + Cupom/Resumo de venda fixo a direita",
+    "layout_archetype": "Grade de catálogo rápido a esquerda + Cupom/Resumo de venda fixo a direita",
     "signature_moves": [
-      "Botoes de pagamento com atalhos F1-F4 e toque minimo 52px",
-      "Totalizacao tabular sempre visivel no topo do cupom"
+      "Botões de pagamento com atalhos F1-F4 e toque mínimo 52px",
+      "Totalização tabular sempre visível no topo do cupom"
     ],
     "anti_patterns": [
-      "Alvos de toque pequenos para operacao em balcao",
-      "Multiplas confirmacoes lentas durante fila de clientes"
+      "Alvos de toque pequenos para operação em balcão",
+      "Multiplas confirmações lentas durante fila de clientes"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1B2E26",
+        "accent": "#C2410C",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#3B1F5C",
+        "accent": "#FFB020",
+        "harmony": "complementar",
+        "why": "Berinjela e ambar: varejo vivo e legível no balcão."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "govtech-licitacoes",
@@ -566,53 +436,36 @@
     ],
     "surface_mode": "Operate",
     "density": "compact-structured",
-    "palette_light": {
-      "z0_well": "#DAD6CD",
-      "z1_canvas": "#E7E3DA",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#102C49",
-      "accent_10": "#D64812",
-      "text_strong": "#0F1A26",
-      "text_muted": "#455466",
-      "border": "#AFB9C4"
-    },
-    "palette_dark": {
-      "z0_well": "#080C13",
-      "z1_canvas": "#0E141F",
-      "z2_card": "#151E2C",
-      "primary_30": "#58A6FF",
-      "accent_10": "#F59E0B",
-      "text_strong": "#F3F6FB",
-      "text_muted": "#9BA9BE",
-      "border": "#27354A"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains",
-      "ibm-plex-suite"
+      "public-sans-mono",
+      "ibm-plex-suite",
+      "atkinson-legibility"
     ],
-    "layout_archetype": "Radar em Lista Limpa -> Detalhe Focado do Edital na mesma pagina + Funil Kanban 4 etapas arrastavel + Cofre de Certidoes com Matriz Cruzada",
+    "layout_archetype": "Radar em Lista Limpa -> Detalhe Focado do Edital na mesma página + Funil Kanban 4 etapas arrastável + Cofre de Certidoes com Matriz Cruzada",
     "signature_moves": [
-      "Termometro de aderencia (0-100) cruzado com certidoes vencidas",
-      "Timeline de marcos do edital ate empenho"
+      "Termômetro de aderência (0-100) cruzado com certidoes vencidas",
+      "Timeline de marcos do edital até empenho"
     ],
     "anti_patterns": [
-      "Esconder certidao vencida no fim da pagina",
-      "Copiar tabelas burocraticas do governo sem triagem por urgencia"
+      "Esconder certidao vencida no fim da página",
+      "Copiar tabelas burocráticas do governo sem triagem por urgência"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#102C49",
+        "accent": "#D64812",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#1C3D2E",
+        "accent": "#B4882A",
+        "harmony": "analoga",
+        "why": "Verde institucional e ouro sobrio, longe do azul de portal antigo."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "observabilidade-sre",
@@ -635,52 +488,36 @@
     ],
     "surface_mode": "Operate",
     "density": "dense-precision",
-    "palette_light": {
-      "z0_well": "#E0E4EA",
-      "z1_canvas": "#EDF0F4",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1B2638",
-      "accent_10": "#0E7490",
-      "text_strong": "#0F172A",
-      "text_muted": "#475569",
-      "border": "#BCC5D1"
-    },
-    "palette_dark": {
-      "z0_well": "#080B10",
-      "z1_canvas": "#0E121A",
-      "z2_card": "#141A25",
-      "primary_30": "#60A5FA",
-      "accent_10": "#F59E0B",
-      "text_strong": "#F3F6FA",
-      "text_muted": "#99A6B9",
-      "border": "#253042"
-    },
     "typography_ids": [
+      "ibm-plex-suite",
       "geist-mono-clean",
-      "ibm-plex-suite"
+      "geológica-mono"
     ],
-    "layout_archetype": "Faixa de saude de servicos + grafico temporal com marcacao de inicio de incidente + log stream",
+    "layout_archetype": "Faixa de saúde de serviços + gráfico temporal com marcação de inicio de incidente + log stream",
     "signature_moves": [
-      "Mapa linear de saude de APIs com marcacao de degrau de latencia",
-      "Botao testar agora com feedback deterministico"
+      "Mapa linear de saúde de APIs com marcação de degrau de latência",
+      "Botão testar agora com feedback determinístico"
     ],
     "anti_patterns": [
       "Bolinha verde piscando falsa sem leitura real de endpoint",
-      "Graficos com excesso de grades e legendas separadas"
+      "Gráficos com excesso de grades e legendas separadas"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1B2638",
+        "accent": "#0E7490",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#0F172A",
+        "accent": "#22C55E",
+        "harmony": "acento semântico",
+        "why": "Base escura neutra; a cor vive nos estados dos serviços."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "atendimento-inbox",
@@ -703,53 +540,36 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#DDE2E6",
-      "z1_canvas": "#EAEFF2",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#13354A",
-      "accent_10": "#0F7653",
-      "text_strong": "#0F1C24",
-      "text_muted": "#455863",
-      "border": "#B9C5CD"
-    },
-    "palette_dark": {
-      "z0_well": "#080D12",
-      "z1_canvas": "#0E151C",
-      "z2_card": "#141E27",
-      "primary_30": "#38BDF8",
-      "accent_10": "#34D399",
-      "text_strong": "#F2F7FA",
-      "text_muted": "#98ABB8",
-      "border": "#243544"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains",
-      "ibm-plex-suite"
+      "figtree-mono",
+      "nunito-sans-mono",
+      "onest-martian"
     ],
     "layout_archetype": "3 colunas reais: Fila por SLA a esquerda + Conversa/Bot no centro + Contexto do cliente/pedidos a direita",
     "signature_moves": [
       "Contador regressivo de SLA em tabular-nums na fila",
-      "Modo escalonamento supervisor com intervencao sem perder historico"
+      "Modo escalonamento supervisor com intervenção sem perder histórico"
     ],
     "anti_patterns": [
-      "Esconder dados do cliente atras de 4 cliques durante ligacao",
-      "Bolhas de chat sem diferenciacao clara entre bot e humano"
+      "Esconder dados do cliente atrás de 4 cliques durante ligação",
+      "Bolhas de chat sem diferenciação clara entre bot e humano"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#13354A",
+        "accent": "#0F7653",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#3A2E5C",
+        "accent": "#2FB6A3",
+        "harmony": "complementar dividida",
+        "why": "Ameixa e verde-água diferenciam humano e automação."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "crm-comercial",
@@ -771,52 +591,35 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#DFDBD3",
-      "z1_canvas": "#ECE9E2",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1C293D",
-      "accent_10": "#B93815",
-      "text_strong": "#121821",
-      "text_muted": "#4A5568",
-      "border": "#BDC3CC"
-    },
-    "palette_dark": {
-      "z0_well": "#090C12",
-      "z1_canvas": "#0F141D",
-      "z2_card": "#161D29",
-      "primary_30": "#60A5FA",
-      "accent_10": "#F97316",
-      "text_strong": "#F3F6FB",
-      "text_muted": "#9AA8BC",
-      "border": "#273347"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains",
-      "ibm-plex-suite"
+      "jakarta-instrument-mono",
+      "satoshi-general",
+      "hanken-commit"
     ],
-    "layout_archetype": "Alternancia instantanea Kanban / Tabela ponderada + Gaveta lateral da conta com historico",
+    "layout_archetype": "Alternância instantânea Kanban / Tabela ponderada + Gaveta lateral da conta com histórico",
     "signature_moves": [
       "Indicador de dias parados na etapa sem movimento",
-      "Proximo passo obrigatorio visivel em cada negociacao"
+      "Próximo passo obrigatório visível em cada negociação"
     ],
     "anti_patterns": [
-      "Kanban cheio de tags irrelevantes onde nao se le valor nem proxima acao"
+      "Kanban cheio de tags irrelevantes onde não se le valor nem próxima ação"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1C293D",
+        "accent": "#B93815",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#5A2A27",
+        "accent": "#E8A33D",
+        "harmony": "analoga quente",
+        "why": "Vinho e mel transmitem relação e valor."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "educacao-lms",
@@ -838,51 +641,35 @@
     ],
     "surface_mode": "Read",
     "density": "editorial-comfortable",
-    "palette_light": {
-      "z0_well": "#E4E0D8",
-      "z1_canvas": "#F2EFE9",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1E3A5F",
-      "accent_10": "#B45309",
-      "text_strong": "#181C24",
-      "text_muted": "#4F5666",
-      "border": "#C5C0B6"
-    },
-    "palette_dark": {
-      "z0_well": "#0E1015",
-      "z1_canvas": "#151922",
-      "z2_card": "#1D2330",
-      "primary_30": "#7AA6E0",
-      "accent_10": "#F59E0B",
-      "text_strong": "#F5F3EE",
-      "text_muted": "#A9AEBC",
-      "border": "#30384B"
-    },
     "typography_ids": [
+      "literata-figtree",
       "source-sans-serif",
-      "newsreader-instrument"
+      "nunito-sans-mono"
     ],
-    "layout_archetype": "Area de leitura/video limpa (65-75ch) + trilha modular retratil",
+    "layout_archetype": "Área de leitura/vídeo limpa (65-75ch) + trilha modular retratil",
     "signature_moves": [
       "Retomar exatamente do minuto/paragrafo onde parou",
-      "Sumario de progresso continuo sem gamificacao infantil"
+      "Sumário de progresso continuo sem gamificação infantil"
     ],
     "anti_patterns": [
-      "Explosao de confetes, rankings e badges falsos em cursos tecnicos"
+      "Explosao de confetes, rankings e badges falsos em cursos técnicos"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1E3A5F",
+        "accent": "#B45309",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#2E3A59",
+        "accent": "#E07A5F",
+        "harmony": "complementar",
+        "why": "Azul-ardosia com coral caloroso, sem infantilizar."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "suave",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "imobiliario-proptech",
@@ -902,52 +689,35 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#DEDAD1",
-      "z1_canvas": "#ECE8DF",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#213830",
-      "accent_10": "#A84A24",
-      "text_strong": "#171C19",
-      "text_muted": "#4E5953",
-      "border": "#BFC4BE"
-    },
-    "palette_dark": {
-      "z0_well": "#0C110F",
-      "z1_canvas": "#121A17",
-      "z2_card": "#192420",
-      "primary_30": "#6AC2A5",
-      "accent_10": "#EC7C4D",
-      "text_strong": "#F3F6F4",
-      "text_muted": "#A3B3AC",
-      "border": "#2B3C35"
-    },
     "typography_ids": [
       "jakarta-instrument-mono",
-      "dm-sans-mono",
-      "inter-jetbrains"
+      "hanken-commit",
+      "onest-martian"
     ],
-    "layout_archetype": "Grade limpa com filtros persistentes + ficha do imovel/contrato com repasses em tabular-nums",
+    "layout_archetype": "Grade limpa com filtros persistentes + ficha do imóvel/contrato com repasses em tabular-nums",
     "signature_moves": [
       "Linha do tempo de vistoria e reajuste IGPM/IPCA",
-      "Grade de repasse locador x locatario crystal-clear"
+      "Grade de repasse locador x locatário crystal-clear"
     ],
     "anti_patterns": [
-      "Fotos distorcidas sem object-cover ou sem proporcao travada"
+      "Fotos distorcidas sem object-cover ou sem proporção travada"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#213830",
+        "accent": "#A84A24",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#33403A",
+        "accent": "#C9A66B",
+        "harmony": "analoga",
+        "why": "Verde-oliva e areia remetem a materiais de construção."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "estudio-criativo-desktop",
@@ -968,50 +738,34 @@
     ],
     "surface_mode": "Operate",
     "density": "dense-neutral",
-    "palette_light": {
-      "z0_well": "#DEDFE3",
-      "z1_canvas": "#EAECEF",
-      "z2_card": "#F7F8FA",
-      "primary_30": "#1F242D",
-      "accent_10": "#D9480F",
-      "text_strong": "#12151B",
-      "text_muted": "#4F5663",
-      "border": "#C0C5CE"
-    },
-    "palette_dark": {
-      "z0_well": "#0B0C0E",
-      "z1_canvas": "#121417",
-      "z2_card": "#1A1D22",
-      "primary_30": "#9CA3AF",
-      "accent_10": "#F97316",
-      "text_strong": "#F3F4F6",
-      "text_muted": "#9BA1AE",
-      "border": "#2D323B"
-    },
     "typography_ids": [
+      "switzer-supreme",
       "geist-mono-clean",
       "ios-sf-native"
     ],
     "layout_archetype": "Canvas neutro dominante no centro + barra de ferramentas fina + inspetor contextual a direita",
     "signature_moves": [
-      "Superficies neutras calibradas para nao contaminar a percepcao de cor da midia"
+      "Superficies neutras calibradas para não contaminar a percepção de cor da mídia"
     ],
     "anti_patterns": [
-      "Interface colorida competindo com o trabalho visual do usuario no canvas"
+      "Interface colorida competindo com o trabalho visual do usuário no canvas"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1F242D",
+        "accent": "#D9480F",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#1E1E1E",
+        "accent": "#8B8B8B",
+        "harmony": "neutra",
+        "why": "Interface neutra para não contaminar a percepção de cor da mídia."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "agro-campo-mobile",
@@ -1033,52 +787,36 @@
     ],
     "surface_mode": "Operate",
     "density": "touch-high-contrast",
-    "palette_light": {
-      "z0_well": "#DDD9CC",
-      "z1_canvas": "#ECE9DE",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1B3B24",
-      "accent_10": "#B8470B",
-      "text_strong": "#111A14",
-      "text_muted": "#435447",
-      "border": "#AEB8AF"
-    },
-    "palette_dark": {
-      "z0_well": "#09100B",
-      "z1_canvas": "#101B13",
-      "z2_card": "#17271C",
-      "primary_30": "#62C77E",
-      "accent_10": "#F57C2E",
-      "text_strong": "#F2F7F3",
-      "text_muted": "#9DB5A3",
-      "border": "#2A4231"
-    },
     "typography_ids": [
       "android-roboto-m3",
-      "dm-sans-mono"
+      "atkinson-legibility",
+      "archivo-inter-mono"
     ],
-    "layout_archetype": "Light-first de altissimo contraste sob luz solar + sincronizacao offline explicita",
+    "layout_archetype": "Light-first de altissimo contraste sob luz solar + sincronização offline explicita",
     "signature_moves": [
-      "Indicador real de fila offline pendente de sincronizacao",
-      "Botoes grandes 48dp+ operaveis com luva/sol"
+      "Indicador real de fila offline pendente de sincronização",
+      "Botões grandes 48dp+ operáveis com luva/sol"
     ],
     "anti_patterns": [
-      "Dark mode obrigatorio sob sol forte",
-      "Textos finos cinza claro ilegiveis fora de escritorio"
+      "Dark mode obrigatório sob sol forte",
+      "Textos finos cinza claro ilegíveis fora de escritório"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1B3B24",
+        "accent": "#B8470B",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#2F5D2A",
+        "accent": "#E3B505",
+        "harmony": "analoga",
+        "why": "Verde de lavoura e amarelo de safra, alto contraste ao sol."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "rh-dp",
@@ -1099,52 +837,35 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#DFDDE3",
-      "z1_canvas": "#ECEBF0",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#232F46",
-      "accent_10": "#0E6B64",
-      "text_strong": "#141824",
-      "text_muted": "#4E5568",
-      "border": "#BEBCCA"
-    },
-    "palette_dark": {
-      "z0_well": "#0B0D14",
-      "z1_canvas": "#111520",
-      "z2_card": "#181E2D",
-      "primary_30": "#7CA1E0",
-      "accent_10": "#2DD4BF",
-      "text_strong": "#F3F5FA",
-      "text_muted": "#A0A9BD",
-      "border": "#2B344B"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains",
-      "ibm-plex-suite"
+      "figtree-mono",
+      "nunito-sans-mono",
+      "hanken-commit"
     ],
-    "layout_archetype": "Checklist de admissao/fechamento em etapas + visao individual do colaborador",
+    "layout_archetype": "Checklist de admissao/fechamento em etapas + visão individual do colaborador",
     "signature_moves": [
-      "Painel de bloqueios de fechamento por competencia",
+      "Painel de bloqueios de fechamento por competência",
       "Autoatendimento mobile limpo para espelho de ponto"
     ],
     "anti_patterns": [
-      "Expor dados pessoais sensiveis em listas publicas sem mascara"
+      "Expor dados pessoais sensíveis em listas públicas sem mascara"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#232F46",
+        "accent": "#0E6B64",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#3B3F6B",
+        "accent": "#E58F65",
+        "harmony": "complementar",
+        "why": "Indigo suave com pessego humaniza dados de pessoas."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "juridico-contratos",
@@ -1164,51 +885,35 @@
     ],
     "surface_mode": "Read",
     "density": "editorial-precision",
-    "palette_light": {
-      "z0_well": "#DFDDD7",
-      "z1_canvas": "#ECEAE4",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1B2A38",
-      "accent_10": "#9F2D20",
-      "text_strong": "#14181D",
-      "text_muted": "#4B525C",
-      "border": "#BFC2C7"
-    },
-    "palette_dark": {
-      "z0_well": "#0B0E12",
-      "z1_canvas": "#12171D",
-      "z2_card": "#192028",
-      "primary_30": "#7AA1C7",
-      "accent_10": "#F87166",
-      "text_strong": "#F4F5F7",
-      "text_muted": "#9FA7B3",
-      "border": "#2C3542"
-    },
     "typography_ids": [
       "newsreader-instrument",
+      "gambetta-switzer",
       "ibm-plex-suite"
     ],
     "layout_archetype": "Leitura comparativa lado a lado + fila de prazos fatais ordenada por vencimento",
     "signature_moves": [
       "Contagem regressiva de prazo fatal com contraste carmim apenas quando urgente",
-      "Diff de clausulas legivel"
+      "Diff de clausulas legível"
     ],
     "anti_patterns": [
       "Largura de linha de 140 caracteres em leitura de pecas"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1B2A38",
+        "accent": "#9F2D20",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#2C2A29",
+        "accent": "#8C2F39",
+        "harmony": "acento único",
+        "why": "Tinta quase preta e carmim reservado a prazos fatais."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "suave",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "turismo-viagens-corporativas",
@@ -1230,52 +935,35 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#DAD4C9",
-      "z1_canvas": "#E6E1D7",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#0E2D4D",
-      "accent_10": "#DE4B14",
-      "text_strong": "#0F1B29",
-      "text_muted": "#475669",
-      "border": "#AEB8C4"
-    },
-    "palette_dark": {
-      "z0_well": "#080C12",
-      "z1_canvas": "#0D131C",
-      "z2_card": "#141C28",
-      "primary_30": "#56A3FF",
-      "accent_10": "#FF7A45",
-      "text_strong": "#F4F7FB",
-      "text_muted": "#9BA9BC",
-      "border": "#263447"
-    },
     "typography_ids": [
-      "geist-mono-clean",
-      "inter-jetbrains",
-      "ibm-plex-suite"
+      "schibsted-plex",
+      "jakarta-instrument-mono",
+      "satoshi-general"
     ],
-    "layout_archetype": "Boarding Pass cards + Painel de emissões, faturas e eventos em 3 horizontes",
+    "layout_archetype": "Boarding Pass cards + Painel de emissões, faturas e eventos",
     "signature_moves": [
-      "Cartao de embarque escaneavel em 1.5s",
+      "Cartão de embarque escaneável em 1.5s",
       "Arco de progresso da etapa de viagem/evento"
     ],
     "anti_patterns": [
-      "Desenhos infantis de avioezinhos ou templates de agencia generica"
+      "Desenhos infantis de avioezinhos ou templates de agência genérica"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#0E2D4D",
+        "accent": "#DE4B14",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#0F3B57",
+        "accent": "#F08A4B",
+        "harmony": "complementar",
+        "why": "Azul de altitude e laranja de por-do-sol, com o acento contido."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "energia-iot-industrial",
@@ -1296,52 +984,36 @@
     ],
     "surface_mode": "Operate",
     "density": "dense-high-contrast",
-    "palette_light": {
-      "z0_well": "#DCE0E4",
-      "z1_canvas": "#E9ECEF",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#162A36",
-      "accent_10": "#C24E0E",
-      "text_strong": "#10171D",
-      "text_muted": "#495661",
-      "border": "#B8C1C9"
-    },
-    "palette_dark": {
-      "z0_well": "#080C0F",
-      "z1_canvas": "#0F161B",
-      "z2_card": "#162028",
-      "primary_30": "#55B3D9",
-      "accent_10": "#F59E0B",
-      "text_strong": "#F1F5F8",
-      "text_muted": "#9AAAB5",
-      "border": "#283744"
-    },
     "typography_ids": [
+      "barlow-ibm-mono",
       "ibm-plex-suite",
-      "space-dm-mono"
+      "geológica-mono"
     ],
     "layout_archetype": "Painel de unidades + Matriz de alarmes ativos + series temporais comparativas",
     "signature_moves": [
-      "Rótulo direto nas curvas de consumo/geracao",
+      "Rótulo direto nas curvas de consumo/geração",
       "Alarme com timestamp exato e protocolo de reconhecimento"
     ],
     "anti_patterns": [
       "Gauges 3D decorativos ocupando meia tela",
       "Efeito neon brilhante estilo filme sci-fi"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#162A36",
+        "accent": "#C24E0E",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#1D2B2A",
+        "accent": "#F5B700",
+        "harmony": "acento único",
+        "why": "Grafite esverdeado e amarelo de alerta industrial."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "marketplace-b2b",
@@ -1361,50 +1033,34 @@
     ],
     "surface_mode": "Operate",
     "density": "balanced",
-    "palette_light": {
-      "z0_well": "#E0DDD6",
-      "z1_canvas": "#ECEAE4",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1A3248",
-      "accent_10": "#C44512",
-      "text_strong": "#131820",
-      "text_muted": "#4D5562",
-      "border": "#C0C4CB"
-    },
-    "palette_dark": {
-      "z0_well": "#090C12",
-      "z1_canvas": "#0F141D",
-      "z2_card": "#161D2A",
-      "primary_30": "#5BA4F8",
-      "accent_10": "#FB923C",
-      "text_strong": "#F3F6FB",
-      "text_muted": "#9AA8BC",
-      "border": "#273347"
-    },
     "typography_ids": [
+      "onest-martian",
       "dm-sans-mono",
-      "inter-jetbrains"
+      "hanken-commit"
     ],
-    "layout_archetype": "Comparativo tabular de cotacoes lado a lado + Carrinho de pedido de compra persistente",
+    "layout_archetype": "Comparativo tabular de cotações lado a lado + Carrinho de pedido de compra persistente",
     "signature_moves": [
-      "Matriz comparativa de preco, prazo e frete destacando menor custo total"
+      "Matriz comparativa de preço, prazo e frete destacando menor custo total"
     ],
     "anti_patterns": [
       "Cards de e-commerce B2C gigantes quando o comprador precisa comparar 12 SKUs"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1A3248",
+        "accent": "#C44512",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#22313F",
+        "accent": "#00A389",
+        "harmony": "analoga fria",
+        "why": "Ardosia e verde de transação concluida."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "app-executivo-socios",
@@ -1427,53 +1083,36 @@
     ],
     "surface_mode": "Operate",
     "density": "focused-decision",
-    "palette_light": {
-      "z0_well": "#DBD5CA",
-      "z1_canvas": "#E7E2D8",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#0E2B48",
-      "accent_10": "#D94B14",
-      "text_strong": "#0F1A26",
-      "text_muted": "#455466",
-      "border": "#B2BCC7"
-    },
-    "palette_dark": {
-      "z0_well": "#080B11",
-      "z1_canvas": "#0D121B",
-      "z2_card": "#141B27",
-      "primary_30": "#5BA8FF",
-      "accent_10": "#FF854D",
-      "text_strong": "#F5F7FB",
-      "text_muted": "#9CAABD",
-      "border": "#263346"
-    },
     "typography_ids": [
       "ios-sf-native",
-      "geist-mono-clean",
+      "satoshi-general",
       "manrope-tabular"
     ],
-    "layout_archetype": "Pulso em 10 segundos no topo + 3 decisoes pendentes acionaveis via Bottom Sheet + Dock 4 abas",
+    "layout_archetype": "Pulso em 10 segundos no topo + 3 decisões pendentes acionáveis via Bottom Sheet + Dock 4 abas",
     "signature_moves": [
       "Simulador de impacto em caixa antes de aprovar em 1 toque",
-      "Desfazer imediato apos aprovacao"
+      "Desfazer imediato após aprovação"
     ],
     "anti_patterns": [
-      "Dashboards com 14 graficos minusculos no celular",
-      "Exigir desktop para aprovar uma fatura critica"
+      "Dashboards com 14 gráficos minusculos no celular",
+      "Exigir desktop para aprovar uma fatura crítica"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#0E2B48",
+        "accent": "#D94B14",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#1B1B1F",
+        "accent": "#C8A96A",
+        "harmony": "acento único",
+        "why": "Preto quente e dourado discreto para decisão executiva."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "gestao-obras-engenharia",
@@ -1494,51 +1133,35 @@
     ],
     "surface_mode": "Operate",
     "density": "structured-high-contrast",
-    "palette_light": {
-      "z0_well": "#DCD8CF",
-      "z1_canvas": "#E8E5DD",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#1E2D3B",
-      "accent_10": "#C24A0B",
-      "text_strong": "#12181E",
-      "text_muted": "#4B5560",
-      "border": "#B8BEC4"
-    },
-    "palette_dark": {
-      "z0_well": "#0A0E12",
-      "z1_canvas": "#11171E",
-      "z2_card": "#18212B",
-      "primary_30": "#689FD4",
-      "accent_10": "#F57C29",
-      "text_strong": "#F2F5F8",
-      "text_muted": "#9CA9B5",
-      "border": "#2B3745"
-    },
     "typography_ids": [
-      "ibm-plex-suite",
-      "space-dm-mono"
+      "archivo-inter-mono",
+      "mona-hubot",
+      "ibm-plex-suite"
     ],
-    "layout_archetype": "Cronograma fisico-financeiro + Diario fotografico com registro de campo mobile",
+    "layout_archetype": "Cronograma físico-financeiro + Diário fotográfico com registro de campo mobile",
     "signature_moves": [
       "Comparativo Previsto vs Realizado alinhado por etapa",
-      "Galeria de vistoria com metadados de data e responsavel"
+      "Galeria de vistoria com metadados de data e responsável"
     ],
     "anti_patterns": [
-      "Graficos de Gantt ilegiveis sem zoom ou filtro por frente"
+      "Gráficos de Gantt ilegíveis sem zoom ou filtro por frente"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#1E2D3B",
+        "accent": "#C24A0B",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#3D3A36",
+        "accent": "#E86A33",
+        "harmony": "complementar",
+        "why": "Concreto e laranja de seguranca."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "linha fina ou tonal",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   },
   {
     "id": "landing-produto-editorial",
@@ -1560,49 +1183,33 @@
     ],
     "surface_mode": "Persuade",
     "density": "editorial-spacious",
-    "palette_light": {
-      "z0_well": "#E2DDD4",
-      "z1_canvas": "#EFECE6",
-      "z2_card": "#FFFFFF",
-      "primary_30": "#18222D",
-      "accent_10": "#BD3F14",
-      "text_strong": "#11161C",
-      "text_muted": "#4C545E",
-      "border": "#C4BFB6"
-    },
-    "palette_dark": {
-      "z0_well": "#0C0E12",
-      "z1_canvas": "#13161C",
-      "z2_card": "#1B1F28",
-      "primary_30": "#89B0D9",
-      "accent_10": "#F26B3A",
-      "text_strong": "#F5F3EE",
-      "text_muted": "#A3AAB8",
-      "border": "#2F3542"
-    },
     "typography_ids": [
-      "fraunces-dm",
-      "newsreader-instrument"
+      "instrument-serif-sans",
+      "clash-cabinet",
+      "fraunces-dm"
     ],
-    "layout_archetype": "Narrativa orientada por prova real (captura do produto em acao) + especificacao direta",
+    "layout_archetype": "Narrativa orientada por prova real (captura do produto em ação) + especificação direta",
     "signature_moves": [
-      "Demonstracao interativa ao vivo acima da dobra em vez de slogan abstrato"
+      "Demonstração interativa ao vivo acima da dobra em vez de slogan abstrato"
     ],
     "anti_patterns": [
       "Template hero + 6 logos falsos + 3 cards com sparkles + depoimentos inventados"
     ],
-    "chart_palette": [
-      "#4C9AFF",
-      "#22C3B8",
-      "#818CF8",
-      "#FF8B4D",
-      "#34D399",
-      "#F472B6"
+    "color_ideas": [
+      {
+        "seed": "#18222D",
+        "accent": "#BD3F14",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
+      },
+      {
+        "seed": "#111111",
+        "accent": "#FF5B2E",
+        "harmony": "acento único",
+        "why": "Tipografia forte em preto com um acento vivo de marca."
+      }
     ],
-    "brand_presence_zones": [
-      "Zona 1 (Identidade na Navegacao): Cabecalho da Sidebar/Mobile com superficie institucional da marca + item ativo com capsula 18% primary e filete 3px accent",
-      "Zona 2 (Card-Rei / .card-brand-hero): Painel focal do topo de cada tela com gradiente direcional 135deg (20% primary -> surface-z2) e borda luminosa 35% primary",
-      "Zona 3 (Controles Ativos & Dados): Sub-abas (.subtab.is-active), filtros (.seg-btn.is-active), foco de tabela e serie principal usando a cor primaria combinada a paleta harmonica de 6 cores (--chart-1..6)"
-    ]
+    "depth_hint": "suave ou tátil",
+    "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   }
 ]

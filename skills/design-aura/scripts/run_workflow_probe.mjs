@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
- * Motor CDP de Testes Interativos de Workflow E2E (Design Aura v2.4.0 · Fase 4.5, zero dependencias npm).
+ * Motor CDP de jornadas E2E da Design Aura (zero dependencias npm).
  *
- * Projetado para os Subagentes Testers (Read-Only): navega, clica em botoes/linhas,
- * preenche campos, seleciona filtros, alterna tema Dark/Light, valida assertivas de negocio
- * + layout pos-clique (zero overflow, zero recorte, zero erro JS/404) e fotografa evidencias.
+ * Usado pelos testers (somente leitura): navega, clica, preenche, seleciona, alterna tema,
+ * percorre a jornada so por teclado (key, tabTo, assertFocused), emula reduced motion
+ * (setReducedMotion), confere resultados de negocio (assertText, assertReachable) e layout
+ * pos-acao (sem overflow, recorte, erro JS ou 404), fotografando as evidencias.
  *
  * Uso:
  *   node run_workflow_probe.mjs --scenario qa-scenario.json --out ./qa-evidence [--base-url http://127.0.0.1:4188] [--root ./design] [--strict]
@@ -14,11 +15,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 
-const VIEWPORTS = {
-  desktop: { width: 1440, height: 900, mobile: false, dpr: 1 },
-  tablet: { width: 768, height: 1024, mobile: true, dpr: 2 },
-  mobile: { width: 390, height: 844, mobile: true, dpr: 2 },
-};
+import { resolveViewport, findBrowser } from './audit_viewports.mjs';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -54,20 +51,6 @@ function parseArgs(argv) {
   return args;
 }
 
-function findBrowser() {
-  const candidates = [
-    process.env.CHROME_PATH,
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-    '/snap/bin/chromium',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  ].filter(Boolean);
-  for (const c of candidates) {
-    if (fs.existsSync(c)) return c;
-  }
-  return null;
-}
 
 function startStaticServer(rootDir) {
   return new Promise((resolve, reject) => {
@@ -196,6 +179,27 @@ function findElementExpr(selector) {
   })()`;
 }
 
+const REAL_KEYS = {
+  Tab: [9, 'Tab'], Enter: [13, 'Enter', '\r'], Escape: [27, 'Escape'], Space: [32, 'Space', ' '],
+  ArrowDown: [40, 'ArrowDown'], ArrowUp: [38, 'ArrowUp'], ArrowLeft: [37, 'ArrowLeft'], ArrowRight: [39, 'ArrowRight'],
+  Home: [36, 'Home'], End: [35, 'End'],
+};
+
+async function realKey(cdp, key, shift = false) {
+  const [vk, code, text] = REAL_KEYS[key] || [0, key, key.length === 1 ? key : undefined];
+  const base = { key: key === 'Space' ? ' ' : key, code, windowsVirtualKeyCode: vk, nativeVirtualKeyCode: vk, modifiers: shift ? 8 : 0 };
+  await cdp.send('Input.dispatchKeyEvent', { type: text ? 'keyDown' : 'rawKeyDown', ...base, ...(text ? { text } : {}) });
+  await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', ...base });
+}
+
+const FOCUS_INFO_EXPR = `(() => {
+  const el = document.activeElement;
+  if (!el || el === document.body) return { tag: 'BODY' };
+  const st = getComputedStyle(el);
+  const ring = (st.outlineStyle !== 'none' && parseFloat(st.outlineWidth) > 0) || (st.boxShadow && st.boxShadow !== 'none');
+  return { tag: el.tagName, id: el.id, text: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 50), ring };
+})()`;
+
 async function runStep(cdp, step, ctx) {
   const act = (step.action || '').trim();
   const label = step.label || `${act} ${step.selector || step.url || step.text || step.theme || ''}`.trim();
@@ -292,6 +296,43 @@ async function runStep(cdp, step, ctx) {
       });
       await new Promise((r) => setTimeout(r, 180));
       out.detail = `Tecla ${key} enviada`;
+    } else if (act === 'key') {
+      // Tecla real do teclado (CDP), move o foco e ativa botoes como uma pessoa faria.
+      const times = Math.max(1, step.times || 1);
+      for (let i = 0; i < times; i++) await realKey(cdp, step.key || 'Tab', !!step.shift);
+      await new Promise((r) => setTimeout(r, step.waitMs || 160));
+      const info = (await cdp.send('Runtime.evaluate', { expression: FOCUS_INFO_EXPR, returnByValue: true }))?.result?.value || {};
+      out.detail = `Tecla ${step.shift ? 'Shift+' : ''}${step.key || 'Tab'} x${times}; foco em ${info.tag}${info.id ? '#' + info.id : ''} "${info.text || ''}"`;
+    } else if (act === 'tabTo') {
+      // Jornada so por teclado: aperta Tab ate o foco chegar no seletor e confere o anel de foco.
+      const limit = step.maxTabs || 40;
+      let reached = false;
+      let info = {};
+      for (let i = 0; i < limit; i++) {
+        await realKey(cdp, 'Tab', !!step.shift);
+        const res = await cdp.send('Runtime.evaluate', {
+          expression: `(() => { const t = ${findElementExpr(step.selector)}; return !!t && (document.activeElement === t || t.contains(document.activeElement)); })()`,
+          returnByValue: true,
+        });
+        if (res?.result?.value) { reached = true; break; }
+      }
+      info = (await cdp.send('Runtime.evaluate', { expression: FOCUS_INFO_EXPR, returnByValue: true }))?.result?.value || {};
+      if (!reached) throw new Error(`DA-A11Y-KEYBOARD: ${step.selector} nao recebeu foco em ${limit} Tabs`);
+      if (step.requireRing !== false && !info.ring) throw new Error(`DA-A11Y-KEYBOARD: ${step.selector} recebe foco sem anel visivel`);
+      out.detail = `Foco por teclado em ${step.selector} com anel visivel`;
+    } else if (act === 'assertFocused') {
+      const res = await cdp.send('Runtime.evaluate', {
+        expression: `(() => { const t = ${findElementExpr(step.selector)}; return !!t && (document.activeElement === t || t.contains(document.activeElement)); })()`,
+        returnByValue: true,
+      });
+      if (!res?.result?.value) throw new Error(`DA-A11Y-KEYBOARD: foco esperado em ${step.selector}`);
+      out.detail = `Foco esta em ${step.selector}`;
+    } else if (act === 'setReducedMotion') {
+      const on = step.value !== false;
+      const theme = (await cdp.send('Runtime.evaluate', { expression: "document.documentElement.getAttribute('data-theme') || 'dark'", returnByValue: true }))?.result?.value || 'dark';
+      await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }, { name: 'prefers-reduced-motion', value: on ? 'reduce' : 'no-preference' }] });
+      await new Promise((r) => setTimeout(r, 120));
+      out.detail = `prefers-reduced-motion ${on ? 'reduce' : 'no-preference'}`;
     } else if (act === 'wait') {
       await new Promise((r) => setTimeout(r, step.ms || 300));
       out.detail = `Aguardou ${step.ms || 300}ms`;
@@ -330,15 +371,38 @@ async function runStep(cdp, step, ctx) {
       if (act === 'assertVisible' && !visible) throw new Error(`Esperava elemento visivel: ${step.selector}`);
       if (act === 'assertHidden' && visible) throw new Error(`Esperava elemento oculto: ${step.selector}`);
       out.detail = `${act} OK (${step.selector})`;
+    } else if (act === 'assertReachable') {
+      if (!step.selector) throw new Error('assertReachable requer selector.');
+      const res = await cdp.send('Runtime.evaluate', {
+        expression: `(() => {
+          const el = ${findElementExpr(step.selector)};
+          if (!el || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) return 'Controle oculto ou ausente';
+          if (el.matches(':disabled') || el.closest('[inert], [aria-disabled="true"]')) return 'Controle desabilitado';
+          const r = el.getBoundingClientRect();
+          if (r.left < 0 || r.top < 0 || r.right > innerWidth || r.bottom > innerHeight) return 'Controle fora da área visível';
+          for (const [x, y] of [[0.5, 0.5], [0.2, 0.25], [0.8, 0.25], [0.2, 0.75], [0.8, 0.75]]) {
+            const hit = document.elementFromPoint(r.left + r.width * x, r.top + r.height * y);
+            if (!el.contains(hit)) return 'Ação encoberta por ' + (hit?.id || hit?.tagName || 'uma região recortada');
+          }
+          return '';
+        })()`,
+        returnByValue: true,
+      });
+      const issue = res?.result?.value;
+      if (issue !== '') throw new Error(`DA-REACHABLE: ${step.selector}: ${issue || 'Não foi possível verificar o controle'}`);
+      out.detail = `Controle alcançável: ${step.selector}`;
     } else if (act === 'assertText') {
       const sel = step.selector || 'body';
-      const needle = String(step.contains ?? step.text ?? '');
+      const exact = step.equals !== undefined;
+      const needle = String(step.equals ?? step.contains ?? step.text ?? '');
+      if (!exact && !needle) throw new Error('assertText requer equals, contains ou text.');
+      const expected = JSON.stringify(needle.replace(/\s+/g, ' ').trim());
       const res = await cdp.send('Runtime.evaluate', {
         expression: `(() => {
           const el = ${findElementExpr(sel)};
           if (!el) return { ok: false, reason: 'Elemento nao encontrado: ' + ${JSON.stringify(sel)} };
           const txt = (el.textContent || '').replace(/\\s+/g, ' ').trim();
-          return { ok: txt.toLowerCase().includes(${JSON.stringify(needle.toLowerCase())}), sample: txt.slice(0, 140) };
+          return { ok: ${exact} ? txt === ${expected} : txt.toLowerCase().includes(${expected}.toLowerCase()), sample: txt.slice(0, 140) };
         })()`,
         returnByValue: true,
       });
@@ -419,6 +483,12 @@ async function main() {
     process.exit(1);
   }
   const scenario = JSON.parse(fs.readFileSync(path.resolve(args.scenario), 'utf8'));
+  const vpName = scenario.viewport || 'desktop';
+  const vp = resolveViewport(vpName);
+  const initTheme = scenario.theme || 'dark';
+  if (!['dark', 'light'].includes(initTheme)) throw new Error('Temas válidos: dark e light.');
+  const steps = scenario.steps;
+  if (!Array.isArray(steps) || !steps.length) throw new Error('Cenário sem passos de QA.');
   const outDir = path.resolve(args.out);
   fs.mkdirSync(outDir, { recursive: true });
 
@@ -429,11 +499,6 @@ async function main() {
     staticSrv = await startStaticServer(rootDir);
     baseUrl = `http://127.0.0.1:${staticSrv.port}`;
   }
-
-  const vpName = scenario.viewport || 'desktop';
-  const vp = VIEWPORTS[vpName] || VIEWPORTS.desktop;
-  const initTheme = scenario.theme || 'dark';
-  const steps = scenario.steps || [];
 
   const consoleErrors = [];
   const failedAssets = [];
@@ -507,6 +572,7 @@ async function main() {
   const report = {
     name: scenario.name || path.basename(args.scenario),
     viewport: vpName,
+    dimensions: { width: vp.width, height: vp.height },
     theme: initTheme,
     passed,
     summary: {

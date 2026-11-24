@@ -1,0 +1,490 @@
+[
+ {
+  "id": "colorjs",
+  "name": "Color.js",
+  "kind": "tool",
+  "use": "dependency",
+  "url": "https://colorjs.io",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "palette",
+   "contrast"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Conversoes OKLCH, gamut e contraste.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "dtcg-spec",
+  "name": "Especificacao DTCG 2025.10",
+  "kind": "official",
+  "use": "reference",
+  "url": "https://www.designtokens.org/tr/2025.10/",
+  "repo": "",
+  "license": "especificação aberta",
+  "license_status": "reference",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "tokens-pipeline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Formato padrão de tokens ($value, $type) estável desde out/2025.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "harmony",
+  "name": "Harmonizer / Harmony (Evil Martians)",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://evilmartians.com/chronicles/exploring-the-oklch-ecosystem-and-its-tools",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "palette",
+   "contrast"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Paletas OKLCH com croma e contraste APCA consistentes entre matizes.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "leonardo",
+  "name": "Leonardo (Adobe)",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://leonardocolor.io",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "palette",
+   "contrast"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Paletas geradas por contraste alvo.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "radix-colors",
+  "name": "Radix Colors",
+  "kind": "tool",
+  "use": "dependency",
+  "url": "https://www.radix-ui.com/colors",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "palette",
+   "contrast"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Escalas de 12 degraus com função (fundo, hover, borda, sólido, texto).",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "style-dictionary",
+  "name": "Style Dictionary",
+  "kind": "tool",
+  "use": "dependency",
+  "url": "https://styledictionary.com",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "tokens-pipeline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "Exporta tokens para várias plataformas (suporta DTCG).",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "apcach",
+  "name": "apcach",
+  "kind": "tool",
+  "use": "dependency",
+  "url": "https://www.npmjs.com/package/apcach",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "contrast",
+   "palette"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Compoe cores com contraste APCA alvo.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "culori",
+  "name": "culori",
+  "kind": "tool",
+  "use": "dependency",
+  "url": "https://culorijs.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "palette"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Biblioteca de cor completa e leve.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "oklch-picker",
+  "name": "OKLCH Color Picker",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://oklch.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "palette"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Seletor e conversor OKLCH.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "realtime-colors",
+  "name": "Realtime Colors",
+  "kind": "tool",
+  "use": "reference",
+  "url": "https://www.realtimecolors.com",
+  "repo": "",
+  "license": "ferramenta gratuita",
+  "license_status": "reference",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "theme-editor",
+   "palette"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Ve a paleta aplicada num site antes de decidir.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "terrazzo",
+  "name": "Terrazzo",
+  "kind": "tool",
+  "use": "dependency",
+  "url": "https://terrazzo.app",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "tokens-pipeline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Pipeline de tokens DTCG.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "tokens-studio",
+  "name": "Tokens Studio for Figma",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://tokens.studio",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "tokens-pipeline",
+   "theme-editor"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Liga tokens JSON a variáveis do Figma.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "tweakcn",
+  "name": "tweakcn",
+  "kind": "tool",
+  "use": "tool",
+  "url": "https://tweakcn.com",
+  "repo": "",
+  "license": "conferir",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "color-tokens"
+  ],
+  "needs": [
+   "theme-editor"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Editor visual de tema para shadcn.",
+  "a11y": "",
+  "notes": ""
+ }
+]

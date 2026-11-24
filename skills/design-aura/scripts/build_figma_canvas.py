@@ -752,7 +752,7 @@ def verify_screen_files(manifest: dict, manifest_path: Path, out_dir: Path) -> l
 
 
 def _normalize_screen_targets(manifest: dict, app_base: str = "") -> bool:
-    """Resolve telas SPA ('route') em URLs navegaveis para vitrine unificada (v2.4.0). Retorna True se houver SPA."""
+    """Resolve telas SPA ('route') em URLs navegaveis para vitrine unificada. Retorna True se houver SPA."""
     base = (app_base or manifest.get("project", {}).get("appBaseUrl") or "").rstrip("/")
     has_spa = bool(base)
     for screen in manifest.get("screens", []):
@@ -2262,7 +2262,7 @@ def render_entrega_html(
     out_dir: Path | None = None,
     app_url: str = "",
 ) -> str:
-    """Gera o Hub Unificado de Link Unico (entrega.html · v2.4.0)."""
+    """Gera o Hub Unificado de Link Unico (entrega.html)."""
     proj = manifest.get("project", {})
     name = html.escape(proj.get("name", "Projeto Design Aura"))
     subtitle = html.escape(proj.get("subtitle", "Entrega Unificada"))

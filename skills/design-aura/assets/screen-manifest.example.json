@@ -6,8 +6,19 @@
     "startScreenId": "portal",
     "bibleLink": "",
     "defaultTheme": "dark",
+    "vitrineViewports": [
+      "desktop",
+      "mobile"
+    ],
     "worldWidth": 1920,
-    "worldHeight": 1200
+    "worldHeight": 1200,
+    "surfaceMode": "operate",
+    "minDesktopWidth": 1024,
+    "budgets": {
+      "headerMaxBars": 2,
+      "headerMaxPx": 200,
+      "mobileTopMaxPct": 40
+    }
   },
   "theme": {
     "brandAccent": "#EA580C",
@@ -53,6 +64,10 @@
       "title": "Portal de Despacho",
       "file": "desktop-portal.html",
       "platform": "desktop",
+      "viewports": [
+        "desktop",
+        "1920x1080"
+      ],
       "x": 70,
       "y": 100,
       "w": 360,
@@ -63,7 +78,34 @@
       "metric": "14 rotas ativas · 2 alertas",
       "badge": "Início",
       "isStart": true,
-      "desc": "Visão de comando matinal com triagem em 3 horizontes (Agora, Em Rota, Radar) e atalho Cmd+K."
+      "desc": "Visão do dia: o que exige ação agora primeiro, depois os próximos dias; atalho Cmd+K.",
+      "archetype": "painel",
+      "primaryAction": {
+        "label": "Abrir ocorrências",
+        "desktop": "cabeçalho do bloco urgente",
+        "mobile": "barra inferior"
+      },
+      "states": [
+        "populado",
+        "vazio",
+        "erro"
+      ],
+      "zones": [
+        {
+          "name": "Navegação",
+          "width": 232
+        },
+        {
+          "name": "Hoje",
+          "width": "1fr",
+          "min": 520
+        },
+        {
+          "name": "Próximos dias",
+          "width": 340
+        }
+      ],
+      "minWidth": 1280
     },
     {
       "id": "ocorrencias",
@@ -83,7 +125,30 @@
       "metric": "2 bloqueios · SLA 12m",
       "badge": "3 Zonas",
       "isStart": false,
-      "desc": "Fila de atrasos e sinistros à esquerda, dossiê da carga no centro e telemetria de veículo à direita."
+      "desc": "Fila de atrasos e sinistros à esquerda, dossiê da carga no centro e telemetria de veículo à direita.",
+      "archetype": "lista-detalhe-mesma-area",
+      "primaryAction": {
+        "label": "Resolver ocorrência",
+        "desktop": "rodapé do detalhe",
+        "mobile": "barra fixa acima da safe area"
+      },
+      "states": [
+        "populado",
+        "aberto",
+        "vazio",
+        "erro"
+      ],
+      "zones": [
+        {
+          "name": "Navegação",
+          "width": 232
+        },
+        {
+          "name": "Fila",
+          "width": "1fr",
+          "min": 560
+        }
+      ]
     },
     {
       "id": "faturamento",
@@ -103,7 +168,33 @@
       "metric": "R$ 184.920,00 · 98% em dia",
       "badge": "Tabular",
       "isStart": false,
-      "desc": "Tabela densa de fretes com valores à direita em tabular-nums e aprovação de repasse em 1 clique."
+      "desc": "Tabela densa de fretes com valores à direita em tabular-nums e aprovação de repasse em 1 clique.",
+      "archetype": "master-detail",
+      "primaryAction": {
+        "label": "Emitir fatura",
+        "desktop": "cabeçalho do detalhe",
+        "mobile": "barra inferior"
+      },
+      "states": [
+        "populado",
+        "vazio",
+        "erro"
+      ],
+      "zones": [
+        {
+          "name": "Navegação",
+          "width": 232
+        },
+        {
+          "name": "Lista",
+          "width": 360
+        },
+        {
+          "name": "Detalhe",
+          "width": "1fr",
+          "min": 420
+        }
+      ]
     },
     {
       "id": "mobile-rota",
@@ -113,6 +204,10 @@
       "title": "Viagem Atual",
       "file": "mobile-viagem.html",
       "platform": "mobile",
+      "viewports": [
+        "mobile",
+        "mobile-360x800"
+      ],
       "x": 80,
       "y": 605,
       "w": 250,
@@ -123,7 +218,17 @@
       "metric": "Parada 3/5 · ETA 14:20",
       "badge": "Mobile",
       "isStart": false,
-      "desc": "Tela principal do motorista na zona do polegar com confirmação de entrega e sincronização offline."
+      "desc": "Tela principal do motorista na zona do polegar com confirmação de entrega e sincronização offline.",
+      "archetype": "lista-mobile",
+      "primaryAction": {
+        "label": "Confirmar entrega",
+        "mobile": "barra inferior"
+      },
+      "states": [
+        "populado",
+        "vazio",
+        "offline"
+      ]
     }
   ],
   "edges": [

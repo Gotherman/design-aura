@@ -9,6 +9,11 @@ import bisect
 import json
 import os
 import re
+import sys as _sys
+from pathlib import Path as _Path
+
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from rules_registry import apply_caps  # noqa: E402
 import sys
 from pathlib import Path
 
@@ -397,7 +402,7 @@ def check_structural_rules(raw_text: str, clean_text: str, ext: str, rel_path: s
 
 
 def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: str, starts: list[int]) -> list[dict]:
-    """Checagens estaticas de piso de craft (v2.4.0): anti-stub, serifa em Operate, anti-jargao e anti-eco."""
+    """Checagens estaticas de piso de craft: anti-stub, serifa em Operate, anti-jargao e anti-eco."""
     findings: list[dict] = []
     lower_name = Path(rel_path).name.lower()
     is_vitrine = lower_name in {"fluxo.html", "preview.html", "index.html", "entrega.html", "design-bible.html"}
@@ -459,7 +464,7 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "fix": "Aplique a classe de campo do design system (borda, padding, radius, resize: vertical e :focus-visible)",
                 })
 
-    # DA-ICON-GENERIC-REPEAT (v2.2): repeticao preguicosa do mesmo icone generico de webfont (>= 5x na mesma tela)
+    # DA-ICON-GENERIC-REPEAT: repeticao preguicosa do mesmo icone generico de webfont (>= 5x na mesma tela)
     if not is_vitrine and ext in {".html", ".htm"}:
         generic_icons = ("ph-bank", "ph-warning-circle", "ph-warning", "ph-clock", "ph-info", "ph-check-circle")
         for g_ico in generic_icons:
@@ -470,12 +475,12 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "severity": "MEDIUM",
                     "location": f"{rel_path}:{pos_to_line(starts, matches[0].start())}",
                     "evidence": f"{g_ico} repetido {len(matches)}x na mesma tela",
-                    "message": f"Icone generico '{g_ico}' repetido {len(matches)}x como muleta visual (Bloco 7 / Craft v2.2)",
+                    "message": f"Icone generico '{g_ico}' repetido {len(matches)}x como muleta visual (Bloco 7)",
                     "fix": "Substitua por SVGs Duotone/1.75px especificos do dominio (receipt-tax, plane-departure, file-certificate, gavel), monogramas de bancos (.bank-emblem) ou .chip-sla com anel SVG",
                 })
                 break
 
-    # DA-FLAT-CHART-AXIS (v2.2): grafico de linha/area com yAxis min: 0 fixo sem serie de barras (paredao morto)
+    # DA-FLAT-CHART-AXIS: grafico de linha/area com yAxis min: 0 fixo sem serie de barras (paredao morto)
     if not is_vitrine and ext in {".html", ".htm", ".js", ".ts", ".tsx"}:
         if re.search(r"echarts\.init|new\s+ApexCharts|new\s+Chart\b", clean_text):
             m_axis = re.search(r"yAxis\s*:\s*\{[^{}]*\bmin\s*:\s*0\b", clean_text)
@@ -490,7 +495,7 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "fix": "Use escala Y dinamica calibrada (ex.: min: (v) => Math.floor(v.min * 0.88)) ou grafico Combo (Barras Entrada/Saida + Curva de Saldo + HUD vivo de crosshair)",
                 })
 
-    # DA-MOBILE-FLEX-CLIP (v2.2.1): container flex-column rolavel (.mob-scroll / .sheet-panel) sem flex-shrink: 0 nos filhos diretos
+    # DA-MOBILE-FLEX-CLIP: container flex-column rolavel (.mob-scroll / .sheet-panel) sem flex-shrink: 0 nos filhos diretos
     if not is_vitrine and ext in (CSS_EXTS | MARKUP_EXTS):
         m_mob_scroll = re.search(r"\.(?:mob-scroll|mob-body|mobile-scroll)\s*\{[^}]*display\s*:\s*flex[^}]*flex-direction\s*:\s*column", clean_text, re.I | re.S)
         if m_mob_scroll and not re.search(r"\.(?:mob-scroll|mob-body|mobile-scroll)\s*>\s*\*\s*\{[^}]*flex-shrink\s*:\s*0", clean_text, re.I | re.S):
@@ -503,7 +508,7 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                 "fix": "Adicione '.mob-scroll > * { flex-shrink: 0; }' ou troque .mob-scroll para 'display: grid; grid-auto-rows: max-content; align-content: start;'",
             })
 
-    # DA-BRAND-DARK-SCOPE (v2.3.0): superficie escura da marca no Modo Claro sem redeclarar escopo de --text-muted/--text-strong
+    # DA-BRAND-DARK-SCOPE: superficie escura da marca no Modo Claro sem redeclarar escopo de --text-muted/--text-strong
     if not is_vitrine and ext in CSS_EXTS:
         m_brand_light = re.search(
             r'\[data-theme=["\']light["\']\][^{]{0,140}(?:\.card-brand-hero|\.auth-brand-pane|\.sidebar)[^{]{0,140}\{([^}]*--surface-brand-dark[^}]*)\}',
@@ -525,7 +530,7 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "fix": "Redeclarar localmente --text-strong, --text-body e --text-muted claros dentro de .card-brand-hero/.auth-brand-pane/.sidebar (ou usar a classe .on-brand-dark)",
                 })
 
-    # DA-REF-COPY-LEAK (v2.3.0): copy de referencia de produto vazada para interface visivel do cliente
+    # DA-REF-COPY-LEAK: copy de referencia de produto vazada para interface visivel do cliente
     if not is_vitrine and ext in {".html", ".htm", ".jsx", ".tsx", ".vue", ".svelte"}:
         visible_html = re.sub(r"<(?:script|style)\b[^>]*>.*?</(?:script|style)>", " ", clean_text, flags=re.I | re.S)
         m_ref_leak = re.search(
@@ -546,7 +551,7 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                 "fix": "Use o vocabulario proprio do negocio do cliente (ex.: 'Janelas & Preferencias' em vez de citar sistemas terceiros de inspiracao)",
             })
 
-    # DA-TECH-JARGON-UI (v2.4.0): jargao tecnico/infraestrutura vazado na copy visivel do trabalhador
+    # DA-TECH-JARGON-UI: jargao tecnico/infraestrutura vazado na copy visivel do trabalhador
     if not is_vitrine and ext in MARKUP_EXTS:
         visible_html = re.sub(r"<(?:script|style)\b[^>]*>.*?</(?:script|style)>", " ", clean_text, flags=re.I | re.S)
         visible_text_only = re.sub(r"<[^>]+>", " ", visible_html)
@@ -563,11 +568,11 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                 "severity": "HIGH",
                 "location": f"{rel_path}:{pos_to_line(starts, pos)}",
                 "evidence": snippet_at(raw_text, pos),
-                "message": f"Jargao tecnico/infraestrutura ('{m_jargon.group(0)}') vazado para a interface do trabalhador (Bloco 5 / v2.4.0)",
+                "message": f"Jargao tecnico/infraestrutura ('{m_jargon.group(0)}') vazado para a interface do trabalhador (Bloco 5)",
                 "fix": "Traduza para linguagem humana do negocio (ou mova para tela estritamente tecnica de engenharia/automacao)",
             })
 
-        # DA-BADGE-ECHO estatico (v2.4.0): mesmo texto de badge/chip repetido >= 5x na mesma tela
+        # DA-BADGE-ECHO estatico: mesmo texto de badge/chip repetido >= 5x na mesma tela
         badge_texts: dict[str, tuple[int, int]] = {}
         for bm in re.finditer(
             r"<(?:span|div|small)\b[^>]*class(?:Name)?=[\"'][^\"']*(?:badge|chip|pill|status|tag)[^\"']*[\"'][^>]*>([^<]{3,32})</(?:span|div|small)>",
@@ -589,7 +594,7 @@ def _craft_floor_findings(clean_text: str, raw_text: str, ext: str, rel_path: st
                     "severity": "MEDIUM",
                     "location": f"{rel_path}:{pos_to_line(starts, pos)}",
                     "evidence": f"Badge '{key}' repetido {cnt}x na mesma tela",
-                    "message": f"Selo-eco repetido {cnt}x ('{key}') poluindo lista ou aba que ja indica esse estado (Bloco 8 / v2.4.0)",
+                    "message": f"Selo-eco repetido {cnt}x ('{key}') poluindo lista ou aba que ja indica esse estado (Bloco 8)",
                     "fix": "Remova o selo redundante dos itens individuais; exiba selos apenas para excecoes ou estados distintos",
                 })
                 break
@@ -654,11 +659,11 @@ def _nested_surface_findings(clean_text: str, raw_text: str, ext: str, rel_path:
         if cardish and any(item[1] for item in stack):
             findings.append({
                 "rule": "DA-B2-01",
-                "severity": "BLOCK",
+                "severity": "MEDIUM",
                 "location": f"{rel_path}:{pos_to_line(starts, match.start())}",
                 "evidence": snippet_at(raw_text, match.start()),
-                "message": "Card dentro de card (Bloco 2)",
-                "fix": "Achate a hierarquia: superficie externa unica e conteudo interno sem segunda caixa",
+                "message": "Superfícies aninhadas a revisar (Bloco 2)",
+                "fix": "Confirme no render se a camada interna tem função própria. Se competir pela mesma atenção, use faixa recuada, proximidade ou divisórias.",
             })
         if radius:
             for item in reversed(stack):
@@ -763,7 +768,7 @@ def scan_file(path: Path, root: Path) -> list[dict]:
 
     findings.extend(check_structural_rules(raw_text, clean_text, ext, rel_path, starts))
     findings = [f for f in findings if not _allowed(raw_text, _pos_from_location(raw_text, f["location"]), f["rule"])]
-    return findings
+    return apply_caps(findings)
 
 
 def _pos_from_location(raw_text: str, location: str) -> int:
@@ -798,13 +803,15 @@ def format_markdown(findings: list[dict], scanned_count: int) -> str:
     blocks = sum(1 for f in findings if f["severity"] == "BLOCK")
     highs = sum(1 for f in findings if f["severity"] == "HIGH")
     meds = sum(1 for f in findings if f["severity"] == "MEDIUM")
+    reviews = sum(1 for f in findings if f["severity"] == "REVIEW")
     lines = [
-        "# Auditoria Estática Design Aura (10 Blocos)",
-        f"- **Arquivos inspecionados:** {scanned_count} · **BLOCK:** {blocks} · **HIGH:** {highs} · **MEDIUM:** {meds}",
+        "# Auditoria Estática Design Aura",
+        f"- **Arquivos inspecionados:** {scanned_count} · **BLOCK:** {blocks} · **HIGH:** {highs} · **REVIEW:** {reviews} · **MEDIUM:** {meds}",
+        "- BLOCK trava. HIGH corrige ou registra exceção (`design-aura-allow: <regra> <motivo>`). REVIEW e MEDIUM vão para a inspeção visual e o polimento.",
         "",
     ]
     if not findings:
-        lines.append("Nenhuma violacao detectada pelos portoes estaticos dos 10 Blocos.")
+        lines.append("Nenhum achado nos portoes estaticos.")
         return "\n".join(lines)
 
     lines.extend([
@@ -833,7 +840,7 @@ def main():
             scanned += 1
             all_findings.extend(scan_file(f, root))
 
-    sev_rank = {"BLOCK": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
+    sev_rank = {"BLOCK": 0, "HIGH": 1, "REVIEW": 2, "MEDIUM": 3, "LOW": 4}
     all_findings.sort(key=lambda x: (sev_rank.get(x["severity"], 9), x["location"], x["rule"]))
 
     if args.format == "json":

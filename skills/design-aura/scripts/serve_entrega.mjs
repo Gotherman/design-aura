@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Servidor Unificado de Link Unico da Design Aura (v2.4.0, zero dependencias npm).
+ * Servidor Unificado de Link Unico da Design Aura.
  *
  * Combina em 1 unica porta (padrao 0.0.0.0:4188):
  *   - '/'           -> entrega.html (Hub unificado: Mapa Figma · App ao Vivo · Preview · Galeria · Biblia + PDF)

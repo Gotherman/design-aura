@@ -1,0 +1,1232 @@
+[
+ {
+  "id": "ag-charts-community",
+  "name": "AG Charts Community",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.ag-grid.com/charts",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "angular"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "financial",
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install ag-charts-community",
+  "summary": "Gráficos de negócio e financeiros com bom desempenho.",
+  "a11y": "",
+  "notes": "Recursos Enterprise são pagos.",
+  "installs": {
+   "react": "npm install ag-charts-react ag-charts-community",
+   "vue": "npm install ag-charts-vue3 ag-charts-community",
+   "angular": "npm install ag-charts-angular ag-charts-community"
+  }
+ },
+ {
+  "id": "apache-echarts",
+  "name": "Apache ECharts",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://echarts.apache.org",
+  "repo": "apache/echarts",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "financial",
+   "categorical",
+   "flow-network",
+   "geo-map",
+   "distribution"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "financeiro",
+   "projecao",
+   "linha",
+   "barra",
+   "area",
+   "sparkline",
+   "dashboard",
+   "telemetria",
+   "kpi"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install echarts",
+  "summary": "Gráficos financeiros, curvas de caixa, series temporais, comparativos e visualizações interativas de alta densidade em HTML puro ou qualquer framework",
+  "a11y": "Suporta aria.enabled=true para gerar descrições acessíveis e padronização de cores via tema próprio da Biblia",
+  "notes": ""
+ },
+ {
+  "id": "d3",
+  "name": "D3",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://d3js.org",
+  "repo": "",
+  "license": "ISC",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "flow-network",
+   "distribution",
+   "geo-map",
+   "timeseries"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install d3",
+  "summary": "Primitivos de visualização para gráficos sob medida.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "deck-gl",
+  "name": "deck.gl",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://deck.gl",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "geo-map",
+   "distribution"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install deck.gl",
+  "summary": "Camadas de dados sobre mapas em WebGL.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "maplibre",
+  "name": "MapLibre GL JS",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://maplibre.org",
+  "repo": "",
+  "license": "BSD-3-Clause",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "geo-map"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install maplibre-gl",
+  "summary": "Mapas vetoriais com estilo próprio.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install maplibre-gl react-map-gl"
+  }
+ },
+ {
+  "id": "nivo",
+  "name": "Nivo",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://nivo.rocks",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "categorical",
+   "flow-network",
+   "geo-map",
+   "distribution"
+  ],
+  "keywords": [
+   "grafico",
+   "chart",
+   "responsivo"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @nivo/core @nivo/line",
+  "summary": "Estudar gráfico responsivo. Confirme MIT no pacote antes de instalar.",
+  "a11y": "",
+  "notes": "",
+  "stale": true
+ },
+ {
+  "id": "observable-plot",
+  "name": "Observable Plot",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://observablehq.com/plot",
+  "repo": "",
+  "license": "ISC",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "distribution",
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @observablehq/plot",
+  "summary": "Visualizações estatísticas e series limpas com tipografia editorial e zero poluição",
+  "a11y": "SVG semântico com suporte direto a aria-label por marca",
+  "notes": ""
+ },
+ {
+  "id": "shadcn-charts",
+  "name": "shadcn/ui Charts",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://ui.shadcn.com/charts",
+  "repo": "https://github.com/shadcn-ui/ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "tooltip",
+   "area",
+   "bar",
+   "radial",
+   "donut"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx shadcn@latest add chart",
+  "summary": "Tooltips HTML customizados, legendas interativas e composição de gráficos acoplada diretamente às variáveis CSS --chart-1..5",
+  "a11y": "Acessibilidade de teclado e contraste automático Dark/Light",
+  "notes": ""
+ },
+ {
+  "id": "swift-charts",
+  "name": "Swift Charts",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://developer.apple.com/documentation/charts",
+  "repo": "",
+  "license": "Apple SDK",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "ios"
+  ],
+  "platforms": [
+   "ios",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts",
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-chart",
+   "native-primitives"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "framework do sistema: import Charts (iOS 16+)",
+  "summary": "Gráficos nativos do iOS/macOS.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "lightweight-charts",
+  "name": "TradingView Lightweight Charts",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tradingview.github.io/lightweight-charts/",
+  "repo": "https://github.com/tradingview/lightweight-charts",
+  "license": "Apache-2.0",
+  "license_status": "attribution",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "financial",
+   "timeseries"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "financeiro",
+   "caixa",
+   "saldo",
+   "serie temporal",
+   "crosshair",
+   "area",
+   "baseline"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install lightweight-charts",
+  "summary": "Padrão ouro open-source (45 KB) da TradingView para fluxo de caixa, projeção de saldo, baseline-área acima/abaixo do piso e crosshair HUD vivo",
+  "a11y": "Combine com cabeçalho HUD HTML acessível que anuncia data, saldo e delta",
+  "notes": "",
+  "attribution": "Exige atribuição a TradingView (logo/link padrão ou nota na página)."
+ },
+ {
+  "id": "unovis",
+  "name": "Unovis",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://unovis.dev",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react",
+   "vue",
+   "svelte",
+   "angular",
+   "solid",
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical",
+   "geo-map",
+   "flow-network"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tokens",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @unovis/ts",
+  "summary": "Gráficos, mapas e redes modulares para qualquer framework.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @unovis/ts @unovis/react",
+   "vue": "npm install @unovis/ts @unovis/vue",
+   "svelte": "npm install @unovis/ts @unovis/svelte",
+   "angular": "npm install @unovis/ts @unovis/angular",
+   "solid": "npm install @unovis/ts @unovis/solid"
+  }
+ },
+ {
+  "id": "victory-native-xl",
+  "name": "Victory Native XL",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://nearform.com/open-source/victory-native",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts",
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-chart",
+   "timeseries"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npx expo install victory-native @shopify/react-native-skia react-native-reanimated react-native-gesture-handler",
+  "summary": "Gráficos nativos em Skia para React Native.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "apexcharts",
+  "name": "ApexCharts.js",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://apexcharts.com",
+  "repo": "https://github.com/apexcharts/apexcharts.js",
+  "license": "ApexCharts Community (< US$ 2M de receita) / Comercial desde a 5.0; até 3.54 MIT",
+  "license_status": "trap",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical",
+   "financial"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "combo",
+   "waterfall",
+   "cascata",
+   "anotacao",
+   "sparkline",
+   "area",
+   "bar"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install apexcharts",
+  "summary": "Gráficos interativos prontos para HTML/JS ou React com anotações de eventos (annotations), Combo Bar+Área, Range-Área e Sparklines embutidos",
+  "a11y": "Desative animações longas em Operate e re-tematize cores pelos tokens --chart-1..6",
+  "notes": "Não é mais MIT a partir da 5.0. Prefira Apache ECharts, Unovis ou AG Charts Community."
+ },
+ {
+  "id": "chartjs",
+  "name": "Chart.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.chartjs.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install chart.js",
+  "summary": "Gráficos canvas simples e leves.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "cytoscape",
+  "name": "Cytoscape.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://js.cytoscape.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "flow-network"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install cytoscape",
+  "summary": "Análise e desenho de redes.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "evilcharts",
+  "name": "EvilCharts (Shadcn Animated & Glowing Charts)",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://evilcharts.com",
+  "repo": "https://github.com/legions-developer/evilcharts",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "area",
+   "bar",
+   "radar",
+   "radial",
+   "pie",
+   "gradiente"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npx shadcn@latest add https://evilcharts.com/r/area-chart",
+  "summary": "Gráficos sofisticados com preenchimento hachurado/pontilhado SVG, gradientes suaves, barras com destaque ativo e cartões de métrica com HUD",
+  "a11y": "Re-tematize os gradientes SVG usando --chart-1 a --chart-6 do projeto",
+  "notes": ""
+ },
+ {
+  "id": "fl-chart",
+  "name": "fl_chart",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://pub.dev/packages/fl_chart",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "flutter"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts",
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-chart"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "flutter pub add fl_chart",
+  "summary": "Gráficos para Flutter.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "leaflet",
+  "name": "Leaflet",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://leafletjs.com",
+  "repo": "",
+  "license": "BSD-2-Clause",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "geo-map"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install leaflet",
+  "summary": "Mapas leves e simples.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "recharts",
+  "name": "Recharts",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://recharts.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install recharts",
+  "summary": "Gráficos composáveis React para paineis financeiros e métricas operacionais",
+  "a11y": "Integração direta com tooltips acessíveis e tokens CSS",
+  "notes": ""
+ },
+ {
+  "id": "sigma-js",
+  "name": "Sigma.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.sigmajs.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "flow-network"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install sigma graphology",
+  "summary": "Grafos grandes em WebGL.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install sigma graphology @react-sigma/core"
+  }
+ },
+ {
+  "id": "tanstack-charts",
+  "name": "TanStack Charts",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tanstack.com/charts",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "timeseries",
+   "categorical"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install react-charts",
+  "summary": "Gráficos headless da família TanStack.",
+  "a11y": "",
+  "notes": "",
+  "stale": true
+ },
+ {
+  "id": "uplot",
+  "name": "uPlot (Ultra-Fast Time Series & Sparklines)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/leeoniya/uPlot",
+  "repo": "https://github.com/leeoniya/uPlot",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts",
+   "kpi-metrics"
+  ],
+  "needs": [
+   "timeseries",
+   "sparkline"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "telemetria",
+   "sla",
+   "sparkline",
+   "performance",
+   "serie temporal"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install uplot",
+  "summary": "Motor Canvas 2D ultraleve (~45 KB) usado pelo Grafana para series temporais, cursores sincronizados e sparklines em tabelas",
+  "a11y": "Sincronize o cursor com uma legenda HTML visível fora do canvas",
+  "notes": "",
+  "stale": true
+ },
+ {
+  "id": "vega-lite",
+  "name": "Vega-Lite",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://vega.github.io/vega-lite",
+  "repo": "",
+  "license": "BSD-3-Clause",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "distribution",
+   "categorical",
+   "timeseries"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install vega vega-lite vega-embed",
+  "summary": "Gramática declarativa de gráficos.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "vico",
+  "name": "Vico",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/patrykandpatrick/vico",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "android"
+  ],
+  "platforms": [
+   "android",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "charts",
+   "mobile-native"
+  ],
+  "needs": [
+   "mobile-chart"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "Gradle: implementation(\"com.patrykandpatrick.vico:compose-m3:<versão>\")",
+  "summary": "Gráficos para Jetpack Compose.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "visx",
+  "name": "visx (Airbnb Low-Level Visualization Primitives)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://airbnb.io/visx",
+  "repo": "https://github.com/airbnb/visx",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "flow-network",
+   "distribution",
+   "timeseries"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "sankey",
+   "chord",
+   "heatmap",
+   "custom visualization"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @visx/xychart @visx/network",
+  "summary": "Primitivos D3+React da Airbnb para visualizações financeiras sob medida, curvas com brush e diagramas de fluxo",
+  "a11y": "Total controle sobre SVG <title>, <desc> e foco",
+  "notes": ""
+ },
+ {
+  "id": "frappe-charts",
+  "name": "Frappe Charts (Charts & Activity Heatmap)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://frappe.io/charts",
+  "repo": "https://github.com/frappe/charts",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "categorical",
+   "distribution"
+  ],
+  "keywords": [
+   "chart",
+   "grafico",
+   "heatmap",
+   "percentage bar",
+   "mixed chart",
+   "erp"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install frappe-charts",
+  "summary": "Gráficos SVG limpos inspirados no ERPNext/GitHub, incluindo Heatmap anual de atividade, barras de composição percentual e gráficos mistos",
+  "a11y": "Renderiza SVG puro fácil de estilizar via CSS tokens",
+  "notes": ""
+ },
+ {
+  "id": "plotly",
+  "name": "Plotly.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://plotly.com/javascript",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "read"
+  ],
+  "categories": [
+   "charts"
+  ],
+  "needs": [
+   "distribution",
+   "timeseries",
+   "geo-map"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install plotly.js-dist-min",
+  "summary": "Gráficos científicos e 3D.",
+  "a11y": "",
+  "notes": "Pesado e com cara de análise científica.",
+  "installs": {
+   "react": "npm install react-plotly.js plotly.js"
+  }
+ }
+]

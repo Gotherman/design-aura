@@ -8,12 +8,12 @@ node <skill_dir>/scripts/serve_entrega.mjs --design-dir <pasta_saida> [--app-dir
 ```
 
 Arquivos gerados automaticamente na pasta `<pasta_saida>`:
-0. **`entrega.html`** — **Hub Unificado de Link Único (`v2.4.0`, raiz `.da-hub`):**
+0. **`entrega.html`** — **Hub Unificado de Link Único (raiz `.da-hub`):**
    - Barra superior única unificando **`Mapa Figma · App ao Vivo (se SPA) · Preview Guiado · Galeria · Bíblia Visual + PDF + Tema Dark/Light`**.
    - **Aba inteligente por dispositivo:** Desktop abre em `Mapa Figma` (ou `?tab=app`); Mobile (`<= 768px`) abre em `App ao Vivo` / `Preview Guiado` com grade de botões `>= 44px`.
    - **Sincronia de Tema em 3 Canais:** `localStorage`, `postMessage({ type: 'designaura:theme' })` e injeção direta `data-theme` nos iframes filhos.
    - Servido em **1 única porta** (`0.0.0.0:4188`) por `scripts/serve_entrega.mjs` combinando `/`, `/design/*` e `/app/*` (fallback SPA de `dist/`).
-1. **`fluxo.html`** — Canvas Infinito Estilo Figma (`v2.4.0` Hub-and-Spoke):
+1. **`fluxo.html`** — Canvas Infinito Estilo Figma:
    - **Estúdio Dark-First** (`project.canvasTheme` padrão `"dark"`, independente do tema padrão do app; tecla `T` alterna Dark/Light e propaga para todos os iframes).
    - **Auto-Layout Hub-and-Spoke panorâmico:** organiza automaticamente Acesso/Conta à esquerda → **`★ Tela Inicial / Hub`** em destaque central com borda laranja → módulos Desktop em **raias horizontais equilibradas** à direita → faixa dedicada **Mobile** embaixo. Detecta torres verticais degeneradas (`height > width * 1.12` com `>= 10` telas) e reorganiza automaticamente (use `--relayout` para forçar ou `project.lockManualLayout: true` para travar coordenadas manuais).
    - **Higiene de arestas (`tier: "primary" | "secondary"`):** em mapas grandes (`> 22` arestas), exibe apenas as setas principais coloridas por módulo na visão geral — eliminando a macarronada de linhas cruzadas. Ao clicar/isolar uma tela ou ativar **`Setas: Todas (E)`**, todas as conexões secundárias/de retorno acendem instantaneamente.
@@ -28,7 +28,7 @@ Arquivos gerados automaticamente na pasta `<pasta_saida>`:
 
 ---
 
-## Como funciona para Protótipos HTML e para Apps Reais (Dual-Engine `v2.4.0`)
+## Como funciona para Protótipos HTML e para Apps Reais 
 
 - **Protótipos HTML estáticos / Sistema de páginas:** `file` aponta para caminhos relativos (`"desktop-portal.html"`, `"mobile-hoje.html"`).
 - **Apps reais SPA (React / Vite / Next.js / Vue / Expo Web):** use `"route": "/fila-operacional"` (ou `file` começando com `/`) no `screen-manifest.json`, passe `--app-base /app` (ou `http://127.0.0.1:4188/app`) no `build_figma_canvas.py` e `--base-url http://127.0.0.1:4188` no `capture_and_audit.mjs`, e sirva tudo junto na mesma porta com `serve_entrega.mjs --design-dir ./design --app-dir ./dist`.
@@ -49,6 +49,9 @@ Veja um exemplo completo funcional em [assets/screen-manifest.example.json](../a
     "startScreenId": "portal",
     "bibleLink": "../DESIGN-BIBLE.md",
     "defaultTheme": "dark",
+    "surfaceMode": "operate",
+    "minDesktopWidth": 1024,
+    "budgets": {"headerMaxBars": 2, "headerMaxPx": 200, "mobileTopMaxPct": 40},
     "worldWidth": 2800,
     "worldHeight": 1900
   },
@@ -94,7 +97,13 @@ Veja um exemplo completo funcional em [assets/screen-manifest.example.json](../a
       "metric": "4 pendências · SLA 98%",
       "badge": "Início",
       "isStart": true,
-      "desc": "Visão executiva com triagem por horizonte temporal e acesso em 1 clique."
+      "desc": "Visão do dia com o que exige ação primeiro e acesso em 1 clique.",
+      "archetype": "painel",
+      "primaryAction": {"label": "Abrir fila", "desktop": "cabeçalho do bloco urgente", "mobile": "barra inferior"},
+      "states": ["populado", "vazio", "erro"],
+      "zones": [{"name": "Navegação", "width": 240}, {"name": "Hoje", "width": "1fr", "min": 520}, {"name": "Próximos", "width": 360}],
+      "minWidth": 1280,
+      "viewports": ["desktop", "1920x1080"]
     }
   ],
   "edges": [
@@ -121,13 +130,29 @@ Veja um exemplo completo funcional em [assets/screen-manifest.example.json](../a
           "screenId": "portal",
           "short": "Portal",
           "title": "Triagem matinal no Painel Executivo",
-          "tip": "Verifique os alertas prioritários no bloco Agora e clique em Abrir Fila Operacional."
+          "tip": "Verifique o que vence hoje e clique em Abrir fila."
         }
       ]
     }
   ]
 }
 ```
+
+
+## Campos que a Bíblia e a auditoria usam
+
+| Campo | Onde | Para quê |
+|---|---|---|
+| `project.surfaceMode` | projeto | `operate`, `read` ou `persuade`; escolhe os orçamentos padrão e os detectores que se aplicam |
+| `project.budgets` / `screens[].budgets` | projeto ou tela | Orçamentos do projeto (`headerMaxBars`, `headerMaxPx`, `mobileTopMaxPct`, `mobileTopMaxPx`, `maxSiblingTabs`, `deadSpaceReviewPct`, `cardVoidPx`, `duplicateTextMin`, `alignEdgesMax`, `perfMaxKB`, `perfMaxRequests`, `perfMaxFonts`) |
+| `project.minDesktopWidth` / `screens[].minWidth` | projeto ou tela | Largura mínima em que as zonas precisam caber (padrão 1024) |
+| `screens[].archetype` | tela | Arquétipo da tela ([04](04-desktop-e-sistemas.md)); obrigatório para a Bíblia passar no `--check` |
+| `screens[].primaryAction` | tela | Rótulo e posição da ação primária em cada largura |
+| `screens[].states` | tela | Estados que precisam existir e ser vistos (populado, aberto, vazio, erro) |
+| `screens[].zones` | tela | Zonas com `width` (px) ou `"1fr"` com `min`; viram diagramas na Bíblia e são conferidas contra a largura mínima |
+| `screens[].viewports` | tela | Larguras auditadas para esta tela |
+| `screens[].clickSelector` / `afterClickSelector` | tela | Estado pós-clique verificado na captura |
+| `screens[].mode` | tela | Sobrescreve `surfaceMode` (por exemplo, o site institucional dentro de um sistema) |
 
 ## Fluxo navegável
 
@@ -145,3 +170,8 @@ A vitrine é um percurso, não um cartaz de telas soltas.
 - Telas Mobile recomendam artboard `w: 250–270, h: 350–380` com `vw: 430, vh: 932` (ou `390x844`).
 - `fromSide` e `toSide` aceitam `"l"` (esquerda), `"r"` (direita), `"t"` (topo), `"b"` (base).
 - Sempre garanta que todas as strings de `screens[].id`, `edges[].from/to` e `journeys[].steps[].screenId` existam de verdade no array `screens`. O script `build_figma_canvas.py` valida referências quebradas e aborta com erro claro se algo estiver desconectado.
+
+
+## Demonstrações ilustrativas, quando solicitadas
+
+Para still, animação ou bento de apresentação, escolha uma ação e seu resultado. Confira a abertura, o quadro mais carregado, o resultado e o reinício na composição publicada e em mobile quando aplicável. Use o quadro do resultado como alternativa estática quando contar a história sozinho. Identifique o material como ilustrativo. O QA do produto continua nas rotas e interações reais. [Stageshow](https://benji.org/stageshow) · [Ensaio](https://raw.githubusercontent.com/benjitaylor/skills/main/stageshow/references/rehearse.md)

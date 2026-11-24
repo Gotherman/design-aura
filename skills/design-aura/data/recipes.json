@@ -1,0 +1,211 @@
+[
+  {
+    "id": "prazo-consumido",
+    "name": "Prazo ou janela com consumo",
+    "needs": ["progress-meter", "status-tracker"],
+    "problem": "Mostrar quanto de um prazo já passou sem virar um texto solto como '41 min'.",
+    "options": [
+      {"id": "anel-no-chip", "name": "Anel de progresso dentro do chip", "when": "Listas e filas onde o prazo acompanha cada item.", "anatomy": "SVG 14–16px com trilha a ~20% de opacidade e arco proporcional; rótulo curto (o que é o prazo) e valor tabular.", "avoid": "Anel em todo chip da tela; use só onde o prazo decide a prioridade."},
+      {"id": "barra-linear-fina", "name": "Barra linear fina sob o item", "when": "Linhas largas de tabela ou cartões onde o anel ficaria pequeno demais.", "anatomy": "Barra de 2–3px ocupando a largura do item, tom semântico só quando o prazo entra em risco.", "avoid": "Barra colorida em todos os itens quando todos estão em dia."},
+      {"id": "texto-tom", "name": "Texto com tom e ícone", "when": "Interfaces densas e direções de linha fina, em que menos forma é melhor.", "anatomy": "Valor tabular + ícone de 14px; a cor muda só no estado de atenção ou atraso.", "avoid": "Depender só da cor para comunicar o atraso."}
+    ]
+  },
+  {
+    "id": "estado-do-item",
+    "name": "Estado de um registro",
+    "needs": ["status-tracker", "data-table"],
+    "problem": "Comunicar estado (aguardando, aprovado, falha) sem arco-íris de pílulas.",
+    "options": [
+      {"id": "badge-tingido", "name": "Badge tingido", "when": "Estados distintos que precisam ser lidos em listas.", "anatomy": "Fundo --{tom}-surface, borda --{tom}-border, texto e ícone --{tom}-text; raio da linguagem de forma do projeto.", "avoid": "Repetir o mesmo badge em todos os itens de uma aba que já filtra aquele estado."},
+      {"id": "ponto-com-halo", "name": "Ponto com halo e rótulo", "when": "Estados vivos (online, processando, em atendimento).", "anatomy": "Ponto de 6–8px com halo de 3px a ~24% do tom, rótulo em texto normal.", "avoid": "Ponto sem rótulo ou animado sem estado real."},
+      {"id": "texto-icone", "name": "Ícone e texto, sem cápsula", "when": "Tabelas muito densas e direções minimalistas.", "anatomy": "Ícone semântico de 14px + texto; cápsula só nas exceções.", "avoid": "Ícone genérico de alerta para todo estado."}
+    ]
+  },
+  {
+    "id": "identidade-de-entidade",
+    "name": "Identidade de entidade em listas (empresa, banco, cliente)",
+    "needs": ["icons-brand", "avatar", "data-table"],
+    "problem": "Diferenciar entidades sem repetir o mesmo ícone genérico.",
+    "options": [
+      {"id": "logo-oficial", "name": "Logo oficial", "when": "Marcas conhecidas e integrações (bancos, canais, serviços).", "anatomy": "SVG da marca (Simple Icons, SVGL) em caixa neutra de 24–32px.", "avoid": "Recolorir logos de terceiros ou usá-los fora das regras da marca."},
+      {"id": "monograma", "name": "Monograma tipográfico", "when": "Entidades sem logo ou internas.", "anatomy": "Sigla de 2–3 letras na fonte do projeto, fundo com tom derivado da entidade.", "avoid": "Gerar cores aleatórias que brigam com a semântica."},
+      {"id": "icone-em-emblema", "name": "Ícone de categoria em emblema", "when": "Quando a categoria importa mais que a entidade.", "anatomy": "Ícone da família do projeto em caixa com tom suave; no máximo um emblema por linha.", "avoid": "Emblema em todo ícone da tela: vira o template de 'ícone em quadrado colorido'."}
+    ]
+  },
+  {
+    "id": "metadados",
+    "name": "Pares chave e valor",
+    "needs": ["data-table", "kpi-card"],
+    "problem": "Mostrar metadados (protocolo, turno, nota) sem caixinhas iguais competindo.",
+    "options": [
+      {"id": "chip-bipartido", "name": "Chip bipartido", "when": "Poucos pares importantes ao lado de um título.", "anatomy": "Compartimento do rótulo em superfície recuada e do valor em superfície elevada ou tom semântico.", "avoid": "Mais de 3 chips em sequência."},
+      {"id": "lista-de-definicao", "name": "Lista de definição em grade", "when": "Painéis de detalhe com muitos campos.", "anatomy": "Grade de 2 colunas, rótulo discreto acima ou à esquerda, valor forte; alinhamento comum.", "avoid": "Cada par dentro do próprio cartão."},
+      {"id": "faixa-de-metadados", "name": "Faixa de metadados", "when": "Cabeçalho de documento ou conferência.", "anatomy": "Uma linha com separadores finos e espaço constante.", "avoid": "Códigos técnicos que o usuário final não usa."}
+    ]
+  },
+  {
+    "id": "ranking-e-composicao",
+    "name": "Ranking e composição",
+    "needs": ["categorical", "kpi-card", "sparkline"],
+    "problem": "Comparar valores sem uma lista seca de números.",
+    "options": [
+      {"id": "bar-list", "name": "Lista com barra proporcional", "when": "Top N e participação por categoria.", "anatomy": "Barra translúcida atrás do rótulo com largura proporcional ao valor, valor e % alinhados à direita.", "avoid": "Piso visual artificial que distorce a proporção."},
+      {"id": "barra-segmentada", "name": "Barra segmentada", "when": "Composição de um total em 3–6 partes.", "anatomy": "Uma barra com segmentos da paleta de gráfico e legenda alinhada.", "avoid": "Mais de 6 segmentos."},
+      {"id": "tracker", "name": "Faixa de blocos de status", "when": "Saúde ao longo do tempo (uptime, SLA diário, validade).", "anatomy": "24–45 blocos com tooltip por bloco; tom semântico só nos desvios.", "avoid": "Faixa decorativa sem leitura acessível fora do hover."}
+    ]
+  },
+  {
+    "id": "serie-temporal-densa",
+    "name": "Série temporal com pouca variação",
+    "needs": ["timeseries", "financial"],
+    "problem": "Evitar o gráfico 'tutorial': linha reta no topo e área morta até o zero.",
+    "options": [
+      {"id": "combo-barras-linha", "name": "Barras de entrada e saída + linha de saldo", "when": "Fluxo de caixa, estoque, capacidade.", "anatomy": "Barras diárias positivas e negativas, linha suave do acumulado, eixo Y ajustado à faixa real e cabeçalho que mostra o valor sob o cursor.", "avoid": "Eixo Y travado em zero quando a série varia pouco."},
+      {"id": "area-com-faixa", "name": "Área com faixa de meta", "when": "Indicador com limite mínimo ou alvo.", "anatomy": "Área de baixa opacidade, faixa sombreada da meta e anotações nos pontos críticos.", "avoid": "Gradiente forte que esconde a leitura."},
+      {"id": "linha-anotada", "name": "Linha com anotações", "when": "Leitura editorial e relatórios.", "anatomy": "Linha fina, rótulos diretos no fim das séries e marcos de evento.", "avoid": "Legenda separada quando o rótulo direto resolve."}
+    ]
+  },
+  {
+    "id": "cascata",
+    "name": "Formação de um resultado",
+    "needs": ["financial", "categorical"],
+    "problem": "Explicar como um valor inicial vira um resultado.",
+    "options": [
+      {"id": "waterfall-conectado", "name": "Cascata com conectores", "when": "Resultado financeiro, orçamento, funil de margem.", "anatomy": "Barras flutuantes com linhas conectoras tracejadas, cor por função, sinal de menos só em deduções e % sobre o total.", "avoid": "Todas as barras da mesma cor ou sinal negativo em subtotais positivos."},
+      {"id": "tabela-com-barras", "name": "Tabela com barras embutidas", "when": "Muitas linhas ou leitura precisa.", "anatomy": "Tabela com coluna de barra proporcional e subtotais destacados.", "avoid": "Gráfico onde a tabela lê melhor."}
+    ]
+  },
+  {
+    "id": "fila-para-detalhe",
+    "name": "Da lista ao detalhe",
+    "needs": ["data-table", "drawer-sheet", "split-panes"],
+    "problem": "Abrir o detalhe de um item sem despejar tudo na tela de uma vez.",
+    "options": [
+      {"id": "resize-na-mesma-area", "name": "Detalhe na mesma área (resize in-place)", "when": "Filas de conferência e aprovação, em que a pessoa decide item a item.", "anatomy": "A lista ocupa a área toda; ao abrir, recolhe para um trilho estreito e o detalhe assume, com voltar, anterior e próximo.", "avoid": "Usar em telas de consulta em que a pessoa compara vários itens."},
+      {"id": "master-detail", "name": "Lista e detalhe lado a lado", "when": "Consulta frequente com comparação (catálogos, mensagens).", "anatomy": "Painéis redimensionáveis; o detalhe guarda a seleção ao trocar de item.", "avoid": "Detalhe com 1 linha e um vazio enorme."},
+      {"id": "drawer-lateral", "name": "Drawer lateral", "when": "Detalhe secundário que não pede foco total.", "anatomy": "Drawer de 400–520px, fecha com Esc e devolve o foco à linha.", "avoid": "Drawer sobre drawer."},
+      {"id": "pagina-dedicada", "name": "Página dedicada", "when": "Detalhe longo, compartilhável por link.", "anatomy": "Rota própria com breadcrumb e volta para a posição da lista.", "avoid": "Perder filtros e rolagem ao voltar."}
+    ]
+  },
+  {
+    "id": "barra-de-decisao",
+    "name": "Ações de decisão",
+    "needs": ["dialog", "form-state"],
+    "problem": "Manter aprovar, devolver e recusar visíveis e sem competir.",
+    "options": [
+      {"id": "rodape-estrutural", "name": "Rodapé estrutural do painel", "when": "Painéis de conferência com corpo rolável.", "anatomy": "Contêiner em coluna: corpo com rolagem própria e rodapé fixo (flex-shrink: 0) com uma ação primária e as demais secundárias.", "avoid": "Barra flutuando sobre o conteúdo ou controles de demonstração junto das ações reais."},
+      {"id": "acoes-no-cabecalho", "name": "Ações no cabeçalho do detalhe", "when": "Detalhes curtos que cabem na dobra.", "anatomy": "Primária à direita do título, destrutiva separada.", "avoid": "Três botões de mesmo peso."}
+    ]
+  },
+  {
+    "id": "feedback-com-desfazer",
+    "name": "Confirmação reversível",
+    "needs": ["toast"],
+    "problem": "Confirmar uma ação sem bloquear e permitir voltar atrás.",
+    "options": [
+      {"id": "toast-desfazer", "name": "Toast com Desfazer", "when": "Ações reversíveis (arquivar, mover, aprovar).", "anatomy": "Mensagem factual com o objeto da ação, botão Desfazer real e tempo visível.", "avoid": "Toast cobrindo a área de decisão ou a próxima ação."},
+      {"id": "estado-inline", "name": "Confirmação no próprio item", "when": "Listas em que o resultado aparece no lugar.", "anatomy": "O item muda de estado com transição curta e oferece desfazer no lugar.", "avoid": "Remover o item sem rastro."}
+    ]
+  },
+  {
+    "id": "confirmacao-destrutiva",
+    "name": "Ação destrutiva",
+    "needs": ["dialog"],
+    "problem": "Evitar perdas sem transformar tudo em modal.",
+    "options": [
+      {"id": "dialogo-com-consequencia", "name": "Diálogo que diz a consequência", "when": "Ações irreversíveis.", "anatomy": "Título com o verbo e o objeto, consequência em uma frase, botão destrutivo com o mesmo verbo.", "avoid": "'Tem certeza?' genérico."},
+      {"id": "digitar-para-confirmar", "name": "Digitar para confirmar", "when": "Exclusões em massa ou de alto impacto.", "anatomy": "Campo que pede o nome do objeto.", "avoid": "Usar em ações comuns."}
+    ]
+  },
+  {
+    "id": "estado-vazio",
+    "name": "Estado vazio",
+    "needs": ["empty-state", "illustration"],
+    "problem": "Transformar ausência de dados em próximo passo.",
+    "options": [
+      {"id": "vazio-acionavel", "name": "Vazio com ação", "when": "Primeiro uso e listas sem itens.", "anatomy": "O que é, por que está vazio e a próxima ação; ilustração só se tiver função.", "avoid": "Ilustração enorme sem ação."},
+      {"id": "vazio-de-filtro", "name": "Vazio de filtro", "when": "Buscas sem resultado.", "anatomy": "Mostra os filtros ativos e um botão para limpar.", "avoid": "Mesmo texto do vazio de primeiro uso."}
+    ]
+  },
+  {
+    "id": "kanban",
+    "name": "Quadro por etapas",
+    "needs": ["kanban"],
+    "problem": "Mover itens entre etapas com leitura de volume e valor.",
+    "options": [
+      {"id": "colunas-em-poco", "name": "Colunas recuadas com resumo", "when": "Funis comerciais e operacionais.", "anatomy": "Colunas em superfície recuada com contagem e soma no topo; cartões elevados; teclado para mover.", "avoid": "Cartões com toda a ficha do item."},
+      {"id": "lista-agrupada", "name": "Lista agrupada por etapa", "when": "Mobile ou muitas etapas.", "anatomy": "Grupos recolhíveis com contagem e ação de mover no menu.", "avoid": "Kanban horizontal espremido em 390px."}
+    ]
+  },
+  {
+    "id": "importacao",
+    "name": "Importar arquivo",
+    "needs": ["file-upload", "data-import"],
+    "problem": "Receber arquivos e mostrar o que vai acontecer com eles.",
+    "options": [
+      {"id": "dropzone-com-previa", "name": "Dropzone com prévia", "when": "CSV, extratos, planilhas.", "anatomy": "Área de soltar com formatos aceitos, prévia das primeiras linhas e mapeamento de colunas antes de confirmar.", "avoid": "Importar direto sem revisão."},
+      {"id": "anexo-em-linha", "name": "Anexo em linha", "when": "Comprovantes e documentos de um registro.", "anatomy": "Botão de anexar no campo, miniatura e estado de envio.", "avoid": "Upload sem progresso nem erro recuperável."}
+    ]
+  },
+  {
+    "id": "inbox-atendimento",
+    "name": "Atendimento por conversas",
+    "needs": ["chat-ui"],
+    "problem": "Priorizar conversas e manter o contexto à mão.",
+    "options": [
+      {"id": "inbox-duas-colunas", "name": "Fila + conversa, contexto sob demanda", "when": "Atendimento com prazo de resposta.", "anatomy": "Coluna de fila de 300–340px, conversa em 1fr, ficha do cliente em drawer.", "avoid": "Três colunas fixas que esmagam a conversa em 1024px."},
+      {"id": "inbox-tres-colunas", "name": "Três colunas a partir de 1440px", "when": "Telas largas e ficha consultada o tempo todo.", "anatomy": "Ficha fixa só quando a largura útil passa de ~1400px; abaixo vira drawer.", "avoid": "Larguras fixas que somam mais que a viewport mínima."}
+    ]
+  },
+  {
+    "id": "acesso",
+    "name": "Login e acesso",
+    "needs": ["auth", "otp-input"],
+    "problem": "Entrar rápido com a marca presente sem poluir.",
+    "options": [
+      {"id": "split-marca", "name": "Tela dividida com painel da marca", "when": "Produtos com identidade forte.", "anatomy": "Painel da marca com uma mensagem real; formulário curto com label visível e OTP quando houver.", "avoid": "Slogan de IA ou ilustração genérica no painel."},
+      {"id": "cartao-central", "name": "Cartão central", "when": "Ferramentas internas e direções minimalistas.", "anatomy": "Logo, campos e uma ação; links de ajuda discretos.", "avoid": "Cartão flutuando num gradiente roxo."}
+    ]
+  },
+  {
+    "id": "resumo-mobile",
+    "name": "Resumo no topo do app",
+    "needs": ["mobile-kit", "kpi-card", "bottom-sheet"],
+    "problem": "Dar contexto no topo sem empurrar a lista de trabalho para fora da dobra.",
+    "options": [
+      {"id": "cabecalho-compacto", "name": "Cabeçalho compacto + lista", "when": "Apps operacionais.", "anatomy": "Uma linha de resumo e avisos condensados; o primeiro item da lista aparece na dobra.", "avoid": "Dois banners grandes antes da lista."},
+      {"id": "resumo-em-sheet", "name": "Resumo expansível em sheet", "when": "Muitos indicadores.", "anatomy": "Chip de resumo que abre uma sheet com o detalhe.", "avoid": "Carrossel de KPIs."}
+    ]
+  },
+  {
+    "id": "hero-de-site",
+    "name": "Abertura de site",
+    "needs": ["hero"],
+    "problem": "Dizer o que é, para quem e por que agora em poucos segundos.",
+    "options": [
+      {"id": "hero-produto", "name": "Promessa + produto real", "when": "SaaS e apps.", "anatomy": "Título concreto, uma frase de apoio, uma ação primária e a interface real em contexto.", "avoid": "Mockup genérico, gradiente roxo, blobs e 'Transforme seu negócio'."},
+      {"id": "hero-editorial", "name": "Tipografia editorial e imagem", "when": "Marcas, serviços e conteúdo.", "anatomy": "Tipografia grande com personalidade, fotografia ou ilustração com direção de arte e grade assimétrica.", "avoid": "Imagem de banco sem relação com o negócio."},
+      {"id": "hero-demonstracao", "name": "Demonstração de uma ação", "when": "Quando o valor está numa interação.", "anatomy": "Uma ação e seu resultado em loop curto, com quadro estático no reduced motion.", "avoid": "Animação que esconde o texto."}
+    ]
+  },
+  {
+    "id": "prova-social",
+    "name": "Prova social",
+    "needs": ["social-proof"],
+    "problem": "Dar credibilidade sem inventar.",
+    "options": [
+      {"id": "numeros-reais", "name": "Números reais com fonte", "when": "Há dados verificáveis.", "anatomy": "2–4 números com rótulo e contexto.", "avoid": "Números inventados ou arredondados demais."},
+      {"id": "depoimento-real", "name": "Depoimento com nome e contexto", "when": "Há clientes que autorizaram.", "anatomy": "Citação curta, nome, cargo e empresa.", "avoid": "Depoimentos fictícios e faixas de logos falsas."}
+    ]
+  },
+  {
+    "id": "precos",
+    "name": "Planos e preços",
+    "needs": ["pricing"],
+    "problem": "Comparar planos sem ruído.",
+    "options": [
+      {"id": "tres-planos", "name": "Três planos com destaque", "when": "Ofertas simples.", "anatomy": "Plano recomendado destacado por borda ou superfície, preço tabular e diferenças em lista curta.", "avoid": "Selo 'Mais popular' em mais de um plano."},
+      {"id": "tabela-comparativa", "name": "Tabela comparativa", "when": "Muitos recursos.", "anatomy": "Cabeçalho fixo e grupos recolhíveis.", "avoid": "Marcas de check em todas as células."}
+    ]
+  }
+]

@@ -1,0 +1,208 @@
+[
+ {
+  "id": "excalidraw",
+  "name": "Excalidraw",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://excalidraw.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "canvas-diagrams"
+  ],
+  "needs": [
+   "whiteboard"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @excalidraw/excalidraw",
+  "summary": "Quadro branco com traco feito a mao.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "xyflow",
+  "name": "React Flow / Svelte Flow (xyflow)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://xyflow.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react",
+   "svelte"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "canvas-diagrams"
+  ],
+  "needs": [
+   "node-editor"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @xyflow/react",
+  "summary": "Editores de nos, automações e fluxos.",
+  "a11y": "",
+  "notes": "Exemplos Pro são pagos; a biblioteca e MIT.",
+  "installs": {
+   "react": "npm install @xyflow/react",
+   "svelte": "npm install @xyflow/svelte"
+  }
+ },
+ {
+  "id": "tldraw",
+  "name": "tldraw",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://tldraw.dev",
+  "repo": "",
+  "license": "tldraw license (comercial; marca d'água)",
+  "license_status": "trap",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "canvas-diagrams"
+  ],
+  "needs": [
+   "whiteboard"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "",
+  "summary": "SDK de canvas excelente, mas sem licença permissiva.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "mermaid",
+  "name": "Mermaid",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://mermaid.js.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "canvas-diagrams"
+  ],
+  "needs": [
+   "diagram"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install mermaid",
+  "summary": "Diagramas a partir de texto.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "rete-js",
+  "name": "Rete.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://retejs.org",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "angular"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "canvas-diagrams"
+  ],
+  "needs": [
+   "node-editor"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install rete rete-area-plugin rete-connection-plugin",
+  "summary": "Editor visual de programação por nos.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install rete rete-area-plugin rete-connection-plugin rete-react-plugin",
+   "vue": "npm install rete rete-area-plugin rete-connection-plugin rete-vue-plugin",
+   "angular": "npm install rete rete-area-plugin rete-connection-plugin rete-angular-plugin"
+  }
+ }
+]

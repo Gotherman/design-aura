@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Motor offline BM25 de inteligencia de design da skill Design Aura.
 
-Consulta os catalogos locais (domains.json, typography.json, components_oss.json,
-patterns.json) sem dependencias externas ou acesso a rede.
+Consulta os catalogos locais (domains.json, typography.json, patterns.json e a base
+pre-categorizada data/catalog/) sem dependencias externas ou acesso a rede. Tudo o que
+sai daqui e hipotese: a marca, o fluxo real e a direcao escolhida prevalecem.
 """
 import argparse
 import json
@@ -102,7 +103,9 @@ def rank_items(
 def build_report(query: str, platform: str, stack: str, top: int) -> dict:
     domains = load_json("domains.json")
     typography = load_json("typography.json")
-    components = load_json("components_oss.json")
+    from discover_oss_components import load_catalog, stack_ok  # import tardio evita ciclo
+
+    components = [c for c in load_catalog() if c["kind"] not in {"gallery", "anatomy", "official", "study", "license-trap"} and c["license_ok"]]
     patterns = load_json("patterns.json")
 
     typo_map = {t["id"]: t for t in typography}
@@ -126,7 +129,16 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
             if tid in typo_map and tid not in preferred_typo_ids:
                 preferred_typo_ids.append(tid)
 
-    top_typography = [typo_map[tid] for tid in preferred_typo_ids[:top]]
+    # Uma familia por personalidade: a direcao compara opcoes de fato diferentes.
+    top_typography, seen_pers = [], set()
+    for tid in preferred_typo_ids:
+        t = typo_map[tid]
+        if t.get("personality") in seen_pers:
+            continue
+        seen_pers.add(t.get("personality"))
+        top_typography.append(t)
+        if len(top_typography) >= top:
+            break
     if len(top_typography) < top:
         more_typo = rank_items(
             typography,
@@ -150,17 +162,12 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
     )
 
     def stack_filter(c: dict) -> bool:
-        if stack == "all":
-            return True
-        c_stack = c.get("stack", "all")
-        if isinstance(c_stack, list):
-            return stack in c_stack or "all" in c_stack
-        return c_stack in (stack, "all")
+        return stack_ok(c, stack)
 
     top_components = rank_items(
         components,
-        f"{query} {stack}",
-        lambda c: f"{c['name']} {c['stack']} {c['category']} {c['use_case']}",
+        query,
+        lambda c: f"{c['name']} {' '.join(c.get('needs', []))} {' '.join(c.get('categories', []))} {c['use_case']}",
         platform=platform,
         extra_filter=stack_filter,
         top=max(5, top + 2),
@@ -185,28 +192,23 @@ def format_markdown(report: dict) -> str:
         "## 1. Domínios & Direções (hipótese, a confirmar)",
     ]
     for i, d in enumerate(report["domains"], 1):
-        pl = d["palette_light"]
-        pd = d["palette_dark"]
+        ideas = " · ".join(f"`{c['seed']}` + `{c['accent']}` ({c['harmony']}: {c['why']})" for c in d.get("color_ideas", []))
         lines.extend([
             f"### {i}. {d['name']} (`{d['id']}`)",
-            f"- **Modo de Superfície:** `{d['surface_mode']}` · **Densidade:** `{d['density']}` · **Plataformas:** `{', '.join(d['platforms'])}`",
-            f"- **Arquétipo de Layout:** {d['layout_archetype']}",
-            f"- **Light Mode (Aterrado Nítido):** Z0 `{pl['z0_well']}` | Z1 `{pl['z1_canvas']}` | Z2 `{pl['z2_card']}` | Borda `{pl.get('border', '#B4C1D1')}` | 30% `{pl['primary_30']}` | 10% `{pl['accent_10']}` | Texto `{pl['text_strong']}` / `{pl['text_muted']}`",
-            f"- **Dark Mode (Equilíbrio 65/20/10/5 com Subtom Sutil):** Z0 `{pd['z0_well']}` | Z1 `{pd['z1_canvas']}` | Z2 `{pd['z2_card']}` | Borda `{pd.get('border', '#263347')}` | 30% `{pd['primary_30']}` | 10% `{pd['accent_10']}` | Texto `{pd['text_strong']}` / `{pd['text_muted']}`",
-            f"- **Paleta Categórica Harmônica (6 Cores `--chart-1..6`):** `{', '.join(d.get('chart_palette', []))}`",
-            f"- **3 Zonas de Presença da Marca ('Estou Aqui!'):** {' · '.join(d.get('brand_presence_zones', []))}",
-            f"- **Assinaturas Visuais:** {'; '.join(d.get('signature_moves', []))}",
-            f"- **Anti-Padrões do Domínio:** {'; '.join(d.get('anti_patterns', []))}",
+            f"- **Modo:** `{d['surface_mode']}` · **Densidade:** `{d['density']}` · **Plataformas:** `{', '.join(d['platforms'])}` · **Profundidade sugerida:** {d.get('depth_hint', '')}",
+            f"- **Arquétipo provável:** {d['layout_archetype']}",
+            f"- **Sementes de cor (gere a paleta com `generate_tokens.py --seed`):** {ideas}",
+            f"- **Assinaturas possíveis:** {'; '.join(d.get('signature_moves', []))}",
+            f"- **Erros comuns do setor:** {'; '.join(d.get('anti_patterns', []))}",
             "",
         ])
 
-    lines.append("## 2. Combinações Tipográficas & Regra Numérica")
+    lines.append("## 2. Tipografia: uma opção por personalidade")
     for t in report["typography"]:
         lines.append(
-            f"- **{t['name']}** (`{t['id']}`): {t['mood']} · Display tracking `{t['tracking_display']}` · Medida `{t['body_measure']}`"
+            f"- **{t['name']}** (`{t['id']}` · {t.get('personality', '')} · {t.get('license', '')}): {t['mood']} · tracking de display `{t['tracking_display']}` · medida `{t['body_measure']}`"
         )
-        if t.get("numeric_rule"):
-            lines.append(f"  - *Regra de Números vs Códigos:* {t['numeric_rule']}")
+    lines.append("- Teste cada opção com conteúdo real do projeto: números, nomes longos e acentos (ç, ã, õ).")
     lines.append("")
 
     lines.append("## 3. Padrões de Arquitetura & Interação")
@@ -216,11 +218,11 @@ def format_markdown(report: dict) -> str:
         lines.append(f"  - Evitar: {'; '.join(p['avoid'])}")
     lines.append("")
 
-    lines.append("## 4. Arsenal Open-Source Recomendado")
+    lines.append("## 4. Componentes relacionados (amostra da base)")
     for c in report["components_oss"]:
-        lines.append(f"- **{c['name']}** (`{c['stack']}` · {c['license']} · {c['url']}): {c['use_case']}")
+        lines.append(f"- **{c['name']}** (`{','.join(c.get('stack', []))}` · {c['license']} · {c['url']}): {c['use_case']}")
     lines.append("")
-    lines.append("Para mapear automaticamente as 16 categorias de elementos UI/UX do projeto, rode `discover_oss_components.py --scan <caminho-do-projeto> --stack <stack> --platform <platform> --mode operate`.")
+    lines.append("Para mapear as necessidades do projeto inteiro na base pre-categorizada, rode `discover_oss_components.py --scan <caminho-do-projeto> --stack <stack> --platform <platform> --mode <modo>`.")
 
     return "\n".join(lines)
 
@@ -237,7 +239,7 @@ def main():
     parser.add_argument(
         "--stack",
         default="all",
-        choices=["all", "html", "react", "vue", "svelte", "electron", "tauri", "rn", "flutter", "ios", "android"],
+        choices=["all", "html", "react", "next", "vue", "nuxt", "svelte", "solid", "angular", "electron", "tauri", "rn", "expo", "flutter", "ios", "android"],
         help="Filtrar bibliotecas OSS por stack",
     )
     parser.add_argument("--top", type=int, default=3, help="Quantidade maxima de dominios/tipografias")

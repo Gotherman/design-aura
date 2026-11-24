@@ -1,0 +1,696 @@
+[
+ {
+  "id": "animate-ui",
+  "name": "Animate UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://animate-ui.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion",
+   "foundations"
+  ],
+  "needs": [
+   "animation-lib",
+   "layout-animation",
+   "styled-kit"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "copiar via shadcn CLI conforme a página do componente",
+  "summary": "Primitivos do shadcn com Motion, mantendo acessibilidade.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "anime-js",
+  "name": "Anime.js v4",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://animejs.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib",
+   "scroll-motion",
+   "text-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install animejs",
+  "summary": "Animação leve com timeline, scroll e SVG.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "auto-animate",
+  "name": "AutoAnimate (@formkit/auto-animate)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://auto-animate.formkit.com",
+  "repo": "https://github.com/formkit/auto-animate",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "layout-animation"
+  ],
+  "keywords": [
+   "motion",
+   "animacao",
+   "lista",
+   "filtro",
+   "tabela",
+   "kanban",
+   "transicao"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @formkit/auto-animate",
+  "summary": "Adiciona transições suaves automáticas (1 linha de JS, 2 KB) ao filtrar tabelas, reordenar linhas, abrir detalhes ou mover cards",
+  "a11y": "Respeita automaticamente prefers-reduced-motion do sistema operacional",
+  "notes": ""
+ },
+ {
+  "id": "dotlottie",
+  "name": "dotLottie players",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://developers.lottiefiles.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "rn",
+   "ios",
+   "android",
+   "flutter"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "vector-animation"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @lottiefiles/dotlottie-web",
+  "summary": "Players Lottie modernos para web e nativo.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @lottiefiles/dotlottie-react",
+   "rn": "npm install @lottiefiles/dotlottie-react-native"
+  }
+ },
+ {
+  "id": "gsap",
+  "name": "GSAP",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://gsap.com",
+  "repo": "",
+  "license": "GSAP Standard No-Charge License",
+  "license_status": "free-license",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib",
+   "scroll-motion",
+   "text-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install gsap",
+  "summary": "Animação de alto nível, incluindo SplitText e ScrollTrigger, gratuita desde 2025.",
+  "a11y": "",
+  "notes": "Gratuita mas proprietária; proibido em ferramentas no-code que concorram com o Webflow."
+ },
+ {
+  "id": "motion-framer",
+  "name": "Motion (ex-Framer Motion)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://motion.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib",
+   "layout-animation",
+   "page-transition"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install motion",
+  "summary": "Transições interrompíveis de layout e AnimatePresence com respeito a reduced-motion",
+  "a11y": "Suporta MotionConfig reducedMotion='user'",
+  "notes": ""
+ },
+ {
+  "id": "motion-primitives",
+  "name": "Motion Primitives",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://motion-primitives.com",
+  "repo": "https://github.com/ibelick/motion-primitives",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib",
+   "text-motion",
+   "layout-animation"
+  ],
+  "keywords": [
+   "dialog motion",
+   "text effect",
+   "disclosure",
+   "shared element"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 3,
+  "install": "npx motion-primitives@latest add dialog",
+  "summary": "Movimento interrompível para superficies de leitura ou persuasao, nunca como enfeite de cockpit",
+  "a11y": "Respeite prefers-reduced-motion e o guia 10",
+  "notes": ""
+ },
+ {
+  "id": "rive",
+  "name": "Rive (runtimes)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://rive.app",
+  "repo": "",
+  "license": "MIT (runtimes; editor proprietário)",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "rn",
+   "ios",
+   "android",
+   "flutter"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "vector-animation"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @rive-app/canvas",
+  "summary": "Animações interativas com estados (mascote, aviao, carimbo).",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @rive-app/react-canvas",
+   "rn": "npm install rive-react-native",
+   "flutter": "flutter pub add rive"
+  }
+ },
+ {
+  "id": "view-transitions",
+  "name": "View Transitions API",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://developer.mozilla.org/docs/Web/API/View_Transition_API",
+  "repo": "",
+  "license": "padrão web",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "page-transition"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "nativo do navegador, sem instalação",
+  "summary": "Transições nativas entre estados e rotas.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "animata",
+  "name": "Animata",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://animata.design",
+  "repo": "https://github.com/codse/animata",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "motion",
+   "effects"
+  ],
+  "needs": [
+   "text-motion",
+   "decorative-effects",
+   "hero"
+  ],
+  "keywords": [
+   "hero",
+   "text reveal",
+   "landing motion"
+  ],
+  "style": {
+   "skin": "tailwind",
+   "motion": "expressive"
+  },
+  "flashy": true,
+  "craft": 2,
+  "install": "copiar o componente e re-tematizar",
+  "summary": "Animações de apresentação. Confirme o arquivo LICENSE no commit",
+  "a11y": "Não usar em Operate",
+  "notes": ""
+ },
+ {
+  "id": "css-scroll-driven",
+  "name": "CSS scroll-driven animations",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://developer.mozilla.org/docs/Web/CSS/CSS_scroll-driven_animations",
+  "repo": "",
+  "license": "padrão web",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "scroll-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "nativo do navegador, sem instalação",
+  "summary": "Animação ligada a rolagem sem JS.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "lenis",
+  "name": "Lenis",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://lenis.darkroom.engineering",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "scroll-motion"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install lenis",
+  "summary": "Rolagem suave para sites.",
+  "a11y": "",
+  "notes": "Altera a física nativa da rolagem; só em Persuade e respeitando reduced motion."
+ },
+ {
+  "id": "lottie-web",
+  "name": "lottie-web",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/airbnb/lottie-web",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "vector-animation"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install lottie-web",
+  "summary": "Player de animações Lottie.",
+  "a11y": "",
+  "notes": "",
+  "stale": true
+ },
+ {
+  "id": "react-spring",
+  "name": "React Spring",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.react-spring.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react",
+   "rn"
+  ],
+  "platforms": [
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @react-spring/web",
+  "summary": "Animações por mola.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @react-spring/web",
+   "rn": "npm install @react-spring/native"
+  }
+ },
+ {
+  "id": "smooth-ui",
+  "name": "Smooth UI",
+  "kind": "registry",
+  "use": "copy",
+  "url": "https://smoothui.dev",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "verify",
+  "license_checked_at": null,
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "tailwind",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "copiar via shadcn CLI conforme a página do componente",
+  "summary": "Microinterações prontas.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "theatre-js",
+  "name": "Theatre.js",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.theatrejs.com",
+  "repo": "",
+  "license": "Apache-2.0 (núcleo)",
+  "license_status": "verify",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade"
+  ],
+  "categories": [
+   "motion"
+  ],
+  "needs": [
+   "animation-lib"
+  ],
+  "keywords": [],
+  "style": {
+   "motion": "expressive"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @theatre/core @theatre/studio",
+  "summary": "Editor visual de sequencias de animação.",
+  "a11y": "",
+  "notes": "",
+  "stale": true
+ }
+]

@@ -1,0 +1,400 @@
+[
+ {
+  "id": "floating-ui",
+  "name": "Floating UI",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://floating-ui.com",
+  "repo": "floating-ui/floating-ui",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback"
+  ],
+  "needs": [
+   "popover-tooltip",
+   "context-menu"
+  ],
+  "keywords": [
+   "popover",
+   "tooltip",
+   "dropdown",
+   "menu",
+   "context menu",
+   "ancorado",
+   "overlay"
+  ],
+  "style": {
+   "skin": "headless",
+   "motion": "none"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @floating-ui/dom",
+  "summary": "Posicionamento inteligente sem corte de viewport para popovers, menus contextuais, tooltips e seletores em HTML/JS ou React",
+  "a11y": "Sempre gerencie foco, aria-expanded e fechamento por Esc junto do posicionamento",
+  "notes": "",
+  "installs": {
+   "react": "npm install @floating-ui/react",
+   "vue": "npm install @floating-ui/vue"
+  }
+ },
+ {
+  "id": "html-native-overlays",
+  "name": "HTML nativo: dialog, Popover API, details",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://developer.mozilla.org/docs/Web/API/Popover_API",
+  "repo": "",
+  "license": "padrão web",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "html"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback",
+   "foundations"
+  ],
+  "needs": [
+   "dialog",
+   "popover-tooltip",
+   "drawer-sheet",
+   "web-components"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "nativo do navegador, sem instalação (<dialog> e popover)",
+  "summary": "Use antes de instalar algo em protótipos estáticos: dialog modal, popover e disclosure nativos.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "sonner",
+  "name": "Sonner",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://sonner.emilkowal.ski",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback"
+  ],
+  "needs": [
+   "toast"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install sonner",
+  "summary": "Toasts empilháveis com botão de Desfazer imediato após ações críticas",
+  "a11y": "aria-live polite/assertive com pausa no hover e foco",
+  "notes": ""
+ },
+ {
+  "id": "vaul",
+  "name": "Vaul",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://vaul.emilkowal.ski",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "mobile",
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback",
+   "mobile-native"
+  ],
+  "needs": [
+   "drawer-sheet",
+   "bottom-sheet"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "headless",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install vaul",
+  "summary": "Bottom sheet tátil com física de arrasto estilo iOS para mobile web e PWA",
+  "a11y": "Dialog trap e fechamento por Esc/arrasto com snap points",
+  "notes": "Confirme se o projeto segue mantido antes de adotar.",
+  "stale": true
+ },
+ {
+  "id": "driver-js",
+  "name": "Driver.js (Focus Highlight & Onboarding Tour)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://driverjs.com",
+  "repo": "https://github.com/kamranahmedse/driver.js",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "overlays-feedback",
+   "auth-settings"
+  ],
+  "needs": [
+   "tour",
+   "onboarding"
+  ],
+  "keywords": [
+   "tour",
+   "onboarding",
+   "popover",
+   "highlight",
+   "ajuda",
+   "guia"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install driver.js",
+  "summary": "Destaque de elementos e tour guiado (~5 KB, vanilla JS) para explicar novas rotinas operacionais ou destacar campos pendentes",
+  "a11y": "Gerencia trap de foco e fechamento por Esc",
+  "notes": ""
+ },
+ {
+  "id": "shepherd-js",
+  "name": "Shepherd.js",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://shepherdjs.dev",
+  "repo": "",
+  "license": "AGPL-3.0 / comercial",
+  "license_status": "trap",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback"
+  ],
+  "needs": [
+   "tour"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "",
+  "summary": "Tour guiado; licença mudou para AGPL + comercial.",
+  "a11y": "",
+  "notes": "Confirme a versão: as atuais não são permissivas."
+ },
+ {
+  "id": "intro-js",
+  "name": "Intro.js",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://introjs.com",
+  "repo": "",
+  "license": "AGPL-3.0 / comercial",
+  "license_status": "trap",
+  "license_checked_at": null,
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback"
+  ],
+  "needs": [
+   "tour"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 1,
+  "install": "",
+  "summary": "Tour guiado com licença AGPL + comercial.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "notyf",
+  "name": "Notyf (Minimal Accessible Vanilla Toasts)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://carlosroso.com/notyf/",
+  "repo": "https://github.com/caroso1222/notyf",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "overlays-feedback"
+  ],
+  "needs": [
+   "toast"
+  ],
+  "keywords": [
+   "toast",
+   "notificacao",
+   "feedback",
+   "alerta",
+   "html"
+  ],
+  "style": {
+   "skin": "themeable",
+   "motion": "subtle"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install notyf",
+  "summary": "Toasts leves (~3 KB, zero dependências) em HTML/JS puro com aria-live, facilmente combinados com botão Desfazer",
+  "a11y": "Anuncio a11y automático via role='alert' / aria-live='polite'",
+  "notes": "",
+  "stale": true
+ },
+ {
+  "id": "react-joyride",
+  "name": "React Joyride",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://react-joyride.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "react"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "overlays-feedback"
+  ],
+  "needs": [
+   "tour",
+   "onboarding"
+  ],
+  "keywords": [],
+  "style": {
+   "skin": "themeable"
+  },
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install react-joyride",
+  "summary": "Tour guiado para React.",
+  "a11y": "",
+  "notes": ""
+ }
+]

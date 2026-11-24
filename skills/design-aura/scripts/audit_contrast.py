@@ -486,7 +486,7 @@ def _evaluate_theme_pairs(tname: str, tmap: dict[str, str]) -> list[dict]:
 
 
 def audit_semantic_hue_parity(themes_map: dict[str, dict[str, str]]) -> list[dict]:
-    """Garante paridade de matiz semantico entre Light e Dark (v2.4.0): erro e vermelho nos dois modos, nunca rosa pastel."""
+    """Garante paridade de matiz semantico entre Light e Dark: erro e vermelho nos dois modos, nunca rosa pastel."""
     findings: list[dict] = []
     light_map = themes_map.get("light") or {}
     dark_map = themes_map.get("dark") or {}
@@ -582,9 +582,27 @@ def audit_semantic_hue_parity(themes_map: dict[str, dict[str, str]]) -> list[dic
     return findings
 
 
-def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
-    """Verifica equilibrio cromatico 65/20/10/5, profundidade real no Dark (anti-monobloco) e nitidez no Light."""
+# Limiares de separacao entre planos por estilo de profundidade (decidido na direcao).
+# Sao heuristicas: viram REVIEW pelo registro de regras e nunca bloqueiam a entrega.
+DEPTH_THRESHOLDS = {
+    "tactile": {"light_border": 1.85, "light_z1z2": 1.18, "dark_z2z1": 1.08, "dark_border": 1.25},
+    "hairline": {"light_border": 1.35, "light_z1z2": 1.02, "dark_z2z1": 1.04, "dark_border": 1.2},
+    "soft": {"light_border": 1.12, "light_z1z2": 1.03, "dark_z2z1": 1.06, "dark_border": 1.1},
+    "tonal": {"light_border": 1.0, "light_z1z2": 1.06, "dark_z2z1": 1.08, "dark_border": 1.0},
+}
+DEFAULT_DEPTH_STYLE = "tactile"
+
+
+def depth_style_of(tmap: dict[str, str], override: str | None = None) -> str:
+    style = (override or tmap.get("da-depth-style") or tmap.get("depth-style") or DEFAULT_DEPTH_STYLE).strip().strip("'\"").lower()
+    return style if style in DEPTH_THRESHOLDS else DEFAULT_DEPTH_STYLE
+
+
+def audit_theme_harmony(theme: str, tmap: dict[str, str], depth_style: str | None = None) -> list[dict]:
+    """Verifica separacao real entre planos (Dark sem monobloco, Light sem tudo-branco) conforme o estilo de profundidade."""
     findings: list[dict] = []
+    style = depth_style_of(tmap, depth_style)
+    th = DEPTH_THRESHOLDS[style]
     z1_val = _resolve_token_key(tmap, "surface-z1")
     z2_val = _resolve_token_key(tmap, "surface-z2")
     b_sub_val = _resolve_token_key(tmap, "border-subtle")
@@ -616,14 +634,14 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
                 "status": "FAIL",
                 "reason": (
                     f"DA-DARK-MONOCHROME: Superficies Dark saturadas demais (S={int(round(s1*100))}%/{int(round(s2*100))}%) "
-                    "no mesmo matiz da cor primaria (massa monocromatica pesada). Calibre Z0-Z3 para ardosia com subtom (S=24-35%) "
-                    "e puxe os tons fortes de azul/marca em --surface-brand-header, .card-brand-hero e controles .is-active."
+                    "no mesmo matiz da cor primaria (massa monocromatica). Reduza o croma dos neutros (generate_tokens.py --seed faz isso) "
+                    "e leve a marca para as zonas escolhidas na direcao (identidade, estado ativo, um destaque)."
                 ),
             })
 
         z2_vs_z1 = round(wcag_ratio(z2_rgb, z1_rgb), 2)
         border_vs_z2 = round(wcag_ratio(b_rgb, z2_rgb), 2)
-        if z2_vs_z1 < 1.08 or border_vs_z2 < 1.25:
+        if z2_vs_z1 < th["dark_z2z1"] or border_vs_z2 < th["dark_border"]:
             findings.append({
                 "theme": "dark",
                 "label": "DA-DARK-FLAT-MONOLITH (Z1->Z2 / border-subtle sem profundidade)",
@@ -635,16 +653,16 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
                 "severity": "HIGH",
                 "status": "FAIL",
                 "reason": (
-                    f"DA-DARK-FLAT-MONOLITH: Monobloco escuro sem divisao clara (Z2/Z1={z2_vs_z1}:1 < 1.08:1 ou "
-                    f"border-subtle/Z2={border_vs_z2}:1 < 1.25:1). Separe os planos Z0->Z4 com degrau nitido, borda >= 1.35:1 "
-                    "e cabecalhos/destaques no tom da marca (--surface-brand-header / --rim-highlight)."
+                    f"DA-DARK-FLAT-MONOLITH (estilo {style}): planos escuros sem divisao clara (Z2/Z1={z2_vs_z1}:1 < {th['dark_z2z1']}:1 ou "
+                    f"border-subtle/Z2={border_vs_z2}:1 < {th['dark_border']}:1). Aumente o degrau de luminosidade por plano ou a borda, "
+                    "conforme o estilo de profundidade da direcao, e confirme na captura."
                 ),
             })
 
     if theme == "light":
         border_vs_z2 = round(wcag_ratio(b_rgb, z2_rgb), 2)
         z1_vs_z2 = round(wcag_ratio(z1_rgb, z2_rgb), 2)
-        if border_vs_z2 < 1.85:
+        if border_vs_z2 < th["light_border"]:
             findings.append({
                 "theme": "light",
                 "label": "DA-LIGHT-WASHED-OUT (border-subtle sobre surface-z2)",
@@ -656,12 +674,11 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
                 "severity": "HIGH",
                 "status": "FAIL",
                 "reason": (
-                    f"DA-LIGHT-WASHED-OUT: Borda sutil clara demais no Light Mode ({border_vs_z2}:1 < 1.85:1 contra Z2), "
-                    "apagando contornos de cards e divisoes. Use border-subtle nitida (ideal 2.0-2.4:1, ex.: #93ABC7) "
-                    "com Z1 aterrado (#D9E5F3) e variacoes azul-claro/marinho da marca."
+                    f"DA-LIGHT-WASHED-OUT (estilo {style}): borda sutil fraca para este estilo ({border_vs_z2}:1 < {th['light_border']}:1 contra Z2). "
+                    "Se a separacao vem de sombra ou degrau, declare o estilo (--da-depth-style); se nao, reforce a borda e confirme na captura."
                 ),
             })
-        elif relative_luminance(z2_rgb) > 0.94 and z1_vs_z2 < 1.18:
+        elif relative_luminance(z2_rgb) > 0.94 and z1_vs_z2 < th["light_z1z2"]:
             findings.append({
                 "theme": "light",
                 "label": "DA-LIGHT-WASHED-OUT (surface-z1 colada em surface-z2)",
@@ -673,14 +690,16 @@ def audit_theme_harmony(theme: str, tmap: dict[str, str]) -> list[dict]:
                 "severity": "HIGH",
                 "status": "FAIL",
                 "reason": (
-                    f"DA-LIGHT-WASHED-OUT: Canvas Z1 claro demais frente aos cards brancos Z2 ({z1_vs_z2}:1 < 1.18:1), "
-                    "deixando a tela 'tudo branco'. Aterre surface-z1 (ex.: #D9E5F3) e surface-z0 (#C6D6EA) para profundidade real."
+                    f"DA-LIGHT-WASHED-OUT (estilo {style}): canvas Z1 colado nos cards Z2 ({z1_vs_z2}:1 < {th['light_z1z2']}:1), "
+                    "deixando a tela 'tudo branco'. Aterre Z1/Z0 um degrau ou use sombra de contato, conforme o estilo."
                 ),
             })
     return findings
 
 
-def audit_file(path: Path) -> list[dict]:
+def audit_file(path: Path, depth_style: str | None = None) -> list[dict]:
+    from rules_registry import apply_caps  # noqa: E402
+
     results = []
     themes_map: dict[str, dict[str, str]] = {}
     if path.suffix.lower() == ".json":
@@ -693,25 +712,27 @@ def audit_file(path: Path) -> list[dict]:
                 continue
             themes_map[tname] = tmap
             results.extend(_evaluate_theme_pairs(tname, tmap))
-            results.extend(audit_theme_harmony(tname, tmap))
+            results.extend(audit_theme_harmony(tname, tmap, depth_style or (data.get("meta") or {}).get("depth_style")))
     else:
         css_text = path.read_text(encoding="utf-8")
         themes = parse_css_themes(css_text)
         for tname, tmap in themes.items():
             themes_map[tname] = tmap
             results.extend(_evaluate_theme_pairs(tname, tmap))
-            results.extend(audit_theme_harmony(tname, tmap))
+            results.extend(audit_theme_harmony(tname, tmap, depth_style))
     results.extend(audit_semantic_hue_parity(themes_map))
-    return results
+    return apply_caps(results)
 
 
 def format_markdown(results: list[dict]) -> str:
     blocks = sum(1 for r in results if r["severity"] == "BLOCK")
     highs = sum(1 for r in results if r["severity"] == "HIGH")
     meds = sum(1 for r in results if r["severity"] == "MEDIUM")
+    reviews = sum(1 for r in results if r["severity"] == "REVIEW")
     lines = [
         "# Auditoria de Contraste Design Aura (WCAG 2.1 + APCA-W3)",
-        f"- **Pares avaliados:** {len(results)} · **BLOCK:** {blocks} · **HIGH:** {highs} · **MEDIUM:** {meds}",
+        f"- **Pares avaliados:** {len(results)} · **BLOCK:** {blocks} · **HIGH:** {highs} · **REVIEW:** {reviews} · **MEDIUM:** {meds}",
+        "- REVIEW = heuristica de profundidade/harmonia: confirme na captura ou registre por que nao se aplica.",
         "",
         "| Tema | Par | Foreground | Background | WCAG | APCA Lc | Status | Detalhe |",
         "|---|---|---|---|---:|---:|---|---|",
@@ -734,6 +755,7 @@ def main():
     )
     parser.add_argument("--format", default="markdown", choices=["markdown", "json"], help="Formato da saida")
     parser.add_argument("--strict", action="store_true", help="Retorna exit 1 se houver BLOCK")
+    parser.add_argument("--depth-style", choices=sorted(DEPTH_THRESHOLDS), help="Estilo de profundidade da direcao (padrao: --da-depth-style do CSS ou tactile)")
     args = parser.parse_args()
 
     if not args.target and not args.pair:
@@ -745,7 +767,7 @@ def main():
         if not p.exists():
             print(f"Arquivo nao encontrado: {p}", file=sys.stderr)
             sys.exit(1)
-        results.extend(audit_file(p))
+        results.extend(audit_file(p, args.depth_style))
 
     for raw_pair in args.pair:
         parts = raw_pair.split(":")

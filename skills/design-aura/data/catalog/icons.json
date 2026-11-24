@@ -1,0 +1,942 @@
+[
+ {
+  "id": "heroicons",
+  "name": "Heroicons (Outline 24px, Solid 20px & Micro 16px)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://heroicons.com",
+  "repo": "https://github.com/tailwindlabs/heroicons",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "micro icon",
+   "badge icon",
+   "chip",
+   "pill",
+   "svg"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "copiar o SVG de https://heroicons.com",
+  "summary": "Conjunto da Tailwind Labs com variante Micro 16x16 desenhada especificamente para dentro de badges, chips de status e botões compactos",
+  "a11y": "SVGs puros otimizados para 16px, 20px e 24px",
+  "notes": "",
+  "installs": {
+   "react": "npm install @heroicons/react",
+   "vue": "npm install @heroicons/vue"
+  }
+ },
+ {
+  "id": "iconify-svg",
+  "name": "Iconify SVG Web Component (<iconify-icon>)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://iconify.design",
+  "repo": "https://github.com/iconify/iconify",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-engine"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "svg",
+   "duotone",
+   "solar",
+   "tabler",
+   "lucide",
+   "html"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install iconify-icon",
+  "summary": "Motor universal MIT que renderiza 200.000+ ícones open-source (Solar Duotone, Tabler, Lucide, Heroicons, Radix) como <svg> real em HTML/JS puro ou frameworks",
+  "a11y": "Elimina webfonts borradas renderizando <svg> vetorial sob demanda ou offline",
+  "notes": "O motor e MIT; cada conjunto de ícones tem a própria licença. Registre a do conjunto usado.",
+  "installs": {
+   "react": "npm install @iconify/react",
+   "vue": "npm install @iconify/vue",
+   "svelte": "npm install @iconify/svelte"
+  }
+ },
+ {
+  "id": "lucide-icons",
+  "name": "Lucide Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://lucide.dev",
+  "repo": "lucide-icons/lucide",
+  "license": "ISC",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "svg",
+   "outline",
+   "navegacao",
+   "sidebar",
+   "botao"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install lucide",
+  "summary": "Ícones SVG limpos e leves (1.5px-2px) com recorte cirúrgico de sprites SVG para protótipos HTML ou apps web",
+  "a11y": "Emparelhe stroke-width com o peso tipográfico e prefira sprites SVG enxutos ao bundle inteiro",
+  "notes": "",
+  "installs": {
+   "react": "npm install lucide-react",
+   "vue": "npm install lucide-vue-next",
+   "svelte": "npm install @lucide/svelte"
+  }
+ },
+ {
+  "id": "material-symbols",
+  "name": "Material Symbols",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://fonts.google.com/icons",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-platform",
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install material-symbols",
+  "summary": "Ícones variáveis (peso, preenchimento, grade); padrão do Android.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "phosphor-icons",
+  "name": "Phosphor Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://phosphoricons.com",
+  "repo": "phosphor-icons/core",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "flutter",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile",
+   "ios",
+   "android"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "svg",
+   "duotone",
+   "navegacao",
+   "sidebar",
+   "toolbar"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @phosphor-icons/core",
+  "summary": "Família flexível de ícones SVG (regular, bold, duotone, fill) com consistência óptica para sistemas desktop e mobile",
+  "a11y": "Use regular/duotone no padrão, fill no ativo e aria-hidden=true quando acompanhado de texto",
+  "notes": "",
+  "installs": {
+   "html": "npm install @phosphor-icons/web",
+   "react": "npm install @phosphor-icons/react",
+   "vue": "npm install @phosphor-icons/vue",
+   "flutter": "flutter pub add phosphor_flutter"
+  },
+  "stale": true
+ },
+ {
+  "id": "sf-symbols",
+  "name": "SF Symbols",
+  "kind": "platform",
+  "use": "platform",
+  "url": "https://developer.apple.com/sf-symbols",
+  "repo": "",
+  "license": "licença Apple (so plataformas Apple)",
+  "license_status": "platform",
+  "license_checked_at": null,
+  "stacks": [
+   "ios"
+  ],
+  "platforms": [
+   "ios",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons",
+   "mobile-native"
+  ],
+  "needs": [
+   "icons-platform"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "do sistema: Image(systemName:)",
+  "summary": "Ícones nativos do iOS/macOS alinhados a tipografia do sistema.",
+  "a11y": "",
+  "notes": ""
+ },
+ {
+  "id": "solar-icons-duotone",
+  "name": "Solar Icons (Bold Duotone & Line Duotone SVGs)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/480Design/Solar-Icon-Set",
+  "repo": "https://github.com/480-Design/Solar-Icon-Set",
+  "license": "CC-BY-4.0",
+  "license_status": "attribution",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-duotone-filled",
+   "icons-outline"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "duotone",
+   "svg",
+   "emblem",
+   "kpi icon",
+   "badge icon"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @iconify-json/solar iconify-icon",
+  "summary": "4.800+ ícones SVG Duotone em 2 camadas (Bold Duotone / Line Duotone) com profundidade real para emblemas .icon-emblem e KPIs",
+  "a11y": "Renderize como <svg> real ou <iconify-icon> com aria-hidden='true' para nitidez vetorial sem borrao de webfont",
+  "notes": "",
+  "attribution": "Solar Icons por 480 Design (CC BY 4.0)"
+ },
+ {
+  "id": "tabler-icons",
+  "name": "Tabler Icons (5700+ Crisp 1.75px SVGs)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://tabler.io/icons",
+  "repo": "https://github.com/tabler/tabler-icons",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "svg",
+   "outline",
+   "filled",
+   "operacional"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 3,
+  "install": "npm install @tabler/icons",
+  "summary": "5.700+ ícones vetoriais de alta precisao operacional (receipt-tax, file-invoice, file-certificate, gavel, plane-departure, building-bank)",
+  "a11y": "Permite calibrar stroke-width='1.75' diretamente no SVG sem aberração cromática",
+  "notes": "",
+  "installs": {
+   "html": "npm install @tabler/icons",
+   "react": "npm install @tabler/icons-react",
+   "vue": "npm install @tabler/icons-vue",
+   "svelte": "npm install @tabler/icons-svelte"
+  }
+ },
+ {
+  "id": "carbon-icons",
+  "name": "Carbon Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://carbondesignsystem.com/elements/icons/library",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @carbon/icons",
+  "summary": "Ícones técnicos e enterprise.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @carbon/icons-react",
+   "vue": "npm install @carbon/icons-vue"
+  }
+ },
+ {
+  "id": "fluent-system-icons",
+  "name": "Fluent UI System Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://github.com/microsoft/fluentui-system-icons",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-platform",
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "copiar o SVG do repositório",
+  "summary": "Ícones da Microsoft; casam com apps Windows.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @fluentui/react-icons"
+  }
+ },
+ {
+  "id": "hugeicons-free",
+  "name": "Hugeicons (free)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://hugeicons.com",
+  "repo": "",
+  "license": "MIT (conjunto livre)",
+  "license_status": "verify",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @hugeicons/core-free-icons",
+  "summary": "Conjunto amplo; a parte Pro e paga.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @hugeicons/react @hugeicons/core-free-icons"
+  }
+ },
+ {
+  "id": "iconoir",
+  "name": "Iconoir",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://iconoir.com",
+  "repo": "https://github.com/iconoir-icons/iconoir",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "flutter",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "svg",
+   "fintech",
+   "travel",
+   "aviation"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install iconoir",
+  "summary": "1.600+ ícones SVG refinados com excelente cobertura de aviação, financeiro, documentos e dev tools",
+  "a11y": "SVGs limpos com currentColor",
+  "notes": "",
+  "installs": {
+   "html": "npm install iconoir",
+   "react": "npm install iconoir-react",
+   "vue": "npm install @iconoir/vue",
+   "flutter": "flutter pub add iconoir_flutter"
+  }
+ },
+ {
+  "id": "iconpark",
+  "name": "IconPark",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://iconpark.oceanengine.com",
+  "repo": "",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @icon-park/svg",
+  "summary": "Ícones com quatro estilos configuráveis.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install @icon-park/react",
+   "vue": "npm install @icon-park/vue-next"
+  },
+  "stale": true
+ },
+ {
+  "id": "mingcute-icons",
+  "name": "MingCute Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.mingcute.com",
+  "repo": "https://github.com/Richard9394/MingCute",
+  "license": "Apache-2.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "mobile",
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "mobile",
+   "tab bar",
+   "app"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @iconify-json/mingcute",
+  "summary": "3.000+ ícones geométricos com curvas suaves ideais para apps mobile executivos e tab bars",
+  "a11y": "Variantes Line e Fill pareadas",
+  "notes": ""
+ },
+ {
+  "id": "radix-icons",
+  "name": "Radix Icons (15x15 Dense UI SVGs)",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://www.radix-ui.com/icons",
+  "repo": "https://github.com/radix-ui/icons",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "all"
+  ],
+  "platforms": [
+   "desktop",
+   "system"
+  ],
+  "modes": [
+   "operate",
+   "read"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "dense",
+   "toolbar",
+   "table",
+   "badge",
+   "desktop"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "copiar o SVG de https://www.radix-ui.com/icons",
+  "summary": "Ícones cirúrgicos em grade 15x15px para interfaces desktop densas, cabeçalhos de tabela, popovers e chips",
+  "a11y": "Alinhamento pixel-perfect em telas 1x e 2x",
+  "notes": "",
+  "installs": {
+   "react": "npm install @radix-ui/react-icons"
+  }
+ },
+ {
+  "id": "remix-icon",
+  "name": "Remix Icon (3000+ Line & Fill Paired SVGs)",
+  "kind": "license-trap",
+  "use": "reference",
+  "url": "https://remixicon.com",
+  "repo": "https://github.com/Remix-Design/RemixIcon",
+  "license": "Remix Icon License v1.0",
+  "license_status": "trap",
+  "license_checked_at": "2026-11-23",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline",
+   "icons-duotone-filled"
+  ],
+  "keywords": [
+   "icon",
+   "icone",
+   "enterprise",
+   "finance",
+   "document",
+   "editor"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install @remixicon/react",
+  "summary": "3.000+ ícones neutros corporativos com pares exatos Line (inativo) e Fill (ativo) para sidebars e tab bars",
+  "a11y": "Grade 24x24 consistente com peso óptico equilibrado",
+  "notes": "Saiu do Apache-2.0 para licença própria; distribuições como o Fedora a tratam como não livre."
+ },
+ {
+  "id": "simple-icons",
+  "name": "Simple Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://simpleicons.org",
+  "repo": "",
+  "license": "CC0-1.0",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-brand"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "npm install simple-icons",
+  "summary": "Logos de marcas em SVG.",
+  "a11y": "",
+  "notes": "Marcas pertencem aos donos."
+ },
+ {
+  "id": "svgl-brand-logos",
+  "name": "SVGL (Open-Source Vector Brand Logos)",
+  "kind": "library",
+  "use": "copy",
+  "url": "https://svgl.app",
+  "repo": "https://github.com/pheralb/svgl",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "html",
+   "react",
+   "vue",
+   "svelte",
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop",
+   "mobile"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-brand"
+  ],
+  "keywords": [
+   "logo",
+   "brand",
+   "whatsapp",
+   "bank",
+   "integracao",
+   "canal",
+   "svg"
+  ],
+  "style": {},
+  "flashy": false,
+  "craft": 2,
+  "install": "copiar SVG vetorial otimizado de https://svgl.app",
+  "summary": "Logos SVG vetoriais oficiais (WhatsApp, bancos, provedores, ERPs, ferramentas) com variantes Light e Dark",
+  "a11y": "Inclua role='img' e aria-label quando o logo comunicar o canal ou instituição",
+  "notes": "Código MIT; as marcas pertencem aos donos e seguem as regras de uso de cada uma."
+ },
+ {
+  "id": "akar-icons",
+  "name": "Akar Icons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://akaricons.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": null,
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "operate",
+   "read",
+   "persuade"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 1,
+  "install": "copiar o SVG de https://akaricons.com",
+  "summary": "Ícones arredondados de traco.",
+  "a11y": "",
+  "notes": "",
+  "installs": {
+   "react": "npm install akar-icons"
+  }
+ },
+ {
+  "id": "pixelarticons",
+  "name": "Pixelarticons",
+  "kind": "library",
+  "use": "dependency",
+  "url": "https://pixelarticons.com",
+  "repo": "",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
+  "stacks": [
+   "all"
+  ],
+  "platforms": [
+   "system",
+   "desktop"
+  ],
+  "modes": [
+   "persuade",
+   "read"
+  ],
+  "categories": [
+   "icons"
+  ],
+  "needs": [
+   "icons-outline"
+  ],
+  "keywords": [],
+  "style": {},
+  "flashy": false,
+  "craft": 1,
+  "install": "npm install pixelarticons",
+  "summary": "Ícones em pixel art para direções expressivas.",
+  "a11y": "",
+  "notes": ""
+ }
+]
