@@ -268,6 +268,12 @@ def build_css(data: dict) -> str:
         "  outline-offset: 2px;",
         "}",
         "",
+        "/* Cores forcadas (Windows alto contraste): o sistema troca as cores e remove sombras; borda e foco continuam visiveis. */",
+        "@media (forced-colors: active) {",
+        "  :focus-visible { outline: 2px solid CanvasText; }",
+        "  button, [role=\"button\"], input, select, textarea { border: 1px solid ButtonText; }",
+        "}",
+        "",
         "a {",
         "  text-underline-offset: 3px;",
         "  text-decoration-thickness: 1.5px;",
@@ -393,12 +399,80 @@ def _swift_color(hex_color: str) -> str:
     return f"Color(red: {r:.4f}, green: {g:.4f}, blue: {b:.4f})"
 
 
+# Sombras nativas por estilo de profundidade: (deslocamento y, desfoque CSS, opacidade) para z1, z2 e z3.
+NATIVE_SHADOW = {
+    "light": {"hairline": ((1, 2, 0.05), (1, 3, 0.07), (8, 24, 0.16)), "soft": ((2, 8, 0.05), (12, 28, 0.12), (16, 40, 0.20)),
+              "tactile": ((3, 8, 0.08), (10, 22, 0.10), (18, 34, 0.13)), "tonal": ((0, 0, 0.0), (0, 0, 0.0), (6, 18, 0.14))},
+    "dark": {"hairline": ((0, 0, 0.0), (1, 2, 0.30), (12, 32, 0.60)), "soft": ((2, 8, 0.30), (10, 26, 0.50), (18, 44, 0.62)),
+             "tactile": ((2, 10, 0.36), (8, 22, 0.44), (16, 36, 0.54)), "tonal": ((0, 0, 0.0), (0, 0, 0.0), (10, 28, 0.55))},
+}
+SCHEME_ROLES = [  # papel do Material 3 -> token da Design Aura
+    ("primary", "primary"), ("onPrimary", "on-primary"), ("primaryContainer", "primary-surface"), ("onPrimaryContainer", "primary-text"),
+    ("secondary", "accent"), ("onSecondary", "on-accent"), ("secondaryContainer", "accent-surface"), ("onSecondaryContainer", "accent-text"),
+    ("error", "danger"), ("onError", "on-danger"), ("errorContainer", "danger-surface"), ("onErrorContainer", "danger-text"),
+    ("surface", "surface-z2"), ("onSurface", "text-strong"), ("onSurfaceVariant", "text-muted"),
+    ("outline", "border-strong"), ("outlineVariant", "border-subtle"),
+]
+
+
+def _px(value) -> float | None:
+    m = re.fullmatch(r"\s*(-?\d+(?:\.\d+)?)\s*(px|dp|pt)?\s*", str(value))
+    return float(m.group(1)) if m else None
+
+
+def _ms(value) -> int | None:
+    m = re.fullmatch(r"\s*(\d+(?:\.\d+)?)\s*ms\s*", str(value))
+    return int(float(m.group(1))) if m else None
+
+
+def _bezier(value) -> tuple[float, ...] | None:
+    m = re.fullmatch(r"\s*cubic-bezier\(([^)]*)\)\s*", str(value))
+    if not m:
+        return None
+    nums = [float(x) for x in m.group(1).split(",")]
+    return tuple(nums) if len(nums) == 4 else None
+
+
+def _num(x: float) -> str:
+    return str(int(x)) if float(x).is_integer() else f"{x:g}"
+
+
+def _family(stack: str) -> str | None:
+    first = str(stack or "").split(",")[0].strip().strip("'\"")
+    return None if not first or first.lower() in {"system-ui", "-apple-system", "sans-serif", "serif", "ui-monospace", "monospace"} else first
+
+
+def _native_groups(data: dict) -> dict:
+    meta = data.get("meta", {})
+    style = str(meta.get("depth_style") or "hairline")
+    typo = data.get("typography", {})
+    motion = data.get("motion", {})
+    return {
+        "radius": {k: _px(v) for k, v in data.get("radii", {}).items() if _px(v) is not None},
+        "space": {k: _px(v) for k, v in data.get("spacing", {}).items() if _px(v) is not None},
+        "size": {k: _px(v) for k, v in data.get("sizing", {}).items() if _px(v) is not None},
+        "fonts": {k: _family(typo.get(k, "")) for k in ("font-display", "font-ui", "font-mono")},
+        "text_base": _px(typo.get("text-base", "16px")) or 16.0,
+        "durations": {k: _ms(v) for k, v in motion.items() if _ms(v) is not None},
+        "curves": {k: _bezier(v) for k, v in motion.items() if _bezier(v)},
+        "press": float(motion.get("press-scale", 0.97)),
+        "shadow": {theme: NATIVE_SHADOW[theme].get(style, NATIVE_SHADOW[theme]["hairline"]) for theme in ("light", "dark")},
+    }
+
+
 def build_swift(data: dict) -> str:
     _, themes = _resolved_themes(data)
+    g = _native_groups(data)
     lines = [
         "import SwiftUI",
+        "#if canImport(UIKit)",
+        "import UIKit",
+        "#elseif canImport(AppKit)",
+        "import AppKit",
+        "#endif",
         "",
-        "/// Tokens de cor da Design Aura. Movimento nativo continua no guia 10 (spring interrompivel, Reduce Motion).",
+        "/// Tokens da Design Aura (gerados; nao edite a mao). Transicoes de navegacao usam as do sistema;",
+        "/// Motion vale para respostas do produto e respeita Reduce Motion (guia 10).",
         "enum DesignTokens {",
     ]
     for theme, mapping in themes.items():
@@ -408,13 +482,60 @@ def build_swift(data: dict) -> str:
                 lines.append(f"        static let {_camel(key)} = {_swift_color(value)}")
         lines.append("    }")
         lines.append("")
-    motion = data.get("motion", {})
-    if motion:
-        lines.append("    enum Motion {")
-        for key, value in motion.items():
-            lines.append(f"        static let {_camel(key)} = \"{value}\"")
+    lines.append("    /// Cores que acompanham o tema do sistema (claro/escuro).")
+    lines.append("    enum Adaptive {")
+    for key, value in themes["light"].items():
+        if _is_color(value) and _is_color(themes["dark"].get(key, "")):
+            name = _camel(key)
+            lines.append(f"        static let {name} = Color.designAura(light: Light.{name}, dark: Dark.{name})")
+    lines.append("    }")
+    lines.append("")
+    for enum_name, group, prefix in (("Radius", g["radius"], ""), ("Space", g["space"], "s"), ("Size", g["size"], "")):
+        lines.append(f"    enum {enum_name} {{")
+        for k, v in group.items():
+            lines.append(f"        static let {prefix + _camel(k) if prefix else _camel(k)}: CGFloat = {_num(v)}")
         lines.append("    }")
+        lines.append("")
+    lines.append("    enum Typography {")
+    for k, fam in g["fonts"].items():
+        literal = '"' + fam + '"' if fam else "nil"
+        lines.append(f"        static let {_camel(k)}: String? = {literal}")
+    lines.append(f"        static let textBase: CGFloat = {_num(g['text_base'])}")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    enum Motion {")
+    for k, ms in g["durations"].items():
+        lines.append(f"        static let {_camel(k)}: Double = {_num(ms / 1000)}")
+    lines.append(f"        static let pressScale: CGFloat = {_num(g['press'])}")
+    enter = g["durations"].get("duration-enter", 220) / 1000
+    for k, (a, b, c, d) in g["curves"].items():
+        lines.append(f"        static let {_camel(k)} = Animation.timingCurve({_num(a)}, {_num(b)}, {_num(c)}, {_num(d)}, duration: {_num(enter)})")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    struct Elevation { let y: CGFloat; let radius: CGFloat; let opacity: Double }")
+    lines.append("    enum Shadow {")
+    for theme, levels in g["shadow"].items():
+        for i, (y, blur, op) in enumerate(levels, 1):
+            lines.append(f"        static let {theme}Z{i} = Elevation(y: {_num(y)}, radius: {_num(blur / 2)}, opacity: {_num(op)})")
+    lines.append("    }")
     lines.append("}")
+    lines.append("")
+    lines.extend([
+        "extension Color {",
+        "    /// Cor dinamica: escolhe a variante pelo tema do sistema.",
+        "    static func designAura(light: Color, dark: Color) -> Color {",
+        "        #if canImport(UIKit)",
+        "        return Color(UIColor { traits in traits.userInterfaceStyle == .dark ? UIColor(dark) : UIColor(light) })",
+        "        #elseif canImport(AppKit)",
+        "        return Color(NSColor(name: nil) { appearance in",
+        "            appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(dark) : NSColor(light)",
+        "        })",
+        "        #else",
+        "        return light",
+        "        #endif",
+        "    }",
+        "}",
+    ])
     return "\n".join(lines) + "\n"
 
 
@@ -428,14 +549,26 @@ def _argb(hex_color: str) -> str | None:
     return "FF" + value[0:6].upper()
 
 
+def _kt_float(x: float) -> str:
+    return f"{x:g}f"
+
+
 def build_kotlin(data: dict) -> str:
     _, themes = _resolved_themes(data)
+    g = _native_groups(data)
     lines = [
         "package design.aura",
         "",
+        "import androidx.compose.animation.core.CubicBezierEasing",
+        "import androidx.compose.foundation.shape.RoundedCornerShape",
+        "import androidx.compose.material3.Shapes",
+        "import androidx.compose.material3.darkColorScheme",
+        "import androidx.compose.material3.lightColorScheme",
         "import androidx.compose.ui.graphics.Color",
+        "import androidx.compose.ui.unit.dp",
+        "import androidx.compose.ui.unit.sp",
         "",
-        "/** Tokens da Design Aura. No Android, duracao de pagina segue Material 3, nao este hex. */",
+        "/** Tokens da Design Aura (gerados). Transicao de pagina segue o Material 3 e a escala de animacao do sistema. */",
         "object DesignTokens {",
     ]
     for theme, mapping in themes.items():
@@ -446,16 +579,70 @@ def build_kotlin(data: dict) -> str:
                 lines.append(f"        val {_pascal(key)} = Color(0x{argb})")
         lines.append("    }")
         lines.append("")
+    for obj, group, prefix in (("Radius", g["radius"], ""), ("Space", g["space"], "S")):
+        lines.append(f"    object {obj} {{")
+        for k, v in group.items():
+            lines.append(f"        val {prefix + _pascal(k)} = {_num(v)}.dp")
+        lines.append("    }")
+        lines.append("")
+    lines.append("    object Size {")
+    for k, v in g["size"].items():
+        v = max(v, 48.0) if k == "touch-min" else v  # Android: alvo minimo de 48 dp
+        lines.append(f"        val {_pascal(k)} = {_num(v)}.dp")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    object Type {")
+    lines.append(f"        val TextBase = {_num(g['text_base'])}.sp")
+    for k, fam in g["fonts"].items():
+        literal = '"' + fam + '"' if fam else "null"
+        lines.append(f"        val {_pascal(k)}: String? = {literal}")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    object Motion {")
+    for k, ms in g["durations"].items():
+        lines.append(f"        const val {_pascal(k)} = {ms}")
+    lines.append(f"        const val PressScale = {_kt_float(g['press'])}")
+    for k, (a, b, c, d) in g["curves"].items():
+        lines.append(f"        val {_pascal(k)} = CubicBezierEasing({_kt_float(a)}, {_kt_float(b)}, {_kt_float(c)}, {_kt_float(d)})")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    object Elevation {")
+    for i, level in enumerate(("1", "3", "6"), 1):
+        lines.append(f"        val Z{i} = {level}.dp")
+    lines.append("    }")
     lines.append("}")
+    lines.append("")
+    for theme, fn in (("light", "lightColorScheme"), ("dark", "darkColorScheme")):
+        obj = theme.capitalize()
+        args = [f"    {role} = DesignTokens.{obj}.{_pascal(tok)}," for role, tok in SCHEME_ROLES if _is_color(themes[theme].get(tok, ""))]
+        if _is_color(themes[theme].get("surface-z1", "")):
+            args.append(f"    background = DesignTokens.{obj}.SurfaceZ1,")
+            args.append(f"    onBackground = DesignTokens.{obj}.TextStrong,")
+        if _is_color(themes[theme].get("surface-z0", "")):
+            args.append(f"    surfaceVariant = DesignTokens.{obj}.SurfaceZ0,")
+        lines.append(f"val Aura{obj}ColorScheme = {fn}(")
+        lines.extend(args)
+        lines.append(")")
+        lines.append("")
+    r = g["radius"]
+    def shape(key, fallback):
+        return f"RoundedCornerShape({_num(r.get(key, fallback))}.dp)"
+    lines.append("val AuraShapes = Shapes(")
+    lines.append(f"    extraSmall = {shape('control-sm', 6)},")
+    lines.append(f"    small = {shape('control-md', 8)},")
+    lines.append(f"    medium = {shape('card-md', 12)},")
+    lines.append(f"    large = {shape('card-lg', 16)},")
+    lines.append(")")
     return "\n".join(lines) + "\n"
 
 
 def build_dart(data: dict) -> str:
     _, themes = _resolved_themes(data)
+    g = _native_groups(data)
     lines = [
         "import 'package:flutter/material.dart';",
         "",
-        "/// Tokens da Design Aura. Curvas de pagina no Flutter nao copiam o cubic-bezier do CSS.",
+        "/// Tokens da Design Aura (gerados). Curvas de pagina seguem a plataforma; Motion vale para respostas do produto.",
         "abstract final class DesignTokens {",
     ]
     for theme, mapping in themes.items():
@@ -464,13 +651,53 @@ def build_dart(data: dict) -> str:
             if argb:
                 lines.append(f"  static const {theme}{_pascal(key)} = Color(0x{argb});")
         lines.append("")
-    lines.append("}")
+    for k, v in g["radius"].items():
+        lines.append(f"  static const radius{_pascal(k)} = {float(v)};")
+    for k, v in g["space"].items():
+        lines.append(f"  static const space{_pascal(k)} = {float(v)};")
+    for k, v in g["size"].items():
+        v = max(v, 48.0) if k == "touch-min" else v
+        lines.append(f"  static const {_camel(k)} = {float(v)};")
+    lines.append(f"  static const textBase = {float(g['text_base'])};")
+    for k, fam in g["fonts"].items():
+        literal = "'" + fam + "'" if fam else "null"
+        lines.append(f"  static const String? {_camel(k)} = {literal};")
+    lines.append("")
+    for k, ms in g["durations"].items():
+        lines.append(f"  static const {_camel(k)} = Duration(milliseconds: {ms});")
+    for k, (a, b, c, d) in g["curves"].items():
+        lines.append(f"  static const {_camel(k)} = Cubic({_num(a)}, {_num(b)}, {_num(c)}, {_num(d)});")
+    lines.append(f"  static const pressScale = {g['press']};")
+    lines.append("")
+    for theme, levels in g["shadow"].items():
+        for i, (y, blur, op) in enumerate(levels, 1):
+            alpha = f"{round(op * 255):02X}"
+            body = "[]" if op == 0 else f"[BoxShadow(color: Color(0x{alpha}000000), offset: Offset(0, {float(y)}), blurRadius: {float(blur)})]"
+            lines.append(f"  static const {theme}ShadowZ{i} = <BoxShadow>{body};")
+    lines.append("")
+    for theme, bright in (("light", "Brightness.light"), ("dark", "Brightness.dark")):
+        args = [f"    {role}: {theme}{_pascal(tok)}," for role, tok in SCHEME_ROLES if _is_color(themes[theme].get(tok, ""))]
+        lines.append(f"  static const {theme}Scheme = ColorScheme(")
+        lines.append(f"    brightness: {bright},")
+        lines.extend(args)
+        lines.append("  );")
+        lines.append("")
+    lines.extend([
+        "  static ThemeData theme(Brightness brightness) => ThemeData(",
+        "        useMaterial3: true,",
+        "        colorScheme: brightness == Brightness.dark ? darkScheme : lightScheme,",
+        "        scaffoldBackgroundColor: brightness == Brightness.dark ? darkSurfaceZ1 : lightSurfaceZ1,",
+        "        fontFamily: fontUi,",
+        "      );",
+        "}",
+    ])
     return "\n".join(lines) + "\n"
 
 
 def build_dtcg(data: dict) -> str:
     """Exporta no formato DTCG 2025.10 ($type/$value) para Figma Variables, Tokens Studio e Style Dictionary."""
     primitives = data.get("primitive", {})
+    g = _native_groups(data)
     out: dict = {"$description": f"{data.get('meta', {}).get('brand', 'Projeto')} · Design Aura"}
     for theme in ("light", "dark"):
         tmap = _enrich_semantic_theme({k: resolve_ref(v, primitives) for k, v in data.get("semantic", {}).get(theme, {}).items()}, theme)
@@ -478,10 +705,17 @@ def build_dtcg(data: dict) -> str:
         for k, v in tmap.items():
             hexv = color_to_hex(v)
             group[k] = {"$type": "color", "$value": hexv.upper() if hexv else v}
-        out[theme] = {"color": group}
+        shadows = {}
+        for i, (y, blur, op) in enumerate(g["shadow"][theme], 1):
+            shadows[f"z{i}"] = {"$type": "shadow", "$value": {"color": f"#000000{round(op * 255):02X}", "offsetX": "0px",
+                                                             "offsetY": f"{_num(y)}px", "blur": f"{_num(blur)}px", "spread": "0px"}}
+        out[theme] = {"color": group, "shadow": shadows}
     out["dimension"] = {f"space-{k}": {"$type": "dimension", "$value": v} for k, v in data.get("spacing", {}).items()}
     out["dimension"].update({f"radius-{k}": {"$type": "dimension", "$value": v} for k, v in data.get("radii", {}).items()})
+    out["dimension"].update({k: {"$type": "dimension", "$value": v} for k, v in data.get("sizing", {}).items()})
     out["duration"] = {k: {"$type": "duration", "$value": v} for k, v in data.get("motion", {}).items() if str(v).endswith("ms")}
+    out["cubicBezier"] = {k: {"$type": "cubicBezier", "$value": list(v)} for k, v in g["curves"].items()}
+    out["number"] = {"press-scale": {"$type": "number", "$value": g["press"]}}
     out["fontFamily"] = {k: {"$type": "fontFamily", "$value": v} for k, v in data.get("typography", {}).items() if k.startswith("font-")}
     return json.dumps(out, ensure_ascii=False, indent=2) + "\n"
 
@@ -536,6 +770,7 @@ def main():
     parser.add_argument("--neutral-tint", type=float, help="Croma dos neutros tingidos pela marca (0 a 0.03; padrao 0.012)")
     parser.add_argument("--shape", choices=["sharp", "soft", "round"], help="Linguagem de forma (raios)")
     parser.add_argument("--density", choices=["compact", "regular", "airy"])
+    parser.add_argument("--motion", choices=["none", "subtle", "expressive"], help="Personalidade de motion da direcao (padrao subtle)")
     parser.add_argument("--default-theme", choices=["light", "dark"])
     parser.add_argument("--brand")
     parser.add_argument("--font-display", default="")
@@ -571,10 +806,11 @@ def main():
                         parser.error(f"{label}: {exc}")
             data = build_tokens(seed, accent, pick(args.harmony, "harmony", "complementar"), pick(args.depth_style, "depth_style", "hairline"),
                                 args.neutral_tint if args.neutral_tint is not None else float(direction.get("neutral_tint", 0.012)),
-                                pick(args.brand, "project", "Projeto"), pick(args.default_theme, "default_theme", "light"), fonts, density)
+                                pick(args.brand, "project", "Projeto"), pick(args.default_theme, "default_theme", "light"), fonts, density,
+                                pick(args.motion, "motion", "subtle"))
             data["radii"] = SHAPE_RADII.get(shape, SHAPE_RADII["soft"])
             data["meta"]["shape"] = shape
-            for key in ("name", "motion", "skin"):
+            for key in ("name", "skin"):
                 if direction.get(key):
                     data["meta"]["direction" if key == "name" else key] = direction[key]
             for note in data["report"].get("notes", []):

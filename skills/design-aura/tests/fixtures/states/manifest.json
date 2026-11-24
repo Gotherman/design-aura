@@ -1,0 +1,9 @@
+{
+  "project": {"name": "Calibração de estados", "surfaceMode": "operate"},
+  "screens": [
+    {"id": "fila", "file": "fila.html", "platform": "desktop", "archetype": "lista",
+     "primaryAction": {"label": "Nova visita"},
+     "states": ["populado", {"name": "vazio", "query": "estado=vazio"}, {"name": "erro", "query": "estado=erro"}, "aberto",
+                {"name": "aviso", "query": "estado=coberto", "primaryAction": {"label": "Nova visita"}}]}
+  ]
+}

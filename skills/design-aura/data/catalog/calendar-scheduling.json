@@ -207,9 +207,9 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://svar.dev/react/gantt",
-  "repo": "",
+  "repo": "https://github.com/svar-widgets/react-gantt",
   "license": "MIT",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "react",

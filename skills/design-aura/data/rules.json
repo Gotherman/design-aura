@@ -1,5 +1,5 @@
 {
-  "version": "3.1.1",
+  "version": "3.2.0",
   "layers": {
     "invariant": "Ofício objetivo e universal. Pode bloquear (BLOCK) ou exigir correção (HIGH). Vale para qualquer projeto.",
     "tell": "Sinal forte de interface genérica com evidência no código. Vai até HIGH: corrige ou registra a exceção com motivo.",
@@ -222,7 +222,8 @@
       "title": "Ação visível encoberta ou fora de alcance",
       "evidence": "runtime",
       "sources": [
-        "probe"
+        "probe",
+        "capture"
       ]
     },
     {
@@ -717,6 +718,24 @@
       "id": "DA-REDUCED-MOTION",
       "layer": "heuristic",
       "title": "Movimento que não respeita prefers-reduced-motion",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-ZOOM-REFLOW",
+      "layer": "heuristic",
+      "title": "Com zoom de 200%, a página rola na horizontal ou corta texto",
+      "evidence": "runtime",
+      "sources": [
+        "capture"
+      ]
+    },
+    {
+      "id": "DA-FORCED-COLORS",
+      "layer": "heuristic",
+      "title": "Em cores forçadas, controles perdem o contorno",
       "evidence": "runtime",
       "sources": [
         "capture"

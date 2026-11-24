@@ -193,16 +193,16 @@
     ],
     "color_ideas": [
       {
+        "seed": "#3F6B5C",
+        "accent": "#C27C4C",
+        "harmony": "complementar suave",
+        "why": "Sálvia e terracota acolhem sem o azul-hospital frio."
+      },
+      {
         "seed": "#124E5B",
         "accent": "#0D7C8C",
         "harmony": "estrutura + acento",
         "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
-      },
-      {
-        "seed": "#3F6B5C",
-        "accent": "#C27C4C",
-        "harmony": "complementar suave",
-        "why": "Salvia e terracota acolhem sem o azul-hospital frio."
       }
     ],
     "depth_hint": "linha fina ou tonal",
@@ -900,16 +900,16 @@
     ],
     "color_ideas": [
       {
-        "seed": "#1B2A38",
-        "accent": "#9F2D20",
-        "harmony": "estrutura + acento",
-        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
-      },
-      {
         "seed": "#2C2A29",
         "accent": "#8C2F39",
         "harmony": "acento único",
         "why": "Tinta quase preta e carmim reservado a prazos fatais."
+      },
+      {
+        "seed": "#1B2A38",
+        "accent": "#9F2D20",
+        "harmony": "estrutura + acento",
+        "why": "Combinação clássica do setor; use se a marca não tiver cor própria."
       }
     ],
     "depth_hint": "suave",
@@ -1211,5 +1211,659 @@
     ],
     "depth_hint": "suave ou tátil",
     "note": "Hipotese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "ecommerce-moda-varejo",
+    "name": "Loja online, moda e varejo de consumo",
+    "keywords": [
+      "loja online",
+      "e-commerce",
+      "ecommerce",
+      "moda",
+      "roupa",
+      "vitrine",
+      "carrinho",
+      "checkout",
+      "produto",
+      "colecao",
+      "frete",
+      "tamanho"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "editorial-spacious",
+    "typography_ids": [
+      "fraunces-dm",
+      "satoshi-general",
+      "bricolage-inter"
+    ],
+    "layout_archetype": "Vitrine com foto de produto dominante e filtros recolhíveis + página de produto com galeria, tamanho e frete à vista + checkout em uma coluna",
+    "signature_moves": [
+      "Foto real do produto em proporção fixa, sem moldura decorativa",
+      "Preço, parcelamento e frete na mesma linha de leitura"
+    ],
+    "anti_patterns": [
+      "Carrossel automático no topo",
+      "Selo 'mais vendido' em todo card",
+      "Pop-up de cupom antes da primeira rolagem"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#1C1917",
+        "accent": "#C2410C",
+        "harmony": "tinta + acento quente",
+        "why": "A foto do produto carrega a cor; a interface fica em tinta e um acento quente para comprar."
+      },
+      {
+        "seed": "#2F3E36",
+        "accent": "#D4A017",
+        "harmony": "complementar suave",
+        "why": "Verde-musgo e mostarda para marcas de produto natural ou artesanal."
+      }
+    ],
+    "depth_hint": "suave",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "restaurante-delivery",
+    "name": "Restaurante, cardápio e delivery",
+    "keywords": [
+      "restaurante",
+      "cardapio",
+      "delivery",
+      "pedido",
+      "comida",
+      "lanchonete",
+      "pizzaria",
+      "cafeteria",
+      "reserva de mesa",
+      "entrega",
+      "prato"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "regular",
+    "typography_ids": [
+      "young-serif-dm",
+      "outfit-jakarta-mono",
+      "rubik-dm-mono"
+    ],
+    "layout_archetype": "Cardápio por categoria com foto e preço à direita + carrinho fixo no mobile + acompanhamento do pedido em linha do tempo",
+    "signature_moves": [
+      "Botão de adicionar ao lado do preço, sem abrir outra tela",
+      "Tempo de entrega e taxa visíveis antes do carrinho"
+    ],
+    "anti_patterns": [
+      "Foto de banco de imagem genérica",
+      "Cardápio em PDF",
+      "Gradiente laranja-vermelho em toda superfície"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#7A2E1A",
+        "accent": "#E8B04B",
+        "harmony": "análoga quente",
+        "why": "Tomate tostado e mostarda lembram cozinha sem cair no vermelho de fast-food."
+      },
+      {
+        "seed": "#1F3A2E",
+        "accent": "#E56B3A",
+        "harmony": "complementar",
+        "why": "Verde-oliva escuro com laranja para casas de comida fresca."
+      }
+    ],
+    "depth_hint": "tátil ou suave",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "hospedagem-turismo-consumidor",
+    "name": "Hotel, pousada e turismo para o viajante",
+    "keywords": [
+      "hotel",
+      "pousada",
+      "hospedagem",
+      "quarto",
+      "diaria",
+      "reserva",
+      "check-in",
+      "viagem",
+      "roteiro",
+      "passeio",
+      "praia",
+      "hospede"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "editorial-spacious",
+    "typography_ids": [
+      "lora-plusjakarta",
+      "newsreader-instrument",
+      "figtree-mono"
+    ],
+    "layout_archetype": "Galeria do lugar + seletor de datas e hóspedes fixo + quartos comparáveis em lista com preço total da estadia",
+    "signature_moves": [
+      "Preço total da estadia, não só a diária",
+      "Mapa com distâncias reais até o que importa"
+    ],
+    "anti_patterns": [
+      "Vídeo pesado no hero que atrasa a reserva",
+      "Calendário que esconde indisponibilidade",
+      "Avaliações inventadas"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#0F4C5C",
+        "accent": "#E9A46A",
+        "harmony": "complementar",
+        "why": "Mar profundo e areia: o lugar aparece na foto, a interface só acompanha."
+      },
+      {
+        "seed": "#2E4A3F",
+        "accent": "#D98E5F",
+        "harmony": "análoga terrosa",
+        "why": "Mata e terracota para pousadas de campo e serra."
+      }
+    ],
+    "depth_hint": "suave",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "fitness-bem-estar",
+    "name": "Fitness, treino e bem-estar",
+    "keywords": [
+      "academia",
+      "treino",
+      "fitness",
+      "yoga",
+      "pilates",
+      "bem estar",
+      "meditacao",
+      "habito",
+      "personal",
+      "exercicio",
+      "corrida"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Operate",
+    "density": "regular",
+    "typography_ids": [
+      "sora-work-mono",
+      "onest-martian",
+      "figtree-mono"
+    ],
+    "layout_archetype": "Hoje no topo (próximo treino ou aula) + progresso da semana compacto + histórico abaixo",
+    "signature_moves": [
+      "Progresso semanal com números reais, sem confete",
+      "Timer grande e legível a um braço de distância"
+    ],
+    "anti_patterns": [
+      "Gamificação com animação em toda ação",
+      "Neon sobre preto sem contraste",
+      "Métricas de saúde inventadas"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#14342B",
+        "accent": "#C6E84B",
+        "harmony": "complementar viva",
+        "why": "Verde profundo com lima dá energia sem o neon padrão de app de treino."
+      },
+      {
+        "seed": "#1E2A4A",
+        "accent": "#FF7A59",
+        "harmony": "complementar",
+        "why": "Azul-noite e coral para estúdios de yoga e pilates."
+      }
+    ],
+    "depth_hint": "tonal",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "beleza-estetica",
+    "name": "Salão, barbearia e estética",
+    "keywords": [
+      "salao",
+      "barbearia",
+      "estetica",
+      "manicure",
+      "cabelo",
+      "beleza",
+      "sobrancelha",
+      "agendamento de servico",
+      "profissional",
+      "procedimento"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "regular",
+    "typography_ids": [
+      "gambetta-switzer",
+      "instrument-serif-sans",
+      "dm-sans-mono"
+    ],
+    "layout_archetype": "Serviços com duração e preço + escolha do profissional + horários livres em grade por dia",
+    "signature_moves": [
+      "Horários livres como chips por dia",
+      "Antes e depois só com autorização e legenda do serviço"
+    ],
+    "anti_patterns": [
+      "Rosa pastel genérico em tudo",
+      "Fonte cursiva ilegível em botões",
+      "Galeria sem legenda de serviço"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#4A2C2A",
+        "accent": "#C98B6B",
+        "harmony": "análoga",
+        "why": "Cacau e rosé terroso fogem do rosa padrão do setor."
+      },
+      {
+        "seed": "#22333B",
+        "accent": "#C9A66B",
+        "harmony": "complementar",
+        "why": "Grafite e latão para barbearias e estúdios masculinos."
+      }
+    ],
+    "depth_hint": "suave",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "esporte-aventura-aulas",
+    "name": "Escola de esporte, aventura e aulas",
+    "keywords": [
+      "surfe",
+      "surf",
+      "escalada",
+      "natacao",
+      "kitesurf",
+      "mergulho",
+      "esporte",
+      "aventura",
+      "aula experimental",
+      "turma",
+      "clube",
+      "trilha"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "editorial-spacious",
+    "typography_ids": [
+      "funnel-display",
+      "bricolage-inter",
+      "archivo-inter-mono"
+    ],
+    "layout_archetype": "Hero com foto real da atividade + próximas turmas com vagas + agendar aula experimental em dois passos",
+    "signature_moves": [
+      "Condições do dia (maré, vento, clima) como faixa informativa",
+      "Vagas restantes por turma"
+    ],
+    "anti_patterns": [
+      "Vídeo de banco de imagem",
+      "Formulário longo antes de mostrar preço",
+      "Gradiente azul-turquesa genérico de 'praia'"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#0B3C5D",
+        "accent": "#F2A541",
+        "harmony": "complementar",
+        "why": "Oceano e sol: o par natural de esportes de água, com acento quente para agendar."
+      },
+      {
+        "seed": "#123524",
+        "accent": "#F25C3B",
+        "harmony": "complementar viva",
+        "why": "Mata e laranja de sinalização para escalada e trilha."
+      }
+    ],
+    "depth_hint": "tátil",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "midia-editorial",
+    "name": "Mídia, notícias e conteúdo editorial",
+    "keywords": [
+      "noticias",
+      "jornal",
+      "revista",
+      "blog",
+      "artigo",
+      "newsletter",
+      "podcast",
+      "editorial",
+      "materia",
+      "colunista",
+      "reportagem"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Read",
+    "density": "editorial-spacious",
+    "typography_ids": [
+      "newsreader-instrument",
+      "literata-figtree",
+      "source-sans-serif"
+    ],
+    "layout_archetype": "Manchete + linha fina + leitura em coluna de 60–70ch + relacionados ao fim",
+    "signature_moves": [
+      "Data, autor e tempo de leitura visíveis",
+      "Texto de leitura entre 17 e 19 px com entrelinha generosa"
+    ],
+    "anti_patterns": [
+      "Anúncio entre parágrafos a cada dois blocos",
+      "Pop-up de newsletter no primeiro segundo",
+      "Texto cinza-claro de baixo contraste"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#1A1A1A",
+        "accent": "#B3261E",
+        "harmony": "tinta + vermelho editorial",
+        "why": "Tradição de impresso: preto de texto e um vermelho para chamadas."
+      },
+      {
+        "seed": "#1D2B36",
+        "accent": "#D9A441",
+        "harmony": "complementar",
+        "why": "Azul-petróleo e ocre para revistas e newsletters de nicho."
+      }
+    ],
+    "depth_hint": "linha fina",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "portfolio-agencia",
+    "name": "Portfólio, estúdio e agência criativa",
+    "keywords": [
+      "portfolio",
+      "agencia",
+      "estudio",
+      "fotografo",
+      "arquiteto",
+      "cases",
+      "projetos",
+      "freelancer",
+      "designer",
+      "ilustrador"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "editorial-spacious",
+    "typography_ids": [
+      "clash-cabinet",
+      "mona-hubot",
+      "switzer-supreme"
+    ],
+    "layout_archetype": "Grade de cases com imagem grande + case com problema, processo e resultado + contato direto",
+    "signature_moves": [
+      "Cases com resultado concreto e créditos",
+      "Navegação mínima: a imagem manda"
+    ],
+    "anti_patterns": [
+      "Cursor customizado e rolagem sequestrada",
+      "Animação de entrada em cada bloco",
+      "Texto em marquee"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#111111",
+        "accent": "#FF5B2E",
+        "harmony": "tinta + acento único",
+        "why": "O trabalho é a cor; a casca é tinta com um acento assinado."
+      },
+      {
+        "seed": "#2B2A28",
+        "accent": "#6B8F71",
+        "harmony": "neutro quente + verde",
+        "why": "Para estúdios de arquitetura e paisagismo."
+      }
+    ],
+    "depth_hint": "linha fina ou sem sombra",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "eventos-ingressos",
+    "name": "Eventos, ingressos e inscrições",
+    "keywords": [
+      "evento",
+      "ingresso",
+      "show",
+      "festival",
+      "congresso",
+      "palestra",
+      "inscricao",
+      "lote",
+      "credenciamento",
+      "programacao"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "regular",
+    "typography_ids": [
+      "schibsted-plex",
+      "space-dm-mono",
+      "bricolage-inter"
+    ],
+    "layout_archetype": "Data, local e lote atual no topo + programação por dia + compra em uma coluna + ingresso com QR",
+    "signature_moves": [
+      "Lote e preço com a data da virada",
+      "Programação filtrável por trilha ou palco"
+    ],
+    "anti_patterns": [
+      "Contagem regressiva piscando",
+      "Taxas escondidas até o fim da compra"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#0D3B2E",
+        "accent": "#FF6F59",
+        "harmony": "complementar",
+        "why": "Verde-noite e coral fogem do roxo-neon padrão de evento."
+      },
+      {
+        "seed": "#1F2A44",
+        "accent": "#F7B32B",
+        "harmony": "complementar",
+        "why": "Azul-noite e amarelo de palco para congressos."
+      }
+    ],
+    "depth_hint": "tonal",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "institucional-ong",
+    "name": "Instituto, ONG e causa social",
+    "keywords": [
+      "ong",
+      "instituto",
+      "fundacao",
+      "associacao",
+      "doacao",
+      "voluntario",
+      "causa",
+      "impacto",
+      "transparencia",
+      "projeto social"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Read",
+    "density": "regular",
+    "typography_ids": [
+      "public-sans-mono",
+      "atkinson-legibility",
+      "lora-plusjakarta"
+    ],
+    "layout_archetype": "Causa em uma frase + impacto com números e fonte + como ajudar (doar, voluntariar) + prestação de contas",
+    "signature_moves": [
+      "Prestação de contas legível",
+      "Doação recorrente em dois passos"
+    ],
+    "anti_patterns": [
+      "Foto de sofrimento usada como choque",
+      "Números de impacto sem fonte"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#2F4858",
+        "accent": "#F6AE2D",
+        "harmony": "complementar",
+        "why": "Azul-ardósia sério com um amarelo de esperança."
+      },
+      {
+        "seed": "#3D405B",
+        "accent": "#E07A5F",
+        "harmony": "complementar suave",
+        "why": "Índigo acinzentado e terracota para causas de cuidado."
+      }
+    ],
+    "depth_hint": "linha fina",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "imobiliaria-vitrine",
+    "name": "Imobiliária e vitrine de imóveis",
+    "keywords": [
+      "imovel",
+      "imoveis",
+      "imobiliaria",
+      "apartamento",
+      "casa",
+      "aluguel",
+      "venda",
+      "corretor",
+      "condominio",
+      "metragem",
+      "bairro"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Persuade",
+    "density": "regular",
+    "typography_ids": [
+      "hanken-commit",
+      "manrope-tabular",
+      "gambetta-switzer"
+    ],
+    "layout_archetype": "Busca por bairro e faixa de preço + lista com foto, metragem e custo total + ficha com mapa e custos mensais",
+    "signature_moves": [
+      "Custo mensal total (aluguel, condomínio e IPTU) na lista",
+      "Fotos na ordem de uma visita"
+    ],
+    "anti_patterns": [
+      "Foto com grande-angular distorcida",
+      "Preço 'sob consulta'"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#1F2A44",
+        "accent": "#C8A96A",
+        "harmony": "complementar",
+        "why": "Azul-noite e latão: sóbrio, sem o dourado de luxo exagerado."
+      },
+      {
+        "seed": "#28453B",
+        "accent": "#D9895B",
+        "harmony": "complementar",
+        "why": "Verde-garrafa e terracota para imóveis residenciais."
+      }
+    ],
+    "depth_hint": "suave",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
+  },
+  {
+    "id": "comunidade-social-app",
+    "name": "Comunidade, rede social e creators",
+    "keywords": [
+      "comunidade",
+      "rede social",
+      "feed",
+      "grupo",
+      "forum",
+      "seguidores",
+      "perfil",
+      "comentario",
+      "creator",
+      "postagem"
+    ],
+    "platforms": [
+      "system",
+      "desktop",
+      "mobile"
+    ],
+    "surface_mode": "Operate",
+    "density": "regular",
+    "typography_ids": [
+      "onest-martian",
+      "figtree-mono",
+      "host-grotesk"
+    ],
+    "layout_archetype": "Feed com o conteúdo em primeiro plano + ações discretas + composição rápida",
+    "signature_moves": [
+      "Conteúdo do usuário domina; cromo mínimo",
+      "Composição a um toque de qualquer tela"
+    ],
+    "anti_patterns": [
+      "Métricas de vaidade em destaque",
+      "Badge vermelho de notificação em tudo"
+    ],
+    "color_ideas": [
+      {
+        "seed": "#1E3A5F",
+        "accent": "#FF8A3D",
+        "harmony": "complementar",
+        "why": "Azul de confiança com um laranja de interação."
+      },
+      {
+        "seed": "#2D2A32",
+        "accent": "#5CC8A1",
+        "harmony": "neutro + verde-menta",
+        "why": "Grafite com menta para comunidades de nicho."
+      }
+    ],
+    "depth_hint": "tonal",
+    "note": "Hipótese de catálogo. A cor da marca, o fluxo real do projeto e a direção escolhida prevalecem."
   }
 ]

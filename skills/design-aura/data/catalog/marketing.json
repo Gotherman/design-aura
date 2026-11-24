@@ -5,10 +5,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://tailark.com",
-  "repo": "",
-  "license": "MIT (conferir por bloco)",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "repo": "https://github.com/tailark/blocks",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -139,10 +139,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://www.eldoraui.site",
-  "repo": "",
+  "repo": "https://github.com/karthikmudunuri/eldoraui",
   "license": "MIT",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -273,10 +273,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://www.launchuicomponents.com",
-  "repo": "",
+  "repo": "https://github.com/launch-ui/launch-ui",
   "license": "MIT",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -315,10 +315,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://pageui.shipixen.com",
-  "repo": "",
+  "repo": "https://github.com/danmindru/page-ui",
   "license": "MIT",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -357,10 +357,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://uiverse.io",
-  "repo": "",
-  "license": "MIT (comunidade)",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "repo": "https://github.com/uiverse-io/galaxy",
+  "license": "MIT",
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
   ],
@@ -388,6 +388,7 @@
   "install": "copiar o código da página do componente",
   "summary": "Elementos da comunidade em HTML/CSS.",
   "a11y": "",
-  "notes": "Qualidade varia; avalie peca a peca."
+  "notes": "Qualidade varia; avalie peca a peca.",
+  "stale": true
  }
 ]

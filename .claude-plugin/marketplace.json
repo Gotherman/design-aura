@@ -5,15 +5,15 @@
     "name": "Lucas (Gotherman)"
   },
   "metadata": {
-    "description": "Design Aura v3.1.1 — Visual direction and build workflow for mobile apps, desktop apps, web systems and sites: direction studio, OKLCH color engine, three-part design bible, pre-categorized open source component base, subagent build, evidence-based audits and Figma-style showcase.",
-    "version": "3.1.1"
+    "description": "Design Aura v3.2.0 — Visual direction and build workflow for mobile apps, desktop apps, web systems and sites: multi-surface direction studio, OKLCH color engine, full native tokens, three-part design bible, pre-categorized open source component base, state/zoom/forced-colors audits and Figma-style showcase.",
+    "version": "3.2.0"
   },
   "plugins": [
     {
       "name": "design-aura",
       "source": "./",
-      "description": "Design Aura v3.1.1 — Direção visual e construção de interfaces sem cara de IA para apps mobile, apps desktop, sistemas web e sites: Estúdio de Direção, motor de cor OKLCH, Bíblia em três partes, base pré-categorizada de componentes open source, construção por subagentes, auditoria por evidência e vitrine estilo Figma.",
-      "version": "3.1.1",
+      "description": "Design Aura v3.2.0 — Direção visual e construção de interfaces sem cara de IA para apps mobile, apps desktop, sistemas web e sites: Estúdio de Direção multi-superfície, motor de cor OKLCH, tokens nativos completos, Bíblia em três partes, base pré-categorizada de componentes open source, auditoria com estados, zoom 200% e cores forçadas, e vitrine estilo Figma.",
+      "version": "3.2.0",
       "author": {
         "name": "Lucas (Gotherman)"
       },

@@ -778,9 +778,9 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://basecoatui.com",
-  "repo": "",
+  "repo": "https://github.com/hunvreus/basecoat",
   "license": "MIT",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
@@ -1407,8 +1407,8 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://preline.co",
-  "repo": "",
-  "license": "MIT",
+  "repo": "https://github.com/htmlstreamofficial/preline",
+  "license": "MIT + Preline UI Fair Use License",
   "license_status": "verify",
   "license_checked_at": "2026-11-24",
   "stacks": [
@@ -1441,7 +1441,7 @@
   "install": "npm install preline",
   "summary": "Componentes e blocos em HTML + Tailwind com plugins JS.",
   "a11y": "",
-  "notes": ""
+  "notes": "O pacote declara MIT junto com a Preline UI Fair Use License (partes Pro e templates). Confira o que vai copiar antes de usar."
  },
  {
   "id": "primevue",
@@ -1537,10 +1537,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://reui.io",
-  "repo": "",
+  "repo": "https://github.com/keenthemes/reui",
   "license": "MIT",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -1657,10 +1657,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://ui.spectrumhq.in",
-  "repo": "",
+  "repo": "https://github.com/arihantcodes/spectrum-ui",
   "license": "Apache-2.0",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visitas da semana</title>
+<style>
+:root{--z1:#f4f5f2;--z2:#fff;--line:#d6dbd2;--ink:#18201b;--muted:#4d5b52;--primary:#2f5d46;--on-primary:#fff;--bad:#9f1d1d;--bad-bg:#fdecec}
+[data-theme="dark"]{--z1:#111713;--z2:#19211c;--line:#2d3830;--ink:#edf2ee;--muted:#a9b6ad;--primary:#8cc7a6;--on-primary:#0c1410;--bad:#f3a3a3;--bad-bg:#3a1717}
+*{box-sizing:border-box}body{margin:0;background:var(--z1);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
+main{max-width:880px;margin:0 auto;padding:24px 16px;display:grid;gap:16px}
+header{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}h1{margin:0;font-size:22px}.sub{margin:2px 0 0;color:var(--muted)}
+.btn{min-height:44px;padding:0 18px;border-radius:8px;border:1px solid transparent;background:var(--primary);color:var(--on-primary);font:600 15px system-ui;cursor:pointer}
+.btn.ghost{background:var(--z2);color:var(--ink);border-color:var(--line)}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;background:var(--z2);border:1px solid var(--line);border-radius:10px}
+.muted{color:var(--muted)}.empty,.error{padding:24px;background:var(--z2);border:1px solid var(--line);border-radius:12px;display:grid;gap:8px;justify-items:start}
+.error{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.toast{position:fixed;inset:auto 0 0 0;padding:28px 16px;background:var(--ink);color:var(--z2);text-align:center;font-weight:600}
+</style></head>
+<body><main>
+<header><div><h1>Visitas da semana</h1><p class="sub">Rota norte · 24 a 28 de novembro</p></div><button class="btn" id="nova">Nova visita</button></header>
+<section id="conteudo" aria-live="polite"></section>
+</main>
+<script>
+const estado = new URLSearchParams(location.search).get('estado');
+const alvo = document.getElementById('conteudo');
+const visitas = [['Sítio Boa Vista', 'Segunda, 08:00'], ['Granja Três Irmãos', 'Segunda, 10:30'], ['Fazenda Água Limpa', 'Terça, 09:15'], ['Chácara Recanto Verde', 'Quarta, 14:00']];
+if (estado === 'vazio') {
+  alvo.innerHTML = '<div class="empty"><strong>Nenhuma visita nesta semana</strong><span class="muted">Visitas agendadas aparecem aqui com dia e horário.</span><button class="btn ghost">Ver semana seguinte</button></div>';
+} else if (estado === 'erro') {
+  alvo.innerHTML = '<div class="error" role="alert"><strong>Não foi possível carregar as visitas</strong><span>Verifique a conexão e tente de novo.</span><button class="btn ghost">Tentar de novo</button></div>';
+} else {
+  alvo.innerHTML = '<ul>' + visitas.map(([n, h]) => `<li><span>${n}</span><span class="muted">${h}</span></li>`).join('') + '</ul>';
+}
+if (estado === 'coberto') {
+  document.getElementById('nova').scrollIntoView();
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = 'Visita salva'; t.id = 'aviso';
+  document.body.appendChild(t);
+  document.querySelector('header').style.cssText = 'position:fixed;left:0;right:0;bottom:0;padding:16px;background:var(--z2)';
+}
+</script>
+</body></html>

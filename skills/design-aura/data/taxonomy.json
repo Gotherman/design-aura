@@ -1,5 +1,5 @@
 {
-  "version": "3.1.1",
+  "version": "3.2.0",
   "notes": "Taxonomia da base de componentes. Palavras-chave normalizadas (minusculas, sem acento). Palavra simples com 4+ letras casa como prefixo de palavra; com '=' no fim casa só a palavra exata; expressao com espaço casa como trecho entre limites de palavra.",
   "categories": [
     {

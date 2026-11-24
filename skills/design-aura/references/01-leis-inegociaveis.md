@@ -35,7 +35,7 @@ Objetivas e universais. Valem em qualquer projeto, direção ou plataforma. Uma 
 | `DA-JS-ERROR` | Zero erro ou exceção de JavaScript, inclusive depois das interações. | runtime |
 | `DA-ASSET-404` | Zero recurso local que não carrega. | runtime |
 | `DA-AUDIT-COVERAGE` | Toda tela, largura e estado declarados no manifesto têm captura; o que faltar é pendência, não aprovação. | runtime |
-| `DA-REACHABLE` | A ação principal está visível e alcançável no estado testado (sem toast, sheet ou overlay por cima). | runtime |
+| `DA-REACHABLE` | A ação principal está visível e alcançável no estado testado (sem toast, sheet ou overlay por cima). O auditor confere `primaryAction` do manifesto; não achar pelo rótulo ou achar desabilitada sai como REVIEW. | runtime |
 | `DA-B5-01` | Sem Lorem ipsum, John Doe, Acme e similares na tela entregue. | código |
 | `DA-B2-08A` | Sem texto de bastidor na tela ("não está nesta amostra", "semente do funil"). | código |
 | `DA-A11Y-KEYBOARD` | A jornada principal completa só com teclado, com o foco visível em cada passo. | runtime |
@@ -111,6 +111,8 @@ Medidas aproximadas de composição. Saem como REVIEW: abra a captura, confirme 
 | `DA-ALIGN-EDGES` | Muitas linhas de alinhamento à esquerda; a grade está dispersa. Orçamento: `alignEdgesMax`. | runtime |
 | `DA-PERF-BUDGET` | Peso, requisições ou fontes acima do orçamento do projeto. | runtime |
 | `DA-REDUCED-MOTION` | Animação infinita que continua com prefers-reduced-motion. | runtime |
+| `DA-ZOOM-REFLOW` | Com zoom de 200% (metade da largura desktop), a página rola na horizontal fora de tabelas e áreas com rolagem própria, ou corta texto sem reticências. Gera a captura `-zoom200`. | runtime |
+| `DA-FORCED-COLORS` | Em cores forçadas (alto contraste do Windows), controles cujo contorno dependia só do fundo ficam sem borda. Gera a captura `-forced-colors`. | runtime |
 
 ## Princípios que nenhum script mede
 

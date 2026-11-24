@@ -486,6 +486,16 @@ SURFACES = {
 }
 
 
+# Motion da direcao: muda duracao e curva do produto. Transicao de pagina no iOS e no Android segue o sistema.
+MOTION = {
+    "none": {"duration-fast": "100ms", "duration-enter": "160ms", "duration-exit": "120ms", "page-desktop": "160ms",
+             "page-ios": "350ms", "page-android": "250ms", "ease-out": "cubic-bezier(0.25, 1, 0.5, 1)", "press-scale": "1"},
+    "subtle": {"duration-fast": "120ms", "duration-enter": "220ms", "duration-exit": "140ms", "page-desktop": "200ms",
+               "page-ios": "350ms", "page-android": "250ms", "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)", "press-scale": "0.97"},
+    "expressive": {"duration-fast": "140ms", "duration-enter": "280ms", "duration-exit": "180ms", "page-desktop": "240ms",
+                   "page-ios": "350ms", "page-android": "250ms", "ease-out": "cubic-bezier(0.16, 1, 0.3, 1)", "press-scale": "0.96"},
+}
+
 # Densidade muda a escala de espaco, a altura de controle e de linha e o texto base.
 DENSITY = {
     "compact": {"space": ("4px", "6px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px"),
@@ -508,7 +518,7 @@ def _hardest_bg(a: str, b: str, theme: str) -> str:
 
 def build_tokens(seed: str, accent: str | None = None, harmony: str = "complementar", depth_style: str = "hairline",
                  neutral_tint: float = 0.012, brand: str = "Projeto", default_theme: str = "light",
-                 fonts: dict | None = None, density: str = "regular") -> dict:
+                 fonts: dict | None = None, density: str = "regular", motion: str = "subtle") -> dict:
     seed = parse_color(seed)
     accent = parse_color(accent) if accent else derive_accent(seed, harmony)
     _, sc, sh = hex_to_oklch(seed)
@@ -611,7 +621,8 @@ def build_tokens(seed: str, accent: str | None = None, harmony: str = "complemen
     return {
         "$schema": "design-aura/tokens@3",
         "meta": {"brand": brand, "version": "1.0", "defaultTheme": default_theme, "depth_style": style,
-                 "seed": seed, "accent": accent, "harmony": harmony, "density": density, "generated_by": "color_engine"},
+                 "seed": seed, "accent": accent, "harmony": harmony, "density": density,
+                 "motion": motion if motion in MOTION else "subtle", "generated_by": "color_engine"},
         "primitive": {},
         "semantic": semantic,
         "typography": {
@@ -625,7 +636,6 @@ def build_tokens(seed: str, accent: str | None = None, harmony: str = "complemen
         "spacing": spacing,
         "sizing": dict(DENSITY[density]["sizing"]),
         "radii": {"control-sm": "6px", "control-md": "8px", "card-sm": "10px", "card-md": "12px", "card-lg": "16px", "pill": "999px"},
-        "motion": {"duration-fast": "120ms", "duration-enter": "220ms", "duration-exit": "140ms", "page-desktop": "200ms",
-                   "page-ios": "350ms", "page-android": "250ms", "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)", "press-scale": "0.97"},
+        "motion": dict(MOTION.get(motion, MOTION["subtle"])),
         "report": report,
     }
