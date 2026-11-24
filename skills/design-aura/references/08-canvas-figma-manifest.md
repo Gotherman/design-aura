@@ -100,7 +100,7 @@ Veja um exemplo completo funcional em [assets/screen-manifest.example.json](../a
       "desc": "Visão do dia com o que exige ação primeiro e acesso em 1 clique.",
       "archetype": "painel",
       "primaryAction": {"label": "Abrir fila", "desktop": "cabeçalho do bloco urgente", "mobile": "barra inferior"},
-      "states": ["populado", "vazio", "erro"],
+      "states": ["populado", {"name": "vazio", "query": "estado=vazio"}, {"name": "erro", "query": "estado=erro"}, {"name": "aberto", "click": "[data-da-open]", "after": ".drawer"}],
       "zones": [{"name": "Navegação", "width": 240}, {"name": "Hoje", "width": "1fr", "min": 520}, {"name": "Próximos", "width": 360}],
       "minWidth": 1280,
       "viewports": ["desktop", "1920x1080"]
@@ -147,8 +147,8 @@ Veja um exemplo completo funcional em [assets/screen-manifest.example.json](../a
 | `project.budgets` / `screens[].budgets` | projeto ou tela | Orçamentos do projeto (`headerMaxBars`, `headerMaxPx`, `mobileTopMaxPct`, `mobileTopMaxPx`, `maxSiblingTabs`, `deadSpaceReviewPct`, `cardVoidPx`, `duplicateTextMin`, `alignEdgesMax`, `perfMaxKB`, `perfMaxRequests`, `perfMaxFonts`) |
 | `project.minDesktopWidth` / `screens[].minWidth` | projeto ou tela | Largura mínima em que as zonas precisam caber (padrão 1024) |
 | `screens[].archetype` | tela | Arquétipo da tela ([04](04-desktop-e-sistemas.md)); obrigatório para a Bíblia passar no `--check` |
-| `screens[].primaryAction` | tela | Rótulo e posição da ação primária em cada largura |
-| `screens[].states` | tela | Estados que precisam existir e ser vistos (populado, aberto, vazio, erro) |
+| `screens[].primaryAction` | tela | Rótulo e posição da ação primária em cada largura. O auditor procura o botão pelo rótulo (ou por `selector`) e confere se está visível e sem nada por cima |
+| `screens[].states` | tela | Estados que precisam existir e ser vistos. Texto simples marca o estado; um objeto diz como chegar nele e vira captura própria (`tela@estado`): `query` ou `hash` na mesma tela, `file` ou `route` em outra, `click` + `after` para pós-clique, `primaryAction` própria. `"covered_by": "probe"` quando uma jornada E2E cobre. Estado sem caminho aparece como `DA-AUDIT-COVERAGE` (pendente). Vazio, erro e carregando não recebem sinais de tela rasa ou vazio grande |
 | `screens[].zones` | tela | Zonas com `width` (px) ou `"1fr"` com `min`; viram diagramas na Bíblia e são conferidas contra a largura mínima |
 | `screens[].viewports` | tela | Larguras auditadas para esta tela |
 | `screens[].clickSelector` / `afterClickSelector` | tela | Estado pós-clique verificado na captura |

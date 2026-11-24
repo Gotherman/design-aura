@@ -44,7 +44,7 @@ Se nenhuma resposta for concreta, não anime. "Fica moderno" não conta.
 - Reduced motion / remover animações: troca espacial vira crossfade de até 120 ms. Estado ainda muda.
 - Detalhe de domínio aprovado fica numa ação real (enviar, validar, confirmar). Não vira cenário nem um efeito diferente em cada tela.
 
-Tokens sugeridos em `tokens.json`, sem copiar a duração de uma plataforma para a outra:
+A direção escolhe a personalidade de motion: `none` (resposta curta e sem escala no toque, para ferramentas densas), `subtle` (o padrão) ou `expressive` (entradas mais longas e curva mais marcada, para marca e consumo). `generate_tokens.py --motion` ou o campo `motion` da direção gera as durações e a curva; as transições de página do iOS e do Android continuam as do sistema. Tokens sugeridos em `tokens.json`, sem copiar a duração de uma plataforma para a outra:
 
 ```json
 "motion": {

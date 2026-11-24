@@ -498,9 +498,9 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://hugeicons.com",
-  "repo": "",
+  "repo": "https://github.com/hugeicons/hugeicons",
   "license": "MIT (conjunto livre)",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "all"

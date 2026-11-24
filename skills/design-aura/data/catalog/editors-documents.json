@@ -308,8 +308,8 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://www.blocknotejs.org",
-  "repo": "",
-  "license": "MPL-2.0 (núcleo)",
+  "repo": "https://github.com/TypeCellOS/BlockNote",
+  "license": "MPL-2.0 (núcleo) · pacotes XL com licença própria",
   "license_status": "verify",
   "license_checked_at": "2026-11-24",
   "stacks": [
@@ -339,7 +339,7 @@
   "install": "npm install @blocknote/core @blocknote/react @blocknote/mantine",
   "summary": "Editor em blocos estilo Notion.",
   "a11y": "",
-  "notes": "Pacotes XL tem outra licença."
+  "notes": "Núcleo MPL-2.0 conferido; os pacotes XL (exportação e IA) têm licença própria e paga para uso comercial."
  },
  {
   "id": "milkdown",

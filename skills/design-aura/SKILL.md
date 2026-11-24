@@ -8,7 +8,7 @@ description: >-
   verificação visual e funcional, mesmo que o pedido não diga "design".
 license: MIT
 metadata:
-  version: "3.1.1"
+  version: "3.2.0"
   author: "Lucas (Gotherman)"
   display-name: "Design Aura"
 ---
@@ -69,7 +69,7 @@ Uma rodada em português claro, cada pergunta com uma opção recomendada **deri
 Se a pessoa disser que não entendeu, pare, explique com um exemplo do produto e confirme antes de seguir. Grave as respostas no Contrato de plataforma da Bíblia; o que você assumir entra marcado como hipótese.
 
 ### F2A — Estúdio de Direção
-Monte 2 ou 3 direções realmente diferentes (cor e harmonia, tipografia, forma, densidade, profundidade, assinatura, o que cada uma recusa) e renderize todas sobre o mesmo trecho real do produto, em Light e Dark:
+Monte 2 ou 3 direções realmente diferentes (cor e harmonia, tipografia, forma, densidade, profundidade, motion, assinatura, o que cada uma recusa) e renderize todas sobre o mesmo trecho real de cada superfície do produto (sistema, mobile, site), em Light e Dark:
 
 ```bash
 python3 <skill_dir>/scripts/design_intel.py "<domínio e objetivo>" --stack <stack>      # hipóteses de partida
@@ -101,17 +101,18 @@ Subagentes de 1 a 3 telas, com briefing que traz o mapa de zonas da tela, os dad
 ```bash
 python3 <skill_dir>/scripts/build_figma_canvas.py design/screen-manifest.json --tokens design/tokens.css --out design/telas --verify-files
 python3 <skill_dir>/scripts/aura_check.py --manifest design/screen-manifest.json --tokens design/tokens.css --bible design/DESIGN-BIBLE.md \
-  --shell design/SHELL-CONTRACT.md --project design/telas --out design/audit [--base-url http://127.0.0.1:4188] [--baseline design/audit-antes] --smoke-interact --strict
+  --shell design/SHELL-CONTRACT.md --project design/telas --out design/audit [--base-url http://127.0.0.1:4188] [--baseline design/audit-antes] \
+  --smoke-interact --log design/aura-log.jsonl --strict
 python3 <skill_dir>/scripts/build_figma_canvas.py design/screen-manifest.json --tokens design/tokens.css --thumbs design/audit/captures --out design/telas --verify-files
 ```
 
-Em SPA, rode o build antes de auditar. Em sites, acrescente `--mode persuade --viewports desktop,1024x768,mobile`. Portão que não rodou deixa o veredito pendente; num ajuste pontual, declare `--partial` com o motivo. A vitrine (`entrega.html`, `fluxo.html`, `preview.html`, `index.html`) e o servidor de link único estão em [08](references/08-canvas-figma-manifest.md).
+A captura cobre os estados declarados no manifesto (vazio, erro, aberto), confere a ação primária de cada tela e faz, uma vez por tela, zoom de 200% e cores forçadas. Em SPA, rode o build antes de auditar. Em sites, acrescente `--mode persuade --viewports desktop,1024x768,mobile`. Portão que não rodou deixa o veredito pendente; num ajuste pontual, declare `--partial` com o motivo. A vitrine (`entrega.html`, `fluxo.html`, `preview.html`, `index.html`) e o servidor de link único estão em [08](references/08-canvas-figma-manifest.md).
 
 ### F4.5 — QA funcional e crítica visual
 Testers somente leitura percorrem as jornadas com `run_workflow_probe.mjs`, incluindo um trecho só por teclado e casos extremos de dados. Um crítico visual com contexto limpo compara as capturas com a Parte A da Bíblia usando a rubrica de [07](references/07-auditoria-e-veredito.md). O orquestrador tria pela causa, corrige ou despacha correções e pede reteste. No máximo dois ciclos; o que restar vira pendência explícita.
 
 ### F5 — Entrega e aprendizado
-Veredito: **aprovado**, **requer correção** ou **pendente de verificação**, conforme a evidência. Entregue um link verificado. Registre na Bíblia (histórico) cada correção pedida pelo usuário, com motivo e escopo. Uma correção só vira regra da skill depois de reproduzida em outro projeto ou numa fixture de calibração.
+Veredito: **aprovado**, **requer correção** ou **pendente de verificação**, conforme a evidência. Entregue um link verificado. Registre na Bíblia (histórico) cada correção pedida pelo usuário, com motivo e escopo; o `aura-log.jsonl` mostra quais regras mais apareceram nas rodadas. Uma correção só vira regra da skill depois de reproduzida em outro projeto ou numa fixture de calibração.
 
 ## Leis em uma página
 

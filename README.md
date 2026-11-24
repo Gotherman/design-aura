@@ -1,4 +1,4 @@
-# Design Aura (`design-aura` · `v3.1.1`)
+# Design Aura (`design-aura` · `v3.2.0`)
 
 Skill de direção visual e construção de interfaces bonitas, sofisticadas e sem cara de IA para **apps mobile** (iOS, Android, React Native/Expo, Flutter, PWA), **apps desktop** (Electron, Tauri, nativo), **sistemas web** (SaaS, ERPs, painéis; HTML estático ou SPA React/Vite/Next) e **sites**.
 
@@ -6,10 +6,10 @@ Skill de direção visual e construção de interfaces bonitas, sofisticadas e s
 
 1. **Lê o projeto** (repositório, planejamento, rotas, marca) e escolhe o modo: criar, remodelar, polir, ajuste pontual ou upgrade.
 2. **Entrevista curta** com recomendações derivadas do próprio projeto.
-3. **Estúdio de Direção**: 2–3 direções diferentes (cor, tipografia, forma, densidade, profundidade) renderizadas sobre o mesmo trecho real do produto, em Light e Dark, para a pessoa escolher.
-4. **Bíblia de direção visual** em três partes (aprovar, construir, verificar), com tokens gerados por um motor de cor OKLCH, orçamentos de composição, diagramas de zona e componentes com caminho e licença. Só avança com a checagem de completude limpa.
+3. **Estúdio de Direção**: 2–3 direções diferentes (cor, tipografia, forma, densidade, profundidade, motion) renderizadas sobre o mesmo trecho real de cada superfície do produto (sistema, mobile, site), em Light e Dark, para a pessoa escolher.
+4. **Bíblia de direção visual** em três partes (aprovar, construir, verificar), com tokens gerados por um motor de cor OKLCH (CSS + `forced-colors`, Tailwind v4, TS, SwiftUI, Jetpack Compose, Flutter e DTCG 2025.10), orçamentos de composição, diagramas de zona e componentes com caminho e licença. Só avança com a checagem de completude limpa.
 5. **Telas-Mãe** por arquétipo e **construção por subagentes** (1–3 telas cada) com auditoria a cada entrega.
-6. **Verificação por evidência**: contraste WCAG + APCA, linter, auditoria no navegador em várias larguras e temas, jornadas clicadas (inclusive só por teclado), crítico visual independente e comparação antes/depois.
+6. **Verificação por evidência**: contraste WCAG + APCA, linter, auditoria no navegador em várias larguras, temas e estados declarados (vazio, erro, aberto), ação primária visível, zoom de 200%, cores forçadas, jornadas clicadas (inclusive só por teclado), crítico visual independente, linha de base e log histórico (`--log`).
 7. **Vitrine em link único** (`entrega.html`: mapa estilo Figma, app ao vivo, preview guiado, galeria, Bíblia).
 
 ## Princípios
@@ -45,13 +45,15 @@ Instalação manual: copie `skills/design-aura` (e `skills/designaura` para o co
 | `render_direction_board.py` | Estúdio de Direção |
 | `generate_tokens.py` + `color_engine.py` | Tokens por semente OKLCH; CSS, Tailwind v4, TS, Swift, Kotlin, Dart e DTCG |
 | `render_design_bible.py` | Bíblia em HTML/PDF, checagem de completude, diagramas de zona, sincronia |
-| `aura_check.py` | Todos os portões num comando |
+| `aura_check.py` | Todos os portões num comando (com `--log` em JSONL por rodada) |
 | `audit_contrast.py` | WCAG + APCA, paridade semântica, separação de planos por estilo de profundidade |
 | `lint_design_aura.py` | Linter estático por camada |
-| `capture_and_audit.mjs` | Captura e auditoria no Chromium (larguras, temas, pós-clique, peso, movimento, linha de base) |
+| `capture_and_audit.mjs` | Captura e auditoria no Chromium (larguras, temas, estados declarados, ação primária, zoom 200%, cores forçadas, pós-clique, peso, movimento, linha de base) |
 | `run_workflow_probe.mjs` | Jornadas E2E (cliques, teclado real, reduced motion, assertivas) |
 | `build_figma_canvas.py` + `serve_entrega.mjs` | Vitrine e servidor de link único |
 | `refresh_catalog.py` | Licença e atividade da base de componentes (`--mark-checked` grava a data e marca peças paradas) |
+
+Release e paridade de instalações locais: `python3 tools/release.py --check` / `--sync`.
 
 Requisitos: Python 3, Node 20+ e Chromium/Chrome. Sem npm install nem pip install.
 

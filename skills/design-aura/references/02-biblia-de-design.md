@@ -23,19 +23,25 @@ Cada direção fecha estes eixos:
 | Densidade | compacta, equilibrada, arejada | 06 · Espaço e forma |
 | Profundidade | linha fina, suave, tonal, tátil | 06 · Profundidade |
 | Ícones | uma família que combine com o traço da fonte | 06 · Ícones |
+| Motion | sem motion, sutil ou expressivo (durações e curva) | 10 · Motion |
 | Assinatura | um gesto ligado ao domínio, se aprovado | 10 · Motion |
 | Recusa | o que esta direção não faz | — |
 
 As direções precisam diferir em pelo menos três eixos. O script avisa quando duas ficam parecidas demais. Se todas puxarem para o mesmo painel genérico, troque o padrão de interação (tabela em vez de cartões, linha do tempo em vez de feed) e não só a cor.
 
 ### 3. O mesmo trecho real
-Escolha um trecho que represente o produto: a barra do app, um título com subtítulo, um KPI, quatro linhas da lista principal com estados diferentes, as ações primária e secundária e um campo. Use dados do próprio projeto. Veja `assets/direction-board.example.json`.
+Escolha um trecho que represente cada superfície do produto, com dados do próprio projeto (veja `assets/direction-board.example.json`):
+- **sistema** (`"kind": "app"`): a barra do app, título com subtítulo, um KPI, quatro linhas da lista principal com estados diferentes, as ações e um campo;
+- **mobile** (`"kind": "mobile"`): o topo, um resumo, quatro itens com estado, a ação principal e a barra de abas;
+- **site** (`"kind": "site"`): a navegação, a promessa, o texto de apoio, as duas chamadas, três provas e três blocos de conteúdo.
+
+Use `fragments` com um trecho por superfície que existe no produto. Cada direção aparece em todas elas, em Light e Dark.
 
 ```bash
 python3 <skill_dir>/scripts/render_direction_board.py direcoes.json --out design/direcao
 ```
 
-Sai `direction-board.html` (cada direção em Light e Dark), `direcao-N.json` (a direção em si) e `direcao-N.tokens.json/.css` de cada uma, já calibrados pelo motor de cor (contraste e paridade semântica verificados). A densidade aparece no board: compacta e arejada mudam espaço, altura de controle e de linha. Depois da escolha, o `direcao-N.json` alimenta os próximos comandos (`generate_tokens.py --direction` e `discover_oss_components.py --direction`), sem transcrever semente, forma ou densidade à mão.
+Sai `direction-board.html` (cada direção em Light e Dark), `direcao-N.json` (a direção em si) e `direcao-N.tokens.json/.css` de cada uma, já calibrados pelo motor de cor (contraste e paridade semântica verificados). A densidade aparece no board (compacta e arejada mudam espaço, altura de controle e de linha), e o motion de cada direção (`none`, `subtle` ou `expressive`) vira as durações e a curva dos tokens. Depois da escolha, o `direcao-N.json` alimenta os próximos comandos (`generate_tokens.py --direction` e `discover_oss_components.py --direction`), sem transcrever semente, forma ou densidade à mão.
 
 ### 4. Portão 1A
 Mostre o board e peça uma escolha: uma direção, uma mistura de eixos ("a cor da 1 com a forma da 2") ou outra rodada. Registre a escolha e o motivo na Parte A. Se a pessoa autorizou seguir direto, use a recomendada e diga qual foi.

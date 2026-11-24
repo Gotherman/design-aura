@@ -32,6 +32,12 @@ Ele roda, conforme os caminhos informados:
 
 O resultado consolidado fica em `aura-check.json`. Portão sem a entrada correspondente aparece como "não rodou" e, com `--strict`, falha a verificação: sem ele o veredito é **pendente de verificação**. Num ajuste pontual que de fato dispensa algum portão, declare `--partial` e escreva o motivo no relatório. O relatório da captura anterior é apagado antes de cada rodada, então um navegador que não abriu nunca devolve resultado velho. Os scripts também rodam isolados (`audit_contrast.py`, `lint_design_aura.py`, `capture_and_audit.mjs`, `render_design_bible.py --check`).
 
+### Estados, ação primária e acessibilidade extra
+- **Estados declarados** em `screens[].states` com caminho (`query`, `hash`, `file`, `route`, `click`) viram capturas `tela@estado`. Estado sem caminho e sem `covered_by` fica pendente (`DA-AUDIT-COVERAGE`).
+- **Ação primária**: o auditor procura `primaryAction` pelo rótulo ou pelo `selector`, rola até ela e confere se está visível e sem nada por cima (`DA-REACHABLE`, HIGH). Não achar pelo rótulo ou achar desabilitada sai como REVIEW.
+- **Zoom de 200%** (metade da largura desktop) e **cores forçadas** rodam uma vez por tela, com capturas `-zoom200` e `-forced-colors` para o crítico. Rolagem horizontal fora de tabelas, texto cortado e controle que perde o contorno saem como REVIEW (`DA-ZOOM-REFLOW`, `DA-FORCED-COLORS`). `--no-a11y-extra` desliga.
+- **Histórico de rodadas**: `aura_check.py --log design/aura-log.jsonl` acrescenta um resumo por rodada (totais, portões pulados e regras mais frequentes). Ao fim do projeto ele mostra onde a skill ou a direção ainda falham.
+
 ### Cobertura declarada
 - `screens[].viewports` define larguras por tela (`"desktop"`, `"1920x1080"`, `"mobile-360x800"`); `project.vitrineViewports` cobre a vitrine.
 - `clickSelector` + `afterClickSelector` verificam o estado aberto. Estados que pedem preparo vão para uma jornada E2E.

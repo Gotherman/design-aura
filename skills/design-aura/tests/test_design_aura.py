@@ -1049,7 +1049,7 @@ class V3BibleAndRegistryTests(unittest.TestCase):
         body = "decisão registrada com o motivo e o efeito esperado na tela"
         sections = ["Contrato de plataforma", "Direção", "Cor", "Tipografia", "Espaço e forma", "Profundidade", "Orçamentos",
                     "Componentes", "Telas", "Motion", "Conteúdo e dados fictícios", "Leis do projeto", "Portões", "Histórico"]
-        md = "# Biblia\n> **Design Aura:** `v3.1.1`\n" + "".join(f"## {name}\n{body}\n" for name in sections) + "`fila`\n"
+        md = "# Biblia\n> **Design Aura:** `v3.2.0`\n" + "".join(f"## {name}\n{body}\n" for name in sections) + "`fila`\n"
         manifest = {"screens": [{"id": "fila", "archetype": "lista", "primaryAction": {"label": "Aprovar"}, "states": ["populado"]}]}
         self.assertEqual(check_bible(md, manifest, {"--primary-surface": "#eee", "--chart-1": "#111", "--danger": "#b00"}), [])
 
@@ -1243,7 +1243,7 @@ class V311Tests(unittest.TestCase):
     def test_bible_check_rejects_empty_sections_and_template_has_all_sections(self):
         from render_design_bible import check_bible
 
-        empty = "# Bíblia de Direção Visual\n**Design Aura:** `v3.1.1`\n" + "".join(
+        empty = "# Bíblia de Direção Visual\n**Design Aura:** `v3.2.0`\n" + "".join(
             f"## {n}\n" for n in ("Contrato de plataforma", "Cor", "Tipografia", "Planos", "Orçamento", "Componentes", "Telas", "Motion",
                                   "Conteúdo", "Leis do projeto", "Portões", "Histórico"))
         errors = check_bible(empty, None, None)
@@ -1291,6 +1291,115 @@ class V311Tests(unittest.TestCase):
             self.assertTrue(all(int(c) == n_cats for c in cats), (f.name, cats, n_cats))
             needs = re.findall(r"(\d+) necessidades", text)
             self.assertTrue(all(int(n) == n_needs for n in needs), (f.name, needs, n_needs))
+
+
+class V32Tests(unittest.TestCase):
+    """3.2: setores de consumo e site, Estudio por superficie, tokens nativos, estados, acao primaria e acessibilidade extra."""
+
+    def test_benchmark_anti_convergence_of_starting_hypotheses(self):
+        from color_engine import hex_to_oklch
+        from design_intel import build_report
+
+        briefs = ["clínica veterinária com agenda de consultas e app para tutores",
+                  "SaaS jurídico claro para escritórios de advocacia com prazos e contratos",
+                  "site de escola de surfe com agendamento de aulas experimentais"]
+        reports = [build_report(b, "all", "all", 3) for b in briefs]
+        tops = [r["domains"][0] for r in reports]
+        self.assertEqual(len({d["id"] for d in tops}), 3, [d["id"] for d in tops])
+        hues = [hex_to_oklch(d["color_ideas"][0]["seed"])[2] for d in tops]
+        for i in range(3):
+            for j in range(i + 1, 3):
+                gap = abs(((hues[i] - hues[j] + 540) % 360) - 180)
+                self.assertGreaterEqual(gap, 40, (tops[i]["id"], tops[j]["id"], gap))
+        self.assertEqual(len({r["typography"][0]["personality"] for r in reports}), 3)
+        self.assertGreaterEqual(len({d["depth_hint"] for d in tops}), 2)
+        none = build_report("plataforma de foguetes interplanetários", "all", "all", 3)
+        self.assertEqual(none["domains"], [])
+
+    def test_board_renders_each_surface_and_motion_axis(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("render_direction_board.py", [str(ROOT / "assets" / "direction-board.example.json"), "--out", tmp])
+            self.assertEqual(res.returncode, 0, res.stderr)
+            html = (Path(tmp) / "direction-board.html").read_text(encoding="utf-8")
+            for marker in ('class="appbar"', 'class="phone"', 'class="site"', "<dt>Motion</dt>"):
+                self.assertIn(marker, html)
+            spec = json.loads((ROOT / "assets" / "direction-board.example.json").read_text(encoding="utf-8"))
+            for i, d in enumerate(spec["directions"], 1):
+                tokens = json.loads((Path(tmp) / f"direcao-{i}.tokens.json").read_text(encoding="utf-8"))
+                self.assertEqual(tokens["meta"]["motion"], d["motion"])
+            calm = json.loads((Path(tmp) / "direcao-2.tokens.json").read_text(encoding="utf-8"))["motion"]
+            lively = json.loads((Path(tmp) / "direcao-3.tokens.json").read_text(encoding="utf-8"))["motion"]
+            self.assertLess(int(calm["duration-enter"][:-2]), int(lively["duration-enter"][:-2]))
+
+    def test_native_token_outputs_are_complete(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            res = run_py("generate_tokens.py", ["--seed", "#1F4D3A", "--accent", "#C98A12", "--shape", "round", "--density", "compact",
+                                                "--motion", "expressive", "--emit-json", str(Path(tmp) / "t.json"), "--out", tmp, "--format", "all"])
+            self.assertEqual(res.returncode, 0, res.stderr)
+            swift = (Path(tmp) / "DesignTokens.swift").read_text(encoding="utf-8")
+            for marker in ("enum Adaptive", "enum Radius", "enum Space", "enum Size", "Animation.timingCurve", "struct Elevation", "static func designAura"):
+                self.assertIn(marker, swift)
+            self.assertNotIn('"140ms"', swift)
+            kt = (Path(tmp) / "DesignTokens.kt").read_text(encoding="utf-8")
+            for marker in ("lightColorScheme(", "darkColorScheme(", "val AuraShapes = Shapes(", "CubicBezierEasing(", "val TouchMin = 48.dp", "primaryContainer ="):
+                self.assertIn(marker, kt)
+            dart = (Path(tmp) / "design_tokens.dart").read_text(encoding="utf-8")
+            for marker in ("static const lightScheme = ColorScheme(", "Cubic(", "static const touchMin = 48.0;", "BoxShadow(", "ThemeData("):
+                self.assertIn(marker, dart)
+            dtcg = json.loads((Path(tmp) / "tokens.dtcg.json").read_text(encoding="utf-8"))
+            self.assertEqual(dtcg["light"]["shadow"]["z3"]["$type"], "shadow")
+            self.assertEqual(dtcg["cubicBezier"]["ease-out"]["$type"], "cubicBezier")
+            css = (Path(tmp) / "tokens.css").read_text(encoding="utf-8")
+            self.assertIn("@media (forced-colors: active)", css)
+
+    def test_declared_states_are_captured_and_primary_action_is_checked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_node("capture_and_audit.mjs", ["--manifest", str(FIXTURES / "states" / "manifest.json"), "--out", tmp,
+                                               "--viewports", "desktop", "--themes", "light", "--quiet", "--no-vitrine"])
+            rows = {r["target"]: r for r in json.loads((Path(tmp) / "audit-report.json").read_text(encoding="utf-8"))}
+        self.assertTrue({"fila", "fila@vazio", "fila@erro", "fila@aviso", "fila@aberto"} <= set(rows), sorted(rows))
+        rules = lambda t: {(i["severity"], i["rule"]) for i in rows[t]["issues"]}  # noqa: E731
+        self.assertFalse(rules("fila"), rows["fila"]["issues"])
+        self.assertFalse({r for r in rules("fila@vazio") if r[1] in ("DA-STUB-SCREEN", "DA-DEAD-SPACE")})
+        self.assertIn(("HIGH", "DA-REACHABLE"), rules("fila@aviso"))
+        self.assertIn(("HIGH", "DA-AUDIT-COVERAGE"), rules("fila@aberto"))
+
+    def test_zoom_and_forced_colors_checks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_node("capture_and_audit.mjs", [str(FIXTURES / "bad" / "largura-fixa.html"), "--out", str(Path(tmp) / "b"),
+                                               "--viewports", "desktop", "--themes", "light", "--quiet"])
+            bad = {i["rule"] for i in json.loads((Path(tmp) / "b" / "audit-report.json").read_text(encoding="utf-8"))[0]["issues"]}
+            self.assertTrue({"DA-ZOOM-REFLOW", "DA-FORCED-COLORS"} <= bad, bad)
+            self.assertTrue((Path(tmp) / "b" / "largura-fixa-desktop-light-zoom200.png").exists())
+            run_node("capture_and_audit.mjs", [str(FIXTURES / "good" / "tabela-operacional.html"), str(FIXTURES / "good" / "app-claro-minimal.html"),
+                                               "--out", str(Path(tmp) / "g"), "--viewports", "desktop", "--themes", "light", "--quiet"])
+            good = {i["rule"] for r in json.loads((Path(tmp) / "g" / "audit-report.json").read_text(encoding="utf-8")) for i in r["issues"]}
+            self.assertFalse(good & {"DA-ZOOM-REFLOW", "DA-FORCED-COLORS"}, good)
+
+    def test_aura_check_appends_run_log(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            log = Path(tmp) / "aura-log.jsonl"
+            for _ in range(2):
+                run_py("aura_check.py", ["--tokens", str(ROOT / "assets" / "tokens.example.json"), "--project", str(FIXTURES / "bad"),
+                                         "--out", str(Path(tmp) / "o"), "--partial", "--log", str(log)])
+            lines = [json.loads(x) for x in log.read_text(encoding="utf-8").splitlines()]
+        self.assertEqual(len(lines), 2)
+        self.assertIn("top_rules", lines[0])
+        self.assertTrue(lines[0]["top_rules"])
+        self.assertIn("navegador", lines[0]["skipped"])
+
+    def test_release_stamps_match_and_catalog_traps_are_explicit(self):
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("release", ROOT.parents[1] / "tools" / "release.py")
+        release = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(release)
+        self.assertEqual(release.stamp_problems(release.version()), [])
+        from discover_oss_components import load_catalog
+
+        items = {i["id"]: i for i in load_catalog()}
+        self.assertNotIn("@theatre/studio", items["theatre-js"]["install"])
+        self.assertLessEqual(sum(1 for i in items.values() if i["license_status"] == "verify"), 20)
 
 
 if __name__ == "__main__":

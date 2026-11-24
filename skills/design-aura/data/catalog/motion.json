@@ -620,10 +620,10 @@
   "kind": "registry",
   "use": "copy",
   "url": "https://smoothui.dev",
-  "repo": "",
+  "repo": "https://github.com/educlopez/smoothui",
   "license": "MIT",
-  "license_status": "verify",
-  "license_checked_at": null,
+  "license_status": "ok",
+  "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
   ],
@@ -661,7 +661,7 @@
   "use": "dependency",
   "url": "https://www.theatrejs.com",
   "repo": "",
-  "license": "Apache-2.0 (núcleo)",
+  "license": "Apache-2.0 (@theatre/core) · AGPL-3.0 (@theatre/studio)",
   "license_status": "verify",
   "license_checked_at": "2026-11-24",
   "stacks": [
@@ -687,10 +687,10 @@
   },
   "flashy": false,
   "craft": 2,
-  "install": "npm install @theatre/core @theatre/studio",
+  "install": "npm install @theatre/core",
   "summary": "Editor visual de sequencias de animação.",
   "a11y": "",
-  "notes": "",
+  "notes": "@theatre/studio é AGPL-3.0: use só em desenvolvimento e nunca no bundle de produção.",
   "stale": true
  }
 ]

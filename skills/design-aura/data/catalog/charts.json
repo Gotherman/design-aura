@@ -919,9 +919,9 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://tanstack.com/charts",
-  "repo": "",
+  "repo": "https://github.com/react-tools/react-charts",
   "license": "MIT",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
@@ -951,7 +951,7 @@
   "install": "npm install react-charts",
   "summary": "Gráficos headless da família TanStack.",
   "a11y": "",
-  "notes": "",
+  "notes": "Última versão é beta (2.0.0-beta) e o repositório está parado; prefira outra peça para gráficos de produção.",
   "stale": true
  },
  {

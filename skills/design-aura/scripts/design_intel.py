@@ -15,6 +15,8 @@ from collections import Counter
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+GENERIC_TERMS = {"plataforma", "sistema", "sistemas", "app", "apps", "aplicativo", "site", "sites", "gestao", "online", "web", "software",
+                 "solucao", "portal", "ferramenta", "produto", "de", "do", "da", "para", "com", "e", "o", "a", "um", "uma", "em", "no", "na"}
 
 
 def normalize_text(text: str) -> list[str]:
@@ -81,7 +83,10 @@ def rank_items(
     platform: str = "all",
     extra_filter=None,
     top: int = 3,
+    min_ratio: float = 0.0,
 ) -> list[dict]:
+    """Ranqueia por BM25. Com min_ratio, so devolve o que tem pontuacao > 0 e pelo menos
+    essa fracao da melhor: nada de completar a lista com itens sem relacao com a consulta."""
     filtered = [
         item for item in items
         if match_platform(item.get("platforms", []), platform)
@@ -97,6 +102,9 @@ def rank_items(
         s = bm25.score(q_tokens, i)
         scored.append((s, i, item))
     scored.sort(key=lambda x: (x[0], -x[1]), reverse=True)
+    if min_ratio > 0:
+        best = scored[0][0] if scored else 0.0
+        scored = [x for x in scored if x[0] > 0 and x[0] >= best * min_ratio]
     return [x[2] for x in scored[:top]]
 
 
@@ -110,9 +118,11 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
 
     typo_map = {t["id"]: t for t in typography}
 
+    # Palavras genericas ("plataforma", "sistema", "app") nao dizem o setor; sem elas, briefing sem setor fica sem preset.
+    domain_query = " ".join(t for t in normalize_text(query) if t not in GENERIC_TERMS) or query
     top_domains = rank_items(
         domains,
-        query,
+        domain_query,
         lambda d: " ".join([
             d["name"],
             " ".join(d.get("keywords", [])),
@@ -121,6 +131,7 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
         ]),
         platform=platform,
         top=top,
+        min_ratio=0.45,
     )
 
     preferred_typo_ids = []
@@ -159,6 +170,7 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
         lambda p: f"{p['name']} {p['when_to_use']} {' '.join(p.get('anatomy', []))}",
         platform=platform,
         top=max(3, top),
+        min_ratio=0.4,
     )
 
     def stack_filter(c: dict) -> bool:
@@ -171,6 +183,7 @@ def build_report(query: str, platform: str, stack: str, top: int) -> dict:
         platform=platform,
         extra_filter=stack_filter,
         top=max(5, top + 2),
+        min_ratio=0.3,
     )
 
     return {
@@ -191,6 +204,8 @@ def format_markdown(report: dict) -> str:
         "",
         "## 1. Domínios & Direções (hipótese, a confirmar)",
     ]
+    if not report["domains"]:
+        lines.extend(["Nenhum setor da base combina com esta descrição. Derive as direções do próprio produto: tarefas, público, marca e referências da entrevista.", ""])
     for i, d in enumerate(report["domains"], 1):
         ideas = " · ".join(f"`{c['seed']}` + `{c['accent']}` ({c['harmony']}: {c['why']})" for c in d.get("color_ideas", []))
         lines.extend([
@@ -212,6 +227,8 @@ def format_markdown(report: dict) -> str:
     lines.append("")
 
     lines.append("## 3. Padrões de Arquitetura & Interação")
+    if not report["patterns"]:
+        lines.append("- Nenhum padrão da base combina; consulte `data/recipes.json` pelo problema concreto.")
     for p in report["patterns"]:
         lines.append(f"- **{p['name']}** ({', '.join(p['platforms'])}): {p['when_to_use']}")
         lines.append(f"  - Anatomia: {' → '.join(p['anatomy'])}")

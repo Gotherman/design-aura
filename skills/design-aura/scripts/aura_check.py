@@ -13,8 +13,10 @@ pendente e tambem falha em --strict, salvo com --partial (verificacao parcial de
 ajuste pontual).
 """
 import argparse
+import datetime as dt
 import json
 import subprocess
+from collections import Counter
 import sys
 from pathlib import Path
 
@@ -55,6 +57,7 @@ def main():
     ap.add_argument("--depth-style", default="")
     ap.add_argument("--strict", action="store_true")
     ap.add_argument("--partial", action="store_true", help="Declara verificacao parcial: portoes nao executados nao falham o --strict")
+    ap.add_argument("--log", default="", help="Acrescenta um resumo desta rodada (JSON por linha) para ver quais regras mais aparecem ao longo do projeto")
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -141,6 +144,15 @@ def main():
     total = {k: sum(g["counts"].get(k, 0) for g in gates) for k in ("BLOCK", "HIGH", "REVIEW", "MEDIUM")}
     (out / "aura-check.json").write_text(json.dumps({"total": total, "gates": gates, "skipped": skipped, "partial": args.partial},
                                                     ensure_ascii=False, indent=2), encoding="utf-8")
+    if args.log:
+        rules = Counter(d.get("rule") or g["gate"] for g in gates for d in g["details"] if d.get("severity") in ("BLOCK", "HIGH", "REVIEW"))
+        entry = {"at": dt.datetime.now().isoformat(timespec="seconds"), "total": total, "partial": args.partial,
+                 "skipped": [s["gate"] for s in skipped], "gates": {g["gate"]: g["counts"] for g in gates},
+                 "top_rules": rules.most_common(10), "out": str(out)}
+        log = Path(args.log)
+        log.parent.mkdir(parents=True, exist_ok=True)
+        with log.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     print("# Design Aura — verificação consolidada")
     print("| Portão | BLOCK | HIGH | REVIEW | MEDIUM |")

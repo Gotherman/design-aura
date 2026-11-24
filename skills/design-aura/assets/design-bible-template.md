@@ -1,6 +1,6 @@
 # Bíblia de Direção Visual — {{PROJETO}}
 
-> **Versão do projeto:** {{VERSAO}} · **Design Aura:** `v3.1.1` · **Superfícies:** {{SUPERFICIES}} · **Modo:** {{Operate | Read | Persuade}}
+> **Versão do projeto:** {{VERSAO}} · **Design Aura:** `v3.2.0` · **Superfícies:** {{SUPERFICIES}} · **Modo:** {{Operate | Read | Persuade}}
 
 Como usar: a Parte A é para aprovar, a Parte B é para construir, a Parte C é para verificar. Troque todo `{{...}}` e todo `...` por decisões. `render_design_bible.py --check` aponta o que ficou em aberto.
 
@@ -104,7 +104,7 @@ CSS dos componentes base usando só `var(--token)`: botão primário, secundári
 ### `{{id}}` — {{título}}
 - **Arquétipo:** {{...}} · **Zonas:** {{nome largura | nome 1fr (min)}} (diagrama abaixo, gerado do manifesto)
 - **Ação primária:** {{rótulo}} — desktop: {{posição}} · mobile: {{posição}}
-- **Estados:** populado, aberto/pós-ação, vazio, erro
+- **Estados:** populado, aberto/pós-ação, vazio, erro (cada um com caminho de captura no manifesto: `query`, `file`, `click` ou `covered_by`)
 - **Padrões visuais:** {{recipes.json: id/opção}}
 - **Fora desta tela e onde mora:** {{...}}
 
@@ -116,7 +116,7 @@ CSS dos componentes base usando só `var(--token)`: botão primário, secundári
 **Recusadas:** {{peça — motivo}}
 
 ## B8. Motion
-- **Anima:** {{...}} · **Fica quieto:** {{...}}
+- **Personalidade:** {{none | subtle | expressive}} (durações e curva em `tokens.json`) · **Anima:** {{...}} · **Fica quieto:** {{...}}
 - **Desktop:** {{hover 120–160 ms; página ~200 ms}} · **iOS:** {{push do sistema; sheet com detent}} · **Android:** {{eixo compartilhado ~250 ms; predictive back}}
 - **Gesto de assinatura:** {{ou nenhum}} · **Reduced motion:** {{...}}
 

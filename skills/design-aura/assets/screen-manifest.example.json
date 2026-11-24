@@ -87,8 +87,14 @@
       },
       "states": [
         "populado",
-        "vazio",
-        "erro"
+        {
+          "name": "vazio",
+          "query": "estado=vazio"
+        },
+        {
+          "name": "erro",
+          "query": "estado=erro"
+        }
       ],
       "zones": [
         {
@@ -134,9 +140,19 @@
       },
       "states": [
         "populado",
-        "aberto",
-        "vazio",
-        "erro"
+        {
+          "name": "aberto",
+          "click": "[data-da-open]",
+          "after": "[data-da-detail]"
+        },
+        {
+          "name": "vazio",
+          "query": "estado=vazio"
+        },
+        {
+          "name": "erro",
+          "query": "estado=erro"
+        }
       ],
       "zones": [
         {
@@ -177,8 +193,14 @@
       },
       "states": [
         "populado",
-        "vazio",
-        "erro"
+        {
+          "name": "vazio",
+          "query": "estado=vazio"
+        },
+        {
+          "name": "erro",
+          "query": "estado=erro"
+        }
       ],
       "zones": [
         {
@@ -226,7 +248,10 @@
       },
       "states": [
         "populado",
-        "vazio",
+        {
+          "name": "vazio",
+          "query": "estado=vazio"
+        },
         "offline"
       ]
     }

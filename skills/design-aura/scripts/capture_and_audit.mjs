@@ -68,6 +68,52 @@ function resolveManifestScreenPath(manifestDir, relFile) {
   return direct;
 }
 
+const DEFAULT_STATE_RE = /^(populad|padr[aã]o|default|populated|cheio|normal|base)/i;
+const OPEN_STATE_RE = /^(abert|p[oó]s[- ]?a[cç][aã]o|open|after|detalhe)/i;
+const SPARSE_STATE_RE = /(vazi|empty|erro|error|falha|offline|carregand|loading|sem[- ]?result|sem[- ]?dados|bloquead|permiss)/i;
+
+function slugify(text) {
+  return String(text).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'estado';
+}
+
+function normalizePrimaryAction(pa) {
+  if (!pa) return null;
+  if (typeof pa === 'string') return pa.trim() ? { label: pa.trim(), selector: '' } : null;
+  const label = String(pa.label || '').trim();
+  const selector = String(pa.selector || '').trim();
+  return label || selector ? { label, selector } : null;
+}
+
+function primaryActionExpr(pa) {
+  return `(() => {
+    const sel = ${JSON.stringify(pa.selector || '')};
+    const label = ${JSON.stringify(String(pa.label || '').trim().toLowerCase())};
+    const norm = (s) => String(s || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+    const shown = (e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    let el = null;
+    try { el = sel ? document.querySelector(sel) : null; } catch (e) { el = null; }
+    if (!el && label) {
+      const cands = Array.from(document.querySelectorAll('button, a, [role="button"], input[type="submit"], input[type="button"]')).filter(shown);
+      const text = (e) => norm(e.textContent || e.value);
+      el = cands.find((e) => text(e) === label || norm(e.getAttribute('aria-label')) === label)
+        || cands.find((e) => text(e).includes(label) || norm(e.getAttribute('aria-label')).includes(label));
+    }
+    if (!el) return { status: 'missing' };
+    el.scrollIntoView({ block: 'center', inline: 'center' });
+    const st = getComputedStyle(el);
+    let out = { status: 'ok' };
+    const r = el.getBoundingClientRect();
+    if (st.visibility === 'hidden' || st.display === 'none' || parseFloat(st.opacity || '1') < 0.1 || r.width < 1 || r.height < 1) out = { status: 'blocked', reason: 'invisível ou sem área clicável' };
+    else if (el.matches(':disabled') || el.getAttribute('aria-disabled') === 'true') out = { status: 'disabled' };
+    else {
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      if (hit && !el.contains(hit) && !hit.contains(el)) out = { status: 'blocked', reason: 'encoberta por ' + (hit.id ? '#' + hit.id : (hit.className && typeof hit.className === 'string' ? '.' + hit.className.trim().split(/\\s+/)[0] : hit.tagName.toLowerCase())) };
+    }
+    window.scrollTo(0, 0);
+    return out;
+  })()`;
+}
+
 function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
   const abs = path.resolve(manifestPath);
   const data = JSON.parse(fs.readFileSync(abs, 'utf8'));
@@ -88,6 +134,7 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
       afterClickSelector: (screen.afterClickSelector || '').trim(),
       budgets: budgetsFor(screen.mode || projectMode, { ...projectBudgets, ...(screen.budgets || {}) }),
       mode: String(screen.mode || projectMode).toLowerCase(),
+      primaryAction: normalizePrimaryAction(screen.primaryAction),
     };
     if (state.afterClickSelector && !state.clickSelector) {
       throw new Error(`Tela ${screen.id}: afterClickSelector requer clickSelector.`);
@@ -141,6 +188,47 @@ function entriesFromManifest(manifestPath, includeVitrine, baseUrl = '') {
       ...state,
     });
   }
+  // Estados declarados (vazio, erro, aberto...): viram capturas proprias ou pendencia de cobertura.
+  for (const screen of data.screens || []) {
+    const baseEntry = entries.find((e) => e.labelOverride === (screen.id || '') && !e.stateName);
+    for (const raw of Array.isArray(screen.states) ? screen.states : []) {
+      const st = typeof raw === 'string' ? { name: raw } : (raw || {});
+      const name = String(st.name || '').trim();
+      if (!name || DEFAULT_STATE_RE.test(name) || st.covered_by || st.coveredBy) continue;
+      const hasRecipe = st.query || st.hash || st.file || st.route || st.click;
+      if (!hasRecipe) {
+        if (OPEN_STATE_RE.test(name) && (screen.clickSelector || '').trim()) continue; // coberto pelo pos-clique da tela
+        missing.push({ target: `${screen.id}@${slugify(name)}`, viewport: undefined,
+          detail: `Estado "${name}" declarado sem caminho de captura. Use {"name", "query"|"hash"|"file"|"route"|"click"} ou "covered_by": "probe".` });
+        continue;
+      }
+      if (!baseEntry && !st.file && !st.route) {
+        missing.push({ target: `${screen.id}@${slugify(name)}`, viewport: undefined, detail: `Estado "${name}": a tela base não tem captura.` });
+        continue;
+      }
+      let target = baseEntry ? baseEntry.target : '';
+      if (st.file) {
+        target = /^https?:\/\//i.test(st.file) ? st.file : (st.file.startsWith('/') && normBase ? `${normBase}${st.file}` : resolveManifestScreenPath(base, st.file));
+      } else if (st.route) {
+        target = /^https?:\/\//i.test(st.route) ? st.route : `${normBase}${st.route.startsWith('/') ? st.route : '/' + st.route}`;
+      }
+      const suffix = `${st.query ? (String(st.query).startsWith('?') ? st.query : '?' + st.query) : ''}${st.hash ? (String(st.hash).startsWith('#') ? st.hash : '#' + st.hash) : ''}`;
+      entries.push({
+        ...(baseEntry || { platform: (screen.platform || '').toLowerCase() || 'responsive', isVitrine: false,
+          budgets: budgetsFor(screen.mode || projectMode, { ...projectBudgets, ...(screen.budgets || {}) }), mode: String(screen.mode || projectMode).toLowerCase(),
+          viewports: screen.viewports === undefined ? undefined : validateViewports(screen.viewports) }),
+        target,
+        labelOverride: `${screen.id}@${slugify(name)}`,
+        stateName: name,
+        budgets: { ...((baseEntry && baseEntry.budgets) || budgetsFor(screen.mode || projectMode, { ...projectBudgets, ...(screen.budgets || {}) })),
+                   sparseState: SPARSE_STATE_RE.test(name) },
+        urlSuffix: suffix,
+        clickSelector: String(st.click || '').trim(),
+        afterClickSelector: String(st.after || '').trim(),
+        primaryAction: normalizePrimaryAction(st.primaryAction),
+      });
+    }
+  }
 
   const vitrineViewports = data.project?.vitrineViewports === undefined
     ? undefined : validateViewports(data.project.vitrineViewports);
@@ -191,6 +279,7 @@ function parseArgs(argv) {
     includeVitrine: true,
     allViewports: false,
     smokeInteract: false,
+    a11yExtra: true,
     concurrency: 4,
     quiet: false,
     missing: [],
@@ -213,9 +302,10 @@ function parseArgs(argv) {
     else if (a === '--mode' && argv[i + 1]) args.mode = argv[++i];
     else if (a === '--baseline' && argv[i + 1]) args.baseline = argv[++i];
     else if (a === '--no-motion-check') args.checkMotion = false;
+    else if (a === '--no-a11y-extra') args.a11yExtra = false;
     else if (a === '--strict') args.strict = true;
     else if (a === '--help' || a === '-h') {
-      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,1920x1080,mobile-360x800] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--mode operate|read|persuade] [--baseline <dir-de-capturas-anteriores>] [--no-motion-check] [--quiet] [--strict]');
+      console.log('Uso: node capture_and_audit.mjs <arquivo|url> [...] --manifest screen-manifest.json --out <dir> [--base-url http://127.0.0.1:4188] [--viewports desktop,1920x1080,mobile-360x800] [--themes dark,light] [--concurrency 4] [--smoke-interact] [--all-viewports] [--no-vitrine] [--mode operate|read|persuade] [--baseline <dir-de-capturas-anteriores>] [--no-motion-check] [--no-a11y-extra] [--quiet] [--strict]');
       process.exit(0);
     } else {
       const isVit = /(?:entrega|fluxo|preview|index|design-bible)\.html$/i.test(a);
@@ -234,7 +324,7 @@ function parseArgs(argv) {
   const seen = new Set();
   args.entries = args.entries.filter((e) => {
     const address = /^https?:\/\//i.test(e.target) ? e.target : path.resolve(e.target);
-    const k = JSON.stringify([address, e.labelOverride, e.viewports, e.clickSelector, e.afterClickSelector]);
+    const k = JSON.stringify([address, e.labelOverride, e.viewports, e.clickSelector, e.afterClickSelector, e.urlSuffix || '']);
     if (seen.has(k)) return false;
     seen.add(k);
     return true;
@@ -696,7 +786,8 @@ const DOM_AUDIT_FN = `(() => {
     }
 
     // 13. DA-STUB-SCREEN: tabelas operacionais rasas (1-2 linhas) ou tela casca quase vazia
-    if (!isAuthPage && isAppMode) {
+    // Estado declarado como vazio, erro ou carregando e raso por definicao: nao recebe este sinal.
+    if (!isAuthPage && isAppMode && !B.sparseState) {
       let stubTables = 0;
       for (const tbl of document.querySelectorAll('table')) {
         const st = getComputedStyle(tbl);
@@ -729,7 +820,7 @@ const DOM_AUDIT_FN = `(() => {
     }
 
     // 14. DA-DEAD-SPACE: vazio morto em desktop (1440x900) + inspector/aside vazio ou subaproveitado
-    if (isDesktop && !isAuthPage && B.mode !== 'persuade') {
+    if (isDesktop && !isAuthPage && B.mode !== 'persuade' && !B.sparseState) {
       for (const aside of document.querySelectorAll('aside, [class*="inspector"], [class*="detail-pane"], [class*="side-panel"]')) {
         const st = getComputedStyle(aside);
         const r = aside.getBoundingClientRect();
@@ -804,15 +895,24 @@ const DOM_AUDIT_FN = `(() => {
     }
 
     // 15. DA-SURFACE-FLAT: falta de separacao visual Z1 vs Z2
-    if (!isAuthPage && isAppMode) {
+    if (!isAuthPage && isAppMode && !B.sparseState) {
       const bodyLum = lum(resolveBg(document.body));
       const containers = Array.from(mainEl.querySelectorAll('section, article, table, aside, [class*="card"], [class*="panel"], [class*="sheet"], [class*="box"], [class*="surface"]')).filter((el) => {
         const st = getComputedStyle(el);
         const r = el.getBoundingClientRect();
         return st.display !== 'none' && r.width >= 160 && r.height >= 60;
       });
+      // Itens de lista com borda propria (ou no link-cartao interno) tambem separam os planos.
+      const borderedItem = Array.from(mainEl.querySelectorAll('li, li > a, [role="listitem"], [class*="item"], [class*="row"]')).slice(0, 60).some((el) => {
+        const st = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        const bw = parseFloat(st.borderTopWidth || '0') + parseFloat(st.borderBottomWidth || '0');
+        const bc = colorOf(st.borderTopColor) || colorOf(st.borderBottomColor);
+        return r.width >= 160 && r.height >= 32 && bw >= 1 && bc && bc[3] > 0.08;
+      });
       if (containers.length >= 1) {
         let elevated = 0;
+        if (borderedItem) elevated++;
         for (const el of containers.slice(0, 40)) {
           const st = getComputedStyle(el);
           const bg = colorOf(st.backgroundColor);
@@ -1107,6 +1207,61 @@ function auditExpr(budgets) {
   return '(() => { window.__DA_BUDGETS__ = ' + JSON.stringify(budgets || DEFAULT_BUDGETS) + '; return ' + DOM_AUDIT_FN + '; })()';
 }
 
+// Zoom de 200%: rolagem horizontal da pagina (fora de tabelas e areas com rolagem propria) e texto cortado sem reticencias.
+const ZOOM_CHECK_FN = `(() => {
+  const se = document.scrollingElement || document.documentElement;
+  let over = Math.max(0, se.scrollWidth - window.innerWidth);
+  if (over > 4) {
+    // descarta o excesso que vem de tabelas, grades, mapas, codigo e areas com overflow proprio
+    let culprit = null;
+    for (const el of document.querySelectorAll('body *')) {
+      const r = el.getBoundingClientRect();
+      if (r.right <= window.innerWidth + 4 || r.width === 0) continue;
+      if (el.closest('table, pre, code, canvas, svg, [role="grid"], [class*="grid-scroll"], [class*="table"]')) continue;
+      let p = el.parentElement, scrolls = false;
+      while (p && p !== document.body) {
+        const ps = getComputedStyle(p);
+        if (/(auto|scroll)/.test(ps.overflowX)) { scrolls = true; break; }
+        p = p.parentElement;
+      }
+      if (!scrolls) { culprit = el; break; }
+    }
+    if (!culprit) over = 0;
+  }
+  let clipped = 0; const samples = [];
+  for (const el of document.querySelectorAll('h1, h2, h3, p, a, button, label, td, th, li, span, strong')) {
+    if (el.children.length) continue;
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) continue;
+    const st = getComputedStyle(el);
+    const hidesX = st.overflow === 'hidden' || st.overflowX === 'hidden' || st.overflowX === 'clip';
+    if (hidesX && st.textOverflow !== 'ellipsis' && el.scrollWidth > el.clientWidth + 2) {
+      clipped++;
+      if (samples.length < 3) samples.push('"' + (el.textContent || '').trim().slice(0, 24) + '"');
+    }
+  }
+  return { over: Math.round(over), clipped, samples };
+})()`;
+
+// Cores forcadas: controles cujo contorno dependia so do fundo (o sistema remove o fundo e a sombra).
+const FORCED_COLORS_CHECK_FN = `(() => {
+  const active = matchMedia('(forced-colors: active)').matches;
+  let unbounded = 0; const samples = [];
+  for (const el of document.querySelectorAll('button, [role="button"], input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), select, textarea, a[class*="btn"], a[class*="button"]')) {
+    const r = el.getBoundingClientRect();
+    if (r.width < 8 || r.height < 8) continue;
+    const st = getComputedStyle(el);
+    if (st.visibility === 'hidden' || st.display === 'none') continue;
+    const border = ['Top', 'Right', 'Bottom', 'Left'].some((s) => parseFloat(st['border' + s + 'Width']) >= 1 && st['border' + s + 'Style'] !== 'none');
+    const outline = parseFloat(st.outlineWidth) >= 1 && st.outlineStyle !== 'none';
+    if (!border && !outline) {
+      unbounded++;
+      if (samples.length < 3) samples.push((el.tagName.toLowerCase()) + ' "' + ((el.textContent || el.value || el.getAttribute('aria-label') || '').trim().slice(0, 20)) + '"');
+    }
+  }
+  return { active, unbounded, samples };
+})()`;
+
 const MOTION_CHECK_FN = `(() => {
   const waiting = /skeleton|spinner|loading|progress|typing|shimmer|busy|recording|pulse-live/i;
   const offenders = [];
@@ -1213,7 +1368,7 @@ async function main() {
     if (/^https?:\/\//i.test(e.target)) {
       return {
         label: e.labelOverride || e.target.replace(/^https?:\/\/[^/]+/i, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 40) || 'root',
-        url: e.target,
+        url: e.target + (e.urlSuffix || ''),
         ...e,
       };
     }
@@ -1221,7 +1376,7 @@ async function main() {
     const rel = path.relative(rootDir, abs).split(path.sep).join('/');
     return {
       label: e.labelOverride || path.basename(abs, path.extname(abs)),
-      url: `http://127.0.0.1:${staticSrv.port}/${rel}`,
+      url: `http://127.0.0.1:${staticSrv.port}/${rel}${e.urlSuffix || ''}`,
       ...e,
     };
   });
@@ -1375,6 +1530,20 @@ async function main() {
       const shot = await cdp.send('Page.captureScreenshot', { format: 'png' });
       fs.writeFileSync(shotPath, Buffer.from(shot.data, 'base64'));
 
+      if (target.primaryAction && !mainDoc404) {
+        const pa = target.primaryAction;
+        const paRes = await cdp.send('Runtime.evaluate', { expression: primaryActionExpr(pa), returnByValue: true });
+        const v = paRes?.result?.value || {};
+        const name = pa.label || pa.selector;
+        if (v.status === 'missing') {
+          issues.push({ severity: 'REVIEW', rule: 'DA-REACHABLE', detail: `Ação primária "${name}" não encontrada pelo rótulo nesta largura. Declare primaryAction.selector ou confira na captura.` });
+        } else if (v.status === 'disabled') {
+          issues.push({ severity: 'REVIEW', rule: 'DA-REACHABLE', detail: `Ação primária "${name}" desabilitada no estado capturado. Confirme que o motivo aparece para a pessoa.` });
+        } else if (v.status === 'blocked') {
+          issues.push({ severity: 'HIGH', rule: 'DA-REACHABLE', detail: `Ação primária "${name}" ${v.reason}.` });
+        }
+      }
+
       const budgets = target.budgets || DEFAULT_BUDGETS;
       const transferKB = Math.round(net.bytes / 1024);
       if (!target.isVitrine && budgets.perfMaxKB && (transferKB > budgets.perfMaxKB || net.requests > budgets.perfMaxRequests || net.fonts > budgets.perfMaxFonts)) {
@@ -1391,6 +1560,45 @@ async function main() {
           }
         } finally {
           await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }] });
+        }
+      }
+
+      // Zoom de 200% e cores forcadas: uma vez por tela (largura desktop, primeiro tema), com capturas para o critico.
+      const a11yHere = args.a11yExtra && !target.isVitrine && !mainDoc404 && vp.width >= 1024 && !vp.mobile && theme === args.themes[0];
+      if (a11yHere) {
+        try {
+          await cdp.send('Emulation.setDeviceMetricsOverride', { width: Math.round(vp.width / 2), height: Math.round(vp.height / 2), deviceScaleFactor: 2, mobile: false });
+          await new Promise((r) => setTimeout(r, 260));
+          const zres = await cdp.send('Runtime.evaluate', { expression: ZOOM_CHECK_FN, returnByValue: true });
+          const z = zres?.result?.value || {};
+          const zShot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync(path.join(outDir, `${target.label}-${vpName}-${theme}-zoom200.png`), Buffer.from(zShot.data, 'base64'));
+          if (z.over > 4 || z.clipped > 0) {
+            const parts = [];
+            if (z.over > 4) parts.push(`a página rola ${z.over}px na horizontal fora de tabelas e áreas com rolagem própria`);
+            if (z.clipped > 0) parts.push(`${z.clipped} texto(s) cortado(s): ${z.samples.join(', ')}`);
+            issues.push({ severity: 'REVIEW', rule: 'DA-ZOOM-REFLOW', detail: `Com zoom de 200% (${Math.round(vp.width / 2)}px CSS), ${parts.join('; ')}. Confira a captura -zoom200.` });
+          }
+        } catch (err) {
+          issues.push({ severity: 'REVIEW', rule: 'DA-ZOOM-REFLOW', detail: 'Checagem de zoom não rodou: ' + String(err.message || err).slice(0, 120) });
+        } finally {
+          await cdp.send('Emulation.setDeviceMetricsOverride', { width: vp.width, height: vp.height, deviceScaleFactor: vp.dpr, mobile: vp.mobile });
+        }
+        try {
+          await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }, { name: 'forced-colors', value: 'active' }] });
+          await new Promise((r) => setTimeout(r, 200));
+          const fres = await cdp.send('Runtime.evaluate', { expression: FORCED_COLORS_CHECK_FN, returnByValue: true });
+          const f = fres?.result?.value || {};
+          const fShot = await cdp.send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync(path.join(outDir, `${target.label}-${vpName}-${theme}-forced-colors.png`), Buffer.from(fShot.data, 'base64'));
+          if (f.active && f.unbounded > 0) {
+            issues.push({ severity: 'REVIEW', rule: 'DA-FORCED-COLORS', detail: `Em cores forçadas, ${f.unbounded} controle(s) perdem o contorno (fundo some, sem borda): ${f.samples.join(', ')}. Use borda transparente ou @media (forced-colors: active).` });
+          }
+        } catch (err) {
+          issues.push({ severity: 'REVIEW', rule: 'DA-FORCED-COLORS', detail: 'Checagem de cores forçadas não rodou: ' + String(err.message || err).slice(0, 120) });
+        } finally {
+          await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }] });
+          await new Promise((r) => setTimeout(r, 120));
         }
       }
 

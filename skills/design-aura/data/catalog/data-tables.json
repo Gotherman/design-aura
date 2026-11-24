@@ -242,9 +242,9 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://headless-tree.lukasbach.com",
-  "repo": "",
+  "repo": "https://github.com/lukasbach/headless-tree",
   "license": "MIT",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "react"

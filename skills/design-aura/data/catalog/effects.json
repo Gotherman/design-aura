@@ -213,9 +213,9 @@
   "kind": "library",
   "use": "dependency",
   "url": "https://github.com/oframe/ogl",
-  "repo": "",
+  "repo": "https://github.com/oframe/ogl",
   "license": "Unlicense",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "html"
@@ -298,7 +298,7 @@
   "url": "https://shadergradient.co",
   "repo": "",
   "license": "MIT",
-  "license_status": "verify",
+  "license_status": "ok",
   "license_checked_at": "2026-11-24",
   "stacks": [
    "react"
